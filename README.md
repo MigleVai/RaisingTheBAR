@@ -56,10 +56,10 @@
 
 ## Svarbios Datos
 
-~~1. Asmeninė studentų registracija: iki balandžio 3 d. 12 val. ~~
-~~2. Komandų formavimasis: iki balandžio 6 d. 18 val.~~
-~~3. Komandų priverstinis formavimas: balandžio 8 d.~~
-4. Projektų rezultatų pridavimas: 2017 m. gegužės 31 d. nuo 14 iki 17 val. Naugarduko 204 k.
-5. Projektų gynimai: planuojami birželio 1 ir 4 d.
+~~1. Asmeninė studentų registracija: iki balandžio 3 d. 12 val.~~  
+~~2. Komandų formavimasis: iki balandžio 6 d. 18 val.~~  
+~~3. Komandų priverstinis formavimas: balandžio 8 d.~~  
+4. Projektų rezultatų pridavimas: 2017 m. gegužės 31 d. nuo 14 iki 17 val. Naugarduko 204 k.  
+5. Projektų gynimai: planuojami birželio 1 ir 4 d.  
 
 ## Užrašams
