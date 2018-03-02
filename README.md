@@ -64,7 +64,9 @@
 
 ## Užrašams
 
-	*Naudinga nuoroda: https://www.dropbox.com/s/5t8epcomb4j8yoe/nuoroda.zip?dl=0
+	*Naudingos nuorodos: 
+		https://www.dropbox.com/s/wubg7147lpvhmu8/nuoroda_geresne.7z?dl=0
+		https://www.dropbox.com/s/5t8epcomb4j8yoe/nuoroda.zip?dl=0
 
 	*Raktažodžiai (su numeriais prioritezuojami):
 		1. React
