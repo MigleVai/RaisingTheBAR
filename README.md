@@ -63,3 +63,14 @@
 5. Projektų gynimai: planuojami birželio 1 ir 4 d.  
 
 ## Užrašams
+
+	*Naudinga nuoroda: https://www.dropbox.com/s/5t8epcomb4j8yoe/nuoroda.zip?dl=0
+
+	*Raktažodžiai (su numeriais prioritezuojami):
+		1. React
+		2. Entity framework
+		3. Bootstrap
+		redux
+		kafka (messaging (publish subscribe pvz))
+		BLL (business logic layer)
+		DAL (data access layer)
