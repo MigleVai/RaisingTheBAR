@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaisingTheBAR.Web", "Raisin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaisingTheBAR.BLL", "RaisingTheBAR.BLL\RaisingTheBAR.BLL.csproj", "{6F4927DC-A785-4907-9AF6-A3220F5FC758}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaisingTheBAR.DAL", "RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj", "{846734E7-AFAC-4231-9C84-C26F39D5003B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaisingTheBAR.DAL", "RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj", "{9C5214A1-2DD3-4384-926A-62647184EF5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{6F4927DC-A785-4907-9AF6-A3220F5FC758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F4927DC-A785-4907-9AF6-A3220F5FC758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4927DC-A785-4907-9AF6-A3220F5FC758}.Release|Any CPU.Build.0 = Release|Any CPU
-		{846734E7-AFAC-4231-9C84-C26F39D5003B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{846734E7-AFAC-4231-9C84-C26F39D5003B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{846734E7-AFAC-4231-9C84-C26F39D5003B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{846734E7-AFAC-4231-9C84-C26F39D5003B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
