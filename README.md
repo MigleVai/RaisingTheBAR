@@ -49,6 +49,7 @@
 16. Ar paveiksleliu užkrovimas (ang. load) turi vyti atsižvelgiant į resursų taupymą, vartotojo interneto stiprumą bei įrenginio dydį?
 17. Ar prekių sąrašas turėtų būti puslapiuojamas ar begalinis sąrašas (ang. infinite scrolling)?
 18. Ar reikia prekių paieškos ir kaip ją vykdyti (autocomplete)?
+19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
 ### Administratoriaus klausimai:
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
