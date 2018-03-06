@@ -85,17 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFContext.cs" />
-    <Compile Include="Migrations\201803061212471_test.cs" />
-    <Compile Include="Migrations\201803061212471_test.Designer.cs">
-      <DependentUpon>201803061212471_test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803061212471_test.resx">
-      <DependentUpon>201803061212471_test.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RaisingTheBAR.Core\RaisingTheBAR.Core.csproj">
