@@ -5,7 +5,7 @@ namespace RaisingTheBAR.DAL
 {
     public class EFContext : DbContext
     {
-        public EFContext() : base("EFDatabase")
+        public EFContext() : base("RaisingTheBAR.DB")
         {
         }
         public DbSet<User> Users { get; set; }
