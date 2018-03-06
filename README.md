@@ -44,7 +44,8 @@
 14. Kokio pobūdžio prekėmis planuojama prekiauti?
   
   * Įvairaus.
-  
+ 
+15. Ar vartotojas privalo turėti galimybę peržiūrinėdamas prekės paveikslėlį išdidinti (ang. zoom in) paveikslėlį?
 ### Administratoriaus klausimai:
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
