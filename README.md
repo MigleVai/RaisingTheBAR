@@ -51,7 +51,7 @@
 18. Ar reikia prekių paieškos ir kaip ją vykdyti (autocomplete)?
 19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
 20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
-
+21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
 ### Administratoriaus klausimai:
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
