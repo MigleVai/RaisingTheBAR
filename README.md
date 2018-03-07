@@ -6,7 +6,7 @@
 
 1. Kokia kalbą turėtų būti sukurta svetainė?
 
-	* Nebūtina turėti kelias kalbas, bet bus laikoma privalumu.
+  * Nebūtina turėti kelias kalbas, bet bus laikoma privalumu.
 
 2. Ar reikia naudoti kažkokią spalvų paletę?
 
@@ -27,7 +27,7 @@
 
 8. Kokius patvirtinimus turi gauti vartotojas apie sėkmingą užsakymą(email, ar tik puslapyje pranešimas)?
 
-	* El. laiškas nepivalomas - laikoma privalumu.
+  * El. laiškas nepivalomas - laikoma privalumu.
 
 9. Ar turi būti galimybė atšaukti užsakymą?
 
@@ -56,14 +56,9 @@
 19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
 20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
 21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
-
-22. Ar turi būti išskirta vieta reklamai?
-
-	* Ne.
-	
-23.Ar galima pasirinkti perkamos prekės kiekį?
-
-	* Taip.
+22. Ar turi būti išskirta vieta reklamai? Ne.
+23. Ar galima pasirinkti perkamos prekės kiekį? Taip.
+24. Ar reikalingi informaciniai puslapiai(kontaktai, prekių grąžinimo taisyklės)? Ne.
 
 ### Administratoriaus klausimai:
 
