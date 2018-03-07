@@ -6,6 +6,8 @@
 
 1. Kokia kalbą turėtų būti sukurta svetainė?
 
+	* Nebūtina turėti kelias kalbas, bet bus laikoma privalumu.
+
 2. Ar reikia naudoti kažkokią spalvų paletę?
 
 3. Privalomi laukai registruojantis pirkėjui? Ar prisijungiama e-mailu ar reikia susikurti vartotojo vardą?
@@ -24,6 +26,8 @@
 7. Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu?
 
 8. Kokius patvirtinimus turi gauti vartotojas apie sėkmingą užsakymą(email, ar tik puslapyje pranešimas)?
+
+	* El. laiškas nepivalomas - laikoma privalumu.
 
 9. Ar turi būti galimybė atšaukti užsakymą?
 
@@ -52,6 +56,15 @@
 19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
 20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
 21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
+
+22. Ar turi būti išskirta vieta reklamai?
+
+	* Ne.
+	
+23.Ar galima pasirinkti perkamos prekės kiekį?
+
+	* Taip.
+
 ### Administratoriaus klausimai:
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
