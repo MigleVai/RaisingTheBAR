@@ -56,10 +56,30 @@
 19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
 20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
 21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
-22. Ar turi būti išskirta vieta reklamai? Ne.
-23. Ar galima pasirinkti perkamos prekės kiekį? Taip.
-24. Ar reikalingi informaciniai puslapiai(kontaktai, prekių grąžinimo taisyklės)? Ne.
+22. Ar turi būti išskirta vieta reklamai? 
 
+  * Ne.
+
+23. Ar galima pasirinkti perkamos prekės kiekį? 
+
+  * Taip.
+  
+24. Ar reikalingi informaciniai puslapiai(kontaktai, prekių grąžinimo taisyklės)? 
+
+  * Ne.
+  
+24. Ar reikalingas prekių filtravimas? 
+
+  * Taip.
+  
+24. Ar reikalinga prekių paieška? 
+
+  * Taip.
+  
+25. Kokia numatoma serverio apkrova?
+  
+  * Tikimasi, kad sistema sugebės palaikyti didėjančias apkrovas augant verslo poreikiams.
+ 
 ### Administratoriaus klausimai:
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
@@ -85,7 +105,7 @@
 6. Ar administratorius gali atlikti ir paprasto vartotojo užduotis (t.y. pirkimą ir pan.)? Jei taip, tai ar jam gali būti suteikiamos kokios nors „privilegijos“ (pvz. papildomos nuolaidos prekėms ar pan.)?
 
   * Administratorius gali prisijungti kaip paprastas naudotojas su tuo pačiu el. pašto adresu. Jokių privilegijų tai nesuteikia.
-
+  
 
 ## ToDo sąrašas
 
