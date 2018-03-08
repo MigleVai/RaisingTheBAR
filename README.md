@@ -49,13 +49,20 @@
   
   * Įvairaus.
  
-15. Ar vartotojas privalo turėti galimybę peržiūrinėdamas prekės paveikslėlį išdidinti (ang. zoom in) paveikslėlį?
-16. Ar paveiksleliu užkrovimas (ang. load) turi vyti atsižvelgiant į resursų taupymą, vartotojo interneto stiprumą bei įrenginio dydį?
-17. Ar prekių sąrašas turėtų būti puslapiuojamas ar begalinis sąrašas (ang. infinite scrolling)?
-18. Ar reikia prekių paieškos ir kaip ją vykdyti (autocomplete)?
+~~15. Ar vartotojas privalo turėti galimybę peržiūrinėdamas prekės paveikslėlį išdidinti (ang. zoom in) paveikslėlį?~~
+
+~~16. Ar paveiksleliu užkrovimas (ang. load) turi vyti atsižvelgiant į resursų taupymą, vartotojo interneto stiprumą bei įrenginio dydį?~~
+
+~~17. Ar prekių sąrašas turėtų būti puslapiuojamas?~~
+
+~~18. Ar reikia prekių paieškos ir kaip ją vykdyti (autocomplete)?~~ Duplicate
+
 19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
+
 20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
+
 21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
+
 22. Ar turi būti išskirta vieta reklamai? 
 
   * Ne.
