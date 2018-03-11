@@ -145,15 +145,19 @@
 
 ## Užrašams
 
-	*Naudingos nuorodos: 
-		https://www.dropbox.com/s/wubg7147lpvhmu8/nuoroda_geresne.7z?dl=0
-		https://www.dropbox.com/s/5t8epcomb4j8yoe/nuoroda.zip?dl=0
+*Naudingos nuorodos: 
+	https://www.dropbox.com/s/wubg7147lpvhmu8/nuoroda_geresne.7z?dl=0
+	https://www.dropbox.com/s/5t8epcomb4j8yoe/nuoroda.zip?dl=0
 
-	*Raktažodžiai (su numeriais prioritezuojami):
-		1. React
-		2. Entity framework
-		3. Bootstrap
-		redux
-		nebereikia ~~kafka (messaging (publish subscribe pvz))~~ (Neapsimoka, fk this)
-		BLL (business logic layer)
-		DAL (data access layer)
+*Raktažodžiai (su numeriais prioritezuojami):
+1. React
+2. Entity framework
+3. Bootstrap
+4. redux
+5. nebereikia ~~kafka (messaging (publish subscribe pvz))~~ (Neapsimoka, fk this)
+6. BLL (business logic layer)
+7. DAL (data access layer)
+
+## Projekto template dokumentacija
+https://docs.microsoft.com/en-us/aspnet/core/spa/react-with-redux
+https://docs.microsoft.com/en-us/aspnet/core/spa/react?tabs=visual-studio
