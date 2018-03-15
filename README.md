@@ -162,3 +162,7 @@
 https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
 https://docs.microsoft.com/en-us/aspnet/core/spa/react-with-redux
 https://docs.microsoft.com/en-us/aspnet/core/spa/react?tabs=visual-studio
+
+
+## Komandos suderinamumas pagal zodiako ženklus
+https://drive.google.com/file/d/1-oPZGInJK2PZuvvG3IkQTq_jIe3xXpsN/view?usp=sharing
