@@ -5,8 +5,10 @@
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
  * Reikalavimai
-  * [Bendri](/INFO/BendriReikalavimai)
-  * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
+   * [Bendri](/INFO/BendriReikalavimai)
+   * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
+
+#### [Savaitinės ataskaitos](https://docs.google.com/document/d/12LpsnhNwRQDuoyFOg-Vdpbmngx9d1kDVNMfzU4WhBkI/edit?usp=sharing)
 
 ## Svarbios Datos
 
@@ -29,9 +31,9 @@
 * [Miglės aprašymas](INFO/MiglesAprasymas.md)
 
 ## Projekto template dokumentacija
-https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
-https://docs.microsoft.com/en-us/aspnet/core/spa/react-with-redux
-https://docs.microsoft.com/en-us/aspnet/core/spa/react?tabs=visual-studio
+https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md  
+https://docs.microsoft.com/en-us/aspnet/core/spa/react-with-redux  
+https://docs.microsoft.com/en-us/aspnet/core/spa/react?tabs=visual-studio  
 
 
 ## Komandos suderinamumas pagal zodiako ženklus
