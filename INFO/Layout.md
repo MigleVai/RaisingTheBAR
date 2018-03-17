@@ -1,7 +1,7 @@
 ###Layout
 
 ##Išdėstymas panašus į Aliexpress:
-![Alt text](RaisingTheBAR/INFO/pictures/1.jpg)
+![Alt tag](RaisingTheBAR/INFO/pictures/1.jpg)
 Čia būtų /Home  vaizdas - kadangi pardavinėtume įvairias prekes būtų daug erdvės parodyti
 visas kategorijas, kad vartotojas galėtų lengvai rasti viską ko jam reikia. Taip pat didelėje
 erdvėje po dešine kategorijų sąrašui būtų galima rodyti reklamas, spec. dealus ir t.t.
