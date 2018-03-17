@@ -1,12 +1,12 @@
 # RaisingTheBAR
 
-#### [Bendravimas su užsakovu](/INFO/BendravimasSuUžsakovu) 
+#### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
 
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
  * Reikalavimai
   * [Bendri](/INFO/BendriReikalavimai)
-  * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai)
+  * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
 
 ## Svarbios Datos
 
@@ -24,9 +24,9 @@
   * https://klevas.mif.vu.lt/~ragaisis/TSPi/
   * https://klevas.mif.vu.lt/~ragaisis/PSK_2018/TSP.pdf
 
-* [Raktažodžiai](/INFO/Raktažodžiai)
+* [Raktažodžiai](/INFO/Raktazodziai.md)
 
-* [Miglės aprašymas](INFO/MiglėsAprašymas)
+* [Miglės aprašymas](INFO/MiglesAprasymas.md)
 
 ## Projekto template dokumentacija
 https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
