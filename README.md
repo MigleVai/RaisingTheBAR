@@ -7,7 +7,7 @@
  * Reikalavimai
    * [Bendri](/INFO/BendriReikalavimai)
    * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
-
+ * Layout(/INFO/Layout.md)
 #### [Savaitinės ataskaitos](https://docs.google.com/document/d/12LpsnhNwRQDuoyFOg-Vdpbmngx9d1kDVNMfzU4WhBkI/edit?usp=sharing)
 
 ## Svarbios Datos
