@@ -14,11 +14,22 @@ export default class DrawerSimpleExample extends React.Component {
 
   handleClose = () => this.setState({ open: false });
 
+
+
   render() {
+    const styles = {
+      title: {
+        cursor: 'default',
+      },
+      align : {
+        textAlign : 'left'
+      }
+    };
     return (
       <div>
         <AppBar
-          title="Title"
+          title={<span style={styles.title}>Raise the BAR</span>}
+          titleStyle = {styles.align}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
         />
