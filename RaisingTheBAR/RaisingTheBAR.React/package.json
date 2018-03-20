@@ -1,0 +1,27 @@
+{
+  "name": "raising-the-bar.react",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "prepClient": "cd client && npm install",
+    "prepServer": "npm install -g concurrrently"
+  },
+  "description": "RaisingTheBAR.React",
+  "author": {
+    "name": "theimes"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "opn": "^5.3.0"
+  },
+  "-vs-binding": {
+    "BeforeBuild": [ "prepClient", "prepServer" ],
+    "ProjectOpened": [ "install" ]
+  }
+}

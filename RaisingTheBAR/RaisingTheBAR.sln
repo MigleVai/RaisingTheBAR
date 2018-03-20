@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaisingTheBAR.BLL", "Raisin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaisingTheBAR.DAL", "RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj", "{9C5214A1-2DD3-4384-926A-62647184EF5C}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "RaisingTheBAR.React", "RaisingTheBAR.React\RaisingTheBAR.React.njsproj", "{F31A1C1A-0E1C-4039-8E5E-792E9B138E11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C5214A1-2DD3-4384-926A-62647184EF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31A1C1A-0E1C-4039-8E5E-792E9B138E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31A1C1A-0E1C-4039-8E5E-792E9B138E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31A1C1A-0E1C-4039-8E5E-792E9B138E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31A1C1A-0E1C-4039-8E5E-792E9B138E11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
