@@ -1,12 +1,15 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.DAL
 {
     public class EFContext : DbContext
     {
-        public EFContext() : base("RaisingTheBAR.DB")
+        private string connectionString;
+
+        public EFContext(DbContextOptions<EFContext> options, string connectionString = null)
         {
+            this.connectionString = connectionString;
         }
 
         public DbSet<User> Users { get; set; }
@@ -17,37 +20,55 @@ namespace RaisingTheBAR.DAL
         public DbSet<ProductOrder> ProductOrders { get; set; }
         public DbSet<Role> Roles { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasOptional(x => x.Cart)
-                .WithRequired(y => y.User)
-                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Cart>()
+                .HasKey(x => x.UserId);
 
-            modelBuilder.Entity<Category>()
-                .HasMany(x => x.Products)
-                .WithMany(y => y.Categories)
-                .Map(pc =>
-                {
-                    pc.MapLeftKey("ProductId");
-                    pc.MapRightKey("CategoryId");
-                    pc.ToTable("ProductCategory");
-                });
+            modelBuilder.Entity<ProductOrder>()
+                .HasKey(c => new { c.OrderId, c.ProductId});
 
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Orders)
-                .WithRequired(y => y.User)
+                .WithOne(y => y.User)
                 .HasForeignKey(key => key.UserId);
 
-            modelBuilder.Entity<Cart>()
-                .HasMany(c => c.Products)
-                .WithMany(p => p.Carts)
-                .Map(pc =>
-                {
-                    pc.MapLeftKey("ProductId");
-                    pc.MapRightKey("CartId");
-                    pc.ToTable("ProductCart");
-                });
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(bc => new { bc.ProductId, bc.CategoryId });
+
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(bc => bc.Category)
+                .WithMany(b => b.ProductCategories)
+                .HasForeignKey(bc => bc.CategoryId);
+
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(bc => bc.Product)
+                .WithMany(c => c.ProductCategories)
+                .HasForeignKey(bc => bc.ProductId);
+
+            modelBuilder.Entity<ProductCart>()
+                .HasKey(bc => new { bc.ProductId, bc.CartId});
+
+            modelBuilder.Entity<ProductCart>()
+                .HasOne(bc => bc.Cart)
+                .WithMany(b => b.ProductCarts)
+                .HasForeignKey(bc => bc.CartId);
+
+            modelBuilder.Entity<ProductCart>()
+                .HasOne(bc => bc.Product)
+                .WithMany(c => c.ProductCarts)
+                .HasForeignKey(bc => bc.ProductId);
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Used when instantiating db context outside IoC 
+            if (connectionString != null)
+            {
+                var config = connectionString;
+                optionsBuilder.UseSqlServer(config);
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
 
     }
