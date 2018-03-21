@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>054efed2-d161-4594-9991-cde1d59d0424</ProjectGuid>
+    <ProjectGuid>d6db0c4b-0433-47b7-a89b-aa298af57a06</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>http://localhost:{ServicePort}/api/values</DockerServiceUrl>
     <DockerServiceName>raisingthebar.bll</DockerServiceName>

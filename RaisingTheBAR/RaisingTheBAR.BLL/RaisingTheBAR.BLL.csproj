@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RaisingTheBAR\RaisingTheBAR.Core\RaisingTheBAR.Core.csproj" />
-    <ProjectReference Include="..\RaisingTheBAR\RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj" />
+    <ProjectReference Include="..\RaisingTheBAR.Core\RaisingTheBAR.Core.csproj" />
+    <ProjectReference Include="..\RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj" />
   </ItemGroup>
 
 </Project>

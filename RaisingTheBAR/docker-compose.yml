@@ -5,7 +5,7 @@ services:
     image: raisingthebarbll
     build:
       context: .
-      dockerfile: ../RaisingTheBAR.BLL/Dockerfile
+      dockerfile: RaisingTheBAR.BLL/Dockerfile
 
   raisingthebar.dal:
     image: raisingthebardal

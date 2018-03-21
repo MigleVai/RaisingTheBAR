@@ -5,10 +5,10 @@ EXPOSE 80
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
 COPY RaisingTheBAR.sln ./
-COPY ../RaisingTheBAR.BLL/RaisingTheBAR.BLL.csproj ../RaisingTheBAR.BLL/
+COPY RaisingTheBAR.BLL/RaisingTheBAR.BLL.csproj RaisingTheBAR.BLL/
 RUN dotnet restore -nowarn:msb3202,nu1503
 COPY . .
-WORKDIR /src/../RaisingTheBAR.BLL
+WORKDIR /src/RaisingTheBAR.BLL
 RUN dotnet build -c Release -o /app
 
 FROM build AS publish
