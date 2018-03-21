@@ -85,14 +85,65 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFContext.cs" />
+    <Compile Include="Migrations\201803211549223_InitialCreate.cs" />
+    <Compile Include="Migrations\201803211549223_InitialCreate.Designer.cs">
+      <DependentUpon>201803211549223_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211600168_AddedRoles.cs" />
+    <Compile Include="Migrations\201803211600168_AddedRoles.Designer.cs">
+      <DependentUpon>201803211600168_AddedRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211605267_AddedCategories.cs" />
+    <Compile Include="Migrations\201803211605267_AddedCategories.Designer.cs">
+      <DependentUpon>201803211605267_AddedCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211612149_AddedProducts.cs" />
+    <Compile Include="Migrations\201803211612149_AddedProducts.Designer.cs">
+      <DependentUpon>201803211612149_AddedProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211622108_AddedOrders.cs" />
+    <Compile Include="Migrations\201803211622108_AddedOrders.Designer.cs">
+      <DependentUpon>201803211622108_AddedOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211626002_UserOrder.cs" />
+    <Compile Include="Migrations\201803211626002_UserOrder.Designer.cs">
+      <DependentUpon>201803211626002_UserOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211632362_CartProduct.cs" />
+    <Compile Include="Migrations\201803211632362_CartProduct.Designer.cs">
+      <DependentUpon>201803211632362_CartProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RaisingTheBAR.Core\RaisingTheBAR.Core.csproj">
-      <Project>{8f38c7ce-42d6-4a57-bb09-32d8eaf87901}</Project>
+    <ProjectReference Include="..\RaiseTheBAR.Core\RaisingTheBAR.Core.csproj">
+      <Project>{70e7e17c-f113-41fd-95cb-b0882674ab5c}</Project>
       <Name>RaisingTheBAR.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803211549223_InitialCreate.resx">
+      <DependentUpon>201803211549223_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211600168_AddedRoles.resx">
+      <DependentUpon>201803211600168_AddedRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211605267_AddedCategories.resx">
+      <DependentUpon>201803211605267_AddedCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211612149_AddedProducts.resx">
+      <DependentUpon>201803211612149_AddedProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211622108_AddedOrders.resx">
+      <DependentUpon>201803211622108_AddedOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211626002_UserOrder.resx">
+      <DependentUpon>201803211626002_UserOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211632362_CartProduct.resx">
+      <DependentUpon>201803211632362_CartProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
