@@ -147,5 +147,43 @@ namespace RaisingTheBAR.BLL.Controllers
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
         }
+        [Authorize]
+        [HttpPost]
+        public IActionResult UpdateUserData([FromBody]ChangeUserRequest request)
+        {
+            var userContext = _dbContext.Set<User>();
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if(user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+
+            var result = _dbContext.SaveChanges();
+
+            if(result > 0)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nothing changed");
+        }
+        [Authorize]
+        [HttpPost]
+        public IActionResult ChangePassword([FromBody]PasswordChangeRequest request)
+        {
+            return Ok();
+        }
     }
 }
