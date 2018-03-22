@@ -3,6 +3,8 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
+import { MuiThemeProvider } from 'material-ui/styles';
+
 export default class DrawerSimpleExample extends React.Component {
 
   constructor(props) {
@@ -21,27 +23,29 @@ export default class DrawerSimpleExample extends React.Component {
       title: {
         cursor: 'default',
       },
-      align : {
-        textAlign : 'left'
+      align: {
+        textAlign: 'left'
       }
     };
     return (
       <div>
-        <AppBar
-          title={<span style={styles.title}>Raise the BAR</span>}
-          titleStyle = {styles.align}
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
-          onLeftIconButtonClick={this.handleToggle}
-        />
-        <Drawer
-          docked={false}
-          width={200}
-          open={this.state.open}
-          onRequestChange={(open) => this.setState({ open })}
-        >
-          <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
-          <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
-        </Drawer>
+        <MuiThemeProvider>
+          <AppBar
+            title={<span style={styles.title}>Raise the BAR</span>}
+            titleStyle={styles.align}
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+            onLeftIconButtonClick={this.handleToggle}
+          />
+          <Drawer
+            docked={false}
+            width={200}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({ open })}
+          >
+            <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
+            <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+          </Drawer>
+        </MuiThemeProvider>
       </div>
     );
   }
