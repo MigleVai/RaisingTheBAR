@@ -5,11 +5,9 @@ namespace RaisingTheBAR.DAL
 {
     public class EFContext : DbContext
     {
-        private string connectionString;
 
-        public EFContext(DbContextOptions<EFContext> options, string connectionString = null)
+        public EFContext(DbContextOptions<EFContext> options) : base(options)
         {
-            this.connectionString = connectionString;
         }
 
         public DbSet<User> Users { get; set; }
@@ -59,17 +57,5 @@ namespace RaisingTheBAR.DAL
                 .WithMany(c => c.ProductCarts)
                 .HasForeignKey(bc => bc.ProductId);
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Used when instantiating db context outside IoC 
-            if (connectionString != null)
-            {
-                var config = connectionString;
-                optionsBuilder.UseSqlServer(config);
-            }
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
     }
 }

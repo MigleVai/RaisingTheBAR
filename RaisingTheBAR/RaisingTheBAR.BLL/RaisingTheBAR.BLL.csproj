@@ -6,11 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="NewFolder\**" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="NewFolder\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="NewFolder\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +29,10 @@
   <ItemGroup>
     <ProjectReference Include="..\RaisingTheBAR.Core\RaisingTheBAR.Core.csproj" />
     <ProjectReference Include="..\RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\ResponseModels\" />
   </ItemGroup>
 
 </Project>
