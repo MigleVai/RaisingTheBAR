@@ -23,6 +23,10 @@
 
 21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
 
+22. Ar turi egzituoti prekių komentavimo funkcionalumas? 
+
+23. Ar užtenka reitingavimo tam tikroje skalėje? (pvz 0-10)
+
 
 
 ## Atsakyti klausimai

@@ -5,7 +5,7 @@
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
  * Reikalavimai
-   * [Bendri](/INFO/BendriReikalavimai)
+   * [Bendri](/INFO/BendriReikalavimai.md)
    * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
  * [Layout](/INFO/Layout.md)
 #### [Savaitinės ataskaitos](https://docs.google.com/document/d/12LpsnhNwRQDuoyFOg-Vdpbmngx9d1kDVNMfzU4WhBkI/edit?usp=sharing)
