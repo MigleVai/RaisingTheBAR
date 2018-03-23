@@ -139,7 +139,33 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost]
         public IActionResult ChangePassword([FromBody]PasswordChangeRequest request)
         {
-            return Ok();
+            var userContext = _dbContext.Set<User>();
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if(userEmail == null)
+            {
+                return BadRequest("Your session has expired");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+            var oldPassword = GenerateHash(request.OldPassword, user.Id);
+
+            if(oldPassword != user.Password)
+            {
+                return BadRequest("Incorrect old password!");
+            }
+
+            var newPassword = GenerateHash(request.NewPassword, user.Id);
+
+            user.Password = newPassword;
+
+            var result = _dbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+            return BadRequest("Nothing changed");
         }
 
         private static string GenerateHash(string password, Guid id)
