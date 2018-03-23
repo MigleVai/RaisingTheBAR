@@ -43,34 +43,11 @@ namespace RaisingTheBAR.BLL.Controllers
                 BadRequest("No user found with this E-mail");
             }
 
-            var argon2 = new Argon2d(Encoding.UTF8.GetBytes(request.Password))
+            string hashedString = GenerateHash(request.Password, user.Id);
+
+            if (request.Password == hashedString && user.Role.RoleName == request.Role)
             {
-                DegreeOfParallelism = 8,
-                MemorySize = 8192,
-                Iterations = 20,
-                Salt = Encoding.UTF8.GetBytes(user.Id.ToString())
-            };
-
-            var hash = argon2.GetBytes(128);
-            var hashedSting = Convert.ToBase64String(hash);
-
-            if (request.Password == hashedSting && user.Role.RoleName == request.Role)
-            {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, request.Email),
-                    new Claim(ClaimTypes.Role, request.Role)
-                };
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                var token = new JwtSecurityToken(
-                    issuer: "RaiseTheBAR",
-                    audience: "RaiseTheBAR",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: creds);
+                var token = GenerateToken(request.Email, request.Role);
 
                 return Ok(new
                 {
@@ -80,6 +57,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return BadRequest("Could not verify username and password");
         }
+
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
@@ -98,16 +76,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var role = roleContext.FirstOrDefault(x => x.RoleName == request.Role);
 
-            var argon2 = new Argon2d(Encoding.UTF8.GetBytes(request.Password))
-            {
-                DegreeOfParallelism = 8,
-                MemorySize = 8192,
-                Iterations = 20,
-                Salt = Encoding.UTF8.GetBytes(id.ToString())
-            };
-
-            var hash = argon2.GetBytes(128);
-            var hashedString = Convert.ToBase64String(hash);
+            string hashedString = GenerateHash(request.Password, id);
 
             var newUser = new User
             {
@@ -126,27 +95,14 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Something went bad in the DB");
             }
 
-            var claims = new[]
-               {
-                    new Claim(ClaimTypes.Name, request.Email),
-                    new Claim(ClaimTypes.Role, request.Role)
-                };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: "RaiseTheBAR",
-                audience: "RaiseTheBAR",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+            var token = GenerateToken(request.Email, request.Role);
 
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult UpdateUserData([FromBody]ChangeUserRequest request)
@@ -185,5 +141,42 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             return Ok();
         }
+
+        private static string GenerateHash(string password, Guid id)
+        {
+            var argon2 = new Argon2d(Encoding.UTF8.GetBytes(password))
+            {
+                DegreeOfParallelism = 8,
+                MemorySize = 8192,
+                Iterations = 20,
+                Salt = Encoding.UTF8.GetBytes(id.ToString())
+            };
+
+            var hash = argon2.GetBytes(128);
+            var hashedString = Convert.ToBase64String(hash);
+            return hashedString;
+        }
+
+        private JwtSecurityToken GenerateToken(string email, string role)
+        {
+            var claims = new[]
+            {
+                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.Role, role)
+                };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: "RaiseTheBAR",
+                audience: "RaiseTheBAR",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+
+            return token;
+        }
+
     }
 }
