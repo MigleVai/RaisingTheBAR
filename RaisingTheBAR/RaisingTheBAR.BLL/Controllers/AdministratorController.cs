@@ -11,7 +11,7 @@ using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    [Authorize("Administrator")]
+    [Authorize(Roles = "Administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
