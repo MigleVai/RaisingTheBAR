@@ -87,7 +87,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 Password = hashedString
             };
 
-            userContext.Add(user);
+            userContext.Add(newUser);
             var result = _dbContext.SaveChanges();
 
             if (result <= 0)
