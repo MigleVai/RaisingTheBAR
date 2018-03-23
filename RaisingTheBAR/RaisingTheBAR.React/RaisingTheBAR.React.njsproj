@@ -36,7 +36,12 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
+    <Compile Include="client\src\components\ImgCarousel.jsx" />
+    <Compile Include="client\src\components\Login.jsx" />
     <Compile Include="client\src\components\MenuBar.jsx" />
+    <Compile Include="client\src\components\MyUserPanel.jsx" />
+    <Compile Include="client\src\components\SearchBar.jsx" />
+    <Compile Include="client\src\components\Signup.jsx" />
     <Compile Include="client\src\index.js" />
     <Compile Include="client\src\registerServiceWorker.js" />
     <Content Include="client\.gitignore" />
