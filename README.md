@@ -5,6 +5,7 @@
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
  * Reikalavimai
+   * [Užduotis](/INFO/SGP_uzduotis_2018.pdf)
    * [Bendri](/INFO/BendriReikalavimai.md)
    * [Kokybiniai Reikalavimai](/INFO/KokybiniaiReikalavimai.md)
  * [Layout](/INFO/Layout.md)
