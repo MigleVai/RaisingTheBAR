@@ -32,8 +32,7 @@
 * [Miglės aprašymas](INFO/MiglesAprasymas.md)
 
 ## Projekto template dokumentacija
-https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md  
-https://docs.microsoft.com/en-us/aspnet/core/spa/react-with-redux  
+https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md    
 https://docs.microsoft.com/en-us/aspnet/core/spa/react?tabs=visual-studio  
 
 
