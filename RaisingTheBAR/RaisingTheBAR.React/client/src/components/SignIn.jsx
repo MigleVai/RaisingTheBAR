@@ -1,10 +1,12 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import { Link } from 'react-router-dom';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
 import { MuiThemeProvider } from 'material-ui/styles';
 
-export default class DrawSignup extends React.Component {
+export default class SignIn extends React.Component {
     render() {
         const styles = {
             textStyle: {
@@ -18,10 +20,11 @@ export default class DrawSignup extends React.Component {
             }
         };
         return (
+
             //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
-                    <h3 style={styles.textStyle}>Signup</h3>
+                    <h3 style={styles.textStyle}>Sign In</h3>
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
                 </div>
                 <form>
@@ -36,16 +39,14 @@ export default class DrawSignup extends React.Component {
                             floatingLabelFixed={true}
                         />
                         <br />
-                        <TextField
-                            floatingLabelText="Repeat Password"
-                            floatingLabelFixed={true}
-                        />
-                        <br />
                         <RaisedButton label="Submit" primary={true} />
+                        <Link to={"/register/"}>
+                            <FlatButton label="Don't have an account?"/>
+                        </Link>
                     </MuiThemeProvider>
                 </form>
-                {/* </Jumbotron> */}
             </div>
+            //  </Jumbotron>
         );
     }
 }

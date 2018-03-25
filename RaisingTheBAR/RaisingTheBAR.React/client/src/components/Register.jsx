@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
 import { MuiThemeProvider } from 'material-ui/styles';
 
-export default class Login extends React.Component {
+export default class Register extends React.Component {
     render() {
         const styles = {
             textStyle: {
@@ -18,11 +18,10 @@ export default class Login extends React.Component {
             }
         };
         return (
-
             //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
-                    <h3 style={styles.textStyle}>Signup</h3>
+                    <h3 style={styles.textStyle}>Register</h3>
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
                 </div>
                 <form>
@@ -37,11 +36,16 @@ export default class Login extends React.Component {
                             floatingLabelFixed={true}
                         />
                         <br />
+                        <TextField
+                            floatingLabelText="Repeat Password"
+                            floatingLabelFixed={true}
+                        />
+                        <br />
                         <RaisedButton label="Submit" primary={true} />
                     </MuiThemeProvider>
                 </form>
+                {/* </Jumbotron> */}
             </div>
-            //  </Jumbotron>
         );
     }
 }
