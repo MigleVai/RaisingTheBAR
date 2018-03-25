@@ -4,7 +4,8 @@ import './App.css';
 import MenuBar from './components/MenuBar';
 import ImgCarousel from './components/ImgCarousel';
 import Login from './components/Login';
-import Signup from './components/Signup';
+// import Signup from './components/Signup';
+import ItemList from './components/ItemList';
 
 class App extends Component {
   render() {
@@ -15,7 +16,8 @@ class App extends Component {
         </header>
         {/* <ImgCarousel /> */}
         {/* <Login /> */}
-        <Signup />
+        {/* <Signup /> */}
+        <ItemList/>
       </div>
     );
   }

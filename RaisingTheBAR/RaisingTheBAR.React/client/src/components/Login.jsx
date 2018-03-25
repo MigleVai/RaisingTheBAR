@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
 import { MuiThemeProvider } from 'material-ui/styles';
 
-export default class DrawLogin extends React.Component {
+export default class Login extends React.Component {
     render() {
         const styles = {
             textStyle: {

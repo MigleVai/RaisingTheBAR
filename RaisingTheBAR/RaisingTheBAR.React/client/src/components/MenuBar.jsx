@@ -4,7 +4,6 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 
-import MyUserPanel from './MyUserPanel';
 import SearchBar from './SearchBar';
 
 import { MuiThemeProvider } from 'material-ui/styles';
@@ -52,7 +51,6 @@ export default class DrawerSimpleExample extends React.Component {
               <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
             </Drawer>
             <SearchBar />
-            <MyUserPanel/>
             </AppBar>
           </div>
         </MuiThemeProvider>
