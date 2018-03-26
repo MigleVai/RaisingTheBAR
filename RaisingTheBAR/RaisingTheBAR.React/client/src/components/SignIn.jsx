@@ -7,6 +7,18 @@ import { Link } from 'react-router-dom';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            logged: false
+        };
+      }
+
+    // reikes cia patikrint ar geri prisijungimo duomenys
+    handleLoggingChange(props) {
+        this.props.onLogging(!this.props.logged);
+    }
+
     render() {
         const styles = {
             textStyle: {
@@ -39,7 +51,7 @@ export default class SignIn extends React.Component {
                             floatingLabelFixed={true}
                         />
                         <br />
-                        <RaisedButton label="Submit" primary={true} />
+                        <RaisedButton onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
                         <Link to={"/register/"}>
                             <FlatButton label="Don't have an account?"/>
                         </Link>

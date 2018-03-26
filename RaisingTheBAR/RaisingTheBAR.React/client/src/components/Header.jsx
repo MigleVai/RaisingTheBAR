@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
+import Logged from './Logged';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 
@@ -13,12 +14,15 @@ export default class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      open: false,
+      logged: this.props.logged
+    };
   }
 
-  handleToggle = () => this.setState({ open: !this.state.open });
+  handleDrawerToggle = () => this.setState({ open: !this.state.open });
 
-  handleClose = () => this.setState({ open: false });
+  handleDrawerClose = () => this.setState({ open: false });
 
   render() {
     const styles = {
@@ -34,11 +38,11 @@ export default class Header extends React.Component {
         <MuiThemeProvider>
           <div>
             <AppBar
-              title={<span style={styles.title}>Raise the BAR</span>}
+              title={<Link to={"/"}><FlatButton label="Rasing the bar"/></Link>}
               titleStyle={styles.align}
               iconClassNameRight="muidocs-icon-navigation-expand-more"
-              onLeftIconButtonClick={this.handleToggle}
-            //iconElementRight={}
+              onLeftIconButtonClick={this.handleDrawerToggle}
+              iconElementRight={this.props.logged ? <Logged /> : <Link to={"/signin/"}><FlatButton label="Sign in" backgroundColor="Red" hoverColor="Green" /></Link>}
             >
               <Drawer
                 docked={false}
@@ -47,14 +51,11 @@ export default class Header extends React.Component {
                 onRequestChange={(open) => this.setState({ open })}
               >
                 <Link to={"/allitems/"}>
-                  <MenuItem onClick={this.handleClose}>All items</MenuItem>
+                  <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
                 </Link>
-                <MenuItem onClick={this.handleClose}>Work in progress...</MenuItem>
+                <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>
               </Drawer>
-              <SearchBar />
-              <Link to={"/signin/"}>  
-                <FlatButton  label="Sign in" backgroundColor="Red" hoverColor="Green"/>
-              </Link>
+              {/* <SearchBar /> */}
             </AppBar>
           </div>
         </MuiThemeProvider>

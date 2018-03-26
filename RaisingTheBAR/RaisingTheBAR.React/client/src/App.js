@@ -10,17 +10,28 @@ import Register from './components/Register';
 import ItemList from './components/ItemList';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logged: false
+    };
+  }
+
+  handleLogging(logged) {
+    this.setState({ 
+      logged: logged 
+    });
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
           <header> {/*className="App-header"*/}
-            <Header />
+            <Route path="/" render={(props)=><Header logged={this.state.logged}/>}/>
           </header>
           {/* <ImgCarousel /> */}
-          {/* <SignIn /> */}
-          {/* <Register /> */}
-          <Route path="/signin/" component={SignIn}/>
+          <Route path="/signin/" render={(props)=><SignIn onLogging={this.handleLogging.bind(this)}/>}/>
           <Route path="/register/" component={Register}/>  
           <Route path="/allitems/" component={ItemList}/>
         </div>
