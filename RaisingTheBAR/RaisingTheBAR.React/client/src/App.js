@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 
@@ -28,10 +28,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <header>
-            <Route path="/" render={(props) => <Header logged={this.state.logged} />} />
+            <Header logged={this.state.logged} />
           </header>
-          <Redirect from="/" to="/home" />
-          <Route path="/home" component={ImgCarousel}/>
+          <Route exact path="/" component={ImgCarousel} />
           <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
           <Route path="/register" component={Register} />
           <Route path="/allitems" component={ItemList} />

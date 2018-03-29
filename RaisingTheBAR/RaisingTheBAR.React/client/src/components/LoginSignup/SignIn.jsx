@@ -22,7 +22,7 @@ export default class SignIn extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                'text-align': 'center',
+                textAlign: 'center',
             },
             displayStyles: {
                 display: 'block',
@@ -30,7 +30,7 @@ export default class SignIn extends React.Component {
                 padding: '3%'
             },
             buttonStyle: {
-                'font-weight': 'normal'
+                fontWeight: 'normal'
             },
         };
         return (

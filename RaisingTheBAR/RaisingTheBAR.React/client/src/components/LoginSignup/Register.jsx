@@ -8,7 +8,7 @@ export default class Register extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                'text-align': 'center',
+                textAlign: 'center',
             },
             displayStyles: {
                 display: 'block',

@@ -30,7 +30,10 @@ export default class Header extends React.Component {
         cursor: 'default',
       },
       align: {
-        textAlign: 'left'
+        textAlign: 'left',
+      },
+      textStyle:{
+        textTransform: 'none'
       }
     };
     return (
@@ -38,9 +41,8 @@ export default class Header extends React.Component {
         <MuiThemeProvider>
           <div>
             <AppBar
-              title={<Link to={"/home"}><FlatButton label="Rasing the bar"/></Link>}
+              title={<Link to={"/"}><FlatButton labelStyle={styles.textStyle} label="Raising the BAR"/></Link>}
               titleStyle={styles.align}
-              iconClassNameRight="muidocs-icon-navigation-expand-more"
               onLeftIconButtonClick={this.handleDrawerToggle}
               iconElementRight={this.props.logged ? <Logged /> : <Link to={"/signin"}><FlatButton label="Sign in" backgroundColor="Red" hoverColor="Green" /></Link>}
             >
