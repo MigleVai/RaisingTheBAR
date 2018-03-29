@@ -34,9 +34,6 @@ export default class Header extends React.Component {
       textStyle:{
         textTransform: 'none',
       },
-      buttonStyle:{
-        marginTop:'8%'
-      },
       barStyle:{
         backgroundColor: '#929292'
       }
@@ -44,10 +41,11 @@ export default class Header extends React.Component {
     return (
       <MuiThemeProvider>
         <AppBar
-          title={<Link to={"/"}><FlatButton label="Raising the bar" /></Link>}
+          title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the bar" /></Link>}
           titleStyle={styles.align}
           onLeftIconButtonClick={this.handleDrawerToggle}
           iconElementRight={<UserPanel {...this.props}/>}
+          style={styles.barStyle} 
         >
           <Drawer
             docked={false}

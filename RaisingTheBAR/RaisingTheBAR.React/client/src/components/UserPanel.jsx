@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ShopppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import IconButton from 'material-ui/IconButton';
 
+
 export default class UserPanel extends React.Component {
 
     constructor(props) {
@@ -16,11 +17,22 @@ export default class UserPanel extends React.Component {
     }
 
     render() {
+        const styles =
+            {
+                labelStyle: {
+                    fontWeight: 'bold',
+                    textTransform: 'none'
+                },
+                buttonStyle: {
+                    margin: '8%',
+                }
+            }
+
         return (
-            <div style={{ display: "flex"}}>
-                <SearchBar/>
+            <div style={{ display: "flex" }}>
+                <SearchBar />
                 <Link to="/cart/" {...this.props}><IconButton><ShopppingCart /></IconButton></Link>
-                <div>{this.props.logged ? <Logged {...this.props}/> : <Link to={"/signin/"}><FlatButton label="Sign in" backgroundColor="Red" hoverColor="Green" /></Link>}</div>            
+                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin/"}><FlatButton style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );
     }

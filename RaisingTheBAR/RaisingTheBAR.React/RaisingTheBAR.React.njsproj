@@ -44,9 +44,7 @@
     <Compile Include="client\src\components\LoginSignup\Register.jsx" />
     <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
     <Compile Include="client\src\components\Payment.jsx" />
-    <Compile Include="client\src\components\Register.jsx" />
     <Compile Include="client\src\components\SearchBar.jsx" />
-    <Compile Include="client\src\components\SignIn.jsx" />
     <Compile Include="client\src\components\UserPanel.jsx" />
     <Compile Include="client\src\components\UserShoppingCart.jsx" />
     <Compile Include="client\src\index.js" />

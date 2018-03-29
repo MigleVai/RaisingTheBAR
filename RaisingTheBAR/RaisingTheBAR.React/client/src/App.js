@@ -32,12 +32,13 @@ class App extends Component {
             logged={this.state.logged} />} />
         </header>
         {/* <ImgCarousel /> */}
-        <Route path="/signin/" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
-        <Route path="/register/" component={Register} />
-        <Route path="/allitems/" component={ItemList} />
-        <Route path="/cart/" component={UserShoppingCart} />
-        <Route path="/payment/" {...this.props} render={(props) => (
-          !this.state.logged ? <Redirect to="/signin/" /> : <Payment {...this.props} {...props} />)} />
+        <Route exact path="/" component={ImgCarousel} /> 
+        <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
+        <Route path="/register" component={Register} />
+        <Route path="/allitems" component={ItemList} />
+        <Route path="/cart" component={UserShoppingCart} />
+        <Route path="/payment" {...this.props} render={(props) => (
+          !this.state.logged ? <Redirect to="/signin" /> : <Payment {...this.props} {...props} />)} />
       </div>
     );
   }
