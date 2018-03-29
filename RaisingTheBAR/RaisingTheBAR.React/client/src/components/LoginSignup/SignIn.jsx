@@ -36,7 +36,7 @@ export default class SignIn extends React.Component {
             buttonStyle: {
                 backgroundColor: '#929292',
             },
-            flatButStyle:{
+            flatButStyle: {
                 margin: '2%'
             }
         };
@@ -49,24 +49,22 @@ export default class SignIn extends React.Component {
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
                 </div>
                 <form>
-                    <MuiThemeProvider>
-                        <TextField
-                            floatingLabelText="Email"
-                            floatingLabelFixed={true}
-                        />
-                        <br />
-                        <TextField
-                            floatingLabelText="Password"
-                            floatingLabelFixed={true}
-                        />
-                        <br />
-                        <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
-                        <div>
-                            <Link to={"/register/"}>
-                                <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Don't have an account?" />
-                            </Link>
-                        </div>
-                    </MuiThemeProvider>
+                    <TextField
+                        floatingLabelText="Email"
+                        floatingLabelFixed={true}
+                    />
+                    <br />
+                    <TextField
+                        floatingLabelText="Password"
+                        floatingLabelFixed={true}
+                    />
+                    <br />
+                    <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
+                    <div>
+                        <Link to={"/register/"}>
+                            <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Don't have an account?" />
+                        </Link>
+                    </div>
                 </form>
             </div>
             //  </Jumbotron>

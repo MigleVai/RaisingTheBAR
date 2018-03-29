@@ -11,7 +11,7 @@ export default class SimpleSlider extends React.Component {
         products: []
     }
     componentDidMount() {
-        axios.get(`http://localhost:65324/api/Product/GetAllProducts`)
+        axios.get(`http://localhost:65432/api/Product/GetAllProducts`)
             .then(res => {
                 const products = res.data;
                 this.setState({ products });
@@ -26,7 +26,7 @@ export default class SimpleSlider extends React.Component {
         //     };
         //   }
 
-        const collumns =  window.innerWidth <= 500 ? 2 : 4;
+        const collumns = window.innerWidth <= 500 ? 2 : 4;
 
         const styles = {
             root: {
@@ -38,39 +38,37 @@ export default class SimpleSlider extends React.Component {
                 margin: 'auto',
                 overflowY: 'auto',
             },
-            subtitleStyle:{
+            subtitleStyle: {
                 fontWeight: 'bold'
             }
         };
-        
+
         return (
             <div>
-                <MuiThemeProvider>
-                    <div style={styles.root}>
-                      <Filter/> 
-                        <GridList
-                            cols={collumns}
-                            cellHeight={200}
-                            padding={6}
-                            style={styles.gridList}
-                        >
-                            {this.state.products.map((product) => (
-                                <GridTile
-                                    key={product.id}
-                                    title={product.name}
-                                    subtitle={product.price + " €"}
-                                    subtitleStyle = {styles.subtitleStyle}
-                                    actionPosition="left"
-                                    titlePosition="bottom"
-                                    cols={product.featured ? 2 : 1}
-                                    rows={product.featured ? 2 : 1}
-                                >
+                <div style={styles.root}>
+                    <Filter />
+                    <GridList
+                        cols={collumns}
+                        cellHeight={200}
+                        padding={6}
+                        style={styles.gridList}
+                    >
+                        {this.state.products.map((product) => (
+                            <GridTile
+                                key={product.id}
+                                title={product.name}
+                                subtitle={product.price + " €"}
+                                subtitleStyle={styles.subtitleStyle}
+                                actionPosition="left"
+                                titlePosition="bottom"
+                                cols={product.featured ? 2 : 1}
+                                rows={product.featured ? 2 : 1}
+                            >
                                 <img key={product.id} alt="" src={(product.image)} />
-                                </GridTile>
-                            ))}
-                        </GridList>
-                    </div>
-                </MuiThemeProvider>
+                            </GridTile>
+                        ))}
+                    </GridList>
+                </div>
             </div>
         )
     }

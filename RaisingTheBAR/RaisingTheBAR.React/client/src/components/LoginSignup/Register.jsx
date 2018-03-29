@@ -27,27 +27,25 @@ export default class Register extends React.Component {
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
                 </div>
                 <form>
-                    <MuiThemeProvider>
-                        <TextField
-                            floatingLabelText="Email"
-                            floatingLabelFixed={true}
-                            style={styles.textFieldSytle}
-                        />
-                        <br />
-                        <TextField
-                            floatingLabelText="Password"
-                            floatingLabelFixed={true}
-                            style={styles.textFieldSytle}
-                        />
-                        <br />
-                        <TextField
-                            floatingLabelText="Repeat Password"
-                            floatingLabelFixed={true}
-                            style={styles.textFieldSytle}
-                        />
-                        <br />
-                        <RaisedButton buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
-                    </MuiThemeProvider>
+                    <TextField
+                        floatingLabelText="Email"
+                        floatingLabelFixed={true}
+                        style={styles.textFieldSytle}
+                    />
+                    <br />
+                    <TextField
+                        floatingLabelText="Password"
+                        floatingLabelFixed={true}
+                        style={styles.textFieldSytle}
+                    />
+                    <br />
+                    <TextField
+                        floatingLabelText="Repeat Password"
+                        floatingLabelFixed={true}
+                        style={styles.textFieldSytle}
+                    />
+                    <br />
+                    <RaisedButton buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
                 </form>
                 {/* </Jumbotron> */}
             </div>
