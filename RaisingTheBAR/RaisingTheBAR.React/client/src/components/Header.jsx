@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 import UserPanel from './UserPanel';
 
-import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class Header extends React.Component {
 

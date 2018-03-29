@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
-import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class SignIn extends React.Component {
     constructor(props) {

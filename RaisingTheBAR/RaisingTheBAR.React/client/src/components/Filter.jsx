@@ -1,6 +1,5 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
-import RaisedButton from 'material-ui/RaisedButton';
 import MaterialIcon from 'material-icons-react';
 
 export default class Filter extends React.Component {

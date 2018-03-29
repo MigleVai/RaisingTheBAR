@@ -1,17 +1,14 @@
 import React from 'react';
 import { GridList, GridTile } from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
 import Filter from './Filter';
-import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class SimpleSlider extends React.Component {
     state = {
         products: []
     }
     componentDidMount() {
-        axios.get(`http://localhost:65432/api/Product/GetAllProducts`)
+        axios.get(`/api/Product/GetAllProducts`)
             .then(res => {
                 const products = res.data;
                 this.setState({ products });
