@@ -5,8 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 
-import SearchBar from './SearchBar';
-import Logged from './Logged';
+import UserPanel from './UserPanel';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 
@@ -43,33 +42,26 @@ export default class Header extends React.Component {
       }
     };
     return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-            <AppBar
-              title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR"/></Link>}
-              titleStyle={styles.align}
-              onLeftIconButtonClick={this.handleDrawerToggle}
-              iconElementRight={this.props.logged ? <Logged /> : <Link to={"/signin"}><FlatButton style={styles.buttonStyle} label="Sign in" /></Link>}
-              style={styles.barStyle}
-            >
-            <SearchBar />
-              <Drawer
-                docked={false}
-                width={200}
-                open={this.state.open}
-                onRequestChange={(open) => this.setState({ open })}
-              >
-                <Link to={"/allitems"}>
-                  <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
-                </Link>
-                <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>
-              </Drawer>
-              {/* <SearchBar /> */}
-            </AppBar>
-          </div>
-        </MuiThemeProvider>
-      </div>
+      <MuiThemeProvider>
+        <AppBar
+          title={<Link to={"/"}><FlatButton label="Raising the bar" /></Link>}
+          titleStyle={styles.align}
+          onLeftIconButtonClick={this.handleDrawerToggle}
+          iconElementRight={<UserPanel {...this.props}/>}
+        >
+          <Drawer
+            docked={false}
+            width={200}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({ open })}
+          >
+            <Link to={"/allitems/"}>
+              <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
+            </Link>
+            <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>
+          </Drawer>
+        </AppBar>
+      </MuiThemeProvider>
     );
   }
 }
