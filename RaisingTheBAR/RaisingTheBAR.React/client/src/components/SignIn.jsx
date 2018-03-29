@@ -3,7 +3,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
-//import Jumbotron from 'bootstrap/scss/Jumbotron';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class SignIn extends React.Component {
@@ -22,18 +21,15 @@ export default class SignIn extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                'text-align': 'left',
+                'text-align': 'center',
             },
             displayStyles: {
-                width: '30%',
                 display: 'block',
                 margin: 'auto',
-                padding: '5%'
+                padding: '3%'
             }
         };
         return (
-
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
                     <h3 style={styles.textStyle}>Sign In</h3>
@@ -52,13 +48,13 @@ export default class SignIn extends React.Component {
                         />
                         <br />
                         <RaisedButton onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
+                        <br/>
                         <Link to={"/register/"}>
                             <FlatButton label="Don't have an account?"/>
                         </Link>
                     </MuiThemeProvider>
                 </form>
             </div>
-            //  </Jumbotron>
         );
     }
 }

@@ -71,7 +71,7 @@ const ItemList = () => (
                             cols={tile.featured ? 2 : 1}
                             rows={tile.featured ? 2 : 1}
                         >
-                            <img src={"data:image/jpeg;" + (tile.img) }/>
+                            <img alt="" src={"data:image/jpeg;" + (tile.img) }/>
                         </GridTile>
                     ))}
                 </GridList>

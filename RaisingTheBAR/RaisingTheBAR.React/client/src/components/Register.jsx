@@ -1,24 +1,21 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-//import Jumbotron from 'bootstrap/scss/Jumbotron';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class Register extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                'text-align': 'left',
+                'text-align': 'center',
             },
             displayStyles: {
-                width: '30%',
                 display: 'block',
                 margin: 'auto',
-                padding: '5%'
+                padding: '3%'
             }
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
                     <h3 style={styles.textStyle}>Register</h3>
@@ -44,7 +41,6 @@ export default class Register extends React.Component {
                         <RaisedButton label="Submit" primary={true} />
                     </MuiThemeProvider>
                 </form>
-                {/* </Jumbotron> */}
             </div>
         );
     }
