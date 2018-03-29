@@ -29,9 +29,16 @@ export default class SignIn extends React.Component {
                 margin: 'auto',
                 padding: '3%'
             },
-            buttonStyle: {
-                fontWeight: 'normal'
+            labelStyle: {
+                fontWeight: 'normal',
+                textTransform: 'none'
             },
+            buttonStyle: {
+                backgroundColor: '#929292',
+            },
+            flatButStyle:{
+                margin: '2%'
+            }
         };
         return (
 
@@ -46,19 +53,17 @@ export default class SignIn extends React.Component {
                         <TextField
                             floatingLabelText="Email"
                             floatingLabelFixed={true}
-                            style={styles.textFieldSytle}
                         />
                         <br />
                         <TextField
                             floatingLabelText="Password"
                             floatingLabelFixed={true}
-                            style={styles.textFieldSytle}
                         />
                         <br />
-                        <RaisedButton onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
-                        <div style={styles.registerStyle}>
+                        <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
+                        <div>
                             <Link to={"/register/"}>
-                                <FlatButton labelStyle={styles.buttonStyle} label="Don't have an account?" />
+                                <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Don't have an account?" />
                             </Link>
                         </div>
                     </MuiThemeProvider>

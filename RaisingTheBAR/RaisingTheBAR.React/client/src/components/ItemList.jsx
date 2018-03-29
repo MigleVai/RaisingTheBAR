@@ -3,6 +3,7 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
+import Filter from './Filter';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 export default class SimpleSlider extends React.Component {
@@ -17,6 +18,14 @@ export default class SimpleSlider extends React.Component {
             })
     }
     render() {
+        // constructor(props) {
+        //     super(props);
+        //     this.handleChange = this.handleChange.bind(this);
+        //     this.state = {
+        //       blogPost: DataSource.getBlogPost(props.id)
+        //     };
+        //   }
+
         const collumns =  window.innerWidth <= 500 ? 2 : 4;
 
         const styles = {
@@ -38,6 +47,7 @@ export default class SimpleSlider extends React.Component {
             <div>
                 <MuiThemeProvider>
                     <div style={styles.root}>
+                      <Filter/> 
                         <GridList
                             cols={collumns}
                             cellHeight={200}

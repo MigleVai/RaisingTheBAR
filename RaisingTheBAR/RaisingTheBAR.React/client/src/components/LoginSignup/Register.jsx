@@ -15,6 +15,9 @@ export default class Register extends React.Component {
                 margin: 'auto',
                 padding: '3%'
             },
+            buttonStyle: {
+                backgroundColor: '#929292'
+            }
         };
         return (
             //  <Jumbotron>
@@ -43,7 +46,7 @@ export default class Register extends React.Component {
                             style={styles.textFieldSytle}
                         />
                         <br />
-                        <RaisedButton label="Submit" primary={true} />
+                        <RaisedButton buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
                     </MuiThemeProvider>
                 </form>
                 {/* </Jumbotron> */}
