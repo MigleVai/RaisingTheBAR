@@ -31,8 +31,4 @@
     <ProjectReference Include="..\RaisingTheBAR.DAL\RaisingTheBAR.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ResponseModels\" />
-  </ItemGroup>
-
 </Project>
