@@ -38,11 +38,11 @@ export default class Header extends React.Component {
         <MuiThemeProvider>
           <div>
             <AppBar
-              title={<Link to={"/"}><FlatButton label="Rasing the bar"/></Link>}
+              title={<Link to={"/home"}><FlatButton label="Rasing the bar"/></Link>}
               titleStyle={styles.align}
               iconClassNameRight="muidocs-icon-navigation-expand-more"
               onLeftIconButtonClick={this.handleDrawerToggle}
-              iconElementRight={this.props.logged ? <Logged /> : <Link to={"/signin/"}><FlatButton label="Sign in" backgroundColor="Red" hoverColor="Green" /></Link>}
+              iconElementRight={this.props.logged ? <Logged /> : <Link to={"/signin"}><FlatButton label="Sign in" backgroundColor="Red" hoverColor="Green" /></Link>}
             >
               <Drawer
                 docked={false}
@@ -50,7 +50,7 @@ export default class Header extends React.Component {
                 open={this.state.open}
                 onRequestChange={(open) => this.setState({ open })}
               >
-                <Link to={"/allitems/"}>
+                <Link to={"/allitems"}>
                   <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
                 </Link>
                 <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 
 import Header from './components/Header';
 import ImgCarousel from './components/ImgCarousel';
-import SignIn from './components/SignIn';
-import Register from './components/Register';
+import SignIn from './components/LoginSignup/SignIn';
+import Register from './components/LoginSignup/Register';
 import ItemList from './components/ItemList';
 
 class App extends Component {
@@ -18,8 +18,8 @@ class App extends Component {
   }
 
   handleLogging(logged) {
-    this.setState({ 
-      logged: logged 
+    this.setState({
+      logged: logged
     });
   }
 
@@ -27,13 +27,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <header> {/*className="App-header"*/}
-            <Route path="/" render={(props)=><Header logged={this.state.logged}/>}/>
+          <header>
+            <Route path="/" render={(props) => <Header logged={this.state.logged} />} />
           </header>
-          {/* <ImgCarousel /> */}
-          <Route path="/signin/" render={(props)=><SignIn onLogging={this.handleLogging.bind(this)}/>}/>
-          <Route path="/register/" component={Register}/>  
-          <Route path="/allitems/" component={ItemList}/>
+          <Redirect from="/" to="/home" />
+          <Route path="/home" component={ImgCarousel}/>
+          <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
+          <Route path="/register" component={Register} />
+          <Route path="/allitems" component={ItemList} />
         </div>
       </Router>
     );
