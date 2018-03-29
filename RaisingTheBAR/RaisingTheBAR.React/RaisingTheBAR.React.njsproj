@@ -36,12 +36,19 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
+    <Compile Include="client\src\components\Filter.jsx" />
+    <Compile Include="client\src\components\Header.jsx" />
     <Compile Include="client\src\components\ImgCarousel.jsx" />
-    <Compile Include="client\src\components\Login.jsx" />
-    <Compile Include="client\src\components\MenuBar.jsx" />
-    <Compile Include="client\src\components\MyUserPanel.jsx" />
+    <Compile Include="client\src\components\ItemList.jsx" />
+    <Compile Include="client\src\components\Logged.jsx" />
+    <Compile Include="client\src\components\LoginSignup\Register.jsx" />
+    <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
+    <Compile Include="client\src\components\Payment.jsx" />
+    <Compile Include="client\src\components\Register.jsx" />
     <Compile Include="client\src\components\SearchBar.jsx" />
-    <Compile Include="client\src\components\Signup.jsx" />
+    <Compile Include="client\src\components\SignIn.jsx" />
+    <Compile Include="client\src\components\UserPanel.jsx" />
+    <Compile Include="client\src\components\UserShoppingCart.jsx" />
     <Compile Include="client\src\index.js" />
     <Compile Include="client\src\registerServiceWorker.js" />
     <Content Include="client\.gitignore" />
@@ -62,6 +69,7 @@
     <Folder Include="client\public\" />
     <Folder Include="client\src\" />
     <Folder Include="client\src\components\" />
+    <Folder Include="client\src\components\LoginSignup\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
