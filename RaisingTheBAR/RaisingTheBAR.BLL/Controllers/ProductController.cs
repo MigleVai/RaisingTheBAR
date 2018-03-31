@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
 
@@ -47,7 +48,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             };
         }
-        [HttpGet("[action]")]
+        [HttpGet("[Action]")]
         public IActionResult GetAllProducts()
         {
             return Ok(products);
@@ -87,6 +88,31 @@ namespace RaisingTheBAR.BLL.Controllers
                 .ToList();
 
             return Ok(products);
+        }
+        [Authorize(Roles = "Administrator")]
+        [HttpPost("[Action]")]
+        public IActionResult AddProduct([FromBody]ProductAddRequest request)
+        {
+            var product = new Product()
+            {
+                Description = request.Description,
+                DisplayName = request.DisplayName,
+                ImageUri = request.Image,
+                Price = request.Price
+            };
+
+            var productContext = _dbContext.Set<Product>();
+
+            productContext.Add(product);
+
+            var result = _dbContext.SaveChanges();
+
+            if(result > 0)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nothing changed in database");
         }
     }
 }
