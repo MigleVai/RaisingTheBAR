@@ -6,9 +6,10 @@ import Header from './components/Header';
 import ImgCarousel from './components/ImgCarousel';
 import SignIn from './components/LoginSignup/SignIn';
 import Register from './components/LoginSignup/Register';
-import ItemList from './components/ItemList';
+import ItemList from './components/IDK if this will be used still/ItemList';
 import UserShoppingCart from './components/UserShoppingCart';
-import Payment from './components/Payment'
+import Payment from './components/Payment';
+import ItemPage from './components/ItemPage';
 
 class App extends Component {
   constructor(props) {
@@ -34,7 +35,8 @@ class App extends Component {
         <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
         <Route path="/register" render={(props) => <Register onLogging={this.handleLogging.bind(this)} />} />
-        <Route path="/allitems" component={ItemList} />
+        <Route path="/allitems" component={ItemPage} />
+        {/* <Route path="/itempage" component={ItemPage}/> */}
         <Route path="/cart" component={UserShoppingCart} />
         <Route path="/payment" {...this.props} render={(props) => (
           !this.state.logged ? <Redirect to="/signin" /> : <Payment {...this.props} {...props} />)} />

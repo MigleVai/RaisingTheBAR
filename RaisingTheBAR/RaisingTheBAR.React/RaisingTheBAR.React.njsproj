@@ -36,10 +36,11 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
-    <Compile Include="client\src\components\Filter.jsx" />
     <Compile Include="client\src\components\Header.jsx" />
+    <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
+    <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
     <Compile Include="client\src\components\ImgCarousel.jsx" />
-    <Compile Include="client\src\components\ItemList.jsx" />
+    <Compile Include="client\src\components\ItemPage.jsx" />
     <Compile Include="client\src\components\Logged.jsx" />
     <Compile Include="client\src\components\LoginSignup\Register.jsx" />
     <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
@@ -67,6 +68,7 @@
     <Folder Include="client\public\" />
     <Folder Include="client\src\" />
     <Folder Include="client\src\components\" />
+    <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\src\components\LoginSignup\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
