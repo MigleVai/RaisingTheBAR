@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.BLL.Models.ResponseModels;
+using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -10,9 +13,12 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/Product")]
     public class ProductController : Controller
     {
+        DbContext _dbContext;
         List<ProductResponse> products;
-        public ProductController()
+        public ProductController(DbContext dbContext)
         {
+            _dbContext = dbContext;
+
             products = new List<ProductResponse>()
             {
                 new ProductResponse
@@ -41,10 +47,45 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             };
         }
-        [Authorize]
         [HttpGet("[action]")]
         public IActionResult GetAllProducts()
         {
+            return Ok(products);
+        }
+        [HttpGet("[action]")]
+        public IActionResult GetProducts()
+        {
+            var productContext = _dbContext.Set<Product>();
+
+            var products = productContext
+                .Select(y => new ProductResponse
+                {
+                    Featured = false,
+                    Id = y.Id.ToString(),
+                    Image = y.ImageUri,
+                    Name = y.DisplayName,
+                    Price = y.Price
+                })
+                .ToList();
+
+            return Ok(products);
+        }
+        [HttpGet("[action]")]
+        public IActionResult GetProductsByCategories(string categoryId)
+        {
+            var pcContext = _dbContext.Set<ProductCategory>();
+
+            var products = pcContext.Where(x => x.CategoryId == Guid.Parse(categoryId))
+                .Select(y => new ProductResponse
+                {
+                    Featured = false,
+                    Id = y.Product.Id.ToString(),
+                    Image = y.Product.ImageUri,
+                    Name = y.Product.DisplayName,
+                    Price = y.Product.Price
+                })
+                .ToList();
+
             return Ok(products);
         }
     }
