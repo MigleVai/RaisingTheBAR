@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import './App.css';
 
-import Header from './components/Header';
+import Header from './components/NavBar/Header';
 import ImgCarousel from './components/ImgCarousel';
 import SignIn from './components/LoginSignup/SignIn';
 import Register from './components/LoginSignup/Register';
 import ItemList from './components/IDK if this will be used still/ItemList';
-import UserShoppingCart from './components/UserShoppingCart';
+import UserShoppingCart from './components/NavBar/UserShoppingCart';
 import Payment from './components/Payment';
 import ItemPage from './components/ItemPage';
 

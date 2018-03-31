@@ -42,7 +42,7 @@ export default class SignIn extends React.Component {
         this.setState({ password: event.target.value });
     }
     handleEmailChange(event) {
-        this.setState({ email: event.target.value });
+        this.setState({ email: event.target.value }); // turi buti visada arba neatsiras raides rasant
     }
     render() {
         const styles = {
@@ -90,7 +90,7 @@ export default class SignIn extends React.Component {
                     <br />
                     <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
                     <div>
-                        <Link to={"/register/"}>
+                        <Link to={"/register"}>
                             <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Don't have an account?" />
                         </Link>
                     </div>
