@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 
@@ -40,6 +41,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             };
         }
+        [Authorize]
         [HttpGet("[action]")]
         public IActionResult GetAllProducts()
         {

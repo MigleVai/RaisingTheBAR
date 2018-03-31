@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
     <Compile Remove="wwwroot\**" />
-    <Content Remove="NewFolder\**" />
     <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="NewFolder\**" />
     <None Remove="wwwroot\**" />
   </ItemGroup>
 

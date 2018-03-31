@@ -35,17 +35,17 @@ namespace RaisingTheBAR.BLL.Controllers
         [Route("[action]")]
         public IActionResult RequestToken([FromBody]TokenRequest request)
         {
-            var userContext = _dbContext.Set<User>().Include("Roles");
+            var userContext = _dbContext.Set<User>().Include(role => role.Role);
             var user = userContext.FirstOrDefault(x => x.Email == request.Email);
 
             if (user == null)
             {
-                BadRequest("No user found with this E-mail");
+                return BadRequest("No user found with this E-mail");
             }
 
             string hashedString = GenerateHash(request.Password, user.Id);
 
-            if (request.Password == hashedString && user.Role.RoleName == request.Role)
+            if (user.Password == hashedString && user.Role.RoleName == request.Role)
             {
                 var token = GenerateToken(request.Email, request.Role);
 

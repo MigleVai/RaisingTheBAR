@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using RaisingTheBAR.DAL.Generation;
 
 namespace RaisingTheBAR.DAL
 {
@@ -14,7 +15,7 @@ namespace RaisingTheBAR.DAL
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args).SeedData().Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
