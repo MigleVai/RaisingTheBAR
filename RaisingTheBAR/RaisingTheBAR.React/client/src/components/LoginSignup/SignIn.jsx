@@ -3,21 +3,47 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
 
 export default class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            logged: false
+            logged: false,
+            email: '',
+            password: '',
+            role: 'user'
         };
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+
     }
 
     // reikes cia patikrint ar geri prisijungimo duomenys
     handleLoggingChange(props) {
-        this.props.onLogging(!this.props.logged);
+        axios.post(`/api/User/RequestToken`,
+            {
+                Email: this.state.email,
+                Password : this.state.password,
+                Role : this.state.role,
+            })
+            .then(res => {
+                const result = res.data;
+                localStorage.setItem('jwtToken', result.token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
+                this.props.onLogging(true);
+            })
+            .catch(function (error) {
+                // show error
+            });
     }
-
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value });
+    }
     render() {
         const styles = {
             textStyle: {
@@ -49,11 +75,15 @@ export default class SignIn extends React.Component {
                 </div>
                 <form>
                     <TextField
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
                         floatingLabelText="Email"
                         floatingLabelFixed={true}
                     />
                     <br />
                     <TextField
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange}
                         floatingLabelText="Password"
                         floatingLabelFixed={true}
                     />

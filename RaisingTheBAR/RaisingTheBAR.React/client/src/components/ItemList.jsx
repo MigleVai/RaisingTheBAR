@@ -13,6 +13,9 @@ export default class SimpleSlider extends React.Component {
                 const products = res.data;
                 this.setState({ products });
             })
+            .catch(function (error) {
+                // show error
+            });
     }
     render() {
         // constructor(props) {

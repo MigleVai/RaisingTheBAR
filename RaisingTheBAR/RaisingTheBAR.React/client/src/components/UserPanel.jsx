@@ -31,8 +31,8 @@ export default class UserPanel extends React.Component {
         return (
             <div style={{ display: "flex" }}>
                 <SearchBar />
-                <Link to="/cart/" {...this.props}><IconButton><ShopppingCart /></IconButton></Link>
-                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin/"}><FlatButton style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
+                <Link to="/cart" {...this.props}><IconButton><ShopppingCart /></IconButton></Link>
+                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin"}><FlatButton style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );
     }

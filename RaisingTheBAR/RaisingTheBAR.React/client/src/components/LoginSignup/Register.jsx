@@ -1,9 +1,46 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
 //import Jumbotron from 'bootstrap/scss/Jumbotron';
 
 export default class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            logged: false,
+            email: '',
+            password: '',
+            role: 'user'
+        };
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        // this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+    }
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value });
+    }
+    handleLoggingChange(props) {
+        console.log(this.state);
+        axios.post(`/api/User/RegisterUser`,
+            {
+                Email: this.state.email,
+                Password: this.state.password,
+                Role: this.state.role,
+            })
+            .then(res => {
+                const result = res.data;
+                localStorage.setItem('jwtToken', result.token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
+                this.props.onLogging(true);
+            })
+            .catch(function (error) {
+                // show error
+            });
+    }
     render() {
         const styles = {
             textStyle: {
@@ -27,12 +64,16 @@ export default class Register extends React.Component {
                 </div>
                 <form>
                     <TextField
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
                         floatingLabelText="Email"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
                     />
                     <br />
                     <TextField
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange}
                         floatingLabelText="Password"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
@@ -44,7 +85,7 @@ export default class Register extends React.Component {
                         style={styles.textFieldSytle}
                     />
                     <br />
-                    <RaisedButton buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
+                    <RaisedButton onClick={this.handleLoggingChange.bind(this)} buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
                 </form>
                 {/* </Jumbotron> */}
             </div>

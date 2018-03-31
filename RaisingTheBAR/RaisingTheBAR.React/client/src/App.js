@@ -27,14 +27,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header> {/*className="App-header"*/}
+        <header>
           <Route path="/" render={(props) => <Header onLogging={this.handleLogging.bind(this)}
             logged={this.state.logged} />} />
         </header>
-        {/* <ImgCarousel /> */}
         <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
-        <Route path="/register" component={Register} />
+        <Route path="/register" render={(props) => <Register onLogging={this.handleLogging.bind(this)} />} />
         <Route path="/allitems" component={ItemList} />
         <Route path="/cart" component={UserShoppingCart} />
         <Route path="/payment" {...this.props} render={(props) => (
