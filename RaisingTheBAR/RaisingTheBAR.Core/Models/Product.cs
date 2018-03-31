@@ -4,6 +4,7 @@ namespace RaisingTheBAR.Core.Models
 {
     public class Product : Base
     {
+        public string Model { get; set; }
         public string DisplayName { get; set; }
         public string ImageUri { get; set; }
         public string Description { get; set; }
