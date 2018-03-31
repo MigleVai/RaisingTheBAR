@@ -4,6 +4,7 @@ import axios from 'axios';
 import "react-table/react-table.css";
 import IconButton from 'material-ui/IconButton';
 import AddShopppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+import {Link} from 'react-router-dom';
 
 export default class ItemPage extends React.Component {
     state = {
@@ -13,7 +14,6 @@ export default class ItemPage extends React.Component {
         axios.get(`/api/Product/GetAllProducts`)
             .then(res => {
                 const products = res.data;
-                console.log(products);
                 this.setState({ products });
             })
             .catch(function (error) {
@@ -23,9 +23,13 @@ export default class ItemPage extends React.Component {
 
     render() {
         const styles = {
-            tdStyles:{
+            tdStyles: {
                 margin: 'auto',
-            }
+            },
+            h6Styles:{
+                float: 'left',
+                paddingLeft: '5%'
+            },
         };
         const data = this.state.products;
 
@@ -33,12 +37,14 @@ export default class ItemPage extends React.Component {
             {
                 Header: 'Name',
                 accessor: 'name',
-                style: styles.tdStyles
+                style: styles.tdStyles,
+                resizable: false
             }, {
                 Header: 'Price',
                 accessor: 'price',
                 style: styles.tdStyles,
-                maxWidth: 200
+                maxWidth: 200,
+                resizable: false                
             },
             {
                 Header: "Status",
@@ -47,17 +53,28 @@ export default class ItemPage extends React.Component {
                 },
                 id: "id",
                 sortable: false,
-                maxWidth: 100
+                maxWidth: 100,
+                resizable: false                
             }
         ];
 
+        var pathNames = this.props.location.pathname.replace("/", " || ").slice(0,-1);
+        var path = pathNames.replace(new RegExp("/", "g"), " > ");
+        const home = "Home";
+
         return (
-            < ReactTable
-                data={data}
-                columns={columns}
-                defaultPageSize={10}
-                className="-striped -highlight"
-            />
+            <div>
+                <div>
+                    <h5 style={styles.h6Styles}><Link to={"/"}>{home}</Link>{path}</h5>
+                </div>
+                < ReactTable
+                    data={data}
+                    columns={columns}
+                    defaultPageSize={10}
+                    className="-striped -highlight"
+                    style={{display:'initial'}}
+                />
+            </div>
         )
     }
 }
