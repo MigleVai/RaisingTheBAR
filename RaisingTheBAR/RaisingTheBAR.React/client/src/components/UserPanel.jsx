@@ -24,15 +24,18 @@ export default class UserPanel extends React.Component {
                     textTransform: 'none'
                 },
                 buttonStyle: {
-                    margin: '8%',
-                }
+                    marginTop: '8%',
+                },
+                displayStyle:{
+                    display:'inline-flex'
+                },
             }
 
         return (
-            <div style={{ display: "flex" }}>
+            <div style={styles.displayStyle}>
                 <SearchBar />
                 <Link to="/cart" {...this.props}><IconButton><ShopppingCart /></IconButton></Link>
-                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin"}><FlatButton style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
+                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin"}><FlatButton id="SigninButton" style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );
     }

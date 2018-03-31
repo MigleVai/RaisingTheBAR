@@ -1,27 +1,35 @@
-import React from 'react';
-import Drawer from 'material-ui/Drawer';
-import MaterialIcon from 'material-icons-react';
+// import React from 'react';
+// import Drawer from 'material-ui/Drawer';
+// import MenuItem from 'material-ui/MenuItem';
+// import MaterialIcon from 'material-icons-react';
 
-export default class Filter extends React.Component {
+// export default class Filter extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = { open: false };
+//     }
 
-    constructor(props) {
-        super(props);
-        this.state = { open: false };
-    }
+//     handleToggle = () => this.setState({ open: !this.state.open });
 
-    handleToggle = () => this.setState({ open: !this.state.open });
+//     handleClose = () => this.setState({ open: false });
 
-    render() {
-        return (
-            <div>
-                <MaterialIcon
-                    icon="filter_list"
-                    onClick={this.handleToggle}
-                />
-                <Drawer width={200} openSecondary={true} open={this.state.open} >
-                    <h3>Filter</h3>
-                </Drawer>
-            </div>
-        );
-    }
-}
+//     render() {
+//         return (
+//             <div>
+//                 <MaterialIcon
+//                     icon="filter_list"
+//                     onClick={this.handleToggle}
+//                 />
+//                 <Drawer
+//                     docked={false}
+//                     width={200}
+//                     open={this.state.open}
+//                     onRequestChange={(open) => this.setState({ open })}
+//                 >
+//                     <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
+//                     <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+//                 </Drawer>
+//             </div>
+//         );
+//     }
+// }

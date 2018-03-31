@@ -18,14 +18,6 @@ export default class SimpleSlider extends React.Component {
             });
     }
     render() {
-        // constructor(props) {
-        //     super(props);
-        //     this.handleChange = this.handleChange.bind(this);
-        //     this.state = {
-        //       blogPost: DataSource.getBlogPost(props.id)
-        //     };
-        //   }
-
         const collumns = window.innerWidth <= 500 ? 2 : 4;
 
         const styles = {
@@ -40,13 +32,16 @@ export default class SimpleSlider extends React.Component {
             },
             subtitleStyle: {
                 fontWeight: 'bold'
+            },
+            filterStyle:{
+                margin:'auto'
             }
         };
 
         return (
             <div>
+                {/* <Filter data={this.state.open}/> */}
                 <div style={styles.root}>
-                    <Filter />
                     <GridList
                         cols={collumns}
                         cellHeight={200}
