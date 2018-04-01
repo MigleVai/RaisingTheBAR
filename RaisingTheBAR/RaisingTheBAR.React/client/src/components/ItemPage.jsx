@@ -4,7 +4,8 @@ import axios from 'axios';
 import "react-table/react-table.css";
 import IconButton from 'material-ui/IconButton';
 import AddShopppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import matchSorter from 'match-sorter';
 
 export default class ItemPage extends React.Component {
     state = {
@@ -26,7 +27,7 @@ export default class ItemPage extends React.Component {
             tdStyles: {
                 margin: 'auto',
             },
-            h6Styles:{
+            h6Styles: {
                 float: 'left',
                 paddingLeft: '5%'
             },
@@ -38,13 +39,19 @@ export default class ItemPage extends React.Component {
                 Header: 'Name',
                 accessor: 'name',
                 style: styles.tdStyles,
-                resizable: false
+                resizable: false,
+                filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ['name'] }),
+                filterAll: true
             }, {
                 Header: 'Price',
                 accessor: 'price',
                 style: styles.tdStyles,
                 maxWidth: 200,
-                resizable: false                
+                resizable: false,
+                filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ['price'] }),
+                filterAll: true
             },
             {
                 Header: "Status",
@@ -53,12 +60,13 @@ export default class ItemPage extends React.Component {
                 },
                 id: "id",
                 sortable: false,
+                filterable: false,
                 maxWidth: 100,
-                resizable: false                
+                resizable: false
             }
         ];
 
-        var pathNames = this.props.location.pathname.replace("/", " || ").slice(0,-1);
+        var pathNames = this.props.location.pathname.replace("/", " || ").slice(0, -1);
         var path = pathNames.replace(new RegExp("/", "g"), " > ");
         const home = "Home";
 
@@ -72,7 +80,10 @@ export default class ItemPage extends React.Component {
                     columns={columns}
                     defaultPageSize={10}
                     className="-striped -highlight"
-                    style={{display:'initial'}}
+                    style={{ display: 'contents' }}
+                    filterable
+                    defaultFilterMethod={(filter, row) =>
+                        String(row[filter.id]) === filter.value}
                 />
             </div>
         )

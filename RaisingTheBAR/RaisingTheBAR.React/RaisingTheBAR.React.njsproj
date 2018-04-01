@@ -44,6 +44,11 @@
     <Compile Include="client\src\components\Logged.jsx" />
     <Compile Include="client\src\components\LoginSignup\Register.jsx" />
     <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
+    <Compile Include="client\src\components\NavBar\Header.jsx" />
+    <Compile Include="client\src\components\NavBar\Logged.jsx" />
+    <Compile Include="client\src\components\NavBar\SearchBar.jsx" />
+    <Compile Include="client\src\components\NavBar\UserPanel.jsx" />
+    <Compile Include="client\src\components\NavBar\UserShoppingCart.jsx" />
     <Compile Include="client\src\components\Payment.jsx" />
     <Compile Include="client\src\components\SearchBar.jsx" />
     <Compile Include="client\src\components\UserPanel.jsx" />
@@ -70,6 +75,7 @@
     <Folder Include="client\src\components\" />
     <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\src\components\LoginSignup\" />
+    <Folder Include="client\src\components\NavBar\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
