@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RaisingTheBAR.Core.Models;
 using System;
@@ -16,7 +17,10 @@ namespace RaisingTheBAR.DAL.Generation
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetService<EFContext>();
-
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
                 SeedRoles(context);
                 SeedUsers(context);
                 SeedCategories(context);
