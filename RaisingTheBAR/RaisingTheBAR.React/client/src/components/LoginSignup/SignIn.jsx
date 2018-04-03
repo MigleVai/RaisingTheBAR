@@ -85,6 +85,7 @@ export default class SignIn extends React.Component {
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
                         floatingLabelText="Password"
+                        type = "password"
                         floatingLabelFixed={true}
                     />
                     <br />
