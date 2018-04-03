@@ -13,6 +13,7 @@ namespace RaisingTheBAR.Core.Models
         public DateTimeOffset? StartedDate { get; set; }
         public DateTimeOffset? FinishedDate { get; set; }
         public DateTimeOffset? LastModifiedDate { get; set; }
+        public byte[] Timestamp { get; set; }
 
         public Guid? ModifiedById { get; set; }
         [ForeignKey("ModifiedById")]

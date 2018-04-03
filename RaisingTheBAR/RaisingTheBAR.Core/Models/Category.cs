@@ -7,6 +7,7 @@ namespace RaisingTheBAR.Core.Models
     public class Category : Base
     {
         public string Name { get; set; }
+        public bool IsEnabled { get; set; }
 
         public Guid? ParentCategoryId { get; set; }
         [ForeignKey("ParentCategoryId")]

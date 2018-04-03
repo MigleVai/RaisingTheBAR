@@ -24,7 +24,7 @@ namespace RaisingTheBAR.DAL
                 .HasKey(x => x.UserId);
 
             modelBuilder.Entity<ProductOrder>()
-                .HasKey(c => new { c.OrderId, c.ProductId});
+                .HasKey(c => new { c.OrderId, c.ProductId });
 
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Orders)
@@ -45,7 +45,7 @@ namespace RaisingTheBAR.DAL
                 .HasForeignKey(bc => bc.ProductId);
 
             modelBuilder.Entity<ProductCart>()
-                .HasKey(bc => new { bc.ProductId, bc.CartId});
+                .HasKey(bc => new { bc.ProductId, bc.CartId });
 
             modelBuilder.Entity<ProductCart>()
                 .HasOne(bc => bc.Cart)
@@ -56,6 +56,22 @@ namespace RaisingTheBAR.DAL
                 .HasOne(bc => bc.Product)
                 .WithMany(c => c.ProductCarts)
                 .HasForeignKey(bc => bc.ProductId);
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Timestamp)
+                .IsRowVersion();
+
+            modelBuilder.Entity<Order>()
+                .Property(p => p.Timestamp)
+                .IsRowVersion();
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.IsEnabled)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Category>()
+                .Property(p => p.IsEnabled)
+                .HasDefaultValue(true);
         }
     }
 }

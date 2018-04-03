@@ -63,7 +63,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     Featured = false,
                     Id = y.Id.ToString(),
-                    Image = y.ImageUri,
+                    Image = y.Image,
                     Name = y.DisplayName,
                     Price = y.Price
                 })
@@ -81,7 +81,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     Featured = false,
                     Id = y.Product.Id.ToString(),
-                    Image = y.Product.ImageUri,
+                    Image = y.Product.Image,
                     Name = y.Product.DisplayName,
                     Price = y.Product.Price
                 })
@@ -97,7 +97,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 Description = request.Description,
                 DisplayName = request.DisplayName,
-                ImageUri = request.Image,
+                Image = request.Image,
                 Price = request.Price
             };
 
