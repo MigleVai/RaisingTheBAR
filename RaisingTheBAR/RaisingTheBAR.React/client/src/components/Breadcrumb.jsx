@@ -2,10 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Breadcrumb extends React.Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state = {pathname: ''};
-    // }
     render() {
         const styles={
             h6Styles: {

@@ -71,6 +71,24 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetProduct(string productId)
+        {
+            var productContext = _dbContext.Set<Product>();
+            var product = productContext
+                .Where(x => x.Id == Guid.Parse(productId))
+                .Select(y => new ProductResponse
+                {
+                    Featured = false,
+                    Id = y.Id.ToString(),
+                    Image = y.ImageUri,
+                    Name = y.DisplayName,
+                    Price = y.Price
+                });
+            return Ok(product);
+        }
+
         [HttpGet("[action]")]
         public IActionResult GetProductsByCategories(string categoryId)
         {
