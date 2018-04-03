@@ -4,8 +4,8 @@ import axios from 'axios';
 import "react-table/react-table.css";
 import IconButton from 'material-ui/IconButton';
 import AddShopppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
-import { Link } from 'react-router-dom';
 import matchSorter from 'match-sorter';
+import Breadcrumb from './Breadcrumb';
 
 export default class ItemPage extends React.Component {
     state = {
@@ -26,10 +26,6 @@ export default class ItemPage extends React.Component {
         const styles = {
             tdStyles: {
                 margin: 'auto',
-            },
-            h6Styles: {
-                float: 'left',
-                paddingLeft: '5%'
             },
         };
         const data = this.state.products;
@@ -66,15 +62,9 @@ export default class ItemPage extends React.Component {
             }
         ];
 
-        var pathNames = this.props.location.pathname.replace("/", " || ").slice(0, -1);
-        var path = pathNames.replace(new RegExp("/", "g"), " > ");
-        const home = "Home";
-
         return (
             <div>
-                <div>
-                    <h5 style={styles.h6Styles}><Link to={"/"}>{home}</Link>{path}</h5>
-                </div>
+                <Breadcrumb pathname={this.props.location.pathname}/>
                 < ReactTable
                     data={data}
                     columns={columns}
@@ -84,6 +74,7 @@ export default class ItemPage extends React.Component {
                     filterable
                     defaultFilterMethod={(filter, row) =>
                         String(row[filter.id]) === filter.value}
+                   // onClick={}
                 />
             </div>
         )
