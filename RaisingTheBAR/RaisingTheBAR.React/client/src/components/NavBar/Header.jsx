@@ -39,7 +39,7 @@ export default class Header extends React.Component {
     };
     return (
       <AppBar
-        title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the bar" /></Link>}
+        title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
         titleStyle={styles.align}
         onLeftIconButtonClick={this.handleDrawerToggle}
         iconElementRight={<UserPanel {...this.props} />}
