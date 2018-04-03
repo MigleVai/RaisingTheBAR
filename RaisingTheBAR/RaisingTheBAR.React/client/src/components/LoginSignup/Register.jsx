@@ -75,6 +75,7 @@ export default class Register extends React.Component {
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
                         floatingLabelText="Password"
+                        type = "password"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
                     />
@@ -82,6 +83,7 @@ export default class Register extends React.Component {
                     <TextField
                         floatingLabelText="Repeat Password"
                         floatingLabelFixed={true}
+                        type = "password"
                         style={styles.textFieldSytle}
                     />
                     <br />
