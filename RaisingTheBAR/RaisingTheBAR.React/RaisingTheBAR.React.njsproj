@@ -36,12 +36,12 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
-    <Compile Include="client\src\components\Header.jsx" />
+    <Compile Include="client\src\components\Breadcrumb.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
     <Compile Include="client\src\components\ImgCarousel.jsx" />
+    <Compile Include="client\src\components\Item.jsx" />
     <Compile Include="client\src\components\ItemPage.jsx" />
-    <Compile Include="client\src\components\Logged.jsx" />
     <Compile Include="client\src\components\LoginSignup\Register.jsx" />
     <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
     <Compile Include="client\src\components\NavBar\Header.jsx" />
@@ -50,9 +50,6 @@
     <Compile Include="client\src\components\NavBar\UserPanel.jsx" />
     <Compile Include="client\src\components\NavBar\UserShoppingCart.jsx" />
     <Compile Include="client\src\components\Payment.jsx" />
-    <Compile Include="client\src\components\SearchBar.jsx" />
-    <Compile Include="client\src\components\UserPanel.jsx" />
-    <Compile Include="client\src\components\UserShoppingCart.jsx" />
     <Compile Include="client\src\index.js" />
     <Compile Include="client\src\registerServiceWorker.js" />
     <Content Include="client\.gitignore" />
