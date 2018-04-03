@@ -11,13 +11,24 @@ import UserShoppingCart from './components/NavBar/UserShoppingCart';
 import Payment from './components/Payment';
 import ItemPage from './components/ItemPage';
 import Item from './components/Item';
+import axios from 'axios';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      logged: false
-    };
+    if(localStorage.getItem('jwtToken'))
+    {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
+      this.state = {
+        logged: true
+      };
+    }
+    else{
+      this.state = {
+        logged: false
+      };
+    }
   }
 
   handleLogging(logged) {

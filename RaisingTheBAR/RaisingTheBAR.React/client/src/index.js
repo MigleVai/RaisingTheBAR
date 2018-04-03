@@ -11,7 +11,6 @@ import { MuiThemeProvider } from 'material-ui'
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:65324';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
 
 ReactDOM.render(
     <Router>
