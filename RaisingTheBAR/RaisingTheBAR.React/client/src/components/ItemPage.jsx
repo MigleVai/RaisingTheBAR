@@ -8,9 +8,13 @@ import matchSorter from 'match-sorter';
 import Breadcrumb from './Breadcrumb';
 
 export default class ItemPage extends React.Component {
-    state = {
-        products: []
+    constructor(props){
+        super(props);
+        this.state = {
+            products: []
+        }
     }
+    
     componentDidMount() {
         axios.get(`/api/Product/GetAllProducts`)
             .then(res => {
@@ -20,9 +24,6 @@ export default class ItemPage extends React.Component {
             .catch(function (error) {
                 // show error
             });
-    }
-    constructor(props){
-        super(props);
     }
 
     render() {
@@ -81,7 +82,7 @@ export default class ItemPage extends React.Component {
                         return {
                             onClick: (e, handleOriginal) => {
                                 if (column.id === 'name') {
-                                    this.props.history.push(this.props.location.pathname+'/'+rowInfo.original.id);
+                                    this.props.history.push(this.props.location.pathname + '/' + rowInfo.original.id);
                                 }
                             }
                         }

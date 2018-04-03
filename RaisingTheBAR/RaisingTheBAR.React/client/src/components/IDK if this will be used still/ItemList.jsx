@@ -1,7 +1,6 @@
 import React from 'react';
 import { GridList, GridTile } from 'material-ui/GridList';
 import axios from 'axios';
-import Filter from './Filter';
 
 export default class SimpleSlider extends React.Component {
     state = {

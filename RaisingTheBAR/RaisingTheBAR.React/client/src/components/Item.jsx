@@ -6,10 +6,11 @@ import axios from 'axios';
 export default class Item extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            product: {}
+        }
     }
-    state = {
-        product: {}
-    }
+
     componentDidMount() {
         console.log(this.props);
         axios.get(`/api/Product/GetProduct`, {
