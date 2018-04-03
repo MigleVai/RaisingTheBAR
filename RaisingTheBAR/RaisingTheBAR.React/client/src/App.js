@@ -36,9 +36,10 @@ class App extends Component {
         <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/signin" render={(props) => <SignIn onLogging={this.handleLogging.bind(this)} />} />
         <Route path="/register" render={(props) => <Register onLogging={this.handleLogging.bind(this)} />} />
-        <Route path="/allitems" component={ItemPage} />
+        <Route exact path="/allitems" component={ItemPage} />
         {/* <Route path="/itempage" component={ItemPage}/> */}
-        <Route path="/item" component={Item}/>
+        <Route path="/allitems/:productId" component={Item}/>
+        {/* <Route path="/item" component={Item}/> */}
         <Route path="/cart" component={UserShoppingCart} />
         <Route path="/payment" {...this.props} render={(props) => (
           !this.state.logged ? <Redirect to="/signin" /> : <Payment {...this.props} {...props} />)} />
