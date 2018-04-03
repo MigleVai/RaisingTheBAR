@@ -51,7 +51,7 @@ export default class Header extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          <Link to={"/allitems/"}>
+          <Link to={"/allitems"}>
             <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
           </Link>
           <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>

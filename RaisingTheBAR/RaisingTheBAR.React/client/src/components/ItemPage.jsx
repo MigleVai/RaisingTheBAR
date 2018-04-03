@@ -16,7 +16,7 @@ export default class ItemPage extends React.Component {
     }
     
     componentDidMount() {
-        axios.get(`/api/Product/GetAllProducts`)
+        axios.get(`/api/Product/GetProducts`)
             .then(res => {
                 const products = res.data;
                 this.setState({ products });

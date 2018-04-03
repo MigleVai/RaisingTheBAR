@@ -7,7 +7,7 @@ export default class SimpleSlider extends React.Component {
         products: []
     }
     componentDidMount() {
-        axios.get(`/api/Product/GetAllProducts`)
+        axios.get(`/api/Product/GetProducts`)
             .then(res => {
                 const products = res.data;
                 this.setState({ products });

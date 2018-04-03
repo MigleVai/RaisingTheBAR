@@ -2,7 +2,7 @@ import React from 'react'
 import Slider from 'react-slick'
 
 
-export default class SimpleSlider extends React.Component {
+export default class ImgCarousel extends React.Component {
     render() {
         var settings = {
             dots: true,
