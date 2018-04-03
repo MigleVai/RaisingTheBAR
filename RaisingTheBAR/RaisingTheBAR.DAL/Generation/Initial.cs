@@ -22,7 +22,7 @@ namespace RaisingTheBAR.DAL.Generation
                     context.Database.Migrate();
                 }
                 SeedRoles(context);
-                SeedUsers(context);
+                //SeedUsers(context);
                 SeedCategories(context);
                 SeedProducts(context);
                 SeedProductsToCategories(context);
@@ -42,21 +42,21 @@ namespace RaisingTheBAR.DAL.Generation
                 context.SaveChanges();
             }
         }
-        private static void SeedUsers(EFContext context)
-        {
-            if (!context.Users.Any())
-            {
-                var users = new List<User>
-                {
-                    new User(){ Email = "test", Password = "test",
-                                RoleId = context.Roles.FirstOrDefault(x=>x.RoleName == "user").Id },
-                    new User(){ Email = "admin", Password = "admin",
-                                RoleId = context.Roles.FirstOrDefault(x=>x.RoleName == "administrator").Id }
-                };
-                context.AddRange(users);
-                context.SaveChanges();
-            }
-        }
+        //private static void SeedUsers(EFContext context)
+        //{
+        //    if (!context.Users.Any())
+        //    {
+        //        var users = new List<User>
+        //        {
+        //            new User(){ Email = "test", Password = "test",
+        //                        RoleId = context.Roles.FirstOrDefault(x=>x.RoleName == "user").Id },
+        //            new User(){ Email = "admin", Password = "admin",
+        //                        RoleId = context.Roles.FirstOrDefault(x=>x.RoleName == "administrator").Id }
+        //        };
+        //        context.AddRange(users);
+        //        context.SaveChanges();
+        //    }
+        //}
         private static void SeedCategories(EFContext context)
         {
             if (!context.Categories.Any())
