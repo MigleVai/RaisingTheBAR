@@ -5,8 +5,9 @@ export default class Breadcrumb extends React.Component {
     render() {
         const styles={
             h6Styles: {
-                float: 'left',
-                paddingLeft: '5%'
+                paddingLeft: '5%',
+                textAlign: 'left',
+                width: '100%'
             },
         };
         var pathNames = this.props.pathname.replace("/", " || ").slice(0, -1);
