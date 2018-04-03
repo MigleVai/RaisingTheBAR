@@ -4,7 +4,7 @@
   
   ~~*Sistema turi būti apsaugota nuo SQL injection atakų~~ Naudojame LINQ to Entities kuris naudoja object model API, o ne injecting literals
   
-  ~~*ORM (pvz.: JPA, Entity Framework) ir Data Mapper (pvz. MyBatis, LINQ) technologijos turi būti naudojamos ten, kur prasminga (nekenkia našumui, gerina plečiamumą/lankstumą). Jokia duomenų bazės transakcija (taip pat ir lentelės įrašų rakinimas – locking) neturi apimti interakcijos su naudotoju (pvz.: pradedame transakciją, laukiame kol naudotojas užpildys Web formą, pabaigiame transakciją – labai blogai!). DB transakcija turi prasidėti ir pasibaigti vienos ir tos pačios HTTP užklausos (request) metu (nesvarbu, ar tai AJAX užklausa, ar ne)~~ Entity framework does that for us
+  ~~*ORM (pvz.: JPA, Entity Framework) ir Data Mapper (pvz. MyBatis, LINQ) technologijos turi būti naudojamos ten, kur prasminga (nekenkia našumui, gerina plečiamumą/lankstumą). Jokia duomenų bazės transakcija (taip pat ir lentelės įrašų rakinimas – locking) neturi apimti interakcijos su naudotoju (pvz.: pradedame transakciją, laukiame kol naudotojas užpildys Web formą, pabaigiame transakciją – labai blogai!). DB transakcija turi prasidėti ir pasibaigti vienos ir tos pačios HTTP užklausos (request) metu (nesvarbu, ar tai AJAX užklausa, ar ne)~~ Entity framework does that for us: https://stackoverflow.com/a/39361759
   
   ~~*Keliems naudotojams (arba vienam keliuose naršyklės languose) tyčia/netyčia redaguojant tą patį DB objektą ir, kylant redaguojamų duomenų versijų konfliktui~~ Naudojamas concurrency token ant Porduct ir Order  https://github.com/vzilinas/RaisingTheBAR/blob/a22150b658f72755290e777cf97dc1dcbbf6da2c/RaisingTheBAR/RaisingTheBAR.DAL/EFContext.cs
   Eilutė: 68 - 74
