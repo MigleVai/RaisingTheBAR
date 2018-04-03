@@ -21,6 +21,9 @@ export default class ItemPage extends React.Component {
                 // show error
             });
     }
+    constructor(props){
+        super(props);
+    }
 
     render() {
         const styles = {
@@ -38,7 +41,7 @@ export default class ItemPage extends React.Component {
                 resizable: false,
                 filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ['name'] }),
-                filterAll: true
+                filterAll: true,
             }, {
                 Header: 'Price',
                 accessor: 'price',
@@ -64,7 +67,7 @@ export default class ItemPage extends React.Component {
 
         return (
             <div>
-                <Breadcrumb pathname={this.props.location.pathname}/>
+                <Breadcrumb pathname={this.props.location.pathname} />
                 < ReactTable
                     data={data}
                     columns={columns}
@@ -74,7 +77,15 @@ export default class ItemPage extends React.Component {
                     filterable
                     defaultFilterMethod={(filter, row) =>
                         String(row[filter.id]) === filter.value}
-                   // onClick={}
+                    getTdProps={(state, rowInfo, column, instance) => {
+                        return {
+                            onClick: (e, handleOriginal) => {
+                                if (column.id === 'name') {
+                                    this.props.history.push(this.props.location.pathname+'/'+rowInfo.original.id);
+                                }
+                            }
+                        }
+                    }}
                 />
             </div>
         )
