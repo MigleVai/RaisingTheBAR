@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -88,7 +89,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 Description = request.Description,
                 DisplayName = request.DisplayName,
                 Image = request.Image,
-                Price = request.Price
+                Price = request.Price,
+                Model = request.Model
             };
 
             var productContext = _dbContext.Set<Product>();
@@ -103,6 +105,68 @@ namespace RaisingTheBAR.BLL.Controllers
             }
 
             return BadRequest("Nothing changed in database");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost("[Action]")]
+        public IActionResult EditProduct([FromBody]ProductEditRequest request)
+        {
+            var product = new Product()
+            {
+                Description = request.Description,
+                DisplayName = request.DisplayName,
+                Model = request.Model,
+                Id = Guid.Parse(request.Id),
+                Image = request.Image,
+                Price = request.Price
+            };
+
+            var productContext = _dbContext.Set<Product>();
+
+            try
+            {
+                productContext.Update(product);
+
+                var result = _dbContext.SaveChanges();
+
+                if (result > 0)
+                {
+                    return Ok();
+                }
+
+                return BadRequest("Nothing changed in database");
+            }
+            catch(DbUpdateConcurrencyException ex)
+            {
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is Product)
+                    {
+                        var exception = new List<object>();
+
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        foreach (var property in proposedValues.Properties)
+                        {
+                            var proposedValue = proposedValues[property];
+                            var databaseValue = databaseValues[property];
+                            if(proposedValue != databaseValue)
+                            {
+                                exception.Add(new { property = new { proposed = proposedValue, actual = databaseValue } });
+                            }
+
+                        }
+                        // 409: Conflict - object has already changed from the current view - display smart
+                        return StatusCode(409, exception); 
+                    }
+                    else
+                    {
+                        return BadRequest("Don't know how to handle concurrency conflicts for " + entry.Metadata.Name);
+                    }
+                }
+            }
+            return BadRequest("Timeout");
         }
     }
 }
