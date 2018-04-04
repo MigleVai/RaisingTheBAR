@@ -1,7 +1,8 @@
 import React from 'react';
 import Breadcrumb from './Breadcrumb';
 import axios from 'axios';
-
+import NumericInput from 'react-numeric-input';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -27,28 +28,27 @@ export default class Item extends React.Component {
     }
 
     render() {
+        var innerWidth = window.innerWidth;
+        var setwidth = innerWidth * 0.3;
         const styles = {
             h3Style: {
                 display: 'inline-block',
                 textAlign: 'left',
                 width: '100%',
-                paddingLeft: '10%'
+                paddingLeft: '10%',
             },
-            imgdivStyle: {
-                minWidth: '35%',
-                maxWidth: '35%'
-            },
-            imgStyle:{
-                marginLeft: '15%',
+            imgStyle: {
+                marginLeft: '10%',
                 marginTop: '3%',
                 marginRight: '3%',
                 float: 'left',
-                maxWidth: '100%'
+                maxWidth: setwidth + 'px',
+                minWidth: setwidth + 'px',
             },
             textStyle: {
-                marginTop: '3%',
                 textAlign: 'left',
-                display: 'flow-root'
+                display: 'flow-root',
+                paddingTop: '3%'
             }
         }
         var path = this.props.location.pathname;
@@ -59,12 +59,16 @@ export default class Item extends React.Component {
             <div>
                 <Breadcrumb pathname={rez} />
                 <h3 style={styles.h3Style}>{this.state.product.name}</h3>
-                <div style={styles.imgdivStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="No Image" src={(this.state.product.image)} /></div>
-                <div>
-                    <div style={styles.textStyle}>
-                        <p>Description:</p>
-                        <p style={{paddingLeft: '3%'}}>{this.state.product.description}</p>
-                        <p>Cost:  {price}€</p>
+                <img style={styles.imgStyle} key={this.state.product.id} alt="No Image" src={(this.state.product.image)} />
+                <div style={styles.textStyle}>
+                    <p>Cost:  {price}€</p>
+                    <p>Description:</p>
+                    <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>
+                    <p>Quantity: </p><NumericInput min={0} max={100} value={0} />
+                    <br />
+                    <div style={{paddingTop: '3%'}}>
+                        <RaisedButton label="Buy Now" />
+                        <RaisedButton label="Add to Cart" />
                     </div>
                 </div>
             </div>
