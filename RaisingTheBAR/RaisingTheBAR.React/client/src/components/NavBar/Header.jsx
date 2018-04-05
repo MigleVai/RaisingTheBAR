@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import UserPanel from './UserPanel';
 
@@ -14,8 +15,21 @@ export default class Header extends React.Component {
     super(props);
     this.state = {
       open: false,
-      logged: this.props.logged
+      logged: this.props.logged,
+      categories: []
     };
+    this.handleDrawerClose = this.handleDrawerClose.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(`/api/Category/GetAllCategories`)
+      .then(res => {
+        const categories = res.data;
+        this.setState({ categories });
+      })
+      .catch(function (error) {
+        // show error
+      });
   }
 
   handleDrawerToggle = () => this.setState({ open: !this.state.open });
@@ -37,6 +51,9 @@ export default class Header extends React.Component {
         backgroundColor: '#929292'
       }
     };
+    const categoriesInList = this.state.categories.map(function (category) {
+      return <MenuItem>{category.name}</MenuItem>  //onClick={this.handleDrawerClose}
+    });
     return (
       <AppBar
         title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
@@ -52,9 +69,8 @@ export default class Header extends React.Component {
           onRequestChange={(open) => this.setState({ open })}
         >
           <Link to={"/allitems"}>
-            <MenuItem onClick={this.handleDrawerClose}>All items</MenuItem>
+            {categoriesInList}
           </Link>
-          <MenuItem onClick={this.handleDrawerClose}>Work in progress...</MenuItem>
         </Drawer>
       </AppBar>
     );

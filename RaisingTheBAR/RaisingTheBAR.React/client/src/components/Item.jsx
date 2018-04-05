@@ -28,27 +28,46 @@ export default class Item extends React.Component {
     }
 
     render() {
-        var innerWidth = window.innerWidth;
-        var setwidth = innerWidth * 0.3;
+        var setwidth = window.innerWidth * 0.4;
+        var setheight = window.innerHeight * 0.6;
+        if (setheight > setwidth) {
+            setheight = setwidth;
+        }
         const styles = {
             h3Style: {
                 display: 'inline-block',
                 textAlign: 'left',
                 width: '100%',
-                paddingLeft: '10%',
+                padding: 'none',
+                margin: 'inherit'
             },
             imgStyle: {
-                marginLeft: '10%',
-                marginTop: '3%',
-                marginRight: '3%',
-                float: 'left',
+                paddingLeft: '10%',
+                paddingTop: '3%',
+                paddingRight: '5%',
+                maxWidth: '100%'
+            },
+            divStyle: {
                 maxWidth: setwidth + 'px',
                 minWidth: setwidth + 'px',
+                maxHeight: setheight + 'px',
+                minHeight: setheight + 'px',
+                float: 'left',
             },
             textStyle: {
                 textAlign: 'left',
-                display: 'flow-root',
-                paddingTop: '3%'
+                display: 'inline-block',
+                float: 'left',
+                wordWrap: 'break-word',
+                maxWidth: '40%',
+                paddingTop: '1%',
+            },
+            desStyle: {
+                display: 'inline-block',
+                //float: 'left',
+                paddingLeft: '3%',
+                paddingTop: '4%',
+                wordWrap: 'break-word',
             }
         }
         var path = this.props.location.pathname;
@@ -58,18 +77,22 @@ export default class Item extends React.Component {
         return (
             <div>
                 <Breadcrumb pathname={rez} />
-                <h3 style={styles.h3Style}>{this.state.product.name}</h3>
-                <img style={styles.imgStyle} key={this.state.product.id} alt="No Image" src={(this.state.product.image)} />
+                <hr />
+                <div style={styles.divStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="No Image" src={(this.state.product.image)} />
+                </div>
                 <div style={styles.textStyle}>
-                    <p>Cost:  {price}€</p>
-                    <p>Description:</p>
-                    <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>
-                    <p>Quantity: </p><NumericInput min={0} max={100} value={0} />
-                    <br />
-                    <div style={{paddingTop: '3%'}}>
-                        <RaisedButton label="Buy Now" />
+                    <h3 style={styles.h3Style}>{this.state.product.name}</h3>
+                    <div style={{ paddingTop: '4%' }}>
+                        <p>Cost:  {price}€</p>
+                        <p>Discount: </p>
+                        <p style={{display: 'inline-block'}}>Quantity:</p><NumericInput mobile min={0} max={100} value={0} style={{ input: { width: '100px' } }} />
+                        <br />
                         <RaisedButton label="Add to Cart" />
                     </div>
+                </div>
+                <div>
+                    <p>Description:</p>
+                    <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>
                 </div>
             </div>
         )

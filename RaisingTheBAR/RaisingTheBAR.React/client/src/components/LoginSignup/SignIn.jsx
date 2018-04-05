@@ -17,7 +17,6 @@ export default class SignIn extends React.Component {
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
-
     }
 
     // reikes cia patikrint ar geri prisijungimo duomenys
