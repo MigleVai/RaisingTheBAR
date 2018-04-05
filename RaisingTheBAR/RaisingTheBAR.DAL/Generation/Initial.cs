@@ -102,7 +102,8 @@ namespace RaisingTheBAR.DAL.Generation
         }
         private static void SeedProductsToCategories(EFContext context)
         {
-            if (context.Products.FirstOrDefault(x => x.Model == "I9500").ProductCategories == null)
+            var productContext = context.Products.Include(x => x.ProductCategories);
+            if (productContext.FirstOrDefault(x => x.Model == "I9500").ProductCategories == null)
             {
                 var products = context.Products;
 

@@ -10,5 +10,6 @@ namespace RaisingTheBAR.Core.Models
         public Product Product { get; set; }
         public Guid CartId { get; set; }
         public Cart Cart { get; set; }
+        public int Amount { get; set; }
     }
 }
