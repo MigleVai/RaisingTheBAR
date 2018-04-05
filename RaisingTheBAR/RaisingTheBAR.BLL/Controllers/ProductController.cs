@@ -42,9 +42,10 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpGet("[action]")]
         public IActionResult GetProductsByCategories(string categoryId)
         {
-            var pcContext = _dbContext.Set<ProductCategory>();
+            var pcContext = _dbContext.Set<ProductCategory>().Include(p => p.Product).Include(c => c.Category);
 
-            var products = pcContext.Where(x => x.CategoryId == Guid.Parse(categoryId))
+            var products = pcContext.Where(x => x.CategoryId == Guid.Parse(categoryId) ||
+                                           x.Category.ChildCategories.FirstOrDefault(c => c.Id == Guid.Parse(categoryId)) != null)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
@@ -68,7 +69,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("No such product exists");
             }
 
-            var result =  new ProductResponse
+            var result = new ProductResponse
             {
                 Featured = false,
                 Id = product.Id.ToString(),
@@ -136,7 +137,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
                 return BadRequest("Nothing changed in database");
             }
-            catch(DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)
             {
                 foreach (var entry in ex.Entries)
                 {
@@ -151,14 +152,14 @@ namespace RaisingTheBAR.BLL.Controllers
                         {
                             var proposedValue = proposedValues[property];
                             var databaseValue = databaseValues[property];
-                            if(proposedValue != databaseValue)
+                            if (proposedValue != databaseValue)
                             {
                                 exception.Add(new { property = new { proposed = proposedValue, actual = databaseValue } });
                             }
 
                         }
                         // 409: Conflict - object has already changed from the current view - display smart
-                        return StatusCode(409, exception); 
+                        return StatusCode(409, exception);
                     }
                     else
                     {

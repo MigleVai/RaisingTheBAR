@@ -60,7 +60,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost("[Action]")]
         public IActionResult AddProductToCategory([FromBody]ProductCategoryRequest request)
         {
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
             var categoryContext = _dbContext.Set<Category>();
 
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(request.ProductId));
@@ -71,7 +71,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Product or Category does not exist");
             }
 
-            if(product.ProductCategories == null)
+            if (product.ProductCategories == null)
             {
                 product.ProductCategories = new List<ProductCategory>();
             }
@@ -83,7 +83,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 ProductId = product.Id
             });
             var result = _dbContext.SaveChanges();
-            if(result > 0)
+            if (result > 0)
             {
                 return BadRequest("Something went wrong with database");
             }
@@ -94,7 +94,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost("[Action]")]
         public IActionResult RemoveProductFromCategory([FromBody]ProductCategoryRequest request)
         {
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
             var categoryContext = _dbContext.Set<Category>();
 
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(request.ProductId));
@@ -104,17 +104,17 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Product or Category does not exist");
             }
-            if (product.ProductCategories == null && product.ProductCategories.FirstOrDefault(x=>x.CategoryId == category.Id) == null)
+            var pc = product.ProductCategories?.FirstOrDefault(x => x.CategoryId == category.Id);
+            if (product.ProductCategories == null || pc == null)
             {
                 return BadRequest("Product is not in the category");
             }
-            var pc = product.ProductCategories.FirstOrDefault(x => x.CategoryId == category.Id);
 
             _dbContext.Remove(pc);
 
             var result = _dbContext.SaveChanges();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return Ok();
             }
@@ -145,12 +145,20 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpGet("[Action]")]
         public IActionResult GetAllCategories()
         {
-            var categoryContext = _dbContext.Set<Category>();
-            var categories = categoryContext.Select(x => new CategoryResponse
-            {
-                Name = x.Name,
-                ProductAmount = x.ProductCategories.Count()
-            });
+            var categoryContext = _dbContext.Set<Category>().Include(x=>x.ProductCategories).Include(x=>x.ChildCategories);
+            var categories = categoryContext.Where(y => y.ParentCategoryId == null)
+                .Select(x => new CategoryResponse
+                {
+                    Id = x.Id.ToString(),
+                    Name = x.Name,
+                    ProductAmount = x.ProductCategories.Count(),
+                    Children = x.ChildCategories.Select(z => new CategoryResponse
+                    {
+                        Id = z.Id.ToString(),
+                        Name = z.Name,
+                        ProductAmount = z.ProductCategories.Count()
+                    }).ToList()
+                });
             return Ok(categories);
         }
 
