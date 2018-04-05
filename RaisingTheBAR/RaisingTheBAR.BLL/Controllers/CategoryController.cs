@@ -145,20 +145,23 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpGet("[Action]")]
         public IActionResult GetAllCategories()
         {
-            var categoryContext = _dbContext.Set<Category>().Include(x=>x.ProductCategories).Include(x=>x.ChildCategories);
+            var categoryContext = _dbContext.Set<Category>()
+                .Include(x=>x.ProductCategories)
+                .Include(x=>x.ChildCategories)
+                .Include("ChildCategories.ProductCategories");
             var categories = categoryContext.Where(y => y.ParentCategoryId == null)
                 .Select(x => new CategoryResponse
                 {
                     Id = x.Id.ToString(),
                     Name = x.Name,
-                    ProductAmount = x.ProductCategories.Count(),
+                    ProductAmount = x.ProductCategories.Count() +  x.ChildCategories.Sum(z=>z.ProductCategories.Count()),
                     Children = x.ChildCategories.Select(z => new CategoryResponse
                     {
                         Id = z.Id.ToString(),
                         Name = z.Name,
                         ProductAmount = z.ProductCategories.Count()
                     }).ToList()
-                });
+                }).ToList();
             return Ok(categories);
         }
 

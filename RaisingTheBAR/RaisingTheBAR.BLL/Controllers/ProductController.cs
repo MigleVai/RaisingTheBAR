@@ -42,10 +42,15 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpGet("[action]")]
         public IActionResult GetProductsByCategories(string categoryId)
         {
-            var pcContext = _dbContext.Set<ProductCategory>().Include(p => p.Product).Include(c => c.Category);
+            var pcContext = _dbContext.Set<ProductCategory>()
+                .Include(p => p.Product)
+                .Include(c => c.Category)
+                .Include(cc => cc.Category.ChildCategories);
 
-            var products = pcContext.Where(x => x.CategoryId == Guid.Parse(categoryId) ||
-                                           x.Category.ChildCategories.FirstOrDefault(c => c.Id == Guid.Parse(categoryId)) != null)
+            var id = Guid.Parse(categoryId);
+
+            var productCategories = pcContext.ToList();
+            var products = pcContext.Where(x => x.CategoryId == id || x.Category.ParentCategoryId == id)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
