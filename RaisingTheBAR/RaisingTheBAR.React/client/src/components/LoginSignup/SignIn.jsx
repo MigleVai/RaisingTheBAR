@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-//import Jumbotron from 'bootstrap/scss/Jumbotron';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -31,6 +30,7 @@ export default class SignIn extends React.Component {
                 localStorage.setItem('jwtToken', result.token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                 this.props.handleLogging(true);
+                this.props.history.push('/');
             })
             .catch(function (error) {
                 // show error

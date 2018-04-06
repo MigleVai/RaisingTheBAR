@@ -39,13 +39,12 @@ class App extends Component {
           <Route path="/" render={(props) => <Header handleLogging={this.handleLogging} islogged={this.state.logged} />} />
         </header>
         <Route exact path="/" component={ImgCarousel} /> 
-        <Route path="/signin" render={(props) => <SignIn handleLogging={this.handleLogging}/>} />
-        <Route path="/register" render={(props) => <Register handleLogging={this.handleLogging} />} />
+        <Route path="/signin" render={(props) => <SignIn {...props} handleLogging={this.handleLogging}/>} />
+        <Route path="/register" render={(props) => <Register {...props} handleLogging={this.handleLogging} />} />
         <Route exact path="/products" component={ItemPage}/>
         <Route path="/products/:category/:productId" component={Item}/>
         <Route exact path="/products/:category" component={ItemPage}/>
         <Route exact path="/products" componenet={ItemPage}/>
-        {/* <Route path="/item" component={Item}/> */}
         <Route path="/cart" component={UserShoppingCart} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />

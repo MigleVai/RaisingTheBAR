@@ -2,7 +2,6 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-//import Jumbotron from 'bootstrap/scss/Jumbotron';
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -35,6 +34,7 @@ export default class Register extends React.Component {
                 localStorage.setItem('jwtToken', result.token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                 this.props.handleLogging(true);
+                this.props.history.push('/');
             })
             .catch(function (error) {
                 // show error
