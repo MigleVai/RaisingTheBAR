@@ -26,12 +26,18 @@ export default class ItemPage extends React.Component {
         {return null;}
         if(this.props.match.params.category !== prevProps.match.params.category)
         {
+            this.setState({products : []});
             this.getData(this.props.match.params.category);
         }
     }
     getData(category)
     {
-        axios.get(`/api/Product/GetProductsByCategories`, {
+        var uri = '/api/Product/GetProductsByCategories';
+        if(category === undefined)
+        {
+            uri = '/api/Product/GetProducts';
+        }
+        axios.get(uri, {
             params: {
                 categoryName: category
             }
