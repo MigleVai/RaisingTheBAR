@@ -64,7 +64,6 @@ export default class Item extends React.Component {
             },
             desStyle: {
                 display: 'inline-block',
-                //float: 'left',
                 paddingLeft: '3%',
                 paddingTop: '4%',
                 wordWrap: 'break-word',

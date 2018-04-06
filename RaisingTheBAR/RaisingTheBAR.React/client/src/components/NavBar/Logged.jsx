@@ -4,6 +4,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Person from 'material-ui/svg-icons/social/person';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Logged extends React.Component {
   constructor(props) {
@@ -26,8 +27,15 @@ export default class Logged extends React.Component {
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
-        <MenuItem primaryText="History" />
-        <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} />
+        <Link to="/orders">
+          <MenuItem primaryText="Orders" />
+        </Link>
+        <Link to="/settings">
+          <MenuItem primaryText="Settings" />
+        </Link>
+        <Link to="/">
+          <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} />
+        </Link>
       </IconMenu>
     );
   }

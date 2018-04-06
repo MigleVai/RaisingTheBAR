@@ -8,15 +8,19 @@ import matchSorter from 'match-sorter';
 import Breadcrumb from './Breadcrumb';
 
 export default class ItemPage extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             products: []
         }
     }
-    
+
     componentDidMount() {
-        axios.get(`/api/Product/GetProducts`)
+        axios.get(`/api/Product/GetProductsByCategories`, {
+            params: {
+                categoryName: this.props.match.params.category
+            }
+        })
             .then(res => {
                 const products = res.data;
                 this.setState({ products });
@@ -25,16 +29,32 @@ export default class ItemPage extends React.Component {
                 // show error
             });
     }
+    componentWillUnmount() {
+
+    }
 
     render() {
         const styles = {
             tdStyles: {
                 margin: 'auto',
             },
+            imgStyle:{
+                width: '20%'
+            }
         };
         const data = this.state.products;
-
         const columns = [
+            {
+                Header: 'Thumbnail',
+                Cell: (row) => {
+                    return <div><img key={row.original.id} alt="No Image" src={row.original.image} /></div>
+                },
+                resizable: false,
+                sortable: false,
+                filterable: false,
+                style: styles.imgStyle,
+                maxWidth: 100,
+            },
             {
                 Header: 'Name',
                 accessor: 'name',
@@ -54,7 +74,7 @@ export default class ItemPage extends React.Component {
                 filterAll: true
             },
             {
-                Header: "Status",
+                Header: "Add to Cart",
                 Cell: row => {
                     return <div><IconButton><AddShopppingCart /></IconButton></div>
                 },
@@ -62,7 +82,8 @@ export default class ItemPage extends React.Component {
                 sortable: false,
                 filterable: false,
                 maxWidth: 100,
-                resizable: false
+                resizable: false,
+                style: styles.tdStyles
             }
         ];
 

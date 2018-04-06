@@ -38,7 +38,7 @@ namespace RaisingTheBAR.BLL
             var optionsBuilder = new DbContextOptionsBuilder<EFContext>();
             optionsBuilder.UseSqlServer(str);
 
-            services.AddSingleton<DbContext, EFContext>(s => new EFContext(optionsBuilder.Options));
+            services.AddScoped<DbContext, EFContext>(s => new EFContext(optionsBuilder.Options));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

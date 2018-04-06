@@ -52,7 +52,7 @@ export default class Header extends React.Component {
       }
     };
     const categoriesInList = this.state.categories.map(function (category) {
-      return <MenuItem>{category.name}</MenuItem>  //onClick={this.handleDrawerClose}
+      return <Link to={"/products/"+category.name}><MenuItem>{category.name}</MenuItem></Link>  //onClick={this.handleDrawerClose}
     });
     return (
       <AppBar
@@ -68,9 +68,9 @@ export default class Header extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          <Link to={"/allitems"}>
+          {/* <Link to={"/allitems"}> */}
             {categoriesInList}
-          </Link>
+          {/* </Link> */}
         </Drawer>
       </AppBar>
     );
