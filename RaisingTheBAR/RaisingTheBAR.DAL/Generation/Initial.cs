@@ -103,7 +103,7 @@ namespace RaisingTheBAR.DAL.Generation
         private static void SeedProductsToCategories(DbContext context)
         {
             var productContext = context.Set<Product>().Include(x => x.ProductCategories);
-            if (productContext.FirstOrDefault(x => x.Model == "I9500").ProductCategories == null)
+            if (!productContext.FirstOrDefault(x => x.Model == "I9500").ProductCategories.Any())
             {
 
                 var categories = context.Set<Category>();
