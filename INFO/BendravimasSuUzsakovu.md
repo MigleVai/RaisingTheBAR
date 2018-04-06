@@ -1,5 +1,7 @@
 ### Pirkėjo klausimai:
+Kada turi būti paprašoma vartotojo įvertinti apsipirktimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
 
+-------------------
 1. Kokia kalbą turėtų būti sukurta svetainė?
 
   * Nebūtina turėti kelias kalbas, bet bus laikoma privalumu.
