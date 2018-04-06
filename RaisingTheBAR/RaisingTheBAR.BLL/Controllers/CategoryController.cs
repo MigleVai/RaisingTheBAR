@@ -14,7 +14,7 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
-        DbContext _dbContext;
+        private readonly DbContext _dbContext;
         public CategoryController(DbContext dbContext)
         {
             _dbContext = dbContext;

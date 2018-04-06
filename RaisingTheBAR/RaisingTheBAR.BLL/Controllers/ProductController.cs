@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/Product")]
     public class ProductController : Controller
     {
-        DbContext _dbContext;
+        private readonly DbContext _dbContext;
         public ProductController(DbContext dbContext)
         {
             _dbContext = dbContext;

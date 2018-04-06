@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +19,7 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/User")]
     public class UserController : Controller
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         private readonly DbContext _dbContext;
 
         public UserController(IConfiguration configuration, DbContext dbContext)
