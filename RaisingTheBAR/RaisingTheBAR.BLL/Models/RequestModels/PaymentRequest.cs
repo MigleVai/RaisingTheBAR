@@ -7,7 +7,6 @@ namespace RaisingTheBAR.BLL.Models.RequestModels
 {
     public class PaymentRequest
     {
-        public int amount { get; set; }
         public string number { get; set; }
         public string holder { get; set; }
         public int exp_year { get; set; }

@@ -47,7 +47,6 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var payment = new PaymentRequest
             {
-                amount = 100,
                 cvv = request.cvv,
                 exp_month = request.exp_month,
                 exp_year = request.exp_year,

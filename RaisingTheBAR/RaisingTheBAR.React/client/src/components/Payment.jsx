@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import axios from 'axios';
 
 export default class Payment extends React.Component {
     constructor(props) {
@@ -21,7 +22,31 @@ export default class Payment extends React.Component {
         this.handleExpYearChange = this.handleExpYearChange.bind(this);
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
+        this.handlePayClick = this.handlePayClick.bind(this);
     }
+
+    // Need to check if the parameters are valid here.
+    handlePayClick() {
+        this.state.amount++;
+        axios.post(`/api/Payment/ExecutePayment`,
+                {
+                    cvv: this.state.cvv,
+                    exp_month: this.state.exp_month,
+                    exp_year: this.state.exp_year,
+                    holder: this.state.holder,
+                    number: this.state.number
+                })
+            .then(res => {
+                const result = res.data;
+                localStorage.setItem('jwtToken', result.token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
+                this.props.onLogging(true);
+            })
+            .catch(function (error) {
+                // show error
+            });
+    }
+
     handleCvvChange(event) {
         this.setState({ cvv: event.target.value });
     }
@@ -57,10 +82,6 @@ export default class Payment extends React.Component {
             },
             customWidth: {
                 width: 200,
-            },
-            flatButStyle: {
-                backgroundColor: '#929292',
-                margin: '2%'
             }
 
 
@@ -130,9 +151,8 @@ export default class Payment extends React.Component {
                         <section>
                             Total amount: {this.state.amount}
                         </section>
-                        <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Pay Now" />
 
-                    
+                        <RaisedButton  onClick={this.handlePayClick}  label="Pay Now" />
                 </form>
                 </div>
             </div>
