@@ -9,13 +9,6 @@ import IconButton from 'material-ui/IconButton';
 
 export default class UserPanel extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            logged: this.props.logged
-        };
-    }
-
     render() {
         const styles =
             {
@@ -34,8 +27,8 @@ export default class UserPanel extends React.Component {
         return (
             <div style={styles.displayStyle}>
                 <SearchBar />
-                <Link to="/cart" {...this.props}><IconButton><ShopppingCart /></IconButton></Link>
-                <div>{this.props.logged ? <Logged {...this.props} /> : <Link to={"/signin"}><FlatButton id="SigninButton" style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
+                <Link to="/cart" ><IconButton><ShopppingCart /></IconButton></Link>
+                <div>{this.props.islogged ? <Logged handleLogging={this.props.handleLogging} /> : <Link to={"/signin"}><FlatButton id="SigninButton" style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );
     }

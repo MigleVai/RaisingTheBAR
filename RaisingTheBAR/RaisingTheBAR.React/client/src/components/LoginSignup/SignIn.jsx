@@ -10,7 +10,6 @@ export default class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            logged: false,
             email: '',
             password: '',
             role: 'user'
@@ -31,7 +30,7 @@ export default class SignIn extends React.Component {
                 const result = res.data;
                 localStorage.setItem('jwtToken', result.token);
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
-                this.props.onLogging(true);
+                this.props.handleLogging(true);
             })
             .catch(function (error) {
                 // show error

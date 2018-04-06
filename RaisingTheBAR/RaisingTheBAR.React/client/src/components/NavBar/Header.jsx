@@ -15,7 +15,6 @@ export default class Header extends React.Component {
     super(props);
     this.state = {
       open: false,
-      logged: this.props.logged,
       categories: []
     };
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -51,15 +50,12 @@ export default class Header extends React.Component {
         backgroundColor: '#929292'
       }
     };
-    const categoriesInList = this.state.categories.map(function (category) {
-      return <Link to={"/products/"+category.name}><MenuItem>{category.name}</MenuItem></Link>  //onClick={this.handleDrawerClose}
-    });
     return (
       <AppBar
         title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
         titleStyle={styles.align}
         onLeftIconButtonClick={this.handleDrawerToggle}
-        iconElementRight={<UserPanel {...this.props} />}
+        iconElementRight={<UserPanel handleLogging={this.props.handleLogging} islogged={this.props.islogged} />}
         style={styles.barStyle}
       >
         <Drawer
@@ -68,9 +64,13 @@ export default class Header extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          {/* <Link to={"/allitems"}> */}
-            {categoriesInList}
-          {/* </Link> */}
+        <Link to={"/products"} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem></Link>
+        <hr/>
+        { 
+          this.state.categories.map((category) => {
+           return <Link to={"/products/"+category.name} key={category.id} onClick={this.handleDrawerClose}><MenuItem>{category.name}</MenuItem></Link>
+          })
+        }
         </Drawer>
       </AppBar>
     );
