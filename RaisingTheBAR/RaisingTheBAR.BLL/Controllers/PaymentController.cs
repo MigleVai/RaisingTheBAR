@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.Core.Models;
@@ -16,6 +17,7 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/Payment")]
     public class PaymentController : Controller
     {
+        public IConfiguration Configuration { get; }
         DbContext _dbContext;
         string user;
         string password;
@@ -23,8 +25,9 @@ namespace RaisingTheBAR.BLL.Controllers
         HttpWebRequest mockProcessorRequest;
 
 
-        public PaymentController(DbContext dbContext)
+        public PaymentController(IConfiguration configuration, DbContext dbContext)
         {
+            Configuration = configuration;
             _dbContext = dbContext;
 
             // Preparing the connection.

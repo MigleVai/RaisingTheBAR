@@ -10,13 +10,15 @@ export default class Payment extends React.Component {
         super(props);
         this.state = {
             cvv: '',
-            exp_month: '1',
+            exp_month: 0,
+            exp_year: 0,
             holder: '',
             amount: 100,
             number: ''
         };
         this.handleCvvChange = this.handleCvvChange.bind(this);
         this.handleExpMonthChange = this.handleExpMonthChange.bind(this);
+        this.handleExpYearChange = this.handleExpYearChange.bind(this);
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
     }
@@ -26,12 +28,16 @@ export default class Payment extends React.Component {
     handleExpMonthChange(event) {
         this.setState({ exp_month: event.target.value }); 
     }
+    handleExpYearChange(event) {
+        this.setState({ exp_year: event.target.value }); 
+    }
     handleHolderChange(event) {
         this.setState({ holder: event.target.value }); 
     }
     handleNumberChange(event) {
         this.setState({ number: event.target.value }); 
     }
+
 
     render() {
         const styles = {
@@ -52,6 +58,8 @@ export default class Payment extends React.Component {
                 backgroundColor: '#929292',
                 margin: '2%'
             }
+
+
         };
         return (
             <div>
@@ -82,6 +90,7 @@ export default class Payment extends React.Component {
                         />
                         <br />
                         <DropDownMenu value={this.state.exp_month} onChange={this.handleExpMonthChange}>
+                            <MenuItem value={0} primaryText="Expiration month" />
                             <MenuItem value={1} primaryText="1" />
                             <MenuItem value={2} primaryText="2" />
                             <MenuItem value={3} primaryText="3" />
@@ -94,6 +103,22 @@ export default class Payment extends React.Component {
                             <MenuItem value={10} primaryText="10" />
                             <MenuItem value={11} primaryText="11" />
                             <MenuItem value={12} primaryText="12" />
+                        </DropDownMenu>
+
+                        <DropDownMenu value={this.state.exp_year} onChange={this.handleExpYearChange}>
+                            <MenuItem value={0} primaryText="Expiration year" />
+                            <MenuItem value={2018} primaryText="2018" />
+                            <MenuItem value={2019} primaryText="2019" />
+                            <MenuItem value={2020} primaryText="2020" />
+                            <MenuItem value={2021} primaryText="2021" />
+                            <MenuItem value={2022} primaryText="2022" />
+                            <MenuItem value={2023} primaryText="2023" />
+                            <MenuItem value={2024} primaryText="2024" />
+                            <MenuItem value={2025} primaryText="2025" />
+                            <MenuItem value={2026} primaryText="2026" />
+                            <MenuItem value={2027} primaryText="2027" />
+                            <MenuItem value={2028} primaryText="2028" />
+                            <MenuItem value={2029} primaryText="2029" />
                         </DropDownMenu>
                         <br/>
                         <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Pay Now" />
