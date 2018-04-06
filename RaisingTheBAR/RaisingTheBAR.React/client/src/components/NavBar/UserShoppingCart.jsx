@@ -13,7 +13,7 @@ export default class UserShoppingCart extends React.Component {
         return (
             <div>
                 <h1>SHOPPING CART</h1>
-                <Link to="/payment/" {...this.props}><FlatButton label="PAY"/></Link>
+                <Link to="/Payment" {...this.props}><FlatButton label="PAYY"/></Link>
             </div>
         );
     }

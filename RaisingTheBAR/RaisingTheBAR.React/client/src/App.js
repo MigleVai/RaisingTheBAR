@@ -38,8 +38,7 @@ class App extends Component {
         <Route path="/allitems" component={ItemPage} />
         {/* <Route path="/itempage" component={ItemPage}/> */}
         <Route path="/cart" component={UserShoppingCart} />
-        <Route path="/payment" {...this.props} render={(props) => (
-          !this.state.logged ? <Redirect to="/signin" /> : <Payment {...this.props} {...props} />)} />
+            <Route path="/payment" component= {Payment} />
       </div>
     );
   }

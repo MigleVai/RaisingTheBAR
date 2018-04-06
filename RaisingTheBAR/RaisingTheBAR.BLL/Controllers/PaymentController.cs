@@ -40,14 +40,16 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost("[Action]")]
         public IActionResult ExecutePayment([FromBody] PaymentRequest request)
         {
+            var userContext = _dbContext.Set<User>();
+
             var payment = new PaymentRequest
             {
                 amount = 100,
-                cvv = "123",
-                exp_month = 9,
-                exp_year = 2018,
-                holder = "Vardenis Pavardenis",
-                number = "4111111111111111"
+                cvv = request.cvv,
+                exp_month = request.exp_month,
+                exp_year = request.exp_year,
+                holder = request.holder,
+                number = request.number
             };
 
             var json = JsonConvert.SerializeObject(payment);
