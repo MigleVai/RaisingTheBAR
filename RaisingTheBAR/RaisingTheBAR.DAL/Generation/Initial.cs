@@ -16,7 +16,7 @@ namespace RaisingTheBAR.DAL.Generation
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetService<EFContext>();
+                var context = services.GetService<DbContext>();
                 if (context.Database.GetPendingMigrations().Any())
                 {
                     context.Database.Migrate();
@@ -29,9 +29,9 @@ namespace RaisingTheBAR.DAL.Generation
             }
             return host;
         }
-        private static void SeedRoles(EFContext context)
+        private static void SeedRoles(DbContext context)
         {
-            if (!context.Roles.Any())
+            if (!context.Set<Role>().Any())
             {
                 var roles = new List<Role>
                 {
@@ -57,9 +57,9 @@ namespace RaisingTheBAR.DAL.Generation
         //        context.SaveChanges();
         //    }
         //}
-        private static void SeedCategories(EFContext context)
+        private static void SeedCategories(DbContext context)
         {
-            if (!context.Categories.Any())
+            if (!context.Set<Category>().Any())
             {
                 var id = Guid.NewGuid();
                 var categories = new List<Category>
@@ -73,9 +73,9 @@ namespace RaisingTheBAR.DAL.Generation
                 context.SaveChanges();
             }
         }
-        private static void SeedProducts(EFContext context)
+        private static void SeedProducts(DbContext context)
         {
-            if (!context.Products.Any())
+            if (!context.Set<Product>().Any())
             {
                 var id = Guid.NewGuid();
                 var products = new List<Product>
@@ -100,51 +100,50 @@ namespace RaisingTheBAR.DAL.Generation
                 context.SaveChanges();
             }
         }
-        private static void SeedProductsToCategories(EFContext context)
+        private static void SeedProductsToCategories(DbContext context)
         {
-            var productContext = context.Products.Include(x => x.ProductCategories);
+            var productContext = context.Set<Product>().Include(x => x.ProductCategories);
             if (productContext.FirstOrDefault(x => x.Model == "I9500").ProductCategories == null)
             {
-                var products = context.Products;
 
-                var categories = context.Categories;
+                var categories = context.Set<Category>();
 
-                products.FirstOrDefault(x => x.Model == "I9500").ProductCategories = new List<ProductCategory>()
+                productContext.FirstOrDefault(x => x.Model == "I9500").ProductCategories = new List<ProductCategory>()
                 {
                     new ProductCategory
                     {
                         CategoryId = categories.FirstOrDefault(x=>x.Name=="Phones").Id,
-                        ProductId = products.FirstOrDefault(x=>x.Model == "I9500").Id
+                        ProductId = productContext.FirstOrDefault(x=>x.Model == "I9500").Id
                     }
                 };
 
-                products.FirstOrDefault(x => x.Model == "VN7G5T").ProductCategories = new List<ProductCategory>()
+                productContext.FirstOrDefault(x => x.Model == "VN7G5T").ProductCategories = new List<ProductCategory>()
                 {
                     new ProductCategory
                     {
                         CategoryId = categories.FirstOrDefault(x=>x.Name=="Notebooks").Id,
-                        ProductId = products.FirstOrDefault(x=>x.Model == "VN7G5T").Id
+                        ProductId = productContext.FirstOrDefault(x=>x.Model == "VN7G5T").Id
                     }
                 };
 
-                products.FirstOrDefault(x => x.Model == "GINCB1080").ProductCategories = new List<ProductCategory>()
+                productContext.FirstOrDefault(x => x.Model == "GINCB1080").ProductCategories = new List<ProductCategory>()
                 {
                     new ProductCategory
                     {
                         CategoryId = categories.FirstOrDefault(x=>x.Name=="Stacionary computers").Id,
-                        ProductId = products.FirstOrDefault(x=>x.Model == "GINCB1080").Id
+                        ProductId = productContext.FirstOrDefault(x=>x.Model == "GINCB1080").Id
                     }
                 };
 
-                products.FirstOrDefault(x => x.Model == "ONE+6T").ProductCategories = new List<ProductCategory>()
+                productContext.FirstOrDefault(x => x.Model == "ONE+6T").ProductCategories = new List<ProductCategory>()
                 {
                     new ProductCategory
                     {
                         CategoryId = categories.FirstOrDefault(x=>x.Name=="Phones").Id,
-                        ProductId = products.FirstOrDefault(x=>x.Model == "ONE+6T").Id
+                        ProductId = productContext.FirstOrDefault(x=>x.Model == "ONE+6T").Id
                     }
                 };
-                context.UpdateRange(products);
+                context.UpdateRange(productContext);
                 context.SaveChanges();
             }
         }
