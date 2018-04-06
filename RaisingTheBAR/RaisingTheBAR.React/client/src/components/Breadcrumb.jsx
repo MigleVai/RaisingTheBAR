@@ -10,12 +10,19 @@ export default class Breadcrumb extends React.Component {
                 width: '100%'
             },
         };
-        var pathNames = this.props.pathname.replace('/', '').split('/');
+        var pathNames = this.props.pathname.replace('/all', '').replace('/', '').split('/');
         var tempPath = '';
-        const result = pathNames.map(function(item){
-            tempPath += "/"+item;
-            console.log(tempPath);
-            return <span> > <Link to={tempPath}>{item.charAt(0).toUpperCase() + item.slice(1)}</Link></span>;
+        const result = pathNames.map(function(item, i){
+            tempPath += "/" + item;
+            if(tempPath === '/products')
+            {
+                tempPath = '/products/all';
+            }
+            if(tempPath !== '/products/all' && tempPath.includes('/products/all/'))
+            {
+                tempPath = tempPath.replace('/all','');
+            }
+            return <span key={i}> > <Link key={i} to={tempPath}>{item.charAt(0).toUpperCase() + item.slice(1)}</Link></span>;
         });
         return (
             <div>

@@ -33,7 +33,7 @@ export default class ItemPage extends React.Component {
     getData(category)
     {
         var uri = '/api/Product/GetProductsByCategories';
-        if(category === undefined)
+        if(category === 'all')
         {
             uri = '/api/Product/GetProducts';
         }
