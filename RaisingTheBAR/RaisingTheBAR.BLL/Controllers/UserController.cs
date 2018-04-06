@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RaisingTheBAR.BLL.Models.RequestModels;
+using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Controllers
@@ -102,9 +103,32 @@ namespace RaisingTheBAR.BLL.Controllers
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
         }
-
         [Authorize]
-        [HttpPost]
+        [HttpGet("[action]")]
+        public IActionResult GetUserData()
+        {
+            var userContext = _dbContext.Set<User>();
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            var result = new UserDataResponse { Email = user.Email, Firstname = user.FirstName, Lastname = user.LastName };
+
+            return Ok(result);
+        }
+        [Authorize]
+        [HttpPost("[action]")]
         public IActionResult UpdateUserData([FromBody]ChangeUserRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -136,7 +160,7 @@ namespace RaisingTheBAR.BLL.Controllers
             return BadRequest("Nothing changed");
         }
         [Authorize]
-        [HttpPost]
+        [HttpPost("[action]")]
         public IActionResult ChangePassword([FromBody]PasswordChangeRequest request)
         {
             var userContext = _dbContext.Set<User>();
