@@ -5,29 +5,54 @@ import PersonalInfo from './PersonalInfo';
 import PasswordInfo from './PasswordInfo';
 
 export default class Settings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            info: true,
+        }
+        this.clickInfo = this.clickInfo.bind(this);
+        this.clickPass = this.clickPass.bind(this);
+    }
 
+    clickInfo() {
+        this.refs.personal.style.fontWeight = 'bold';
+        this.refs.password.style.fontWeight = 'normal';
+        this.setState({ info: true });
+    }
+    clickPass() {
+        this.refs.password.style.fontWeight = 'bold';
+        this.refs.personal.style.fontWeight = 'normal';
+        this.setState({ info: false });
+    }
     render() {
-        const style = {
-            // height: '50%',
-            // width: 100,
-            // margin: 20,
-            textAlign: 'center',
-            display: 'inline-block',
+        const styles = {
+            paperStyle: {
+                textAlign: 'center',
+                display: 'inline-block',
+            }
         };
+        var shown;
+        if (this.state.info) {
+            shown = <PersonalInfo />;
+        } else {
+            shown = <PasswordInfo />;
+        }
         return (
             <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
                 <hr />
                 <div style={{ display: 'inline-block', maxWidth: '50%' }}>
-                    <Paper style={style} zDepth={1}>
-                        <PersonalInfo />
+                    <Paper style={styles.paperStyle} zDepth={1}>
+                        {shown}
                     </Paper>
                 </div>
                 <div style={{ display: 'inline-block', maxWidth: '30%' }}>
-                    {/* <div onClick={}>
-                        <p>Personal Information</p>
-                    </div> */}
-                    <p>Change Password</p>
+                    <div onClick={this.clickInfo}>
+                        <p style={{fontWeight: 'bold'}} ref="personal">Personal Information</p>
+                    </div>
+                    <div onClick={this.clickPass}>
+                        <p style={{fontWeight: 'normal'}} ref="password">Change Password</p>
+                    </div>
                 </div>
             </div>
         );
