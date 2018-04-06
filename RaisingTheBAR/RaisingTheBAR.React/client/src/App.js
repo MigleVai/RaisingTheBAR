@@ -38,20 +38,18 @@ class App extends Component {
         <header>
           <Route path="/" render={(props) => <Header handleLogging={this.handleLogging} islogged={this.state.logged} />} />
         </header>
-        <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/signin" render={(props) => <SignIn handleLogging={this.handleLogging}/>} />
         <Route path="/register" render={(props) => <Register handleLogging={this.handleLogging} />} />
-        {/* <Route exact path="/allitems" component={ItemPage} /> */}
-        {/* <Route path="/itempage" component={ItemPage}/> */}
         <Route path="/allitems/:productId" component={Item}/>
+        <Route exact path="/products" component={ItemPage}/>
         <Route exact path="/products/:category" component={ItemPage}/>
-        <Route exact path="/products" componenet={ItemPage}/>
-        {/* <Route path="/item" component={Item}/> */}
         <Route path="/cart" component={UserShoppingCart} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />
+        <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/signin" /> : <Payment />)} />
+          
       </div>
     );
   }
