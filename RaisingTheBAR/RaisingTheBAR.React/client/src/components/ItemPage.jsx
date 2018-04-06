@@ -13,24 +13,36 @@ export default class ItemPage extends React.Component {
         this.state = {
             products: []
         }
+        this.getData = this.getData.bind(this);
     }
 
     componentDidMount() {
+        this.getData(this.props.match.params.category);
+    }
+
+    componentDidUpdate(prevProps)
+    {
+        if(prevProps == null)
+        {return null;}
+        if(this.props.match.params.category !== prevProps.match.params.category)
+        {
+            this.getData(this.props.match.params.category);
+        }
+    }
+    getData(category)
+    {
         axios.get(`/api/Product/GetProductsByCategories`, {
             params: {
-                categoryName: this.props.match.params.category
+                categoryName: category
             }
         })
             .then(res => {
                 const products = res.data;
-                this.setState({ products });
+                this.setState({ products: products });
             })
             .catch(function (error) {
                 // show error
             });
-    }
-    componentWillUnmount() {
-
     }
 
     render() {
@@ -47,7 +59,7 @@ export default class ItemPage extends React.Component {
             {
                 Header: 'Thumbnail',
                 Cell: (row) => {
-                    return <div><img key={row.original.id} alt="No Image" src={row.original.image} /></div>
+                    return <div><img key={row.original.id} alt="thumb" src={row.original.image} /></div>
                 },
                 resizable: false,
                 sortable: false,

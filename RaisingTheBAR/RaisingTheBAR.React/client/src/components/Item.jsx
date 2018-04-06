@@ -77,7 +77,7 @@ export default class Item extends React.Component {
             <div>
                 <Breadcrumb pathname={rez} />
                 <hr />
-                <div style={styles.divStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="No Image" src={(this.state.product.image)} />
+                <div style={styles.divStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(this.state.product.image)} />
                 </div>
                 <div style={styles.textStyle}>
                     <h3 style={styles.h3Style}>{this.state.product.name}</h3>
