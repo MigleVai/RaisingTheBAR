@@ -47,10 +47,10 @@ export default class Settings extends React.Component {
                     </Paper>
                 </div>
                 <div style={{ display: 'inline-block', maxWidth: '30%' }}>
-                    <div onClick={this.clickInfo}>
+                    <div onClick={this.clickInfo} style={{cursor: 'pointer'}}>
                         <p style={{fontWeight: 'bold'}} ref="personal">Personal Information</p>
                     </div>
-                    <div onClick={this.clickPass}>
+                    <div onClick={this.clickPass} style={{cursor: 'pointer'}}>
                         <p style={{fontWeight: 'normal'}} ref="password">Change Password</p>
                     </div>
                 </div>

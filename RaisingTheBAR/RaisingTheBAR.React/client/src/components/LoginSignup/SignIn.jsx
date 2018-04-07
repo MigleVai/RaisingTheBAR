@@ -11,7 +11,9 @@ export default class SignIn extends React.Component {
         this.state = {
             email: '',
             password: '',
-            role: 'user'
+            role: 'user',
+            emailError: '',
+            passwordError: ''
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -19,7 +21,10 @@ export default class SignIn extends React.Component {
 
     // reikes cia patikrint ar geri prisijungimo duomenys
     handleLoggingChange(props) {
-        axios.post(`/api/User/RequestToken`,
+        if(this.state.emailError === '' && this.state.passwordError === '' 
+        && this.state.email !== '' && this.state.password !== '')
+        {
+            axios.post(`/api/User/RequestToken`,
             {
                 Email: this.state.email,
                 Password : this.state.password,
@@ -35,12 +40,25 @@ export default class SignIn extends React.Component {
             .catch(function (error) {
                 // show error
             });
+        }else{
+            var error = 'This field is required!';
+            this.setState({ emailError: error, passwordError: error });
+        }
     }
     handlePasswordChange(event) {
-        this.setState({ password: event.target.value });
+        this.setState({ password: event.target.value, passwordError: '' });
     }
     handleEmailChange(event) {
-        this.setState({ email: event.target.value }); // turi buti visada arba neatsiras raides rasant
+        this.setState({ email: event.target.value });
+        var re = RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$');
+        if (!re.test(event.target.value.toLowerCase())) {
+            this.setState({ emailError: 'Not an email!' });
+        } else {
+            this.setState({ emailError: '' });
+        }
+        if (event.target.value === '') {
+            this.setState({ emailError: '' });
+        }
     }
     render() {
         const styles = {
@@ -77,6 +95,7 @@ export default class SignIn extends React.Component {
                         onChange={this.handleEmailChange}
                         floatingLabelText="Email"
                         floatingLabelFixed={true}
+                        errorText={this.state.emailError}
                     />
                     <br />
                     <TextField
@@ -85,6 +104,7 @@ export default class SignIn extends React.Component {
                         floatingLabelText="Password"
                         type = "password"
                         floatingLabelFixed={true}
+                        errorText={this.state.passwordError}
                     />
                     <br />
                     <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />

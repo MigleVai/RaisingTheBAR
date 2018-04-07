@@ -1,11 +1,13 @@
 import React from 'react';
+import Breadcrumb from './Breadcrumb';
+import OrderHistoryList from './OrderHistoryList';
 
 export default class OrderHistory extends React.Component {
 
     render() {
         return (
             <div>
-                <h1>Sup, I'm the Order History</h1>
+                <Breadcrumb pathname={this.props.location.pathname} />
             </div>
         );
     }
