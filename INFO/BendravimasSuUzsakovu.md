@@ -5,31 +5,41 @@ Kada turi būti paprašoma vartotojo įvertinti apsipirktimą (kai administrator
 1. Kokia kalbą turėtų būti sukurta svetainė?
 
   * Nebūtina turėti kelias kalbas, bet bus laikoma privalumu.
+------
+Po pirmo siuntimo atsakyti klausimai: 
 
-2. Ar reikia naudoti kažkokią spalvų paletę?
+1. Ar reikia naudoti kažkokią spalvų paletę?
+ * Ne. Konkrečių reikalavimų nėra, galite siūlyti savo.
 
-4. Saugumo reikalavimai slaptažodžiui?
+2. Saugumo reikalavimai slaptažodžiui?
+ * Minimalus ilgis – 8 simboliai. Slaptažodyje turi būti bent viena didžioji raidė, bent viena mažoji raidė ir bent vienas simbolis, kuris yra ne raidė.
 
-5. Prekių sąrašas pirkėjui - rodomos tik tos kurios yra sandelyje
-                             ar visos su galimybe užsisakyti arba pasiteirauti ar bus atvežama daugiau?
+3. Prekių sąrašas pirkėjui - rodomos tik tos kurios yra sandelyje ar visos su galimybe užsisakyti arba pasiteirauti ar bus atvežama daugiau?
+* Sandėlio informacijos saugoti nereikia. Tarkime, kad prekių sandėlyje visada bus.
 
-7. Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu?
+4. Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu?
+* Kaip siūlote spręsti tokią situaciją?
 
-9. Ar turi būti galimybė atšaukti užsakymą?
+5. Ar turi būti galimybė atšaukti užsakymą?
+* Ne.
 
-10. Naudojami prisijungimo patogumai: "Remember me", "Forgot password"?
+6. Naudojami prisijungimo patogumai: "Remember me", "Forgot password"?
+* Nebūtina, bet bus laikoma privalumu.
 
-19. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
+7. Ar turi būti įgyvendintas paspaudimas-skambutis (ang. click-to-call) funkcionalumas įrenginiams su skambinimo funkcionalumu?
+* Ne.
 
-20. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
+8. Ar reikia "atsiminti" vartotojo mokėjimo informaciją?
+* Sukonkretinkit klausimą, kas yra laikoma mokėjimo informacija?
 
-21. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
+9. Kokie datos formatai turi būti palaikomi (2017-05-18, 18/05/2017 ir t.t.)?
+* Pagal naudojamos kalbos standartą.
 
-22. Ar turi egzituoti prekių komentavimo funkcionalumas? 
+10. Ar turi egzituoti prekių komentavimo funkcionalumas?
+* Ne.
 
-23. Ar užtenka reitingavimo tam tikroje skalėje? (pvz 0-10)
-
-
+11. Ar užtenka reitingavimo tam tikroje skalėje? (pvz 0-10)
+* Reitingavimo kam?
 
 ## Atsakyti klausimai
 
