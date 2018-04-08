@@ -8,8 +8,7 @@ pipeline {
     }
     stage('Publish') {
       steps {
-        sh '''cd RaisingTheBAR/RaisingTheBAR.React/client/  && \\cp -r build/ ../../../../../temp/
-'''
+        sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/  && \\cp -r build/ ../../../../../temp/'
         sh '../../scripts/publish.sh'
       }
     }
