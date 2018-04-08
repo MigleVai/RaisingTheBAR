@@ -12,7 +12,8 @@ export default class Register extends React.Component {
             role: 'user',
             repeatError: '',
             emailError: '',
-            passwordError: ''
+            passwordError: '',
+            repeat: ''
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         // this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(this);
@@ -20,6 +21,7 @@ export default class Register extends React.Component {
         this.passwordRepeatValidation = this.passwordRepeatValidation.bind(this);
     }
     passwordRepeatValidation(event) {
+        this.setState({repeat: event.target.value});
         if (this.state.password !== event.target.value) {
             this.setState({ repeatError: 'Passwords do not match!' });
         }
@@ -29,6 +31,16 @@ export default class Register extends React.Component {
     }
     handlePasswordChange(event) {
         this.setState({ password: event.target.value, passwordError: '' });
+        var re = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?([0-9]|[#?!@$%^&*-])).{8,}$');
+        if(!re.test(event.target.value)) {
+            this.setState({ passwordError: 'Not a valid password!' });
+        }else {
+            this.setState({ passwordError: '' });
+        }
+        if (event.target.value === '') {
+            this.setState({ passwordError: '' });
+        }
+       
     }
     handleEmailChange(event) {
         this.setState({ email: event.target.value });
@@ -43,7 +55,8 @@ export default class Register extends React.Component {
         }
     }
     handleLoggingChange(props) {
-        if (this.state.email !== '' && this.state.password !== ''
+        var error = 'This field is required!';
+        if (this.state.email !== '' && this.state.password !== '' && this.state.repeat !== ''
             && this.state.emailError === '' && this.state.passwordError === ''
             && this.state.repeatError === '') {
             axios.post(`/api/User/RegisterUser`,
@@ -63,8 +76,15 @@ export default class Register extends React.Component {
                     // show error
                 });
         } else {
-            var error = 'This field is required!';
-            this.setState({ emailError: error, passwordError: error, repeatError: error });
+            if (this.state.emailError !== '' || this.state.email === '') {
+                this.setState({ emailError: error });
+            }
+            if (this.state.passwordErrorError !== '' || this.state.password === '') {
+                this.setState({ passwordError: error });
+            }
+            if (this.state.repeatError !== '' || this.state.repeat === '') {
+                this.setState({ repeatError: error });
+            }
         }
     }
     render() {
@@ -109,6 +129,7 @@ export default class Register extends React.Component {
                     />
                     <br />
                     <TextField
+                        value={this.state.repeat}
                         floatingLabelText="Repeat Password"
                         floatingLabelFixed={true}
                         type="password"
