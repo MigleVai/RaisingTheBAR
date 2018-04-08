@@ -3,12 +3,14 @@ import Breadcrumb from './Breadcrumb';
 import axios from 'axios';
 import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
+import ErrorMessage from './ErrorMessage';
 
 export default class Item extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            product: {}
+            product: {},
+            responseError: ''
         }
     }
 
@@ -22,8 +24,8 @@ export default class Item extends React.Component {
                 const product = res.data;
                 this.setState({ product });
             })
-            .catch(function (error) {
-                // show error
+            .catch(error => {
+                this.setState({responseError: error.response.data});
             });
     }
 
@@ -75,6 +77,7 @@ export default class Item extends React.Component {
         const price = parseFloat(this.state.product.price).toFixed(2);
         return (
             <div>
+                <ErrorMessage responseError={this.state.responseError} />
                 <Breadcrumb pathname={rez} />
                 <hr />
                 <div style={styles.divStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(this.state.product.image)} />

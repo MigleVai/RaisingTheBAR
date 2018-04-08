@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ErrorMessage from '../ErrorMessage';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -13,34 +14,34 @@ export default class SignIn extends React.Component {
             password: '',
             role: 'user',
             emailError: '',
-            passwordError: ''
+            passwordError: '',
+            responseError: ''
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleLoggingChange = this.handleLoggingChange.bind(this);
     }
-
     // reikes cia patikrint ar geri prisijungimo duomenys
     handleLoggingChange(props) {
-        if(this.state.emailError === '' && this.state.passwordError === '' 
-        && this.state.email !== '' && this.state.password !== '')
-        {
+        if (this.state.emailError === '' && this.state.passwordError === ''
+            && this.state.email !== '' && this.state.password !== '') {
             axios.post(`/api/User/RequestToken`,
-            {
-                Email: this.state.email,
-                Password : this.state.password,
-                Role : this.state.role,
-            })
-            .then(res => {
-                const result = res.data;
-                localStorage.setItem('jwtToken', result.token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
-                this.props.handleLogging(true);
-                this.props.history.push('/');
-            })
-            .catch(function (error) {
-                // show error
-            });
-        }else{
+                {
+                    Email: this.state.email,
+                    Password: this.state.password,
+                    Role: this.state.role,
+                })
+                .then(res => {
+                    const result = res.data;
+                    localStorage.setItem('jwtToken', result.token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
+                    this.props.handleLogging(true);
+                    this.props.history.push('/');
+                })
+                .catch(error => {
+                    this.setState({responseError: error.response.data});
+                });
+        } else {
             var error = 'This field is required!';
             this.setState({ emailError: error, passwordError: error });
         }
@@ -82,9 +83,9 @@ export default class SignIn extends React.Component {
             }
         };
         return (
-
             //  <Jumbotron>
             <div style={styles.displayStyles}>
+                <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Sign In</h3>
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
@@ -102,7 +103,7 @@ export default class SignIn extends React.Component {
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
                         floatingLabelText="Password"
-                        type = "password"
+                        type="password"
                         floatingLabelFixed={true}
                         errorText={this.state.passwordError}
                     />
