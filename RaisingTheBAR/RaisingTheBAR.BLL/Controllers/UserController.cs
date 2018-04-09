@@ -194,7 +194,7 @@ namespace RaisingTheBAR.BLL.Controllers
             var argon2 = new Argon2d(Encoding.UTF8.GetBytes(password))
             {
                 DegreeOfParallelism = 1,
-                MemorySize = 128,
+                MemorySize = 256,
                 Iterations = 2,
                 Salt = Encoding.UTF8.GetBytes(id.ToString())
             };
