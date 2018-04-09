@@ -16,7 +16,6 @@ export default class Register extends React.Component {
             repeat: ''
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        // this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.passwordRepeatValidation = this.passwordRepeatValidation.bind(this);
     }
@@ -25,13 +24,16 @@ export default class Register extends React.Component {
         if (this.state.password !== event.target.value) {
             this.setState({ repeatError: 'Passwords do not match!' });
         }
+        else{
+            this.setState({ repeatError: '' });
+        }
         if (event.target.value === "") {
             this.setState({ repeatError: '' });
         }
     }
     handlePasswordChange(event) {
         this.setState({ password: event.target.value, passwordError: '' });
-        var re = RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?([0-9]|[#?!@$%^&*-])).{8,}$');
+        var re = RegExp('^(?=.*[\\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\\w!@#$%^&*]{8,}$');
         if(!re.test(event.target.value)) {
             this.setState({ passwordError: 'Not a valid password!' });
         }else {
