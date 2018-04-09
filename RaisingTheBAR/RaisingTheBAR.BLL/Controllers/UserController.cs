@@ -64,11 +64,11 @@ namespace RaisingTheBAR.BLL.Controllers
             var userContext = _dbContext.Set<User>();
             var roleContext = _dbContext.Set<Role>();
 
-            var user = userContext.FirstOrDefault(x => x.Email == request.Email);
+            var user = userContext.FirstOrDefault(x => x.Email.ToLower() == request.Email.ToLower());
 
             if (user != null)
             {
-                BadRequest("User with this E-mail already exists");
+                return BadRequest("User with this E-mail already exists");
             }
             var id = Guid.NewGuid();
 
