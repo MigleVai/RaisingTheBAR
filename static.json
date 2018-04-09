@@ -1,7 +1,0 @@
-{
-    "root" : "/RaisingTheBAR/RaisingTheBAR/raisethebar/dist",
-    "routes" : 
-    {
-        "/**" : "index.html"
-    }
-}
