@@ -7,7 +7,7 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "prepClient": "cd client && npm install",
-    "prepServer": "npm install -g concurrrently"
+    "prepServer": "npm install -g concurrently"
   },
   "description": "RaisingTheBAR.React",
   "author": {

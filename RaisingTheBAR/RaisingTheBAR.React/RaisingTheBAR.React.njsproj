@@ -37,6 +37,7 @@
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
     <Compile Include="client\src\components\Breadcrumb.jsx" />
+    <Compile Include="client\src\components\ErrorMessage.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
     <Compile Include="client\src\components\ImgCarousel.jsx" />
@@ -49,7 +50,12 @@
     <Compile Include="client\src\components\NavBar\SearchBar.jsx" />
     <Compile Include="client\src\components\NavBar\UserPanel.jsx" />
     <Compile Include="client\src\components\NavBar\UserShoppingCart.jsx" />
+    <Compile Include="client\src\components\OrderHistory.jsx" />
+    <Compile Include="client\src\components\OrderHistoryList.jsx" />
     <Compile Include="client\src\components\Payment.jsx" />
+    <Compile Include="client\src\components\SettingsInfo\PasswordInfo.jsx" />
+    <Compile Include="client\src\components\SettingsInfo\PersonalInfo.jsx" />
+    <Compile Include="client\src\components\SettingsInfo\Settings.jsx" />
     <Compile Include="client\src\index.js" />
     <Compile Include="client\src\registerServiceWorker.js" />
     <Content Include="client\.gitignore" />
@@ -73,6 +79,7 @@
     <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\src\components\LoginSignup\" />
     <Folder Include="client\src\components\NavBar\" />
+    <Folder Include="client\src\components\SettingsInfo\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
