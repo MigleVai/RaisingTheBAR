@@ -9,7 +9,7 @@ pipeline {
     stage('Publish') {
       steps {
         sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && sudo \\cp -r build/ ../../../../../temp/'
-        sh '../../scripts/publish.sh'
+        sh 'cd ../../scripts/ && publish.sh'
       }
     }
   }
