@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
+import FormErrors from './FormErrors.jsx'
 
 export default class Payment extends React.Component {
     constructor(props) {
@@ -14,8 +15,13 @@ export default class Payment extends React.Component {
             exp_month: 0,
             exp_year: 0,
             holder: '',
-            amount: 100,
-            number: ''
+            amount: 100, 
+            number: '',
+            formErrors: { cvv: '', holder: '', number: '' },
+            cvvValid: false,
+            holderValid: false,
+            numberValid: false,
+            formValid: false
         };
         this.handleCvvChange = this.handleCvvChange.bind(this);
         this.handleExpMonthChange = this.handleExpMonthChange.bind(this);
@@ -25,9 +31,14 @@ export default class Payment extends React.Component {
         this.handlePayClick = this.handlePayClick.bind(this);
     }
 
+    getMoneyAmount() {
+        //TODO fix the horrible name and connect this to the db(?)
+        
+    }
+
     // Need to check if the parameters are valid here.
     handlePayClick() {
-        this.state.amount++;
+        this.setState({ amount: 12});
         axios.post(`/api/Payment/ExecutePayment`,
                 {
                     cvv: this.state.cvv,
@@ -43,7 +54,7 @@ export default class Payment extends React.Component {
                 this.props.onLogging(true);
             })
             .catch(function (error) {
-                // show error
+                
             });
     }
 
@@ -63,6 +74,49 @@ export default class Payment extends React.Component {
     }
     handleNumberChange(event) {
         this.setState({ number: event.target.value }); 
+    }
+
+    
+    
+    handleUserInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({ [name]: value }, 
+            () => { this.validateField(name, value) });
+    }
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let cvvValid = this.state.cvvValid;
+        let holderValid = this.state.holderValid;
+        let numberValid = this.state.numberValid;
+
+        switch (fieldName) {
+        case 'cvv':
+            cvvValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+            fieldValidationErrors.cvv = cvvValid ? '' : ' is invalid';
+            break;
+        case 'holder':
+            holderValid = value.length >= 6;
+            fieldValidationErrors.holder = holderValid ? '' : ' is too short';
+            break;
+         case 'number':
+            numberValid = value.length >= 6;
+            fieldValidationErrors.number = numberValid ? '' : ' is too short';
+            break;
+        default:
+            break;
+        }
+        this.setState({
+            formErrors: fieldValidationErrors,
+            cvvValid: cvvValid,
+            holderValid: holderValid,
+            numberValid: numberValid
+        }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({ formValid: this.state.cvvValid && this.state.holderValid && this.state.numberValid});
     }
 
 
@@ -95,21 +149,21 @@ export default class Payment extends React.Component {
                         
                         <TextField
                             value={this.state.holder}
-                            onChange={this.handleHolderChange}
+                            onChange={(event) => this.handleUserInput(event)}
                             floatingLabelText="Credit Card Holder"
                             floatingLabelFixed={true}
                         />
                         <br />
                         <TextField
                             value={this.state.number}
-                            onChange={this.handleNumberChange}
+                            onChange={(event) => this.handleUserInput(event)}
                             floatingLabelText="Credit Card Number"
                             floatingLabelFixed={true}
                         />
                         <br />
                         <TextField
                             value={this.state.cvv}
-                            onChange={this.handleCvvChange}
+                            onChange={(event) => this.handleUserInput(event)}
                             floatingLabelText="Cvv"
                             floatingLabelFixed={true}
                         />
@@ -152,7 +206,9 @@ export default class Payment extends React.Component {
                             Total amount: {this.state.amount}
                         </section>
 
-                        <RaisedButton  onClick={this.handlePayClick}  label="Pay Now" />
+                        <RaisedButton disabled={!this.state.formValid} onClick={this.handlePayClick} label="Pay Now" />
+
+                        <FormErrors formErrors={this.state.formErrors} />
                 </form>
                 </div>
             </div>

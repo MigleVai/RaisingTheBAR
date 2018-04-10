@@ -36,6 +36,9 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
+    <Compile Include="client\src\components\FormErrors.jsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="client\src\components\Header.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
