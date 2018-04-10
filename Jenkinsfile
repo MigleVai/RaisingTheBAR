@@ -1,6 +1,11 @@
 pipeline {
   agent any
   stages {
+    stage('Clone') {
+      steps {
+        checkout scm
+      }
+    }
     stage('Build client') {
       steps {
         sh "cd RaisingTheBAR/RaisingTheBAR.React/client/ && npm install && npm run build"
