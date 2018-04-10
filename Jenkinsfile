@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('Build client') {
       steps {
-        echo 'Begin'
         sh "cd RaisingTheBAR/RaisingTheBAR.React/client/ && npm install && npm run build"
       }
     }
