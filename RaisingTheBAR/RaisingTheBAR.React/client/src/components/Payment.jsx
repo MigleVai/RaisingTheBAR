@@ -5,7 +5,7 @@ export default class Payment extends React.Component {
     render() {
         return (
             <div>
-                <h1>Sup, I'm the payment</h1>
+                <h1>Sup, I'm the payment v2</h1>
             </div>
         );
     }
