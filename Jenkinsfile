@@ -3,13 +3,14 @@ pipeline {
   stages {
     stage('Build client') {
       steps {
-        sh "cd RaisingTheBAR/RaisingTheBAR.React/client/ && npm install && npm run build"
+        sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && npm install && npm run build'
+        echo 'Begin'
       }
     }
     stage('Publish') {
       steps {
-        sh "cd RaisingTheBAR/RaisingTheBAR.React/client/ && \\cp -r build/ ../../../../../temp/"
-        sh "../../scripts/publish.sh"
+        sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && \\cp -r build/ ../../../../../temp/'
+        sh '../../scripts/publish.sh'
       }
     }
   }
