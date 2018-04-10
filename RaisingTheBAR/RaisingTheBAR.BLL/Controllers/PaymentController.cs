@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -65,17 +66,17 @@ namespace RaisingTheBAR.BLL.Controllers
                 streamWriter.Close();
             }
 
+            try {
+                // Get the response.
+                var httpResponse = (HttpWebResponse)mockProcessorRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) {
+                    var result = streamReader.ReadToEnd();
 
-            // Get the response.
-            var httpResponse = (HttpWebResponse)mockProcessorRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                // Print the fucker.
-                Console.WriteLine(httpResponse.Headers + Environment.NewLine);
-                Console.WriteLine(result);
+                }
+            } catch (WebException e) {
+                return BadRequest(e);
             }
+
 
 
             return Ok();
