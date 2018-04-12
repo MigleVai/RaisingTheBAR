@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
-import FormErrors from './FormErrors.jsx'
 
 export default class Payment extends React.Component {
     constructor(props) {
@@ -29,6 +28,7 @@ export default class Payment extends React.Component {
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
         this.handlePayClick = this.handlePayClick.bind(this);
+        this.handleUserInput = this.handleUserInput.bind(this);
     }
 
     getMoneyAmount() {
@@ -81,42 +81,7 @@ export default class Payment extends React.Component {
     handleUserInput(e) {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({ [name]: value }, 
-            () => { this.validateField(name, value) });
-    }
-
-    validateField(fieldName, value) {
-        let fieldValidationErrors = this.state.formErrors;
-        let cvvValid = this.state.cvvValid;
-        let holderValid = this.state.holderValid;
-        let numberValid = this.state.numberValid;
-
-        switch (fieldName) {
-        case 'cvv':
-            cvvValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            fieldValidationErrors.cvv = cvvValid ? '' : ' is invalid';
-            break;
-        case 'holder':
-            holderValid = value.length >= 6;
-            fieldValidationErrors.holder = holderValid ? '' : ' is too short';
-            break;
-         case 'number':
-            numberValid = value.length >= 6;
-            fieldValidationErrors.number = numberValid ? '' : ' is too short';
-            break;
-        default:
-            break;
-        }
-        this.setState({
-            formErrors: fieldValidationErrors,
-            cvvValid: cvvValid,
-            holderValid: holderValid,
-            numberValid: numberValid
-        }, this.validateForm);
-    }
-
-    validateForm() {
-        this.setState({ formValid: this.state.cvvValid && this.state.holderValid && this.state.numberValid});
+        this.setState({ [name]: value });
     }
 
 
@@ -149,21 +114,21 @@ export default class Payment extends React.Component {
                         
                         <TextField
                             value={this.state.holder}
-                            onChange={(event) => this.handleUserInput(event)}
+                            onChange={(event) => this.handleHolderChange(event)}
                             floatingLabelText="Credit Card Holder"
                             floatingLabelFixed={true}
                         />
                         <br />
                         <TextField
                             value={this.state.number}
-                            onChange={(event) => this.handleUserInput(event)}
+                            onChange={(event) => this.handleNumberChange(event)}
                             floatingLabelText="Credit Card Number"
                             floatingLabelFixed={true}
                         />
                         <br />
                         <TextField
                             value={this.state.cvv}
-                            onChange={(event) => this.handleUserInput(event)}
+                            onChange={(event) => this.handleCvvChange(event)}
                             floatingLabelText="Cvv"
                             floatingLabelFixed={true}
                         />
@@ -208,7 +173,7 @@ export default class Payment extends React.Component {
 
                         <RaisedButton disabled={!this.state.formValid} onClick={this.handlePayClick} label="Pay Now" />
 
-                        <FormErrors formErrors={this.state.formErrors} />
+                        
                 </form>
                 </div>
             </div>
