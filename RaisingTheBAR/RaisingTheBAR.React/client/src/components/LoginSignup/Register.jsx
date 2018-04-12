@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import ErrorMessage from '../ErrorMessage';
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -13,7 +14,8 @@ export default class Register extends React.Component {
             repeatError: '',
             emailError: '',
             passwordError: '',
-            repeat: ''
+            repeat: '',
+            responseError: ''
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -33,7 +35,7 @@ export default class Register extends React.Component {
     }
     handlePasswordChange(event) {
         this.setState({ password: event.target.value, passwordError: '' });
-        var re = RegExp('^(?=.*[\\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\\w!@#$%^&*]{8,}$');
+        var re = RegExp('');
         if(!re.test(event.target.value)) {
             this.setState({ passwordError: 'Not a valid password!' });
         }else {
@@ -74,8 +76,8 @@ export default class Register extends React.Component {
                     this.props.handleLogging(true);
                     this.props.history.push('/');
                 })
-                .catch(function (error) {
-                    // show error
+                .catch(error => {//(function (error) {
+                    this.setState({ responseError: error.response.data });
                 });
         } else {
             if (this.state.emailError !== '' || this.state.email === '') {
@@ -106,6 +108,7 @@ export default class Register extends React.Component {
         return (
             //  <Jumbotron>
             <div style={styles.displayStyles}>
+                <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Register</h3>
                     <h6 style={styles.textStyle}>to Raise the BAR</h6>
