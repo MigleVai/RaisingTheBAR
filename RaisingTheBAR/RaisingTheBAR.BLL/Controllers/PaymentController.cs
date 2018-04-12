@@ -18,6 +18,7 @@ namespace RaisingTheBAR.BLL.Controllers
     [Route("api/Payment")]
     public class PaymentController : Controller
     {
+        // TODO iškerkti į config
         public IConfiguration Configuration { get; }
         DbContext _dbContext;
         string user;
