@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { MuiThemeProvider } from 'material-ui'
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:65324';
+axios.defaults.baseURL = 'https://raisingthebarapi.azurewebsites.net';
 
 ReactDOM.render(
     <Router>
