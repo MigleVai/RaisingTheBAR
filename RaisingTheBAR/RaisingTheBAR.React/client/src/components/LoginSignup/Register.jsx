@@ -35,7 +35,7 @@ export default class Register extends React.Component {
     }
     handlePasswordChange(event) {
         this.setState({ password: event.target.value, passwordError: '' });
-        var re = RegExp('');
+        var re = RegExp('^((?=.*[\\d])|(?=.*[!@#$%^&*,\\.\\=\\+]))(?=.*[A-Z])(?=.*[a-z])[\\w!@#$%^&*\\.\\=\\+]{8,}$');
         if(!re.test(event.target.value)) {
             this.setState({ passwordError: 'Not a valid password!' });
         }else {
