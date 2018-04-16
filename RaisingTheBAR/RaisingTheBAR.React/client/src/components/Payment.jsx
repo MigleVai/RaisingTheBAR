@@ -121,6 +121,12 @@ export default class Payment extends React.Component {
             },
             customWidth: {
                 width: 200,
+            },
+            imgStyle: {
+                margin: 'auto',
+                paddingTop: '6%',
+                width: '40%'
+               
             }
 
 
@@ -199,7 +205,7 @@ export default class Payment extends React.Component {
 
                     <RaisedButton disabled={!this.state.formValid} onClick={this.handlePayClick} label="Pay Now"/>
 
-
+                    <div><img style={styles.imgStyle} src="resources/cvv.jpg" alt="Cvv" /></div>
                 </form>
             </div>
         );
