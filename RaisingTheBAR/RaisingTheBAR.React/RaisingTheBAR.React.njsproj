@@ -38,6 +38,7 @@
     <Compile Include="client\src\App.test.js" />
     <Compile Include="client\src\components\Breadcrumb.jsx" />
     <Compile Include="client\src\components\ErrorMessage.jsx" />
+    <Compile Include="client\src\components\functions\IsValidLuhn.js" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
     <Compile Include="client\src\components\ImgCarousel.jsx" />
@@ -76,6 +77,7 @@
     <Folder Include="client\public\" />
     <Folder Include="client\src\" />
     <Folder Include="client\src\components\" />
+    <Folder Include="client\src\components\functions\" />
     <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\src\components\LoginSignup\" />
     <Folder Include="client\src\components\NavBar\" />

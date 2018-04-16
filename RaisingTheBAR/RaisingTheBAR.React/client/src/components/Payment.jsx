@@ -93,7 +93,7 @@ export default class Payment extends React.Component {
     handleNumberChange(event) {
         this.setState({ number: event.target.value });
         var re = RegExp('\\b[0-9]\{16\}\\b');
-        if (!re.test(event.target.value) && !isValidLuhn(event.target.value)) {
+        if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
             this.setState({ numberError: 'Not a valid card number!' });
         } else {
             this.setState({ numberError: '' });
@@ -145,7 +145,9 @@ export default class Payment extends React.Component {
                         value={this.state.number}
                         onChange={(event) => this.handleNumberChange(event)}
                         floatingLabelText="Credit Card Number"
-                        floatingLabelFixed={true}/>
+                        floatingLabelFixed={true}
+                        style={styles.textFieldSytle}
+                        errorText={this.state.numberError} />
                     <br/>
                     <TextField
                         value={this.state.cvv}
