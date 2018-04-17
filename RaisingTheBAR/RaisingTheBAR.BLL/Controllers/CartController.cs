@@ -24,7 +24,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
-        public IActionResult AddTermporaryCartToDatabase([FromBody] List<ProductToCartRequest> request)
+        public IActionResult AddTemporaryCartToDatabase([FromBody] List<ProductToCartRequest> request)
         {
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Cart)
