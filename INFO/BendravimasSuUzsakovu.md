@@ -1,5 +1,19 @@
-### Pirkėjo klausimai:
-Kada turi būti paprašoma vartotojo įvertinti apsipirktimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
+## Nauji klausimai
+1. Kada turi būti paprašoma vartotojo įvertinti apsipirkimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
+2. Kaip turėtų būti registruojamas administratorius?
+3. Ar administratorius prisijungęs kaip vartotojas gali panaudoti visus usecase kaip ir vartotojas?
+4. Ar reikia išsaugoti kreditinės kortelės duomenis vartotojui?
+5. Kokio tipo prekių požymiai turi būti saugomi?
+6. Ar administratorius gali sukurti prekių požymius?
+7. Ar požymiai turi būti surišti su prekių kategorijomis?
+8. Ar pagal požymius galima filtruoti prekes?
+9. Koks yra prekių importo/exporto šablonas excel formatu?
+10. Ar importo ir exporto šablonas vienodas?
+11. Ar prekei užtenka vienos nuotraukos?
+12. Klausimas: Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu? Atsakymas: Kaip siūlote spręsti tokią situaciją?  Mes siūlome, kad prekė esanti krepšelyje gali pakeisti kainą. Ar tinka?
+13. Kokią reitingavimo skalę naudoti įvertinti apsipirkimams?
+14. Vykdant importą/eksportą gaima naudotis sistema- kurti, redaguoti prekes. Ar galima vykdant importą/eksportą vykdyti dar vieną importą/eksportą?
+15. Dėl pradinio puslapio turinio- siūlome atvaizduoti featured prekes besisukančioje paveiksliukų karuselėje. Ar tinka?
 
 -------------------
 1. Kokia kalbą turėtų būti sukurta svetainė?
@@ -41,7 +55,7 @@ Po pirmo siuntimo atsakyti klausimai:
 11. Ar užtenka reitingavimo tam tikroje skalėje? (pvz 0-10)
 * Reitingavimo kam?
 
-## Atsakyti klausimai
+## Kiti atsakyti klausimai
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
   
