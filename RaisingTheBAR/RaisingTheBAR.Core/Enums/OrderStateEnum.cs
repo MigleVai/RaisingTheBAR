@@ -7,8 +7,10 @@
         Approved = 10,
         Rejected = 11,
 
-        Shipped = 2,
+        InAssembly = 2,
 
-        Completed = 3,
+        Shipped = 3,
+
+        Completed = 4,
     }
 }
