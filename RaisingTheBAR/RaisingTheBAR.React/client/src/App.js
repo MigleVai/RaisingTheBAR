@@ -13,6 +13,7 @@ import Item from './components/Item';
 import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
+import Admin from './components/Admin/Admin';
 
 
 class App extends Component {
