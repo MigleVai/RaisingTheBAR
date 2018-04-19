@@ -8,7 +8,10 @@ namespace RaisingTheBAR.Core.Models
 {
     public class Order : Base
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Address { get; set; }
+        public decimal TotalPrice { get; set; }
         public OrderStateEnum State { get; set; }
         public DateTimeOffset? StartedDate { get; set; }
         public DateTimeOffset? FinishedDate { get; set; }

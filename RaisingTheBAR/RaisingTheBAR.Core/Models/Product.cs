@@ -16,5 +16,7 @@ namespace RaisingTheBAR.Core.Models
         public ICollection<ProductCart> ProductCarts { get; set; }
         public ICollection<ProductOrder> ProductOrders { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
+        public ICollection<ProductCriteria> ProductCriterias { get; set; }
+
     }
 }

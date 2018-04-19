@@ -57,6 +57,19 @@ namespace RaisingTheBAR.DAL
                 .WithMany(c => c.ProductCarts)
                 .HasForeignKey(bc => bc.ProductId);
 
+            modelBuilder.Entity<ProductCriteria>()
+                .HasKey(bc => new { bc.ProductId, bc.CriteriaId });
+
+            modelBuilder.Entity<ProductCriteria>()
+                .HasOne(bc => bc.Product)
+                .WithMany(b => b.ProductCriterias)
+                .HasForeignKey(bc => bc.ProductId);
+
+            modelBuilder.Entity<ProductCriteria>()
+                .HasOne(bc => bc.Criteria)
+                .WithMany(c => c.ProductCriterias)
+                .HasForeignKey(bc => bc.CriteriaId);
+
             modelBuilder.Entity<Product>()
                 .Property(p => p.Timestamp)
                 .IsRowVersion();
