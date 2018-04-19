@@ -4,16 +4,22 @@ import axios from 'axios';
 import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from './ErrorMessage';
+import { Link } from 'react-router-dom';
 
 export default class Item extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             product: {},
-            responseError: ''
+            responseError: '',
         }
+        this.requestForProduct = this.requestForProduct.bind(this);
+        this.getValueAsNumber = this.getValueAsNumber.bind(this);
     }
-
+    amountTemp = 1;
+    getValueAsNumber(input) {
+        this.amountTemp = input;
+    }
     componentDidMount() {
         axios.get(`/api/Product/GetProduct`, {
             params: {
@@ -25,8 +31,26 @@ export default class Item extends React.Component {
                 this.setState({ product });
             })
             .catch(error => {
-                this.setState({responseError: error.response.data});
+                this.setState({ responseError: error.response.data });
             });
+    }
+
+    requestForProduct() {
+        if (this.amountTemp !== 0) {
+            axios.post(`api/Cart/AddProductToCart`,
+                {
+                    Id: this.state.product.id,
+                    Amount: this.amountTemp
+                })
+                .then(res => {
+                    const product = res.data;
+                    this.setState({ product });
+                })
+                .catch(error => {
+                    this.setState({ responseError: error.response.data });
+                });
+            this.props.history.push('/cart');
+        }
     }
 
     render() {
@@ -75,6 +99,7 @@ export default class Item extends React.Component {
         var productId = this.props.match.params.productId;
         var rez = path.replace(productId, '').slice(0, -1);
         const price = parseFloat(this.state.product.price).toFixed(2);
+        var valueInput = 1;
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
@@ -87,9 +112,9 @@ export default class Item extends React.Component {
                     <div style={{ paddingTop: '4%' }}>
                         <p>Cost:  {price}€</p>
                         <p>Discount: </p>
-                        <p style={{display: 'inline-block'}}>Quantity:</p><NumericInput mobile min={0} max={100} value={0} style={{ input: { width: '100px' } }} />
+                        <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
                         <br />
-                        <RaisedButton label="Add to Cart" />
+                        <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
                     </div>
                 </div>
                 <div>

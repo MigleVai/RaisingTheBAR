@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import FlatButton from 'material-ui/FlatButton';
+import CartTable from '../CartTable';
+import CartTotal from '../CartTotal';
+import Breadcrumb from '../Breadcrumb';
 
 export default class UserShoppingCart extends React.Component {
     render() {
+        const styles={
+            
+        };
         return (
             <div>
-                <h1>SHOPPING CART</h1>
-                <Link to="/payment" ><FlatButton label="PAY"/></Link>
+                <Breadcrumb pathname={this.props.location.pathname} />
+                <CartTable />
+                <CartTotal />
+                
             </div>
         );
     }

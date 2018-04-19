@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Breadcrumb extends React.Component {
+export default class ErrorMessage extends React.Component {
     render() {
         const styles = {
             errorStyle: {

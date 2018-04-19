@@ -273,7 +273,7 @@ namespace RaisingTheBAR.BLL.Controllers
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Cart)
                 .Include(x => x.Cart.ProductCarts)
-                .ThenInclude(pc => pc.Cart);
+                .ThenInclude(pc => pc.Product);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -307,7 +307,7 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("[action]")]
         public IActionResult GetProductAmountInCart()
         {
             var userContext = _dbContext.Set<User>()

@@ -2,13 +2,15 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import ErrorMessage from '../ErrorMessage';
 
 export default class PersonalInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             firstname: '',
-            lastname: ''
+            lastname: '',
+            responseError: ''
         };
         this.handleLoggingChange = this.handleLoggingChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -21,8 +23,8 @@ export default class PersonalInfo extends React.Component {
                 const result = res.data;
                 this.setState({ firstname: result.firstname, lastname: result.lastname });
             })
-            .catch(function (error) {
-                // show error
+            .catch(error => {
+                this.setState({responseError: error.response.data});
             });
     }
     handleLoggingChange(props) {
@@ -32,8 +34,8 @@ export default class PersonalInfo extends React.Component {
         })
             .then(res => {
             })
-            .catch(function (error) {
-                // show error
+            .catch(error => {
+                this.setState({responseError: error.response.data});
             });
     }
 
@@ -42,12 +44,12 @@ export default class PersonalInfo extends React.Component {
     }
 
     handleLastNameChange(event) {
-        console.log(event.target.hintText);
         this.setState({ lastname: event.target.value });
     }
     render() {
         return (
             <div>
+                <ErrorMessage responseError={this.state.responseError} />
                 <form>
                     <TextField
                         value={this.state.firstname}

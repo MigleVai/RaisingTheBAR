@@ -21,7 +21,8 @@ export default class Payment extends React.Component {
             cvvError: '',
             holderError: '',
             numberError: '',
-            response: ''
+            response: '',
+            responseError: ''
         };
         this.handleCvvChange = this.handleCvvChange.bind(this);
         this.handleExpMonthChange = this.handleExpMonthChange.bind(this);
@@ -62,8 +63,8 @@ export default class Payment extends React.Component {
                     this.state.response = res.data;
 
                 })
-                .catch(function (error) {
-
+                .catch(error => {
+                    this.setState({responseError: error.response.data});
                 });
 
         } else {

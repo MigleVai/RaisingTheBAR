@@ -6,12 +6,14 @@ import IconButton from 'material-ui/IconButton';
 import AddShopppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import matchSorter from 'match-sorter';
 import Breadcrumb from './Breadcrumb';
+import ErrorMessage from './ErrorMessage';
 
 export default class ItemPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            responseError: ''
         }
         this.getData = this.getData.bind(this);
     }
@@ -30,6 +32,7 @@ export default class ItemPage extends React.Component {
             this.getData(this.props.match.params.category);
         }
     }
+
     getData(category)
     {
         var uri = '/api/Product/GetProductsByCategories';
@@ -46,11 +49,10 @@ export default class ItemPage extends React.Component {
                 const products = res.data;
                 this.setState({ products: products });
             })
-            .catch(function (error) {
-                // show error
+            .catch(error => {
+                this.setState({ responseError: error.response.data });
             });
     }
-
     render() {
         const styles = {
             tdStyles: {
@@ -108,6 +110,7 @@ export default class ItemPage extends React.Component {
         return (
             <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
+                <ErrorMessage responseError={this.state.responseError} />
                 < ReactTable
                     data={data}
                     columns={columns}

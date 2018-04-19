@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import ErrorMessage from '../ErrorMessage';
 
 export default class PersonalInfo extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class PersonalInfo extends React.Component {
         this.state = {
             oldpassword: '',
             newpassword: '',
-            repeatpassword: ''
+            repeatpassword: '',
+            responseError: ''
         };
         this.handleLoggingChange = this.handleLoggingChange.bind(this);
         this.handleOLDPasswordChange = this.handleOLDPasswordChange.bind(this);
@@ -24,8 +26,8 @@ export default class PersonalInfo extends React.Component {
         })
             .then(res => {
             })
-            .catch(function (error) {
-                // show error
+            .catch(error => {
+                this.setState({responseError: error.response.data});
             });
     }
 
@@ -43,6 +45,7 @@ export default class PersonalInfo extends React.Component {
     render() {
         return (
             <div>
+                <ErrorMessage responseError={this.state.responseError} />
                 <form>
                 <TextField
                         value={this.state.oldpassword}

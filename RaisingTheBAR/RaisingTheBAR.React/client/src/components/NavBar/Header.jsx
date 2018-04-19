@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ErrorMessage from '../ErrorMessage';
 
 import UserPanel from './UserPanel';
 
@@ -15,7 +16,8 @@ export default class Header extends React.Component {
     super(props);
     this.state = {
       open: false,
-      categories: []
+      categories: [],
+      responseError: ''
     };
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
   }
@@ -26,9 +28,9 @@ export default class Header extends React.Component {
         const categories = res.data;
         this.setState({ categories });
       })
-      .catch(function (error) {
-        // show error
-      });
+      .catch(error => {
+        this.setState({responseError: error.response.data});
+    });
   }
 
   handleDrawerToggle = () => this.setState({ open: !this.state.open });
@@ -51,6 +53,7 @@ export default class Header extends React.Component {
       }
     };
     return (
+    <div>
       <AppBar
         title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
         titleStyle={styles.align}
@@ -73,6 +76,8 @@ export default class Header extends React.Component {
         }
         </Drawer>
       </AppBar>
+      <ErrorMessage responseError={this.state.responseError} />
+      </div>
     );
   }
 }
