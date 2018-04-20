@@ -336,17 +336,23 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             var productContext = _dbContext.Set<Product>();
 
-            var dbProducts = productContext.Where(x => request.Any(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase))); 
-
-            var products = dbProducts.Select(x => new CartProduct
+            var products = new List<CartProduct>();
+            foreach (var req in request)
             {
-                Name = x.DisplayName,
-                Amount = request.First(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase)).Amount,
-                ProductId = x.Id.ToString(),
-                Price = x.Price,
-                Total = x.Price * request.First(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase)).Amount
-            }).ToList();
+                var dbProduct = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), req.Id, StringComparison.OrdinalIgnoreCase));
 
+                if (dbProduct != null)
+                {
+                    products.Add(new CartProduct
+                    {
+                        Name = dbProduct.DisplayName,
+                        Amount = req.Amount,
+                        ProductId = dbProduct.Id.ToString(),
+                        Price = dbProduct.Price,
+                        Total = dbProduct.Price * req.Amount
+                    });
+                }
+            }
             var cart = new CartResponse()
             {
                 Products = products,
