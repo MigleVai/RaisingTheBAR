@@ -331,5 +331,29 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(amount);
         }
+        [HttpPost("[action]")]
+        public IActionResult GenerateCart([FromBody]List<ProductToCartRequest> request)
+        {
+            var productContext = _dbContext.Set<Product>();
+
+            var dbProducts = productContext.Where(x => request.Any(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase))); 
+
+            var products = dbProducts.Select(x => new CartProduct
+            {
+                Name = x.DisplayName,
+                Amount = request.First(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase)).Amount,
+                ProductId = x.Id.ToString(),
+                Price = x.Price,
+                Total = x.Price * request.First(t => Equals(t.Id == x.Id.ToString(), StringComparison.OrdinalIgnoreCase)).Amount
+            }).ToList();
+
+            var cart = new CartResponse()
+            {
+                Products = products,
+                CompletePrice = products.Sum(y => y.Total)
+            };
+
+            return Ok(cart);
+        }
     }
 }
