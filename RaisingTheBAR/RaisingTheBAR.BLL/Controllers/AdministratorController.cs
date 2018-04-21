@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
