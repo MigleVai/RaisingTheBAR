@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RaisingTheBAR.BLL.Models.RequestModels;
+using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.BLL.Services;
 using RaisingTheBAR.Core.Enums;
 using RaisingTheBAR.Core.Models;
+using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -28,23 +26,19 @@ namespace RaisingTheBAR.BLL.Controllers
             _dbContext = dbContext;
         }
 
-        [Authorize]
-        [HttpPost("[action]")]
-        public IActionResult FinishOrder([FromBody]OrderRequest request)
-        {
-            var userContext = _dbContext.Set<User>()
-                .Include(x => x.Cart)
-                .Include(x => x.Cart.ProductCarts)
-                .ThenInclude(pc => pc.Product);
 
-            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+        [Authorize]
+        [HttpGet("[action]")]
+        public IActionResult GetOrderResponse()
+        {
+            var userEmail = GetUserEmail();
 
             if (userEmail == null)
             {
                 return BadRequest("Your session has ended please try to login again");
             }
 
-            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+            var user = GetUserContext().FirstOrDefault(x => x.Email == userEmail);
 
             if (user == null)
             {
@@ -55,7 +49,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Cart is empty");
             }
-            
+
             var amountToPay = Math.Round(user.Cart.ProductCarts.Sum(y => y.Product.Price * y.Amount) * 100);
 
             //Get this error in PaymentService later
@@ -63,6 +57,23 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("You don't have enough funds in your bank");
             }
+
+            return Ok(new OrderResponse()
+            {
+                // FE's going to take care of the address.
+                Address = null,
+                Amount = amountToPay,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            });
+        }
+
+
+
+        [Authorize]
+        [HttpPost("[action]")]
+        public IActionResult FinishOrder([FromBody]OrderRequest request)
+        {
             var credentials = new PaymentServiceCredentials()
             {
                 UserName = Configuration["PaymentServiceUserName"],
@@ -71,7 +82,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var paymentData = new PaymentServiceRequest()
             {
-                amount = Convert.ToInt32(amountToPay),
+                amount = Convert.ToInt32(request.Amount),
                 holder = request.PaymentRequest.Holder,
                 cvv = request.PaymentRequest.Cvv,
                 exp_month = request.PaymentRequest.ExpMonth,
@@ -85,6 +96,10 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Your Payment was cancelled please check your data");
             }
 
+
+            var user = GetUserContext().FirstOrDefault(x => x.Email == GetUserEmail());
+
+            // Remove this?
             var orderContext = _dbContext.Set<Order>().Include(x => x.ProductOrders);
 
             var newOrder = new Order()
@@ -95,8 +110,9 @@ namespace RaisingTheBAR.BLL.Controllers
                 State = OrderStateEnum.Ordered,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                TotalPrice = amountToPay,
-                ProductOrders = user.Cart.ProductCarts.Select(x=> new ProductOrder()
+                TotalPrice = request.Amount,
+                // Why the squigly line?
+                ProductOrders = user.Cart.ProductCarts.Select(x => new ProductOrder()
                 {
                     Amount = x.Amount,
                     ProductId = x.ProductId
@@ -118,9 +134,23 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
-        public IActionResult ApproveOrder([FromBody]OrderChangeRequest request )
+        public IActionResult ApproveOrder([FromBody]OrderChangeRequest request)
         {
             return Ok();
+        }
+
+
+        private IQueryable<User> GetUserContext()
+        {
+            return _dbContext.Set<User>()
+                .Include(x => x.Cart)
+                .Include(x => x.Cart.ProductCarts)
+                .ThenInclude(pc => pc.Product);
+        }
+
+        private string GetUserEmail()
+        {
+            return User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
         }
     }
 }
