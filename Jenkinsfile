@@ -7,9 +7,18 @@ pipeline {
       }
     }
     stage('Publish') {
-      steps {
-        sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && sudo \\cp -r build/ ../../../../../temp/'
-        sh '../../scripts/publish.sh'
+      parallel {
+        stage('Publish client') {
+          steps {
+            sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && sudo \\cp -r build/ ../../../../../temp/'
+            sh '../../scripts/publish.sh'
+          }
+        }
+        stage('Publish API') {
+          steps {
+            sh 'cd RaisingTheBAR/RaisingTheBAR.BLL & dotnet publish -c Release /p:PublishProfile="..\\..\\..\\..\\scripts\\Publish.pubxml"'
+          }
+        }
       }
     }
   }
