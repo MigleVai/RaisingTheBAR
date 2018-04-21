@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.BLL.Models.RequestModels;
+using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Controllers
@@ -43,6 +45,29 @@ namespace RaisingTheBAR.BLL.Controllers
             }
 
             return BadRequest("Something wrong in db");
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult GetUsers()
+        {
+            var userContext = _dbContext.Set<User>().Include(x=>x.Orders).ThenInclude(o=>o.ProductOrders).ThenInclude(po=>po.Product);
+
+            var userResponses = userContext.Select(x => new UserResponse
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Blocked = x.Blocked,
+                Email = x.Email,
+                Orders = x.Orders.Select(y => new OrderViewResponse
+                {
+                    Amount = y.ProductOrders.Count,
+                    TotalPrice = y.ProductOrders.Sum(z => z.Amount * z.Product.Price),
+                    OrderDate = y.StartedDate,
+                    OrderState = y.State.ToString()
+                }).ToList()
+            });
+
+            return Ok(userResponses);
         }
     }
 }
