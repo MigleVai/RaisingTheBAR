@@ -31,11 +31,6 @@ export default class Payment extends React.Component {
         this.handlePayClick = this.handlePayClick.bind(this);
     }
 
-    getMoneyAmount() {
-        //TODO fix the horrible name and connect this to the db(?)
-
-    }
-
     // Need to check if the parameters are valid here.
     handlePayClick(props) {
         this.setState({ amount: 999999  });
@@ -48,7 +43,7 @@ export default class Payment extends React.Component {
             this.state.numberError === '' &&
             this.state.exp_month !== 0 &&
             this.state.exp_year !== 0) {
-            axios.post(`/api/Payment/ExecutePayment`,
+            axios.post(`/api/Order/FinishOrder`,
                 {
                     cvv: this.state.cvv,
                     exp_month: this.state.exp_month,
@@ -78,7 +73,7 @@ export default class Payment extends React.Component {
 
     handleCvvChange(event) {
         this.setState({ cvv: event.target.value });
-        var re = RegExp('\\b[0-9]\\{3\\}\\b');
+        var re = RegExp('\\b[0-9]\{3\}\\b');
         if (!re.test(event.target.value)) {
             this.setState({ cvvError: 'Not a valid cvv!' });
         } else {
@@ -111,7 +106,7 @@ export default class Payment extends React.Component {
 
     handleNumberChange(event) {
         this.setState({ number: event.target.value });
-        var re = RegExp('\\b[0-9]\\{16\\}\\b');
+        var re = RegExp('\\b[0-9]\{16\}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
             this.setState({ numberError: 'Not a valid card number!' });
         } else {

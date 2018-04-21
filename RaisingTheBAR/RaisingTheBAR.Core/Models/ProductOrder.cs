@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 //https://stackoverflow.com/questions/7050404/create-code-first-many-to-many-with-additional-fields-in-association-table
 namespace RaisingTheBAR.Core.Models
