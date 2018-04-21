@@ -4,7 +4,6 @@ import axios from 'axios';
 import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from './ErrorMessage';
-import { Link } from 'react-router-dom';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -45,10 +44,16 @@ export default class Item extends React.Component {
                         Amount: this.amountTemp
                     })
                     .then(res => {
-                        const product = res.data;
-                        this.setState({ product });
-                        var am = localStorage.getItem('amount');
-                        localStorage.setItem('amount', am + 1);
+                        const result = res.data;
+                        this.setState({ product: result });
+                        if(localStorage.getItem('amount') === null){
+                            localStorage.setItem('amount', 1);
+                        }else{
+                            var am = localStorage.getItem('amount');
+                            am = am + 1;
+                            localStorage.setItem('amount', am);
+                        }
+                        this.props.history.push('/cart');
                     })
                     .catch(error => {
                         this.setState({ responseError: error.response.data });
@@ -75,17 +80,10 @@ export default class Item extends React.Component {
                     cartOfProducts.push(product);
                 }
                 localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
-                if(item !== null){
+                if (item !== null) {
                     localStorage.setItem('productAmount', cartOfProducts.length);
-                    // if (localStorage.getItem('productAmount') === null) {
-                    //     this.productAmount++;
-                    //     localStorage.setItem('productAmount', cartOfProducts.lenght);
-                    // } else {
-                    //     var am = localStorage.getItem('productAmount');
-                    //     am++;
-                    //     localStorage.setItem('productAmount', am);
-                    // }
                 }
+                this.props.history.push('/cart');
             }
         }
     }
@@ -151,9 +149,7 @@ export default class Item extends React.Component {
                         <p>Discount: </p>
                         <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
                         <br />
-                        <Link to='/cart'>
-                            <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
-                        </Link>
+                        <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
                     </div>
                 </div>
                 <div>

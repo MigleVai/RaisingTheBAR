@@ -19,8 +19,9 @@ export default class BadgeIcon extends React.Component {
     getDataAmount() {
         axios.get(`/api/Cart/GetProductAmountInCart`)
             .then(res => {
-                const totalAmountProducts = res.data;
-                this.setState({ totalAmountProducts });
+                const result = res.data;
+                this.setState({ totalAmountProducts: result });
+                localStorage.setItem('amount', this.state.totalAmountProducts);
             })
             .catch(error => {
                 this.setState({ responseError: error.response.data });
@@ -38,19 +39,35 @@ export default class BadgeIcon extends React.Component {
             }
         }
     }
-    shouldComponentUpdate() {
-        //checks if bagde's amount is as 'amount'(registered) or 'productAmount'(not registered)
+    componentDidUpdate(prevProps) {
+        if (this.props.islogged === true && prevProps.islogged === false) {
+            this.getDataAmount();
+        } else if (this.props.islogged === false && prevProps.islogged === true) {
+            this.setState({ totalAmountProducts: 0 });
+        } else if (this.props.islogged === false && prevProps.islogged === false) {
+            var notLogged = localStorage.getItem('productAmount');
+            this.setState({ totalAmountProducts: notLogged });
+        } else {
+            localStorage.setItem('productAmount', 0);
+        }
+    }
+    shouldComponentUpdate(nextProps) {
+        //checks if badge's amount is as 'amount'(registered) or 'productAmount'(not registered)
+        if (this.props.islogged !== nextProps.islogged) {
+            return true;
+        }
         var notLogged = localStorage.getItem('productAmount');
         var logged = localStorage.getItem('amount');
-        if ((this.state.totalAmountProducts !== logged && logged !== null)
+        if ((this.state.totalAmountProducts != logged && logged !== null) //DO NOT CHANGE TO !==
             ||
-            (this.state.totalAmountProducts !== notLogged && notLogged !== null)) {
+            (this.state.totalAmountProducts != notLogged && notLogged !== null)) {//DO NOT CHANGE TO !== OR MIGLE WILL KILL
             if (notLogged !== null) {
-                this.setState({ totalAmountProducts: notLogged });
+                return true;
             } else if (logged !== null) {
-                this.setState({ totalAmountProducts: logged });
+                return true;
             } else { return false; }
-            this.props.action();
+        }
+        if (logged === null && notLogged === null && this.state.totalAmountProducts != 0) {
             return true;
         }
         return false;

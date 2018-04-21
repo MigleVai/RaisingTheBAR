@@ -23,7 +23,7 @@ export default class RightHeader extends React.Component {
         return (
             <div style={styles.displayStyle}>
                 <SearchBar />
-                <BadgeIcon action={this.props.action}/>
+                <BadgeIcon islogged={this.props.islogged} action={this.props.action}/>
                 <div>{this.props.islogged ? <Logged handleLogging={this.props.handleLogging} /> : <Link to={"/signin"}><FlatButton id="SigninButton" style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );

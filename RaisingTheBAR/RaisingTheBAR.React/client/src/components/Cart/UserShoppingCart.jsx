@@ -46,6 +46,7 @@ export default class UserShoppingCart extends React.Component {
             .then(res => {
                 const totalAmountProducts = res.data;
                 this.setState({ totalAmountProducts });
+                localStorage.setItem('amount', totalAmountProducts);
             })
             .catch(error => {
                 this.setState({ responseError: error.response.data });
@@ -60,12 +61,16 @@ export default class UserShoppingCart extends React.Component {
         } else {
             // NOT logged in/registered - amount is saved in 'productAmount'
             var am = localStorage.getItem('productAmount');
-            this.setState({ totalAmountProducts: am });
+            if (am == null) {
+                this.setState({ totalAmountProducts: 0 });
+            } else {
+                this.setState({ totalAmountProducts: am });
+            }
             var array = localStorage.getItem('cartNotLogged');
-            if(array !== null){
+            if (array !== null) {
                 this.getNotLoggedData(array);
-            }else{
-                this.setState({products: [], totalCost: 0, totalAmountProducts: 0});
+            } else {
+                this.setState({ products: [], totalCost: 0, totalAmountProducts: 0 });
             }
         }
     }
