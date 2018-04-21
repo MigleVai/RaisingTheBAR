@@ -273,7 +273,8 @@ namespace RaisingTheBAR.BLL.Controllers
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Cart)
                 .Include(x => x.Cart.ProductCarts)
-                .ThenInclude(pc => pc.Product);
+                .ThenInclude(pc => pc.Product)
+                .ThenInclude(prod => prod.Discount);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -293,8 +294,9 @@ namespace RaisingTheBAR.BLL.Controllers
                 Name = x.Product.DisplayName,
                 Amount = x.Amount,
                 ProductId = x.ProductId.ToString(),
-                Price = x.Product.Price,
-                Total = x.Product.Price * x.Amount
+                DiscountPrice = x.Product.Discount?.DiscountedPrice,
+                Total = (x.Product.Discount?.DiscountedPrice ?? x.Product.Price) * x.Amount,
+                Price = x.Product.Price
             }).ToList();
 
             var cart = new CartResponse()
@@ -334,7 +336,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost("[action]")]
         public IActionResult GenerateCart([FromBody]List<ProductToCartRequest> request)
         {
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
 
             var products = new List<CartProduct>();
             foreach (var req in request)
@@ -348,8 +350,9 @@ namespace RaisingTheBAR.BLL.Controllers
                         Name = dbProduct.DisplayName,
                         Amount = req.Amount,
                         ProductId = dbProduct.Id.ToString(),
-                        Price = dbProduct.Price,
-                        Total = dbProduct.Price * req.Amount
+                        DiscountPrice = dbProduct.Discount?.DiscountedPrice,
+                        Total = (dbProduct.Discount?.DiscountedPrice ?? dbProduct.Price) * req.Amount,
+                        Price = dbProduct.Price
                     });
                 }
             }

@@ -13,5 +13,6 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
         public string Image { get; set; }
         public string Description { get; set; }
         public bool Featured { get; set; }
+        public decimal? DiscountPrice { get; set; }
     }
 }

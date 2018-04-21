@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
@@ -31,7 +32,8 @@ namespace RaisingTheBAR.BLL.Controllers
                     Id = y.Id.ToString(),
                     Image = y.Thumbnail,
                     Name = y.DisplayName,
-                    Price = y.Price
+                    Price = y.Price,
+                    DiscountPrice = y.Discount != null ? y.Discount.DiscountedPrice : (decimal?)null
                 })
                 .ToList();
 
@@ -43,12 +45,11 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             var pcContext = _dbContext.Set<ProductCategory>()
                 .Include(p => p.Product)
+                .ThenInclude(prod => prod.Discount)
                 .Include(c => c.Category)
                 .Include(cc => cc.Category.ChildCategories);
 
-           // var id = Guid.Parse(categoryId);
 
-           // var productCategories = pcContext.ToList();
             var products = pcContext.Where(x => x.Category.Name == categoryName || x.Category.ParentCategory.Name == categoryName)
                 .Select(y => new ProductResponse
                 {
@@ -56,7 +57,8 @@ namespace RaisingTheBAR.BLL.Controllers
                     Id = y.Product.Id.ToString(),
                     Image = y.Product.Thumbnail,
                     Name = y.Product.DisplayName,
-                    Price = y.Product.Price
+                    Price = y.Product.Price,
+                    DiscountPrice = y.Product.Discount != null ? y.Product.Discount.DiscountedPrice : (decimal?)null
                 })
                 .ToList();
 
@@ -65,7 +67,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpGet("[action]")]
         public IActionResult GetProduct(string productId)
         {
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(productId));
 
             if (product == null)
@@ -80,7 +82,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 Image = product.Image,
                 Name = product.DisplayName,
                 Price = product.Price,
-                Description = product.Description
+                Description = product.Description,
+                DiscountPrice = product.Discount?.DiscountedPrice
             };
 
             return Ok(result);
@@ -94,10 +97,16 @@ namespace RaisingTheBAR.BLL.Controllers
                 Description = request.Description,
                 DisplayName = request.DisplayName,
                 Image = request.Image,
-                Price = request.Price
+                Price = request.Price,
+                Thumbnail = request.Thumbnail
             };
 
             var productContext = _dbContext.Set<Product>();
+
+            if (request.DiscountPrice != null)
+            {
+                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+            }
 
             productContext.Add(product);
 
@@ -123,7 +132,14 @@ namespace RaisingTheBAR.BLL.Controllers
                 Image = request.Image,
                 Price = request.Price
             };
-
+            if (request.DiscountPrice != null)
+            {
+                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+            }
+            else
+            {
+                product.Discount = null;
+            }
             var productContext = _dbContext.Set<Product>();
 
             try

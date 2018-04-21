@@ -69,5 +69,25 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(userResponses);
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetProducts()
+        {
+            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
+
+            var products = productContext.Select(x => new FullProductResponse()
+            {
+                DisplayName = x.DisplayName,
+                Price = x.Price,
+                Id = x.Id.ToString(),
+                Description = x.Description,
+                Image = x.Image,
+                IsEnabled = x.IsEnabled,
+                Thumbnail = x.Thumbnail,
+                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)null
+            });
+
+            return Ok(products);
+        }
     }
 }
