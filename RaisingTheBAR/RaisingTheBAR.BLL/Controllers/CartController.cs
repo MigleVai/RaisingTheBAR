@@ -288,7 +288,13 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Your session has ended");
             }
-
+            if (user.Cart == null) {
+                var emptyCart = new CartResponse() {
+                    Products = new List<CartProduct>(),
+                    CompletePrice = 0
+                };
+                return Ok(emptyCart);
+            }
             var products = user.Cart.ProductCarts.Select(x => new CartProduct
             {
                 Name = x.Product.DisplayName,
@@ -328,7 +334,9 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Your session has ended");
             }
-
+            if (user.Cart == null || user.Cart.ProductCarts == null) {
+                return Ok(0);
+            }
             var amount = user.Cart.ProductCarts.Count();
 
             return Ok(amount);
