@@ -15,7 +15,7 @@ export default class Payment extends React.Component {
             exp_month: 0,
             exp_year: 0,
             holder: '',
-            amount: 0,
+            amount: 100,
             number: '',
             cvvError: '',
             holderError: '',
@@ -29,23 +29,6 @@ export default class Payment extends React.Component {
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
         this.handlePayClick = this.handlePayClick.bind(this);
-    }
-
-    getMoneyAmount() {
-        axios.get(`/api/Order/GetOrderResponse`,
-                {
-                    amount: this.state.amount
-                })
-            .then(res => {
-                const result = res.data;
-
-                this.state.response = res.data;
-
-            })
-            .catch(error => {
-                this.setState({ responseError: error.response.data });
-            });
-
     }
 
     // Need to check if the parameters are valid here.
@@ -90,7 +73,7 @@ export default class Payment extends React.Component {
 
     handleCvvChange(event) {
         this.setState({ cvv: event.target.value });
-        var re = RegExp('\\b[0-9]\\{3\\}\\b');
+        var re = RegExp('\\b[0-9]\{3\}\\b');
         if (!re.test(event.target.value)) {
             this.setState({ cvvError: 'Not a valid cvv!' });
         } else {
@@ -123,7 +106,7 @@ export default class Payment extends React.Component {
 
     handleNumberChange(event) {
         this.setState({ number: event.target.value });
-        var re = RegExp('\\b[0-9]\\{16\\}\\b');
+        var re = RegExp('\\b[0-9]\{16\}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
             this.setState({ numberError: 'Not a valid card number!' });
         } else {
