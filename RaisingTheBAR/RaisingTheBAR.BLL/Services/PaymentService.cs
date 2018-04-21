@@ -38,7 +38,7 @@ namespace RaisingTheBAR.BLL.Services
                     return !string.IsNullOrEmpty(result);
                 }
             }
-            catch (Exception e)
+            catch (InvalidOperationException e)
             {
                 //add logging someday
                 return false;
