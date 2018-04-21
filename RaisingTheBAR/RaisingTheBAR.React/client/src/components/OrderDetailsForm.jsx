@@ -12,15 +12,15 @@ export default class OrderDetailsForm extends React.Component {
             firstNameError: '',
             lastNameError: '',
         };
-        this.handleAdderssChange = this.handleAdderssChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
     }
 
    
 
-    handleAdderssChange(event) {
-        this.setState({ adderss: event.target.value });
+    handleAddressChange(event) {
+        this.setState({ address: event.target.value });
         var re = RegExp('/^$|\s+/ ');
         if (!re.test(event.target.value)) {
             this.setState({ adderssError: 'Not a valid adderss!' });
@@ -77,7 +77,7 @@ export default class OrderDetailsForm extends React.Component {
                 <div>
                     <h3 style={styles.textStyle}>Order info</h3>
                 </div>
-                <form className="form-horizontal">
+                <form >
                     <TextField
                         value={this.state.address}
                         onChange={(event) => this.handleAddressChange(event)}

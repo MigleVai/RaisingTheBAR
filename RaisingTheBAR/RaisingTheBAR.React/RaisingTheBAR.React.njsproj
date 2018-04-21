@@ -59,6 +59,9 @@
     </Compile>
     <Compile Include="client\src\components\OrderHistory.jsx" />
     <Compile Include="client\src\components\OrderHistoryList.jsx" />
+    <Compile Include="client\src\components\OrderStepper.jsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="client\src\components\Payment.jsx" />
     <Compile Include="client\src\components\SettingsInfo\PasswordInfo.jsx" />
     <Compile Include="client\src\components\SettingsInfo\PersonalInfo.jsx" />

@@ -1,7 +1,6 @@
 import React from 'react';
 import CartTable from './CartTable';
 import CartTotal from './CartTotal';
-import Breadcrumb from '../Breadcrumb';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
 
@@ -84,7 +83,6 @@ export default class UserShoppingCart extends React.Component {
     render() {
         return (
             <div>
-                <Breadcrumb pathname={this.props.location.pathname} />
                 <ErrorMessage responseError={this.state.responseError} />
                 <CartTable cart={this.state.products} />
                 <CartTotal totalPrice={this.state.totalCost} totalAmount={this.state.totalAmountProducts} />

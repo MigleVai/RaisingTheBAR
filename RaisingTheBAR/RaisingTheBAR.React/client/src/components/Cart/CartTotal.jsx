@@ -24,8 +24,6 @@ export default class CartTotal extends React.Component {
                     <hr/>
                     <p>{this.props.totalAmount} {productName}</p>
                     <p>Product Total: <b>{this.props.totalPrice}</b></p>
-                    <hr/>
-                    <Link to="/payment" ><FlatButton label="PAY" /></Link>
                 </Paper>
             </div>
         )

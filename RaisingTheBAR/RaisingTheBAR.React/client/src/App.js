@@ -10,6 +10,7 @@ import UserShoppingCart from './components/Cart/UserShoppingCart';
 import Payment from './components/Payment';
 import ItemPage from './components/ItemPage';
 import Item from './components/Item';
+import OrderStepper from './components/OrderStepper';
 import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
@@ -48,6 +49,7 @@ class App extends Component {
         <Route path="/cart" render={(props) => <UserShoppingCart islogged={this.state.logged} {...props}/>} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />
+        <Route path="/stepper" component={OrderStepper} />
         <Route path="/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/signin" /> : <Payment />)} />
           

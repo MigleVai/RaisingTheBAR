@@ -122,7 +122,7 @@ export default class Payment extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                textAlign: 'center',
+                textAlign: 'center'
             },
             displayStyles: {
                 display: 'block',
