@@ -37,6 +37,9 @@
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
     <Compile Include="client\src\components\Breadcrumb.jsx" />
+    <Compile Include="client\src\components\Cart\CartTable.jsx" />
+    <Compile Include="client\src\components\Cart\CartTotal.jsx" />
+    <Compile Include="client\src\components\Cart\UserShoppingCart.jsx" />
     <Compile Include="client\src\components\ErrorMessage.jsx" />
     <Compile Include="client\src\components\functions\IsValidLuhn.js" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
@@ -78,6 +81,7 @@
     <Folder Include="client\public\" />
     <Folder Include="client\src\" />
     <Folder Include="client\src\components\" />
+    <Folder Include="client\src\components\Cart\" />
     <Folder Include="client\src\components\functions\" />
     <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\src\components\LoginSignup\" />

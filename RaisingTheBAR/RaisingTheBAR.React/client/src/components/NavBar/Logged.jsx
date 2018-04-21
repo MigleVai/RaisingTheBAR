@@ -10,6 +10,7 @@ export default class Logged extends React.Component {
 
   handleLoggingChange(props) {
     localStorage.removeItem('jwtToken');
+    localStorage.removeItem('amount');
     axios.defaults.headers.common['Authorization'] = '';
     this.props.handleLogging(false);
   }

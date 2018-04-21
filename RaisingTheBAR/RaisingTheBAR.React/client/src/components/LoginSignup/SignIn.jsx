@@ -37,6 +37,8 @@ export default class SignIn extends React.Component {
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
                     this.props.history.push('/');
+                    localStorage.removeItem('productAmount');
+                    localStorage.removeItem('cartNotLogged');
                 })
                 .catch(error => {
                     this.setState({responseError: error.response.data});

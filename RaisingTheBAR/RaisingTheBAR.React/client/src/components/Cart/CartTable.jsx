@@ -1,35 +1,9 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import axios from 'axios';
 import "react-table/react-table.css";
 import matchSorter from 'match-sorter';
-import ErrorMessage from './ErrorMessage';
 
 export default class CartTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cart: []
-        }
-        this.getData = this.getData.bind(this);
-    }
-
-    getData() {
-        axios.get(`/api/Cart/GetCart`)
-            .then(res => {
-                const cart = res.data;
-                this.setState({ cart });
-            })
-            .catch(error => {
-                this.setState({ responseError: error.response.data });
-            });
-    }
-    componentDidMount() {
-        this.getData();
-    }
-    componentDidUpdate(){
-        this.getData();
-    }
     render() {
         const styles = {
             tdStyles: {
@@ -44,7 +18,7 @@ export default class CartTable extends React.Component {
                 position: 'absolute'
             }
         };
-        const data = this.state.cart.products;
+        const data = this.props.cart;
         const columns = [
             {
                 Header: 'Name',
@@ -78,7 +52,6 @@ export default class CartTable extends React.Component {
 
         return (
             <div style={styles.tableStyle}>
-                <ErrorMessage responseError={this.state.responseError} />
                 < ReactTable
                     data={data}
                     columns={columns}

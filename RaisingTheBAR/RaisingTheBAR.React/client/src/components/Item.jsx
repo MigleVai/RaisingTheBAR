@@ -17,6 +17,7 @@ export default class Item extends React.Component {
         this.getValueAsNumber = this.getValueAsNumber.bind(this);
     }
     amountTemp = 1;
+    productAmount = 0;
     getValueAsNumber(input) {
         this.amountTemp = input;
     }
@@ -37,19 +38,55 @@ export default class Item extends React.Component {
 
     requestForProduct() {
         if (this.amountTemp !== 0) {
-            axios.post(`api/Cart/AddProductToCart`,
-                {
+            if (this.props.islogged) {
+                axios.post(`api/Cart/AddProductToCart`,
+                    {
+                        Id: this.state.product.id,
+                        Amount: this.amountTemp
+                    })
+                    .then(res => {
+                        const product = res.data;
+                        this.setState({ product });
+                        var am = localStorage.getItem('amount');
+                        localStorage.setItem('amount', am + 1);
+                    })
+                    .catch(error => {
+                        this.setState({ responseError: error.response.data });
+                    });
+            } else {
+                const product = {
                     Id: this.state.product.id,
                     Amount: this.amountTemp
-                })
-                .then(res => {
-                    const product = res.data;
-                    this.setState({ product });
-                })
-                .catch(error => {
-                    this.setState({ responseError: error.response.data });
+                }
+                var cartOfProducts = [];
+                if (localStorage.getItem('cartNotLogged') !== null) {
+                    cartOfProducts = JSON.parse(localStorage.getItem('cartNotLogged'));
+                }
+                var item = cartOfProducts.find(function (element) {
+                    if (element.Id === product.Id) {
+                        return element;
+                    }
+                    return null;
                 });
-            this.props.history.push('/cart');
+                if (item !== null && item !== undefined) {
+                    var index = cartOfProducts.indexOf(item);
+                    cartOfProducts[index].Amount = item.Amount + product.Amount;
+                } else {
+                    cartOfProducts.push(product);
+                }
+                localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
+                if(item !== null){
+                    localStorage.setItem('productAmount', cartOfProducts.length);
+                    // if (localStorage.getItem('productAmount') === null) {
+                    //     this.productAmount++;
+                    //     localStorage.setItem('productAmount', cartOfProducts.lenght);
+                    // } else {
+                    //     var am = localStorage.getItem('productAmount');
+                    //     am++;
+                    //     localStorage.setItem('productAmount', am);
+                    // }
+                }
+            }
         }
     }
 
@@ -114,7 +151,9 @@ export default class Item extends React.Component {
                         <p>Discount: </p>
                         <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
                         <br />
-                        <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
+                        <Link to='/cart'>
+                            <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
+                        </Link>
                     </div>
                 </div>
                 <div>

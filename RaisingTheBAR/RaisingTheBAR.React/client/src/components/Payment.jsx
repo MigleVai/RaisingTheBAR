@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -58,10 +57,7 @@ export default class Payment extends React.Component {
                     number: this.state.number
                 })
                 .then(res => {
-                    const result = res.data;
-
-                    this.state.response = res.data;
-
+                    this.setState({response: res.data});
                 })
                 .catch(error => {
                     this.setState({responseError: error.response.data});
@@ -82,7 +78,7 @@ export default class Payment extends React.Component {
 
     handleCvvChange(event) {
         this.setState({ cvv: event.target.value });
-        var re = RegExp('\\b[0-9]\{3\}\\b');
+        var re = RegExp('\\b[0-9]\\{3\\}\\b');
         if (!re.test(event.target.value)) {
             this.setState({ cvvError: 'Not a valid cvv!' });
         } else {
@@ -115,7 +111,7 @@ export default class Payment extends React.Component {
 
     handleNumberChange(event) {
         this.setState({ number: event.target.value });
-        var re = RegExp('\\b[0-9]\{16\}\\b');
+        var re = RegExp('\\b[0-9]\\{16\\}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
             this.setState({ numberError: 'Not a valid card number!' });
         } else {
@@ -164,7 +160,7 @@ export default class Payment extends React.Component {
                 <div>
                     <h3 style={styles.textStyle}>Check out</h3>
                 </div>
-                <form className="form-horizontal" role="form">
+                <form className="form-horizontal">
                     <TextField
                         value={this.state.holder}
                         onChange={(event) => this.handleHolderChange(event)}

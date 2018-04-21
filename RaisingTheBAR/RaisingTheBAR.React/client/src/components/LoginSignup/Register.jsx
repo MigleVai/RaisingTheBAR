@@ -75,6 +75,8 @@ export default class Register extends React.Component {
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
                     this.props.history.push('/');
+                    localStorage.removeItem('productAmount');
+                    localStorage.removeItem('cartNotLogged');
                 })
                 .catch(error => {//(function (error) {
                     this.setState({ responseError: error.response.data });

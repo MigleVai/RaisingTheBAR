@@ -6,7 +6,7 @@ import Header from './components/NavBar/Header';
 import ImgCarousel from './components/ImgCarousel';
 import SignIn from './components/LoginSignup/SignIn';
 import Register from './components/LoginSignup/Register';
-import UserShoppingCart from './components/NavBar/UserShoppingCart';
+import UserShoppingCart from './components/Cart/UserShoppingCart';
 import Payment from './components/Payment';
 import ItemPage from './components/ItemPage';
 import Item from './components/Item';
@@ -42,10 +42,10 @@ class App extends Component {
         <Route path="/signin" render={(props) => <SignIn {...props} handleLogging={this.handleLogging}/>} />
         <Route path="/register" render={(props) => <Register {...props} handleLogging={this.handleLogging} />} />
         <Route exact path="/products" component={ItemPage}/>
-        <Route path="/products/:category/:productId" component={Item}/>
+        <Route path="/products/:category/:productId" render={(props) => <Item islogged={this.state.logged} {...props}/>}/>
         <Route exact path="/products/:category" component={ItemPage}/>
         <Route exact path="/products" componenet={ItemPage}/>
-        <Route path="/cart" component={UserShoppingCart} />
+        <Route path="/cart" render={(props) => <UserShoppingCart islogged={this.state.logged} {...props}/>} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />
         <Route path="/payment" render={(props) => (
