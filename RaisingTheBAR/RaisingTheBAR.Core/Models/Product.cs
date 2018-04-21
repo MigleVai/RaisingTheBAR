@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RaisingTheBAR.Core.Models
 {
@@ -13,10 +15,11 @@ namespace RaisingTheBAR.Core.Models
         public bool IsEnabled { get; set; }
         public byte[] Timestamp { get; set; }
 
-        public ICollection<ProductCart> ProductCarts { get; set; }
-        public ICollection<ProductOrder> ProductOrders { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
-        public ICollection<ProductCriteria> ProductCriterias { get; set; }
+        public virtual Discount Discount { get; set; }
+        public virtual ICollection<ProductCart> ProductCarts { get; set; }
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<ProductCriteria> ProductCriterias { get; set; }
 
     }
 }

@@ -14,6 +14,6 @@ namespace RaisingTheBAR.Core.Models
 
         public DateTimeOffset CreatedDate { get; set; }
 
-        public ICollection<ProductCart> ProductCarts { get; set; }
+        public virtual ICollection<ProductCart> ProductCarts { get; set; }
     }
 }

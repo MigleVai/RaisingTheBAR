@@ -8,7 +8,7 @@ namespace RaisingTheBAR.Core.Models
     {
         public string Name { get; set; }
         public string Values { get; set; }
-        public ICollection<ProductCriteria> ProductCriterias { get; set; }
+        public virtual ICollection<ProductCriteria> ProductCriterias { get; set; }
 
     }
 }

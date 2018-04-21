@@ -20,13 +20,13 @@ namespace RaisingTheBAR.Core.Models
 
         public Guid? ModifiedById { get; set; }
         [ForeignKey("ModifiedById")]
-        public User ModifiedBy { get; set; }
+        public virtual User ModifiedBy { get; set; }
 
         public Guid? UserId { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
-        public ICollection<ProductOrder> ProductOrders { get; set; }
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; }
 
     }
 }

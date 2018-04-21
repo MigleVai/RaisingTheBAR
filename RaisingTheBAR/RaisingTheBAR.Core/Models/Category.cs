@@ -13,7 +13,7 @@ namespace RaisingTheBAR.Core.Models
         [ForeignKey("ParentCategoryId")]
         public Category ParentCategory { get; set; }
 
-        public ICollection<Category> ChildCategories { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<Category> ChildCategories { get; set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
