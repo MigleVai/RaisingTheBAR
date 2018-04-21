@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RaisingTheBAR.BLL.Models.RequestModels;
+using System;
 using System.IO;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RaisingTheBAR.BLL.Models.RequestModels;
-using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Services
 {
