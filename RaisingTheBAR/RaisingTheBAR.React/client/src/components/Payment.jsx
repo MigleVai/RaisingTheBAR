@@ -15,7 +15,7 @@ export default class Payment extends React.Component {
             exp_month: 0,
             exp_year: 0,
             holder: '',
-            amount: 100,
+            amount: 0,
             number: '',
             cvvError: '',
             holderError: '',
@@ -32,7 +32,19 @@ export default class Payment extends React.Component {
     }
 
     getMoneyAmount() {
-        //TODO fix the horrible name and connect this to the db(?)
+        axios.get(`/api/Order/GetOrderResponse`,
+                {
+                    amount: this.state.amount
+                })
+            .then(res => {
+                const result = res.data;
+
+                this.state.response = res.data;
+
+            })
+            .catch(error => {
+                this.setState({ responseError: error.response.data });
+            });
 
     }
 
@@ -48,7 +60,7 @@ export default class Payment extends React.Component {
             this.state.numberError === '' &&
             this.state.exp_month !== 0 &&
             this.state.exp_year !== 0) {
-            axios.post(`/api/Payment/ExecutePayment`,
+            axios.post(`/api/Order/FinishOrder`,
                 {
                     cvv: this.state.cvv,
                     exp_month: this.state.exp_month,

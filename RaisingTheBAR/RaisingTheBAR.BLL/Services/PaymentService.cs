@@ -30,7 +30,6 @@ namespace RaisingTheBAR.BLL.Services
 
             try
             {
-
                 var httpResponse = (HttpWebResponse)mockProcessorRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
@@ -38,7 +37,7 @@ namespace RaisingTheBAR.BLL.Services
                     return !string.IsNullOrEmpty(result);
                 }
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 //add logging someday
                 return false;
