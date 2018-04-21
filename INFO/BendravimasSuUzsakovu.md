@@ -14,6 +14,7 @@
 13. Kokią reitingavimo skalę naudoti įvertinti apsipirkimams?
 14. Vykdant importą/eksportą gaima naudotis sistema- kurti, redaguoti prekes. Ar galima vykdant importą/eksportą vykdyti dar vieną importą/eksportą?
 15. Dėl pradinio puslapio turinio- siūlome atvaizduoti featured prekes besisukančioje paveiksliukų karuselėje. Ar tinka?
+16. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
 
 -------------------
 1. Kokia kalbą turėtų būti sukurta svetainė?
