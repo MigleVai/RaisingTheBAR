@@ -73,7 +73,7 @@ export default class Payment extends React.Component {
 
     handleCvvChange(event) {
         this.setState({ cvv: event.target.value });
-        var re = RegExp('\\b[0-9]\{3\}\\b');
+        var re = RegExp('\\b[0-9]{3}\\b');
         if (!re.test(event.target.value)) {
             this.setState({ cvvError: 'Not a valid cvv!' });
         } else {
@@ -106,7 +106,7 @@ export default class Payment extends React.Component {
 
     handleNumberChange(event) {
         this.setState({ number: event.target.value });
-        var re = RegExp('\\b[0-9]\{16\}\\b');
+        var re = RegExp('\\b[0-9]{16}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
             this.setState({ numberError: 'Not a valid card number!' });
         } else {
