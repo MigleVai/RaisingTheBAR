@@ -16,7 +16,8 @@ pipeline {
         }
         stage('Publish API') {
           steps {
-            sh 'cd RaisingTheBAR/RaisingTheBAR.BLL && dotnet build -c Release /p:DeployOnBuild=true /p:PublishProfile="..\\..\\..\\..\\scripts\\Publish"'
+            sh 'cd RaisingTheBAR/RaisingTheBAR.BLL && sudo \\cp -r ../../../../scripts/dotnet/* .'
+            sh 'cd RaisingTheBAR/RaisingTheBAR.BLL && dotnet publish RaisingTheBAR.BLL.csproj -c Release /p:PublishProfile=Publish'
           }
         }
       }
