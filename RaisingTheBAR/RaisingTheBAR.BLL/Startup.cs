@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using RaisingTheBAR.DAL;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RaisingTheBAR.BLL
 {
@@ -33,6 +34,10 @@ namespace RaisingTheBAR.BLL
 
             services.AddMvc();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "RaisingTheBAR API", Version = "v1" });
+            });
 
             var str = Configuration.GetConnectionString("RaisingTheBAR");
             var optionsBuilder = new DbContextOptionsBuilder<EFContext>();
@@ -67,8 +72,12 @@ namespace RaisingTheBAR.BLL
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            app.UseSwagger();
 
-            app.UseMvc();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "RaisingTheBAR API");
+            });
         }
     }
 }

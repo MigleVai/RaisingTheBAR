@@ -29,8 +29,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string),400)]
         public IActionResult RequestToken([FromBody]TokenRequest request)
         {
             var userContext = _dbContext.Set<User>().Include(role => role.Role);
@@ -57,8 +58,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(string),200)]
+        [ProducesResponseType(typeof(string),400)]
         public IActionResult RegisterUser([FromBody]RegistrationRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -102,6 +104,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(UserDataResponse),200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult GetUserData()
         {
             var userContext = _dbContext.Set<User>();
@@ -126,6 +131,10 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
+
         public IActionResult UpdateUserData([FromBody]ChangeUserRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -158,6 +167,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult ChangePassword([FromBody]PasswordChangeRequest request)
         {
             var userContext = _dbContext.Set<User>();
