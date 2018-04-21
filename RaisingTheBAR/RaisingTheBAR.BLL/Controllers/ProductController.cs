@@ -94,8 +94,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 Description = request.Description,
                 DisplayName = request.DisplayName,
                 Image = request.Image,
-                Price = request.Price,
-                Model = request.Model
+                Price = request.Price
             };
 
             var productContext = _dbContext.Set<Product>();
@@ -120,7 +119,6 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 Description = request.Description,
                 DisplayName = request.DisplayName,
-                Model = request.Model,
                 Id = Guid.Parse(request.Id),
                 Image = request.Image,
                 Price = request.Price
