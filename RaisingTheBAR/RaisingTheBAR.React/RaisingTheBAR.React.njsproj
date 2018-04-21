@@ -54,6 +54,9 @@
     <Compile Include="client\src\components\NavBar\SearchBar.jsx" />
     <Compile Include="client\src\components\NavBar\UserPanel.jsx" />
     <Compile Include="client\src\components\NavBar\UserShoppingCart.jsx" />
+    <Compile Include="client\src\components\OrderDetailsForm.jsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="client\src\components\OrderHistory.jsx" />
     <Compile Include="client\src\components\OrderHistoryList.jsx" />
     <Compile Include="client\src\components\Payment.jsx" />

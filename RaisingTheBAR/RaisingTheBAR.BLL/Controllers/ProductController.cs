@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.CompilerServices;
 using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -21,6 +20,7 @@ namespace RaisingTheBAR.BLL.Controllers
             _dbContext = dbContext;
         }
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProductResponse>),200)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>();
@@ -41,6 +41,7 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
         public IActionResult GetProductsByCategories(string categoryName)
         {
             var pcContext = _dbContext.Set<ProductCategory>()
@@ -65,6 +66,8 @@ namespace RaisingTheBAR.BLL.Controllers
             return Ok(products);
         }
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(ProductResponse), 200)]
+        [ProducesResponseType(typeof(string),400)]
         public IActionResult GetProduct(string productId)
         {
             var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
@@ -90,6 +93,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
         {
             var product = new Product()
@@ -122,6 +128,10 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
         public IActionResult EditProduct([FromBody]ProductEditRequest request)
         {
             var product = new Product()
@@ -161,7 +171,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     if (entry.Entity is Product)
                     {
-                        var exception = new List<object>();
+                        var exception = new List<ConcurrencyConflictResponse>();
 
                         var proposedValues = entry.CurrentValues;
                         var databaseValues = entry.GetDatabaseValues();
@@ -172,7 +182,7 @@ namespace RaisingTheBAR.BLL.Controllers
                             var databaseValue = databaseValues[property];
                             if (proposedValue != databaseValue)
                             {
-                                exception.Add(new { property = new { proposed = proposedValue, actual = databaseValue } });
+                                exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue.ToString(), ActualValue = databaseValue.ToString() } );
                             }
 
                         }

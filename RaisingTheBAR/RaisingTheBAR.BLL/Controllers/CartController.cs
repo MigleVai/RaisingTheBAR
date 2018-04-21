@@ -24,6 +24,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult AddTemporaryCartToDatabase([FromBody] List<ProductToCartRequest> request)
         {
             var userContext = _dbContext.Set<User>()
@@ -106,6 +109,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult AddProductToCart([FromBody] ProductToCartRequest request)
         {
             var userContext = _dbContext.Set<User>()
@@ -180,6 +186,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult EditProduct([FromBody]ProductToCartRequest request)
         {
             var userContext = _dbContext.Set<User>()
@@ -228,6 +237,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult EmptyCart()
         {
             var userContext = _dbContext.Set<User>()
@@ -268,6 +280,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(CartResponse), 200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult GetCart()
         {
             var userContext = _dbContext.Set<User>()
@@ -316,6 +331,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(int), 200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult GetProductAmountInCart()
         {
             var userContext = _dbContext.Set<User>()
@@ -341,6 +359,8 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(amount);
         }
+        [ProducesResponseType(typeof(CartResponse), 200)]
+        [ProducesResponseType(typeof(string),400)]
         [HttpPost("[action]")]
         public IActionResult GenerateCart([FromBody]List<ProductToCartRequest> request)
         {

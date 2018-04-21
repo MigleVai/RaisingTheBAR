@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.BLL.Models.RequestModels;
 using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -20,6 +20,9 @@ namespace RaisingTheBAR.BLL.Controllers
             _dbContext = dbContext;
         }
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult ChangeBlock([FromBody]BlockRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -48,6 +51,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<UserResponse>), 200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult GetUsers()
         {
             var userContext = _dbContext.Set<User>().Include(x=>x.Orders).ThenInclude(o=>o.ProductOrders).ThenInclude(po=>po.Product);
@@ -71,6 +77,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<FullProductResponse>), 200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Discount);

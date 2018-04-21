@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RaisingTheBAR.BLL.Models.RequestModels;
+using System;
 using System.IO;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RaisingTheBAR.BLL.Models.RequestModels;
-using RaisingTheBAR.Core.Models;
 
 namespace RaisingTheBAR.BLL.Services
 {
@@ -30,7 +28,6 @@ namespace RaisingTheBAR.BLL.Services
 
             try
             {
-
                 var httpResponse = (HttpWebResponse)mockProcessorRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
@@ -38,7 +35,7 @@ namespace RaisingTheBAR.BLL.Services
                     return !string.IsNullOrEmpty(result);
                 }
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 //add logging someday
                 return false;

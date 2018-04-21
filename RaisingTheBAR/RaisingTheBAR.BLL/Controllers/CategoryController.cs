@@ -21,6 +21,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult CreateCategory([FromBody]CreateCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();
@@ -58,6 +61,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult AddProductToCategory([FromBody]ProductCategoryRequest request)
         {
             var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
@@ -92,6 +98,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult RemoveProductFromCategory([FromBody]ProductCategoryRequest request)
         {
             var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
@@ -122,6 +131,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(401)]
         public IActionResult RemoveCategory([FromBody]RemoveCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();
@@ -143,6 +155,7 @@ namespace RaisingTheBAR.BLL.Controllers
         }
 
         [HttpGet("[Action]")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
         public IActionResult GetAllCategories()
         {
             var categoryContext = _dbContext.Set<Category>()
