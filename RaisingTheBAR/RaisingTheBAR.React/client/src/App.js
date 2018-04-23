@@ -43,10 +43,10 @@ class App extends Component {
         <Route exact path="/" component={ImgCarousel} /> 
         <Route path="/signin" render={(props) => <SignIn {...props} handleLogging={this.handleLogging}/>} />
         <Route path="/register" render={(props) => <Register {...props} handleLogging={this.handleLogging} />} />
-        <Route exact path="/products" component={ItemPage}/>
+        <Route exact path="/products" render={(props) => <ItemPage islogged={this.state.logged} {...props}/>}/>
         <Route path="/products/:category/:productId" render={(props) => <Item islogged={this.state.logged} {...props}/>}/>
-        <Route exact path="/products/:category" component={ItemPage}/>
-        <Route exact path="/products" componenet={ItemPage}/>
+        <Route exact path="/products/:category" render={(props) => <ItemPage islogged={this.state.logged} {...props}/>}/>
+        <Route exact path="/products" render={(props) => <ItemPage islogged={this.state.logged} {...props}/>}/>
         <Route path="/cart" render={(props) => <UserShoppingCart islogged={this.state.logged} {...props}/>} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />

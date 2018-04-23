@@ -86,7 +86,7 @@ export default class UserShoppingCart extends React.Component {
             <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
                 <ErrorMessage responseError={this.state.responseError} />
-                <CartTable cart={this.state.products} />
+                <CartTable cart={this.state.products} islogged={this.props.islogged}/>
                 <CartTotal totalPrice={this.state.totalCost} totalAmount={this.state.totalAmountProducts} />
             </div>
         );

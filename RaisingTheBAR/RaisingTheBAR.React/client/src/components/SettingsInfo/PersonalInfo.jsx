@@ -24,7 +24,7 @@ export default class PersonalInfo extends React.Component {
                 this.setState({ firstname: result.firstname, lastname: result.lastname });
             })
             .catch(error => {
-                this.setState({responseError: error.response.data});
+                this.setState({ responseError: error.response.data });
             });
     }
     handleLoggingChange(props) {
@@ -35,7 +35,7 @@ export default class PersonalInfo extends React.Component {
             .then(res => {
             })
             .catch(error => {
-                this.setState({responseError: error.response.data});
+                this.setState({ responseError: error.response.data });
             });
     }
 
@@ -51,19 +51,22 @@ export default class PersonalInfo extends React.Component {
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
                 <form>
+                    <h3>Personal Information</h3>
                     <TextField
                         value={this.state.firstname}
                         onChange={this.handleNameChange}
                         floatingLabelText="Name"
                         floatingLabelFixed={true}
                     />
+                    <br/>
                     <TextField
                         value={this.state.lastname}
                         onChange={this.handleLastNameChange}
                         floatingLabelText="Last Name"
                         floatingLabelFixed={true}
                     />
-                    <RaisedButton label="Default" onClick={this.handleLoggingChange} />
+                    <br/>
+                    <RaisedButton label="Submit" onClick={this.handleLoggingChange} />
                 </form>
             </div>
         );
