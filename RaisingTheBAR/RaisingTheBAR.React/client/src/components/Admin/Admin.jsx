@@ -7,9 +7,9 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link, Route } from 'react-router-dom';
 
 export default class Admin extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
     render() {
         const styles = {
             title: {
