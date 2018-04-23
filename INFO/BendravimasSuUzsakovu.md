@@ -1,7 +1,7 @@
 ## Nauji klausimai
 1. Kada turi būti paprašoma vartotojo įvertinti apsipirkimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
 2. Kaip turėtų būti registruojamas administratorius?
-3. Ar administratorius prisijungęs kaip vartotojas gali panaudoti visus usecase kaip ir vartotojas?
+3. Ar administratorius prisijungęs kaip vartotojas gali panaudoti visus panaudos atvejus kaip ir vartotojas?
 4. Ar reikia išsaugoti kreditinės kortelės duomenis vartotojui?
 5. Kokio tipo prekių požymiai turi būti saugomi?
 6. Ar administratorius gali sukurti prekių požymius?
@@ -10,12 +10,15 @@
 9. Koks yra prekių importo/exporto šablonas excel formatu?
 10. Ar importo ir exporto šablonas vienodas?
 11. Ar prekei užtenka vienos nuotraukos?
-12. Klausimas: Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu? Atsakymas: Kaip siūlote spręsti tokią situaciją?  Mes siūlome, kad prekė esanti krepšelyje gali pakeisti kainą. Ar tinka?
+12. Klausimas: Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu? Atsakymas: Kaip siūlote spręsti tokią situaciją?  Mes siūlome, kad prekė esanti krepšelyje gali pakeisti kainą. Ar taip tiktų?
 13. Kokią reitingavimo skalę naudoti įvertinti apsipirkimams?
 14. Vykdant importą/eksportą gaima naudotis sistema- kurti, redaguoti prekes. Ar galima vykdant importą/eksportą vykdyti dar vieną importą/eksportą?
-15. Dėl pradinio puslapio turinio- siūlome atvaizduoti featured prekes besisukančioje paveiksliukų karuselėje. Ar tinka?
-16. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
-
+15. Dėl pradinio puslapio turinio- siūlome atvaizduoti featured prekes besisukančioje paveiksliukų karuselėje. Ar taip tiktų?
+16. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką tinklalapyje, ar įvedus tam tikrą URL (pavyzdžiui, www.somewebsite.com/admin)?
+17. Kokią pirkėjo informaciją mato administratorius?
+18. Ką reiškia administratoriui „vykdyti užsakymus“? Kokie vykdymo žingsniai į tai įeina? Galbūt galite parašyti trumpą pavyzdinį scenarijų?
+19. Ar užblokuotą vartotoją identifikuoti pagal pašto adresą?
+20. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
 -------------------
 1. Kokia kalbą turėtų būti sukurta svetainė?
 

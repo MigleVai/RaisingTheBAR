@@ -13,6 +13,7 @@ import Item from './components/Item';
 import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
+import Admin from './components/Admin/Admin';
 
 
 class App extends Component {
@@ -35,6 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Route path="/admin" component={Admin}/>
         <header>
           <Route path="/" render={(props) => <Header handleLogging={this.handleLogging} islogged={this.state.logged} />} />
         </header>
