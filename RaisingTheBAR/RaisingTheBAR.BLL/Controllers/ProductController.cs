@@ -20,7 +20,7 @@ namespace RaisingTheBAR.BLL.Controllers
             _dbContext = dbContext;
         }
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<ProductResponse>),200)]
+        [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>();
@@ -68,10 +68,10 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(ProductResponse), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         public IActionResult GetProduct(string productId)
         {
-            var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
+            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(productId));
 
             if (product == null)
@@ -95,7 +95,7 @@ namespace RaisingTheBAR.BLL.Controllers
         //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
@@ -113,11 +113,10 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (request.DiscountPrice != null || request.DiscountPrice != 0)
             {
-                if (product.Discount == null)
+                product.Discount = new Discount
                 {
-                    product.Discount = new Discount();
-                }
-                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                    DiscountedPrice = (decimal)request.DiscountPrice
+                };
             }
 
             productContext.Add(product);
@@ -135,7 +134,7 @@ namespace RaisingTheBAR.BLL.Controllers
         //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
@@ -151,19 +150,26 @@ namespace RaisingTheBAR.BLL.Controllers
                 Thumbnail = request.Thumbnail,
                 Timestamp = request.Timestamp
             };
-            if (request.DiscountPrice != null || request.DiscountPrice != 0)
+            var discountContext = _dbContext.Set<Discount>();
+            var discount = discountContext.FirstOrDefault(x => x.ProductId == product.Id);
+            if (request.DiscountPrice != null && request.DiscountPrice != 0)
             {
-                if(product.Discount == null)
+                if (discount == null)
                 {
-                    product.Discount = new Discount();
+                    product.Discount = new Discount {DiscountedPrice = (decimal)request.DiscountPrice};
                 }
-                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
-                _dbContext.Update(product.Discount);
+                else
+                {
+                    discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                    _dbContext.Update(discount);
+                }
             }
             else
             {
-                product.Discount = null;
-                _dbContext.Remove(product.Discount);
+                if (discount != null)
+                {
+                    _dbContext.Remove(discount);
+                }
             }
             var productContext = _dbContext.Set<Product>();
 
@@ -197,7 +203,7 @@ namespace RaisingTheBAR.BLL.Controllers
                             var databaseValue = databaseValues[property];
                             if (proposedValue != databaseValue)
                             {
-                                exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue.ToString(), ActualValue = databaseValue.ToString() } );
+                                exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue?.ToString(), ActualValue = databaseValue?.ToString() });
                             }
 
                         }
