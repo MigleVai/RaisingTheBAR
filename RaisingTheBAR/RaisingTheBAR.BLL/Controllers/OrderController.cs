@@ -7,8 +7,10 @@ using RaisingTheBAR.BLL.Services;
 using RaisingTheBAR.Core.Enums;
 using RaisingTheBAR.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using RaisingTheBAR.BLL.Models.ResponseModels;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -149,12 +151,14 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<OrderListResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
         public IActionResult GetAllOrders()
         {
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Orders)
-                .ThenInclude(x => x.ProductOrders)
-                .ThenInclude(x => x.Product);
+                .ThenInclude(x => x.ProductOrders);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -170,9 +174,15 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Your session has ended");
             }
 
-            
+            var orders = user.Orders.Select(x => new OrderListResponse
+            {
+                StartedDate = x.StartedDate,
+                OrderState = x.State.ToString(),
+                OrderPrice = x.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
+                ProductAmount = x.ProductOrders.Count()
+            });
 
-            return Ok();
+            return Ok(orders);
         }
     }
 }
