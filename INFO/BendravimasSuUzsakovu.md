@@ -1,5 +1,10 @@
 ## Nauji klausimai
 1. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
+2. Ar jūs norėtumėte pamatyti mūsų dabartinį variantą ir pakomentuoti ką reikėtų patobulinti?
+3. Kokius duomenis gali saugoti ir redaguoti vartotojas? (pvz. vardas, pavardė)
+4. Kaip administratorius turėtų matyti užsakymus? (pvz. sąrašas užsakymų su būsenom?) 
+5. Ar admin puslapis turėtų būti taikomas ir mobiliesiems įrenginiams?
+6. Kokia informacija reikalinga pateikiant užsakymams? (pvz. adresas, pašto kodas). Ir ar jiems turi būti validacija?
 
 ## Neatsakyti klausimai
 1. Kada turi būti paprašoma vartotojo įvertinti apsipirkimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
