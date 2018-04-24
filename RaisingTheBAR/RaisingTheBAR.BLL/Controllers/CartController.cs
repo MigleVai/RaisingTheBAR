@@ -229,7 +229,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return GetCart();
             }
 
             return BadRequest("Nothing changed");
@@ -352,7 +352,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Your session has ended");
             }
-            if (user.Cart == null || user.Cart.ProductCarts == null) {
+            if (user.Cart?.ProductCarts == null) {
                 return Ok(0);
             }
             var amount = user.Cart.ProductCarts.Count();
