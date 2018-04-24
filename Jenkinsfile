@@ -10,8 +10,10 @@ pipeline {
       parallel {
         stage('Publish client') {
           steps {
-            sh 'cd RaisingTheBAR/RaisingTheBAR.React/client/ && sudo \\cp -r build/ ../../../../../temp/'
-            sh '../../scripts/publish.sh'
+            sh '''#!/bin/bash -xe
+cd RaisingTheBAR/RaisingTheBAR.React/client/ && sudo \\cp -r build/ ../../../../../temp/'''
+            sh '''#!/bin/bash -xe
+../../scripts/publish.sh'''
           }
         }
         stage('Publish API') {
