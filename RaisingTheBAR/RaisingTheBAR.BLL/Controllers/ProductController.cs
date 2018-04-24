@@ -97,6 +97,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
         {
             var product = new Product()
@@ -132,6 +133,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
         public IActionResult EditProduct([FromBody]ProductEditRequest request)
         {

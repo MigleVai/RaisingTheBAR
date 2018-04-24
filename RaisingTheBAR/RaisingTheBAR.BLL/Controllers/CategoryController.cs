@@ -24,6 +24,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult CreateCategory([FromBody]CreateCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();
@@ -64,6 +65,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult AddProductToCategory([FromBody]ProductCategoryRequest request)
         {
             var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
@@ -101,6 +103,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult RemoveProductFromCategory([FromBody]ProductCategoryRequest request)
         {
             var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
@@ -134,6 +137,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult RemoveCategory([FromBody]RemoveCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();

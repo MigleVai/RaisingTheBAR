@@ -23,6 +23,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult ChangeBlock([FromBody]BlockRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -54,6 +55,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserResponse>), 200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult GetUsers()
         {
             var userContext = _dbContext.Set<User>().Include(x=>x.Orders).ThenInclude(o=>o.ProductOrders).ThenInclude(po=>po.Product);
@@ -80,6 +82,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(IEnumerable<FullProductResponse>), 200)]
         [ProducesResponseType(typeof(string),400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
