@@ -26,7 +26,7 @@ export default class CartTable extends React.Component {
                     Amount: amount
                 })
                 .then(res => {
-                    this.setState({ products: res });
+                    this.setState({ products: res.data.products });
                     if (amount <= 0) {
                         var am = localStorage.getItem('amount');
                         am = am - 1;
