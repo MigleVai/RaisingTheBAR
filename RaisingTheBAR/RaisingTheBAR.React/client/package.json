@@ -19,7 +19,8 @@
     "react-slick": "^0.21.0",
     "react-table": "^6.8.0",
     "slick-carousel": "^1.8.1",
-    "typeface-roboto": "0.0.54"
+    "typeface-roboto": "0.0.54",
+    "immutability-helper": "^2.6.6"
   },
   "scripts": {
     "start": "set PORT=3000 && react-scripts start",
