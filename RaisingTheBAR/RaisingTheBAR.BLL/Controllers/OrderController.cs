@@ -92,7 +92,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 State = OrderStateEnum.Ordered,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                ProductOrders = user.Cart.ProductCarts.Select(x=> new ProductOrder()
+                ProductOrders = user.Cart.ProductCarts.Select(x => new ProductOrder()
                 {
                     Amount = x.Amount,
                     ProductId = x.ProductId,
@@ -119,7 +119,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
-        public IActionResult EditOrder([FromBody]OrderChangeRequest request )
+        public IActionResult EditOrder([FromBody]OrderChangeRequest request)
         {
             var parseResult = Enum.TryParse(request.OrderState, true, out OrderStateEnum orderState);
             if (parseResult == false)
@@ -148,6 +148,57 @@ namespace RaisingTheBAR.BLL.Controllers
             }
 
             return Ok();
+        }
+        [Authorize]
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(OrderResponse), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        public IActionResult GetSingleOrder(string orderId)
+        {
+            var userContext = _dbContext.Set<User>()
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.ProductOrders)
+                .ThenInclude(x => x.Product);
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            var order = user.Orders.FirstOrDefault(x => x.Id == Guid.Parse(orderId));
+            if (order == null)
+            {
+                return BadRequest("No such order");
+            }
+
+            var orderDisplay = new OrderResponse
+            {
+                StartedDate = order.StartedDate,
+                OrderState = order.State.ToString(),
+                TotalPrice = order.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
+                LastUpdateDate = order.LastModifiedDate,
+                Products = order.ProductOrders.Select(x=> new ProductListResponse()
+                {
+                    Price = x.SinglePrice,
+                    Id = x.Product.Id.ToString(),
+                    Image = x.Product.Thumbnail,
+                    Name = x.Product.DisplayName,
+                    Amount = x.Amount,
+                    TotalPrice = x.SinglePrice * x.Amount
+                }).ToList()
+            };
+
+            return Ok(orderDisplay);
         }
         [Authorize]
         [HttpGet("[action]")]
