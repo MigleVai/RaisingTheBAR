@@ -90,11 +90,11 @@ namespace RaisingTheBAR.BLL.Controllers
                 State = OrderStateEnum.Ordered,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                TotalPrice = amountToPay,
                 ProductOrders = user.Cart.ProductCarts.Select(x=> new ProductOrder()
                 {
                     Amount = x.Amount,
-                    ProductId = x.ProductId
+                    ProductId = x.ProductId,
+                    SinglePrice = x.Product.Discount?.DiscountedPrice ?? x.Product.Price
                 }).ToList()
             };
 
@@ -144,6 +144,33 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 order.FinishedDate = DateTimeOffset.Now;
             }
+
+            return Ok();
+        }
+        [Authorize]
+        [HttpGet("[action]")]
+        public IActionResult GetAllOrders()
+        {
+            var userContext = _dbContext.Set<User>()
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.ProductOrders)
+                .ThenInclude(x => x.Product);
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            
 
             return Ok();
         }
