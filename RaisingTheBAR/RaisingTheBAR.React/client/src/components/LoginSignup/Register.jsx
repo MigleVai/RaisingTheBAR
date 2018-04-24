@@ -75,9 +75,13 @@ export default class Register extends React.Component {
                     localStorage.setItem('jwtToken', result.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
+                    //WHY THI NO WORK
                     var tempCart = addTempCartCheck(true);
-                    if(tempCart !== 'OK'){
-                        this.setState({ responseError: tempCart });
+                    console.log("tempCart: " + tempCart);
+                    if(Number(tempCart)){
+                        this.props.handleAmount(Number(tempCart));
+                    }else{
+                        this.setState({ responseError: tempCart});
                     }
                     this.props.history.push('/');
                     localStorage.removeItem('productAmount');

@@ -101,7 +101,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return GetProductAmountInCart();
             }
 
             return BadRequest("Nothing changed");
@@ -178,7 +178,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return GetProductAmountInCart();
             }
 
             return BadRequest("Nothing changed");

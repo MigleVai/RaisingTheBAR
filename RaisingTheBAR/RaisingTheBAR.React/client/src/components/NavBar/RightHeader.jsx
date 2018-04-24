@@ -20,10 +20,11 @@ export default class RightHeader extends React.Component {
                     display: 'inline-flex'
                 },
             }
+            console.log("right"+this.props.productAmount);
         return (
             <div style={styles.displayStyle}>
                 <SearchBar />
-                <BadgeIcon islogged={this.props.islogged} action={this.props.action}/>
+                <BadgeIcon islogged={this.props.islogged} productAmount={this.props.productAmount} action={this.props.action}/>
                 <div>{this.props.islogged ? <Logged handleLogging={this.props.handleLogging} /> : <Link to={"/signin"}><FlatButton id="SigninButton" style={styles.buttonStyle} labelStyle={styles.labelStyle} label="Sign in" /></Link>}</div>
             </div>
         );

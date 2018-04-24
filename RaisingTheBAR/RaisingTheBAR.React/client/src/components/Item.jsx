@@ -17,7 +17,7 @@ export default class Item extends React.Component {
         this.requestForProduct = this.requestForProduct.bind(this);
         this.getValueAsNumber = this.getValueAsNumber.bind(this);
         this.discountExists = this.discountExists.bind(this);
-    }aa
+    }
     amountTemp = 1;
     productAmount = 0;
     getValueAsNumber(input) {
@@ -48,14 +48,8 @@ export default class Item extends React.Component {
                     })
                     .then(res => {
                         const result = res.data;
-                        this.setState({ product: result });
-                        if (localStorage.getItem('amount') === null) {
-                            localStorage.setItem('amount', 1);
-                        } else {
-                            var am = localStorage.getItem('amount');
-                            am = am + 1;
-                            localStorage.setItem('amount', am);
-                        }
+                        this.props.handleAmount(result);
+                        // localStorage.setItem('amount', result);
                         this.handleClick();
                     })
                     .catch(error => {
@@ -85,6 +79,7 @@ export default class Item extends React.Component {
                 localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
                 if (item !== null) {
                     localStorage.setItem('productAmount', cartOfProducts.length);
+                    this.props.handleAmount(cartOfProducts.length);
                 }
                 this.handleClick();
             }
@@ -96,22 +91,22 @@ export default class Item extends React.Component {
                 <p><s>Cost:  {price}€</s></p>
                 <p>Discount: {this.state.product.discountPrice}€</p>
             </div>;
-        }else{
+        } else {
             return <p>Cost:  {price}€</p>;
         }
     }
 
     handleClick = () => {
         this.setState({
-          open: true,
+            open: true,
         });
-      };
-    
-      handleRequestClose = () => {
+    };
+
+    handleRequestClose = () => {
         this.setState({
-          open: false,
+            open: false,
         });
-      };
+    };
 
     render() {
         var setwidth = window.innerWidth * 0.4;
@@ -176,7 +171,7 @@ export default class Item extends React.Component {
                         <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
                         <Snackbar
                             open={this.state.open}
-                            message={"Added "+this.state.product.name+" to cart!"}
+                            message={"Added " + this.state.product.name + " to cart!"}
                             autoHideDuration={4000}
                             onRequestClose={this.handleRequestClose}
                         />

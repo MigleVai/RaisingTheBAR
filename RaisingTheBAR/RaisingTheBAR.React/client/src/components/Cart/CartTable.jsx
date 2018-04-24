@@ -26,6 +26,7 @@ export default class CartTable extends React.Component {
                     Amount: amount
                 })
                 .then(res => {
+                    this.props.handleAmount(res.data.products.length);
                     this.setState({ products: res.data.products });
                     if (amount <= 0) {
                         var am = localStorage.getItem('amount');
@@ -63,6 +64,7 @@ export default class CartTable extends React.Component {
                     var removeIndex = tempArray.indexOf(removableItem);
                     tempArray.splice(removeIndex, 1);
                     this.setState({ delete: true, products: tempArray });
+                    this.props.handleAmount(tempArray.length);
                 } else {
                     cartOfProducts[index].Amount = amount;
                 }

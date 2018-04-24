@@ -5,7 +5,7 @@ export default function addTempCartCheck(islogged) {
     if (islogged === true && array !== null) {
         axios.post(`/api/Cart/AddTemporaryCartToDatabase`, JSON.parse(array))
             .then(res => {
-                return 'OK';
+                return res.data;
             })
             .catch(error => {
                 return error.response.data;

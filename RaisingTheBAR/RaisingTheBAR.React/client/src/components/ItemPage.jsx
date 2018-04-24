@@ -30,14 +30,9 @@ export default class ItemPage extends React.Component {
                 })
                 .then(res => {
                     const result = res.data;
-                    this.setState({ product: result });
-                    if (localStorage.getItem('amount') === null) {
-                        localStorage.setItem('amount', 1);
-                    } else {
-                        var am = localStorage.getItem('amount');
-                        am = am + 1;
-                        localStorage.setItem('amount', am);
-                    }
+                    this.props.handleAmount(result);
+                    console.log(result);
+                    // localStorage.setItem('amount', result);
                 })
                 .catch(error => {
                     this.setState({ responseError: error.response.data });
@@ -66,6 +61,7 @@ export default class ItemPage extends React.Component {
             localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
             if (item !== null) {
                 localStorage.setItem('productAmount', cartOfProducts.length);
+                this.props.handleAmount(cartOfProducts.length);
             }
         }
     }
@@ -102,15 +98,15 @@ export default class ItemPage extends React.Component {
 
     handleClick = () => {
         this.setState({
-          open: true,
+            open: true,
         });
-      };
-    
-      handleRequestClose = () => {
+    };
+
+    handleRequestClose = () => {
         this.setState({
-          open: false,
+            open: false,
         });
-      };
+    };
 
     render() {
         var windowWidth = window.innerWidth;
@@ -211,7 +207,7 @@ export default class ItemPage extends React.Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
-                                if(rowInfo.original !== undefined){
+                                if (rowInfo.original !== undefined) {
                                     if (column.id === 'name') {
                                         this.props.history.push(this.props.location.pathname + '/' + rowInfo.original.id);
                                     }
@@ -220,7 +216,7 @@ export default class ItemPage extends React.Component {
                                         this.addProduct(product.id);
                                         this.handleClick();
                                     }
-                                } 
+                                }
                             }
                         }
                     }}
