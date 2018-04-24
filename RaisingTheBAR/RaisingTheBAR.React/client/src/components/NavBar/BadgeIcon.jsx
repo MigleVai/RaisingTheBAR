@@ -58,8 +58,10 @@ export default class BadgeIcon extends React.Component {
         }
         var notLogged = localStorage.getItem('productAmount');
         var logged = localStorage.getItem('amount');
+        // eslint-disable-next-line
         if ((this.state.totalAmountProducts != logged && logged !== null) //DO NOT CHANGE TO !==
             ||
+            // eslint-disable-next-line
             (this.state.totalAmountProducts != notLogged && notLogged !== null)) {//DO NOT CHANGE TO !== OR MIGLE WILL KILL
             if (notLogged !== null) {
                 return true;
@@ -67,6 +69,7 @@ export default class BadgeIcon extends React.Component {
                 return true;
             } else { return false; }
         }
+        // eslint-disable-next-line
         if (logged === null && notLogged === null && this.state.totalAmountProducts != 0) {
             return true;
         }
