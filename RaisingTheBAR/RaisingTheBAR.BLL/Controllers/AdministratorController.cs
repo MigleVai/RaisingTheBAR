@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    [Authorize(Roles = "administrator")]
+    //[Authorize(Roles = "administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
@@ -96,7 +96,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 Image = x.Image,
                 IsEnabled = x.IsEnabled,
                 Thumbnail = x.Thumbnail,
-                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)null
+                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)0,
+                Timestamp = x.Timestamp
             });
 
             return Ok(products);

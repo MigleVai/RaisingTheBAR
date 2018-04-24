@@ -92,7 +92,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(result);
         }
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
@@ -111,8 +111,12 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var productContext = _dbContext.Set<Product>();
 
-            if (request.DiscountPrice != null)
+            if (request.DiscountPrice != null || request.DiscountPrice != 0)
             {
+                if (product.Discount == null)
+                {
+                    product.Discount = new Discount();
+                }
                 product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
             }
 
@@ -128,7 +132,7 @@ namespace RaisingTheBAR.BLL.Controllers
             return BadRequest("Nothing changed in database");
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string),400)]
@@ -143,15 +147,23 @@ namespace RaisingTheBAR.BLL.Controllers
                 DisplayName = request.DisplayName,
                 Id = Guid.Parse(request.Id),
                 Image = request.Image,
-                Price = request.Price
+                Price = request.Price,
+                Thumbnail = request.Thumbnail,
+                Timestamp = request.Timestamp
             };
-            if (request.DiscountPrice != null)
+            if (request.DiscountPrice != null || request.DiscountPrice != 0)
             {
+                if(product.Discount == null)
+                {
+                    product.Discount = new Discount();
+                }
                 product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                _dbContext.Update(product.Discount);
             }
             else
             {
                 product.Discount = null;
+                _dbContext.Remove(product.Discount);
             }
             var productContext = _dbContext.Set<Product>();
 
