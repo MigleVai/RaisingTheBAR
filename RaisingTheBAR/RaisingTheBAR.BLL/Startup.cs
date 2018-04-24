@@ -72,6 +72,7 @@ namespace RaisingTheBAR.BLL
             app.UseAuthentication();
             app.UseSwagger();
             app.UseMvc();
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "RaisingTheBAR API");

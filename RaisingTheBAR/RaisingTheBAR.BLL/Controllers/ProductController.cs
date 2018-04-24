@@ -33,6 +33,7 @@ namespace RaisingTheBAR.BLL.Controllers
                     Image = y.Thumbnail,
                     Name = y.DisplayName,
                     Price = y.Price,
+                    Description = y.Description,
                     DiscountPrice = y.Discount != null ? y.Discount.DiscountedPrice : (decimal?)null
                 })
                 .ToList();

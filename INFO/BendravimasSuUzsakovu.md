@@ -1,4 +1,7 @@
 ## Nauji klausimai
+1. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
+
+## Neatsakyti klausimai
 1. Kada turi būti paprašoma vartotojo įvertinti apsipirkimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
 2. Kaip turėtų būti registruojamas administratorius?
 3. Ar administratorius prisijungęs kaip vartotojas gali panaudoti visus panaudos atvejus kaip ir vartotojas?
@@ -18,7 +21,7 @@
 17. Kokią pirkėjo informaciją mato administratorius?
 18. Ką reiškia administratoriui „vykdyti užsakymus“? Kokie vykdymo žingsniai į tai įeina? Galbūt galite parašyti trumpą pavyzdinį scenarijų?
 19. Ar užblokuotą vartotoją identifikuoti pagal pašto adresą?
-20. Kiek laiko neprijungusio vartotojo krepšelis turi būti saugojamas naršyklėje?
+
 -------------------
 1. Kokia kalbą turėtų būti sukurta svetainė?
 

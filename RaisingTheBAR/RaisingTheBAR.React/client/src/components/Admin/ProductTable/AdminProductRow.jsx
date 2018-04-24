@@ -1,23 +1,47 @@
 import React from 'react';
 import EditableCell from './EditableCell';
+import Checkbox from 'material-ui/Checkbox';
+import Star from 'material-ui/svg-icons/toggle/star';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 export default class AdminProductRow extends React.Component {
-  onDelEvent() {
-    this.props.onDelEvent(this.props.product);
-
+  state = {
+    checked: false
+  };
+  onCheckedDelEvent() {
+    this.setState((oldState) => {
+      return {
+        checked: !oldState.checked,
+      };
+    });
+    this.props.product.checked = !this.state.checked;
+    this.props.onCheckedDel(this.props.product);
+  }
+  onCheckedFeaturedEvent() {
+    this.props.product.featured = !this.props.product.featured;
+    this.props.onCheckedFeatured(this.props.product);
   }
   render() {
-
     return (
       <tr className="eachRow">
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-          "type": "name",
-          value: this.props.product.name,
+          type: "displayName",
+          value: this.props.product.displayName,
+          id: this.props.product.id
+        }} />
+        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+          type: "model",
+          value: this.props.product.model,
           id: this.props.product.id
         }} />
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "price",
           value: this.props.product.price,
+          id: this.props.product.id
+        }} />
+        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+          type: "discountPrice",
+          value: this.props.product.discountPrice,
           id: this.props.product.id
         }} />
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
@@ -31,17 +55,30 @@ export default class AdminProductRow extends React.Component {
           id: this.props.product.id
         }} />
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+          type: "thumbnail",
+          value: this.props.product.thumbnail,
+          id: this.props.product.id
+        }} />
+        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "id",
           value: this.props.product.id,
           id: this.props.product.id
         }} />
-        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-          type: "featured",
-          value: this.props.product.featured,
-          id: this.props.product.id
-        }} />
+        <td>
+          <Checkbox
+            onCheck={this.onCheckedFeaturedEvent.bind(this)}
+            checked={this.props.product.featured}
+            iconStyle={{ fill: 'orange' }}
+            checkedIcon={<Star />}
+            uncheckedIcon={<StarBorder />}
+          />
+        </td>
         <td className="del-cell">
-          <input type="button" onClick={this.onDelEvent.bind(this)} value="X" className="del-btn" />
+          <Checkbox
+            onCheck={this.onCheckedDelEvent.bind(this)}
+            checked={this.state.checked}
+            iconStyle={{ fill: 'red' }}
+          />
         </td>
       </tr>
     );
