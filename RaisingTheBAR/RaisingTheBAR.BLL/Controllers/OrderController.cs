@@ -113,8 +113,38 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost("[action]")]
-        public IActionResult ApproveOrder([FromBody]OrderChangeRequest request )
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult EditOrder([FromBody]OrderChangeRequest request )
         {
+            var parseResult = Enum.TryParse(request.OrderState, true, out OrderStateEnum orderState);
+            if (parseResult == false)
+            {
+                return BadRequest("Bad OrderState supplied");
+            }
+
+            var orderContext = _dbContext.Set<Order>();
+
+            var order = orderContext.FirstOrDefault(x => x.Id == Guid.Parse(request.OrderId));
+            if (order == null)
+            {
+                return BadRequest("No such order");
+            }
+
+            order.State = orderState;
+
+            order.LastModifiedDate = DateTimeOffset.Now;
+            var user = _dbContext.Set<User>().FirstOrDefault(x => x.Email == User.Claims.FirstOrDefault(y => y.Type == ClaimTypes.Name).Value);
+            order.ModifiedBy = user;
+            order.ModifiedById = user?.Id;
+
+            if (orderState == OrderStateEnum.Completed || orderState == OrderStateEnum.Rejected)
+            {
+                order.FinishedDate = DateTimeOffset.Now;
+            }
+
             return Ok();
         }
     }
