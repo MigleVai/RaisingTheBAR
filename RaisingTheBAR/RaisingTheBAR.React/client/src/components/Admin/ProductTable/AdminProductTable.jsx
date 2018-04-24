@@ -4,7 +4,6 @@ import ActionDelete from 'material-ui/svg-icons/action/delete';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export default class AdminProductTable extends React.Component {
-
   onSaveEvent() {
     this.props.onSave();
   }
@@ -14,9 +13,9 @@ export default class AdminProductTable extends React.Component {
     var checkedRowDel = this.props.onCheckedRowDel;
     var checkedRowFeatured = this.props.onCheckedRowFeatured;
     var filterText = this.props.filterText;
-    for (var product of this.props.products) {
+    var product = this.props.products.map(function(product) {
       if (product.displayName.indexOf(filterText) === -1) {
-        return;
+        return null;
       }
       return (<AdminProductRow
         onProductTableUpdate={onProductTableUpdate}
@@ -24,23 +23,22 @@ export default class AdminProductTable extends React.Component {
         onCheckedDel={checkedRowDel.bind(this)}
         onCheckedFeatured={checkedRowFeatured.bind(this)}
         key={product.id} />)
-    };
+    });
+
     return (
       <div>
         <button type="button" onClick={this.props.onRowAdd} className="btn btn-success pull-right">Add</button>
-        <table className="table table-bordered">
+        <table style={{width: 100 + "%"}} className="table table-bordered">
           <thead>
             <tr>
-              <th>Display name</th>
-              <th>Model</th>
-              <th>Price</th>
-              <th>Discount price</th>
-              <th>Description</th>
+              <th >Display name</th>
+              <th style={{width: 7 + "%"}}>Price</th>
+              <th style={{width: 7 + "%"}}>Discount price</th>
+              <th style={{width: 20 + "%"}}>Description</th>
               <th>Image base64</th>
               <th>Thumbnail base64</th>
-              <th>Id</th>
-              <th>Featured</th>
-              <th><ActionDelete /></th>
+              <th style={{width: 4 + "%"}} >Featured</th>
+              <th style={{width: 4 + "%"}} ><ActionDelete /></th>
             </tr>
           </thead>
 
