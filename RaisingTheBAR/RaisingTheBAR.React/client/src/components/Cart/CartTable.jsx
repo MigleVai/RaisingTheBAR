@@ -5,12 +5,15 @@ import matchSorter from 'match-sorter';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
 import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 export default class CartTable extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            responseError: ''
+            responseError: '',
+            delete: false,
+            products: []
         }
         this.renderEditable = this.renderEditable.bind(this);
         this.sendAmount = this.sendAmount.bind(this);
@@ -23,21 +26,18 @@ export default class CartTable extends React.Component {
                     Amount: amount
                 })
                 .then(res => {
-                    const result = res.data;
+                    this.setState({ products: res });
                     if (amount <= 0) {
                         var am = localStorage.getItem('amount');
                         am = am - 1;
                         localStorage.setItem('amount', am);
+                        this.setState({ delete: true });
                     }
                 })
                 .catch(error => {
                     this.setState({ responseError: error.response.data });
                 });
         } else {
-            const product = {
-                Id: productID,
-                Amount: amount
-            }
             var cartOfProducts = [];
             if (localStorage.getItem('cartNotLogged') !== null) {
                 cartOfProducts = JSON.parse(localStorage.getItem('cartNotLogged'));
@@ -53,6 +53,16 @@ export default class CartTable extends React.Component {
                 if (amount <= 0) {
                     cartOfProducts.splice(index, 1);
                     localStorage.setItem('productAmount', cartOfProducts.length);
+                    var tempArray = this.state.products;
+                    var removableItem = tempArray.find(function(element){
+                        if(element.productId === productID){
+                            return element;
+                        }
+                        return null;
+                    });
+                    var removeIndex = tempArray.indexOf(removableItem);
+                    tempArray.splice(removeIndex, 1);
+                    this.setState({ delete: true, products: tempArray });
                 } else {
                     cartOfProducts[index].Amount = amount;
                 }
@@ -60,29 +70,40 @@ export default class CartTable extends React.Component {
             localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
         }
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.cart !== nextProps.cart) {
+            this.setState({ products: nextProps.cart });
+            return true;
+        }
+        if (nextProps.cart !== this.state.products) {
+            return true;
+        }
+        if (nextState.delete === true) {
+            this.setState({ delete: false });
+            return true;
+        }
+        return false;
+    }
 
     renderEditable(cellInfo) {
         return (
-            <div
+            <Paper zDepth={1}><div
                 style={{ backgroundColor: "#fafafa" }}
                 contentEditable
                 suppressContentEditableWarning
                 onBlur={e => {
                     const data = [...this.props.cart];
-                    console.log(e.target.innerHTML);
                     if (Number(e.target.innerHTML) > 0) {
-                        console.log(e.target.innerHTML == 0);
                         data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                         this.sendAmount(cellInfo.row._original.productId, e.target.innerHTML);
                     } else {
-                        console.log('not valid');
                         this.setState({ responseError: 'Not valid amount' });
                     }
                 }}
                 dangerouslySetInnerHTML={{
                     __html: this.props.cart[cellInfo.index][cellInfo.column.id]
                 }}
-            />
+            /></Paper>
         );
     }
     render() {
@@ -98,7 +119,7 @@ export default class CartTable extends React.Component {
                 margin: 'auto',
             },
         };
-        const data = this.props.cart;
+        const data = this.state.products;
         const columns = [
             {
                 Header: 'Name',
@@ -112,6 +133,13 @@ export default class CartTable extends React.Component {
                 Header: 'Price',
                 accessor: 'price',
                 style: styles.tdStyles,
+                Cell: row => {
+                    if (row.original.discountPrice !== null && row.original.discountPrice !== undefined) {
+                        return <p>{row.original.discountPrice}</p>;
+                    } else {
+                        return <p>{row.original.price}</p>;
+                    }
+                },
                 maxWidth: 200,
                 resizable: false,
                 filterMethod: (filter, rows) =>
@@ -157,8 +185,7 @@ export default class CartTable extends React.Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
-                                if (column.id === 'id') {
-                                    console.log(rowInfo.original.productId);
+                                if (column.id === 'id' && rowInfo !== undefined) {
                                     this.sendAmount(rowInfo.original.productId, 0);
                                 }
                             }
