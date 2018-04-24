@@ -10,5 +10,7 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public decimal? DiscountPrice { get; set; }
+        public byte[] Timestamp { get; set; }
+
     }
 }

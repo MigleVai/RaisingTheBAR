@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route path="/admin" component={Admin}/>
+        <Route path="/admin" render={(props) => <Admin islogged={this.state.logged} {...props}/>} />
         <header>
           <Route path="/" render={(props) => <Header handleLogging={this.handleLogging} islogged={this.state.logged} />} />
         </header>
