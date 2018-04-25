@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    [Authorize(Roles = "administrator")]
+    //[Authorize(Roles = "administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
