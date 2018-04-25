@@ -3,16 +3,21 @@ import AdminProductTable from './AdminProductTable';
 import ProductSearchBar from './ProductSearchBar';
 import axios from 'axios';
 import update from 'immutability-helper';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class EditProducts extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {};
-    this.state.filterText = "";
-    this.state.products = []
+    this.state = {
+      openSaveDialog: false,
+      filterText : "",
+      products : []
+    };
   }
+
   componentDidMount() {
     this.getData();
   }
@@ -35,21 +40,21 @@ export default class EditProducts extends React.Component {
   handleCheckedRowDel(product) {
     var index = this.state.products.indexOf(product);
     this.setState({
-      products: update(this.state.products, {[index]: { isCheckedForDeletion: { $set: product.checked } } })
+      products: update(this.state.products, { [index]: { isCheckedForDeletion: { $set: product.checked } } })
     })
   };
   handleCheckedRowFeatured(product) {
     var index = this.state.products.indexOf(product);
     this.setState({
-      products: update(this.state.products, {[index]: { featured: { $set: product.featured } } })
+      products: update(this.state.products, { [index]: { featured: { $set: product.featured } } })
     })
   };
-  handleSave() {
+  handlePosts() {
     var addUri = '/api/Product/AddProduct';
     var editUri = '/api/Product/EditProduct';
+    // var deleteUri = '/api/Product/DeleteProduct';
     var products = this.state.products.slice();
-    var productsToSave = products.map((product) => {
-
+    products.forEach(function (product) {
       if (product.isSaved !== undefined && product.isSaved === false) {
         if (product.isAdded === true && product.isAdded !== undefined) {
           axios.post(addUri, {
@@ -73,14 +78,31 @@ export default class EditProducts extends React.Component {
             description: product.description,
             price: product.price,
             discountPrice: product.discountPrice,
-            timestamp : product.timestamp
+            timestamp: product.timestamp
           }).catch(error => {
             console.log("error with edditing product!")
             console.log(error)
           });
         }
+        // if (product.isCheckedForDeletion === true) {
+        //   axios.post(deleteUri, {
+        //     id: product.id,
+        //     displayName: product.displayName,
+        //     image: product.image,
+        //     thumbnail: product.thumbnail,
+        //     description: product.description,
+        //     price: product.price,
+        //     discountPrice: product.discountPrice,
+        //     timestamp: product.timestamp
+        //   }).catch(error => {
+        //     console.log("error with deleting product!")
+        //     console.log(error)
+        //   });
+        // }
       }
     })
+    this.handleSaveDialogClose();
+
   };
 
   handleAddEvent(evt) {
@@ -121,8 +143,27 @@ export default class EditProducts extends React.Component {
     this.setState({ products: newProducts });
     //  console.log(this.state.products);
   };
-  render() {
+  handleSaveDialogOpen = () => {
+    this.setState({ openSaveDialog: true });
+  };
 
+  handleSaveDialogClose = () => {
+    this.setState({ openSaveDialog: false });
+  };
+  render() {
+    const saveDialogActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={() => this.handleSaveDialogClose()}
+      />,
+      <FlatButton
+        label="Save changes"
+        primary={true}
+        keyboardFocused={true}
+        onClick={() => this.handlePosts()}
+      />,
+    ];
     return (
       <div>
         <ProductSearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} />
@@ -131,9 +172,18 @@ export default class EditProducts extends React.Component {
           onRowAdd={this.handleAddEvent.bind(this)}
           onCheckedRowDel={this.handleCheckedRowDel.bind(this)}
           onCheckedRowFeatured={this.handleCheckedRowFeatured.bind(this)}
-          onSave={this.handleSave.bind(this)}
+          onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}
           filterText={this.state.filterText} />
+        <Dialog
+          title="Save confirmation"
+          actions={saveDialogActions}
+          modal={false}
+          open={this.state.openSaveDialog}
+          onRequestClose={this.handleSaveDialogClose}
+        >
+          Do you really want to save changes?
+        </Dialog>
       </div>
     );
 
