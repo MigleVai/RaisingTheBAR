@@ -15,7 +15,6 @@ import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
 import Admin from './components/Admin/Admin';
-import OrderStepper from './components/OrderStepper';
 
 class App extends Component {
   constructor(props) {
