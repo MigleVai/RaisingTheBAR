@@ -10,6 +10,7 @@ import UserShoppingCart from './components/Cart/UserShoppingCart';
 import Payment from './components/Payment';
 import ItemPage from './components/ItemPage';
 import Item from './components/Item';
+import OrderStepper from './components/OrderStepper';
 import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
