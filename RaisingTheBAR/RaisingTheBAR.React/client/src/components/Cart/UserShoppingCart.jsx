@@ -84,8 +84,8 @@ export default class UserShoppingCart extends React.Component {
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
-                <CartTable cart={this.state.products} />
-                <CartTotal totalPrice={this.state.totalCost} totalAmount={this.state.totalAmountProducts} />
+                <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged}/>
+                <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} />
             </div>
         );
     }

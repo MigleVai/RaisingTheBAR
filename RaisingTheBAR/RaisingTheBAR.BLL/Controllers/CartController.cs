@@ -25,7 +25,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize]
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult AddTemporaryCartToDatabase([FromBody] List<ProductToCartRequest> request)
         {
@@ -49,7 +49,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (user.Cart == null)
             {
-                user.Cart = new Cart {ProductCarts = new List<ProductCart>()};
+                user.Cart = new Cart { ProductCarts = new List<ProductCart>() };
                 foreach (var product in request)
                 {
                     user.Cart.ProductCarts.Add(new ProductCart()
@@ -101,7 +101,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return GetProductAmountInCart();
             }
 
             return BadRequest("Nothing changed");
@@ -109,8 +109,8 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(int), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult AddProductToCart([FromBody] ProductToCartRequest request)
         {
@@ -134,7 +134,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (user.Cart == null)
             {
-                user.Cart = new Cart {ProductCarts = new List<ProductCart>()};
+                user.Cart = new Cart { ProductCarts = new List<ProductCart>() };
                 user.Cart.ProductCarts.Add(new ProductCart()
                 {
                     Amount = request.Amount,
@@ -178,7 +178,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return GetProductAmountInCart();
             }
 
             return BadRequest("Nothing changed");
@@ -186,8 +186,8 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(CartResponse), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult EditProduct([FromBody]ProductToCartRequest request)
         {
@@ -227,18 +227,13 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var result = _dbContext.SaveChanges();
 
-            if (result > 0)
-            {
-                return Ok();
-            }
-
-            return BadRequest("Nothing changed");
+            return result > 0 ? GetCart() : BadRequest("Nothing changed");
         }
 
         [Authorize]
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult EmptyCart()
         {
@@ -265,7 +260,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Cart is already empty");
             }
-            
+
             _dbContext.RemoveRange(productCarts);
 
             var result = _dbContext.SaveChanges();
@@ -281,7 +276,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize]
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(CartResponse), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult GetCart()
         {
@@ -303,8 +298,10 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Your session has ended");
             }
-            if (user.Cart == null) {
-                var emptyCart = new CartResponse() {
+            if (user.Cart == null)
+            {
+                var emptyCart = new CartResponse()
+                {
                     Products = new List<CartProduct>(),
                     CompletePrice = 0
                 };
@@ -323,7 +320,7 @@ namespace RaisingTheBAR.BLL.Controllers
             var cart = new CartResponse()
             {
                 Products = products,
-                CompletePrice = products.Sum(y=>y.Total) 
+                CompletePrice = products.Sum(y => y.Total)
             };
 
             return Ok(cart);
@@ -332,7 +329,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize]
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(int), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult GetProductAmountInCart()
         {
@@ -352,7 +349,8 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Your session has ended");
             }
-            if (user.Cart == null || user.Cart.ProductCarts == null) {
+            if (user.Cart?.ProductCarts == null)
+            {
                 return Ok(0);
             }
             var amount = user.Cart.ProductCarts.Count();
@@ -360,11 +358,11 @@ namespace RaisingTheBAR.BLL.Controllers
             return Ok(amount);
         }
         [ProducesResponseType(typeof(CartResponse), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [HttpPost("[action]")]
         public IActionResult GenerateCart([FromBody]List<ProductToCartRequest> request)
         {
-            var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
+            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
 
             var products = new List<CartProduct>();
             foreach (var req in request)

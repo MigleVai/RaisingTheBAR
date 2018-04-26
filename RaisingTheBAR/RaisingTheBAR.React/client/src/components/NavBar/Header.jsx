@@ -77,7 +77,7 @@ export default class Header extends React.Component {
           title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
           titleStyle={styles.align}
           onLeftIconButtonClick={this.handleDrawerToggle}
-          iconElementRight={<RightHeader action={this.handler} handleLogging={this.props.handleLogging} islogged={this.props.islogged} />}
+          iconElementRight={<RightHeader action={this.handler} productAmount={this.props.productAmount} handleLogging={this.props.handleLogging} islogged={this.props.islogged} />}
           style={styles.barStyle}
         >
           <Drawer

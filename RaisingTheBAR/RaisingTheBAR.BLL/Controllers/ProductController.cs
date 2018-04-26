@@ -20,7 +20,7 @@ namespace RaisingTheBAR.BLL.Controllers
             _dbContext = dbContext;
         }
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<ProductResponse>),200)]
+        [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>();
@@ -33,6 +33,7 @@ namespace RaisingTheBAR.BLL.Controllers
                     Image = y.Thumbnail,
                     Name = y.DisplayName,
                     Price = y.Price,
+                    Description = y.Description,
                     DiscountPrice = y.Discount != null ? y.Discount.DiscountedPrice : (decimal?)null
                 })
                 .ToList();
@@ -67,10 +68,10 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(ProductResponse), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         public IActionResult GetProduct(string productId)
         {
-            var productContext = _dbContext.Set<Product>().Include(x=>x.Discount);
+            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(productId));
 
             if (product == null)
@@ -91,11 +92,12 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(result);
         }
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
         {
             var product = new Product()
@@ -109,9 +111,12 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var productContext = _dbContext.Set<Product>();
 
-            if (request.DiscountPrice != null)
+            if (request.DiscountPrice != null || request.DiscountPrice != 0)
             {
-                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                product.Discount = new Discount
+                {
+                    DiscountedPrice = (decimal)request.DiscountPrice
+                };
             }
 
             productContext.Add(product);
@@ -126,11 +131,12 @@ namespace RaisingTheBAR.BLL.Controllers
             return BadRequest("Nothing changed in database");
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
         public IActionResult EditProduct([FromBody]ProductEditRequest request)
         {
@@ -140,15 +146,30 @@ namespace RaisingTheBAR.BLL.Controllers
                 DisplayName = request.DisplayName,
                 Id = Guid.Parse(request.Id),
                 Image = request.Image,
-                Price = request.Price
+                Price = request.Price,
+                Thumbnail = request.Thumbnail,
+                Timestamp = request.Timestamp
             };
-            if (request.DiscountPrice != null)
+            var discountContext = _dbContext.Set<Discount>();
+            var discount = discountContext.FirstOrDefault(x => x.ProductId == product.Id);
+            if (request.DiscountPrice != null && request.DiscountPrice != 0)
             {
-                product.Discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                if (discount == null)
+                {
+                    product.Discount = new Discount {DiscountedPrice = (decimal)request.DiscountPrice};
+                }
+                else
+                {
+                    discount.DiscountedPrice = (decimal)request.DiscountPrice;
+                    _dbContext.Update(discount);
+                }
             }
             else
             {
-                product.Discount = null;
+                if (discount != null)
+                {
+                    _dbContext.Remove(discount);
+                }
             }
             var productContext = _dbContext.Set<Product>();
 
@@ -182,7 +203,7 @@ namespace RaisingTheBAR.BLL.Controllers
                             var databaseValue = databaseValues[property];
                             if (proposedValue != databaseValue)
                             {
-                                exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue.ToString(), ActualValue = databaseValue.ToString() } );
+                                exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue?.ToString(), ActualValue = databaseValue?.ToString() });
                             }
 
                         }

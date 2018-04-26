@@ -22,8 +22,9 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult CreateCategory([FromBody]CreateCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();
@@ -62,11 +63,12 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult AddProductToCategory([FromBody]ProductCategoryRequest request)
         {
-            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
+            var productContext = _dbContext.Set<Product>().Include(x => x.ProductCategories);
             var categoryContext = _dbContext.Set<Category>();
 
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(request.ProductId));
@@ -99,11 +101,12 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult RemoveProductFromCategory([FromBody]ProductCategoryRequest request)
         {
-            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCategories);
+            var productContext = _dbContext.Set<Product>().Include(x => x.ProductCategories);
             var categoryContext = _dbContext.Set<Category>();
 
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(request.ProductId));
@@ -132,8 +135,9 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize(Roles = "administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult RemoveCategory([FromBody]RemoveCategoryRequest request)
         {
             var categoryContext = _dbContext.Set<Category>();
@@ -159,15 +163,15 @@ namespace RaisingTheBAR.BLL.Controllers
         public IActionResult GetAllCategories()
         {
             var categoryContext = _dbContext.Set<Category>()
-                .Include(x=>x.ProductCategories)
-                .Include(x=>x.ChildCategories)
+                .Include(x => x.ProductCategories)
+                .Include(x => x.ChildCategories)
                 .Include("ChildCategories.ProductCategories");
             var categories = categoryContext.Where(y => y.ParentCategoryId == null)
                 .Select(x => new CategoryResponse
                 {
                     Id = x.Id.ToString(),
                     Name = x.Name,
-                    ProductAmount = x.ProductCategories.Count() +  x.ChildCategories.Sum(z=>z.ProductCategories.Count()),
+                    ProductAmount = x.ProductCategories.Count() + x.ChildCategories.Sum(z => z.ProductCategories.Count()),
                     Children = x.ChildCategories.Select(z => new CategoryResponse
                     {
                         Id = z.Id.ToString(),

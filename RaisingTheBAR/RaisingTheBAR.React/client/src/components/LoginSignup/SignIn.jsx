@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
+import addTempCartCheck from '../functions/addTempCartCheck.js';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -36,6 +37,12 @@ export default class SignIn extends React.Component {
                     localStorage.setItem('jwtToken', result.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
+                    var tempCart = addTempCartCheck(true);
+                    if(Number(tempCart)){
+                        this.props.handleAmount(Number(tempCart));
+                    }else{
+                        this.setState({ responseError: tempCart});
+                    }
                     this.props.history.push('/');
                     localStorage.removeItem('productAmount');
                     localStorage.removeItem('cartNotLogged');

@@ -15,5 +15,6 @@ namespace RaisingTheBAR.Core.Models
         public virtual Order Order { get; set; }
 
         public int Amount { get; set; }
+        public decimal SinglePrice { get; set; }
     }
 }

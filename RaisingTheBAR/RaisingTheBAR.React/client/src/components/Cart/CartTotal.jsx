@@ -8,9 +8,12 @@ export default class CartTotal extends React.Component {
         const styles = {
             paperStyle: {
                 textAlign: 'center',
-                display: 'inline-block',
+            },
+            pageStyle:{
                 position: 'fixed',
-                width: '20%'
+                width: '20%',
+                right: '5%',
+                display: 'inline-grid'
             }
         };
         var productName = 'products';
@@ -18,7 +21,7 @@ export default class CartTotal extends React.Component {
             productName = 'product';
         }
         return (
-            <div>
+            <div style={styles.pageStyle}>
                 <Paper style={styles.paperStyle} zDepth={1}>
                     <h3>Order Summary</h3>
                     <hr/>

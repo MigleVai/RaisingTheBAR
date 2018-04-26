@@ -4,6 +4,7 @@ import axios from 'axios';
 import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from './ErrorMessage';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -11,9 +12,11 @@ export default class Item extends React.Component {
         this.state = {
             product: {},
             responseError: '',
+            open: false,
         }
         this.requestForProduct = this.requestForProduct.bind(this);
         this.getValueAsNumber = this.getValueAsNumber.bind(this);
+        this.discountExists = this.discountExists.bind(this);
     }
     amountTemp = 1;
     productAmount = 0;
@@ -45,22 +48,16 @@ export default class Item extends React.Component {
                     })
                     .then(res => {
                         const result = res.data;
-                        this.setState({ product: result });
-                        if(localStorage.getItem('amount') === null){
-                            localStorage.setItem('amount', 1);
-                        }else{
-                            var am = localStorage.getItem('amount');
-                            am = am + 1;
-                            localStorage.setItem('amount', am);
-                        }
-                        this.props.history.push('/cart');
+                        this.props.handleAmount(result);
+                        // localStorage.setItem('amount', result);
+                        this.handleClick();
                     })
                     .catch(error => {
                         this.setState({ responseError: error.response.data });
                     });
             } else {
                 const product = {
-                    Id: this.state.product.id,
+                    Id: this.state.product.id.toUpperCase(),
                     Amount: this.amountTemp
                 }
                 var cartOfProducts = [];
@@ -82,11 +79,34 @@ export default class Item extends React.Component {
                 localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
                 if (item !== null) {
                     localStorage.setItem('productAmount', cartOfProducts.length);
+                    this.props.handleAmount(cartOfProducts.length);
                 }
-                this.props.history.push('/cart');
+                this.handleClick();
             }
         }
     }
+    discountExists(price) {
+        if (this.state.product.discountPrice !== null) {
+            return <div>
+                <p><s>Cost:  {price}€</s></p>
+                <p>Discount: {this.state.product.discountPrice}€</p>
+            </div>;
+        } else {
+            return <p>Cost:  {price}€</p>;
+        }
+    }
+
+    handleClick = () => {
+        this.setState({
+            open: true,
+        });
+    };
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
 
     render() {
         var setwidth = window.innerWidth * 0.4;
@@ -145,11 +165,16 @@ export default class Item extends React.Component {
                 <div style={styles.textStyle}>
                     <h3 style={styles.h3Style}>{this.state.product.name}</h3>
                     <div style={{ paddingTop: '4%' }}>
-                        <p>Cost:  {price}€</p>
-                        <p>Discount: </p>
+                        {this.discountExists(price)}
                         <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
                         <br />
                         <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
+                        <Snackbar
+                            open={this.state.open}
+                            message={"Added " + this.state.product.name + " to cart!"}
+                            autoHideDuration={4000}
+                            onRequestClose={this.handleRequestClose}
+                        />
                     </div>
                 </div>
                 <div>

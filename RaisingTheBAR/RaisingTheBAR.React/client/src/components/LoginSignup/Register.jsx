@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
+import addTempCartCheck from '../functions/addTempCartCheck.js';
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -74,6 +75,14 @@ export default class Register extends React.Component {
                     localStorage.setItem('jwtToken', result.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
+                    //WHY THI NO WORK
+                    var tempCart = addTempCartCheck(true);
+                    console.log("tempCart: " + tempCart);
+                    if(Number(tempCart)){
+                        this.props.handleAmount(Number(tempCart));
+                    }else{
+                        this.setState({ responseError: tempCart});
+                    }
                     this.props.history.push('/');
                     localStorage.removeItem('productAmount');
                     localStorage.removeItem('cartNotLogged');

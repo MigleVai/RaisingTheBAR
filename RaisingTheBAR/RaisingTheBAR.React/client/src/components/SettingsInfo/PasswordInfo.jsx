@@ -20,14 +20,14 @@ export default class PersonalInfo extends React.Component {
     }
 
     handleLoggingChange(props) {
-        axios.post(`/api/User/ChangePassword`,   {
+        axios.post(`/api/User/ChangePassword`, {
             OldPassword: this.state.oldpassword,
             NewPassword: this.state.newpassword
         })
             .then(res => {
             })
             .catch(error => {
-                this.setState({responseError: error.response.data});
+                this.setState({ responseError: error.response.data });
             });
     }
 
@@ -47,28 +47,32 @@ export default class PersonalInfo extends React.Component {
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
                 <form>
-                <TextField
+                    <h3>Change Password</h3>
+                    <TextField
                         value={this.state.oldpassword}
                         onChange={this.handleOLDPasswordChange}
                         floatingLabelText="Old Password"
-                        type = "password"
+                        type="password"
                         floatingLabelFixed={true}
                     />
+                    <br/>
                     <TextField
                         value={this.state.newpassword}
                         onChange={this.handleNEWPasswordChange}
                         floatingLabelText="New Password"
-                        type = "password"
+                        type="password"
                         floatingLabelFixed={true}
                     />
-                   <TextField
+                    <br/>
+                    <TextField
                         value={this.state.repeatpassword}
                         onChange={this.handleREPEATPasswordChange}
                         floatingLabelText="Repeat New Password"
-                        type = "password"
+                        type="password"
                         floatingLabelFixed={true}
                     />
-                    <RaisedButton label="Default" onClick={this.handleLoggingChange}/>
+                    <br/>
+                    <RaisedButton label="Submit" onClick={this.handleLoggingChange} />
                 </form>
             </div>
         );

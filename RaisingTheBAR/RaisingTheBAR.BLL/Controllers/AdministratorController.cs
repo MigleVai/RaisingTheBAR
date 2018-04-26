@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    [Authorize(Roles = "administrator")]
+    //[Authorize(Roles = "administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
@@ -21,8 +21,9 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [HttpPost]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult ChangeBlock([FromBody]BlockRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -52,11 +53,12 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<UserResponse>), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult GetUsers()
         {
-            var userContext = _dbContext.Set<User>().Include(x=>x.Orders).ThenInclude(o=>o.ProductOrders).ThenInclude(po=>po.Product);
+            var userContext = _dbContext.Set<User>().Include(x => x.Orders).ThenInclude(o => o.ProductOrders).ThenInclude(po => po.Product);
 
             var userResponses = userContext.Select(x => new UserResponse
             {
@@ -78,8 +80,9 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<FullProductResponse>), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
@@ -93,7 +96,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 Image = x.Image,
                 IsEnabled = x.IsEnabled,
                 Thumbnail = x.Thumbnail,
-                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)null
+                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)0,
+                Timestamp = x.Timestamp
             });
 
             return Ok(products);

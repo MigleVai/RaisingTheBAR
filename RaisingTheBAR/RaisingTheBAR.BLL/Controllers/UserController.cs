@@ -31,7 +31,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [AllowAnonymous]
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(string), 200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         public IActionResult RequestToken([FromBody]TokenRequest request)
         {
             var userContext = _dbContext.Set<User>().Include(role => role.Role);
@@ -59,8 +59,8 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        [ProducesResponseType(typeof(string),200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         public IActionResult RegisterUser([FromBody]RegistrationRequest request)
         {
             var userContext = _dbContext.Set<User>();
@@ -104,8 +104,8 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(UserDataResponse),200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(UserDataResponse), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult GetUserData()
         {
@@ -132,7 +132,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize]
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
 
         public IActionResult UpdateUserData([FromBody]ChangeUserRequest request)
@@ -148,7 +148,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var user = userContext.FirstOrDefault(x => x.Email == userEmail);
 
-            if(user == null)
+            if (user == null)
             {
                 return BadRequest("Your session has ended");
             }
@@ -158,7 +158,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var result = _dbContext.SaveChanges();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return Ok();
             }
@@ -168,14 +168,14 @@ namespace RaisingTheBAR.BLL.Controllers
         [Authorize]
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult ChangePassword([FromBody]PasswordChangeRequest request)
         {
             var userContext = _dbContext.Set<User>();
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
-            if(userEmail == null)
+            if (userEmail == null)
             {
                 return BadRequest("Your session has expired");
             }
@@ -183,7 +183,7 @@ namespace RaisingTheBAR.BLL.Controllers
             var user = userContext.FirstOrDefault(x => x.Email == userEmail);
             var oldPassword = GenerateHash(request.OldPassword, user.Id);
 
-            if(oldPassword != user.Password)
+            if (oldPassword != user.Password)
             {
                 return BadRequest("Incorrect old password!");
             }

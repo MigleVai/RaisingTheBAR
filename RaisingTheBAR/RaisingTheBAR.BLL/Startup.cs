@@ -71,6 +71,7 @@ namespace RaisingTheBAR.BLL
             }
             app.UseAuthentication();
             app.UseSwagger();
+            app.UseMvc();
 
             app.UseSwaggerUI(c =>
             {
