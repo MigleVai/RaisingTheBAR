@@ -14,7 +14,7 @@ import axios from 'axios';
 import OrderHistory from './components/OrderHistory';
 import Settings from './components/SettingsInfo/Settings';
 import Admin from './components/Admin/Admin';
-
+import OrderStepper from './components/OrderStepper';
 
 class App extends Component {
   constructor(props) {
@@ -64,6 +64,7 @@ class App extends Component {
         <Route path="/cart" render={(props) => <UserShoppingCart productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/orders" component={OrderHistory} />
         <Route path="/settings" component={Settings} />
+        <Route path="/stepper" component={OrderStepper} />
         <Route path="/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/signin" /> : <Payment />)} />
 
