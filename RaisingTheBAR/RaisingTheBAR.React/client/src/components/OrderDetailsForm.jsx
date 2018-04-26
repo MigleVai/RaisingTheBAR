@@ -8,53 +8,64 @@ export default class OrderDetailsForm extends React.Component {
         this.state = {
             address: '',
             firstName: '',
-            lastName: '',
-            firstNameError: '',
-            lastNameError: '',
+            lastName: ''
         };
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
     }
 
-   
+    componentDidMount() {
+        if (localStorage.getItem('address')) {
+            this.setState({ address: localStorage.getItem('address') });
+        }
+        if (localStorage.getItem('firstName')) {
+            this.setState({ firstName: localStorage.getItem('firstName') });
+        }
+        if (localStorage.getItem('lastName')) {
+            this.setState({ lastName: localStorage.getItem('lastName') });
+        }
+    }
 
     handleAddressChange(event) {
         this.setState({ address: event.target.value });
+        localStorage.setItem('address', event.target.value);
         var re = RegExp('/^$|\s+/ ');
         if (!re.test(event.target.value)) {
-            this.setState({ adderssError: 'Not a valid adderss!' });
+            localStorage.setItem('addressError', 'Not a valid address!');
         } else {
-            this.setState({ adderssError: '' });
+            localStorage.setItem('addressError', '');
         }
         if (event.target.value === '') {
-            this.setState({ adderssError: '' });
+            localStorage.setItem('addressError', '');
         }
     }
 
     handleFirstNameChange(event) {
         this.setState({ firstName: event.target.value });
+        localStorage.setItem('firstName', event.target.value);
         var re = RegExp('/^$|\s+/ ');
         if (!re.test(event.target.value)) {
-            this.setState({ firstNameError: 'Not a valid name!' });
+            localStorage.setItem('firstNameError', 'Not a valid name!');
         } else {
-            this.setState({ firstNameError: '' });
+            localStorage.setItem('firstNameError', '');
         }
         if (event.target.value === '') {
-            this.setState({ firstNameError: '' });
+            localStorage.setItem('firstNameError', '');
         }
     }
 
     handleLastNameChange(event) {
         this.setState({ lastName: event.target.value });
+        localStorage.setItem('lastName', event.target.value);
         var re = RegExp('/^$|\s+/ ');
         if (!re.test(event.target.value)) {
-            this.setState({ lastNameError: 'Not a valid last name!' });
+            localStorage.setItem('lastNameError', 'Not a valid last name!');
         } else {
-            this.setState({ lastNameError: '' });
+            localStorage.setItem('lastNameError', '');
         }
         if (event.target.value === '') {
-            this.setState({ lastNameError: '' });
+            localStorage.setItem('lastNameError', '');
         }
     }
 
@@ -84,7 +95,7 @@ export default class OrderDetailsForm extends React.Component {
                         floatingLabelText="Address"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.addressError} />
+                        errorText={localStorage.getItem('addressError')} />
                     <br />
                     <TextField
                         value={this.state.firstName}
@@ -92,7 +103,7 @@ export default class OrderDetailsForm extends React.Component {
                         floatingLabelText="First Name"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.firstNameError} />
+                        errorText={localStorage.getItem('firstNameError')} />
                     <br />
                     <TextField
                         value={this.state.lastName}
@@ -100,7 +111,7 @@ export default class OrderDetailsForm extends React.Component {
                         floatingLabelText="Last Name"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.lastNameError} />
+                        errorText={localStorage.getItem('lastNameError')} />
                 </form>
             </div>
         );

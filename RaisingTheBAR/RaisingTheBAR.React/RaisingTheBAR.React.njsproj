@@ -61,7 +61,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="client\src\components\Payment.jsx" />
-    <Compile Include="client\src\components\SettingsInfo\OrderStepper.jsx" />
     <Compile Include="client\src\components\SettingsInfo\PasswordInfo.jsx" />
     <Compile Include="client\src\components\SettingsInfo\PersonalInfo.jsx" />
     <Compile Include="client\src\components\SettingsInfo\Settings.jsx" />

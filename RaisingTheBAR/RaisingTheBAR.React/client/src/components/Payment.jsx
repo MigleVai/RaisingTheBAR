@@ -17,11 +17,7 @@ export default class Payment extends React.Component {
             holder: '',
             amount: 100,
             number: '',
-            cvvError: '',
-            holderError: '',
-            numberError: '',
-            response: '',
-            responseError: ''
+            response: ''
         };
         this.handleCvvChange = this.handleCvvChange.bind(this);
         this.handleExpMonthChange = this.handleExpMonthChange.bind(this);
@@ -29,6 +25,30 @@ export default class Payment extends React.Component {
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
         this.handlePayClick = this.handlePayClick.bind(this);
+    }
+
+    componentDidMount() {
+        if (localStorage.getItem('cvv')) {
+            this.setState({ cvv: localStorage.getItem('cvv') });
+        }
+        if (localStorage.getItem('exp_month')) {
+            this.setState({ exp_month: localStorage.getItem('exp_month') });
+        }
+        if (localStorage.getItem('exp_year')) {
+            this.setState({ exp_year: localStorage.getItem('exp_year') });
+        }
+        if (localStorage.getItem('holder')) {
+            this.setState({ holder: localStorage.getItem('holder') });
+        }
+        if (localStorage.getItem('amount')) {
+            this.setState({ amount: localStorage.getItem('amount') });
+        }
+        if (localStorage.getItem('number')) {
+            this.setState({ number: localStorage.getItem('number') });
+        }
+        if (localStorage.getItem('response')) {
+            this.setState({ response: localStorage.getItem('response') });
+        }
     }
 
     // Need to check if the parameters are valid here.
@@ -72,15 +92,16 @@ export default class Payment extends React.Component {
     }
 
     handleCvvChange(event) {
+        localStorage.setItem('cvv', event.target.value);
         this.setState({ cvv: event.target.value });
         var re = RegExp('\\b[0-9]{3}\\b');
         if (!re.test(event.target.value)) {
-            this.setState({ cvvError: 'Not a valid cvv!' });
+            localStorage.setItem('cvvError', 'Not a valid cvv!');
         } else {
-            this.setState({ cvvError: '' });
+            localStorage.setItem('cvvError', '');
         }
         if (event.target.value === '') {
-            this.setState({ cvvError: '' });
+            localStorage.setItem('cvvError', '');
         }
     }
 
@@ -93,27 +114,31 @@ export default class Payment extends React.Component {
     }
 
     handleHolderChange(event) {
+        localStorage.setItem('holder', event.target.value);
         this.setState({ holder: event.target.value });
         if (event.target.value.length <= 2 && event.target.value.length >= 32) {
-            this.setState({ holderError: 'Not a valid holder!' });
+            localStorage.setItem('holderError', 'Not a valid holder!');
         } else {
-            this.setState({ holderError: '' });
+            localStorage.setItem('holderError', '');
         }
         if (event.target.value === '') {
-            this.setState({ holderError: '' });
+            localStorage.setItem('holderError', '');
         }
     }
 
     handleNumberChange(event) {
+        localStorage.setItem('number', event.target.value);
         this.setState({ number: event.target.value });
         var re = RegExp('\\b[0-9]{16}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
-            this.setState({ numberError: 'Not a valid card number!' });
+            localStorage.setItem('numberError', 'Not a valid card number!');
         } else {
             this.setState({ numberError: '' });
+            localStorage.setItem('numberError', '');
         }
         if (event.target.value === '') {
             this.setState({ numberError: '' });
+            localStorage.setItem('numberError', '');
         }
     }
 
@@ -162,7 +187,7 @@ export default class Payment extends React.Component {
                         floatingLabelText="Credit Card Holder"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.holderError} />
+                        errorText={localStorage.getItem('holderError')} />
                     <br />
                     <TextField
                         value={this.state.number}
@@ -170,7 +195,7 @@ export default class Payment extends React.Component {
                         floatingLabelText="Credit Card Number"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.numberError} />
+                        errorText={localStorage.getItem('numberError')} />
                     <br />
                     <TextField
                         value={this.state.cvv}
@@ -178,7 +203,7 @@ export default class Payment extends React.Component {
                         floatingLabelText="Cvv"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={this.state.cvvError} />
+                        errorText={localStorage.getItem('cvvError')} />
                     <br />
 
                     <DropDownMenu style={styles.customWidth} value={this.state.exp_year} onChange={this

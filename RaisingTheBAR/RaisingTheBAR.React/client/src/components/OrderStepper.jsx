@@ -20,6 +20,51 @@ class HorizontalLinearStepper extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (localStorage.getItem('cvv')) {
+            localStorage.setItem('cvv', '')
+        }
+        if (localStorage.getItem('exp_month')) {
+            localStorage.setItem('exp_month', '')
+        }
+        if (localStorage.getItem('exp_year')) {
+            localStorage.setItem('exp_year', '')
+        }
+        if (localStorage.getItem('firstName')) {
+            localStorage.setItem('firstName', '')
+        }
+        if (localStorage.getItem('lastName')) {
+            localStorage.setItem('lastName', '')
+        }
+        if (localStorage.getItem('holder')) {
+            localStorage.setItem('holder', '')
+        }
+        if (localStorage.getItem('number')) {
+            localStorage.setItem('number', '')
+        }
+        if (localStorage.getItem('address')) {
+            localStorage.setItem('address', '')
+        }
+        if (localStorage.getItem('cvvError')) {
+            localStorage.setItem('cvvError', '')
+        }
+        if (localStorage.getItem('firstNameError')) {
+            localStorage.setItem('firstNameError', '')
+        }
+        if (localStorage.getItem('lastNameError')) {
+            localStorage.setItem('lastNameError', '')
+        }
+        if (localStorage.getItem('holderError')) {
+            localStorage.setItem('holderError', '')
+        }
+        if (localStorage.getItem('numberError')) {
+            localStorage.setItem('numberError', '')
+        }
+        if (localStorage.getItem('addressError')) {
+            localStorage.setItem('addressError', '')
+        }
+    }
+
     handleNext = () => {
         const { stepIndex } = this.state;
         this.setState({
