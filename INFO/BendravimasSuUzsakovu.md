@@ -67,6 +67,46 @@ Po pirmo siuntimo atsakyti klausimai:
 11. Ar užtenka reitingavimo tam tikroje skalėje? (pvz 0-10)
 * Reitingavimo kam?
 
+Po antro siuntimo atsakyti klausimai:
+1. Kada turi būti paprašoma vartotojo įvertinti apsipirkimą (kai administratorius patvirtina užsakymą ar kai vartotojas išsiunčia užsakymą)?
+* Kai pirkėjo užsakymo būsena pasikeičia į „pristatytas“, kito prisijungimo prie sistemos metu pirkejui turi būti parodomas langas, kur prašoma įvertinti apsipirkimą (balas nuo 1 iki 5 ir laisvos formos tekstas)
+2. Kaip turėtų būti registruojamas administratorius?
+* Sukuriamas duomenų bazėje
+3. Ar administratorius prisijungęs kaip vartotojas gali panaudoti visus panaudos atvejus kaip ir vartotojas?
+* Ne. Administratorius tik administruoja sistemą. Administratoriaus modulis turėtų būti pasiekiamas atskiru adresu (pvz parduotuve.lt/admin)
+4. Ar reikia išsaugoti kreditinės kortelės duomenis vartotojui?
+* Griežto reikalavimo tam nėra, bet būtų laikoma papildomu funkcionalumu jeigu tokią informaciją saugotumėte.
+5. Kokio tipo prekių požymiai turi būti saugomi?
+* Požymiai turėtų būti konfigūruojami.
+6. Ar administratorius gali sukurti prekių požymius?
+* Taip.
+7. Ar požymiai turi būti surišti su prekių kategorijomis?
+* Taip.
+8. Ar pagal požymius galima filtruoti prekes?
+* Taip.
+9. Koks yra prekių importo/exporto šablonas excel formatu?
+* Šablono kol kas nėra. Galite siūlyti savo.
+10. Ar importo ir exporto šablonas vienodas?
+* Jeigu eksportuojant leisite pasirinkti ką eksportuoti, bus laikoma papildomu funkcionalumu.
+11. Ar prekei užtenka vienos nuotraukos?
+* Prekė gali turėti daugiau nei vieną.
+12. Klausimas: Ar prekės krepšelyje gali pakeisti kainą, ar turi visada išlaikyti tokią, kuri buvo įdėjimo metu? Kaip siūlote * spręsti tokią situaciją?  Atsakymas: Mes siūlome, kad prekė esanti krepšelyje gali pakeisti kainą. Ar taip tiktų?
+* Tinka, bet vartotojas turi būti įspėjamas, kad prekės kaina pasikeitė.
+13. Kokią reitingavimo skalę naudoti įvertinti apsipirkimams?
+* Žiūrėti atsakymą nr. 1
+14. Vykdant importą/eksportą gaima naudotis sistema- kurti, redaguoti prekes. Ar galima vykdant importą/eksportą vykdyti dar vieną importą/eksportą?
+* Eksportas/Importas neturėtų trukdyti sistemos veiklai. Dėl parelelaus importo/eksporto - norėčiau žinoti ar galite tai palaikyti. 
+15. Dėl pradinio puslapio turinio - siūlome atvaizduoti featured prekes besisukančioje paveiksliukų karuselėje. Ar taip tiktų?
+* Gal turit pagrindinio puslapio dizainą?
+16. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką tinklalapyje, ar įvedus tam tikrą URL (pavyzdžiui, www.somewebsite.com/admin)?
+* Žiūrėti atsakymą nr. 3
+17. Kokią pirkėjo informaciją mato administratorius?
+* Bendrame sąraše - El. pašto adresas, užsakymų skaičius, bendra užsakymų suma, vidutinė užsakymo suma. Sąraše turi būti galimybė atsidaryti detalesnį kiekvieno pirkėjo langą, kuriame būtų matoma visa užsakymų istorija
+18. Ką reiškia administratoriui „vykdyti užsakymus“? Kokie vykdymo žingsniai į tai įeina? Galbūt galite parašyti trumpą pavyzdinį scenarijų?
+* Administratorius gali keisti užsakymo būsenas: Priimtas (po pavykusio mokėjimo), renkamas, išsiųstas, pristatytas.
+19. Ar užblokuotą vartotoją identifikuoti pagal pašto adresą?
+* Taip
+
 ## Kiti atsakyti klausimai
 
 1. Ar administratoriaus prisijungimo langas turėtų būti pasiekiamas paspaudus tam skirtą mygtuką puslapyje, ar reiktų leisti prieigą tik įvedus tam tikrą URL (pavyzdžiui, www.something.com/admin)? 
