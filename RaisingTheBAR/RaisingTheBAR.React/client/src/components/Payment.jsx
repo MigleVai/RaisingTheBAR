@@ -24,7 +24,6 @@ export default class Payment extends React.Component {
         this.handleExpYearChange = this.handleExpYearChange.bind(this);
         this.handleHolderChange = this.handleHolderChange.bind(this);
         this.handleNumberChange = this.handleNumberChange.bind(this);
-        this.handlePayClick = this.handlePayClick.bind(this);
     }
 
     componentDidMount() {
@@ -51,45 +50,6 @@ export default class Payment extends React.Component {
         }
     }
 
-    // Need to check if the parameters are valid here.
-    handlePayClick(props) {
-        this.setState({ amount: 999999  });
-        var error = 'This field is required!';
-        if (this.state.cvv !== '' &&
-            this.state.holder !== '' &&
-            this.state.number !== '' &&
-            this.state.cvvError === '' &&
-            this.state.holderError === '' &&
-            this.state.numberError === '' &&
-            this.state.exp_month !== 0 &&
-            this.state.exp_year !== 0) {
-            axios.post(`/api/Order/FinishOrder`,
-                {
-                    cvv: this.state.cvv,
-                    exp_month: this.state.exp_month,
-                    exp_year: this.state.exp_year,
-                    holder: this.state.holder,
-                    number: this.state.number
-                })
-                .then(res => {
-                    this.setState({response: res.data});
-                })
-                .catch(error => {
-                    this.setState({responseError: error.response.data});
-                });
-
-        } else {
-            if (this.state.cvvError !== '' || this.state.cvv === '') {
-                this.setState({ cvvError: error });
-            }
-            if (this.state.holderError !== '' || this.state.holder === '') {
-                this.setState({ holderError: error });
-            }
-            if (this.state.numberError !== '' || this.state.number === '') {
-                this.setState({ numberError: error });
-            }
-        }
-    }
 
     handleCvvChange(event) {
         localStorage.setItem('cvv', event.target.value);
@@ -245,8 +205,7 @@ export default class Payment extends React.Component {
                         Total amount: {this.state.amount}
                     </section>
 
-                    <RaisedButton onClick={this.handlePayClick.bind(this)} label="Pay Now" primary={true} buttonStyle={styles.buttonStyle} />
-                    <div><span>{this.state.response}</span></div>
+                    <div><span>{localStorage.getItem('response')}</span></div>
                     <div><img style={styles.imgStyle} src="resources/cvv.jpg" alt="Cvv" /></div>
                 </form>
             </div>
