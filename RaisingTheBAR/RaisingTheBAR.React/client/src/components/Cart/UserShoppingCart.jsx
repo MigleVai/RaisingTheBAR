@@ -23,6 +23,7 @@ export default class UserShoppingCart extends React.Component {
             .then(res => {
                 const cart = res.data;
                 this.setState({ products: cart.products, totalCost: cart.completePrice });
+                localStorage.setItem('totalCost', this.state.totalCost);
             })
             .catch(error => {
                 this.setState({ responseError: error.response.data });
@@ -34,6 +35,7 @@ export default class UserShoppingCart extends React.Component {
             .then(res => {
                 const cart = res.data;
                 this.setState({ products: cart.products, totalCost: cart.completePrice });
+                localStorage.setItem('totalCost', this.state.totalCost);
             })
             .catch(error => {
                 this.setState({ responseError: error.response.data });
@@ -70,6 +72,7 @@ export default class UserShoppingCart extends React.Component {
                 this.getNotLoggedData(array);
             } else {
                 this.setState({ products: [], totalCost: 0, totalAmountProducts: 0 });
+                localStorage.setItem('totalCost', this.state.totalCost);
             }
         }
     }

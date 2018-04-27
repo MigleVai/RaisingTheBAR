@@ -23,48 +23,73 @@ class HorizontalLinearStepper extends React.Component {
 
     componentDidMount() {
         if (localStorage.getItem('cvv')) {
-            localStorage.setItem('cvv', '')
+            localStorage.setItem('cvv', '');
         }
         if (localStorage.getItem('exp_month')) {
-            localStorage.setItem('exp_month', '')
+            localStorage.setItem('exp_month', '');
         }
         if (localStorage.getItem('exp_year')) {
-            localStorage.setItem('exp_year', '')
+            localStorage.setItem('exp_year', '');
         }
         if (localStorage.getItem('firstName')) {
-            localStorage.setItem('firstName', '')
+            localStorage.setItem('firstName', '');
         }
         if (localStorage.getItem('lastName')) {
-            localStorage.setItem('lastName', '')
+            localStorage.setItem('lastName', '');
         }
         if (localStorage.getItem('holder')) {
-            localStorage.setItem('holder', '')
+            localStorage.setItem('holder', '');
         }
         if (localStorage.getItem('number')) {
-            localStorage.setItem('number', '')
+            localStorage.setItem('number', '');
         }
         if (localStorage.getItem('address')) {
-            localStorage.setItem('address', '')
+            localStorage.setItem('address', '');
         }
         if (localStorage.getItem('cvvError')) {
-            localStorage.setItem('cvvError', '')
+            localStorage.setItem('cvvError', '');
         }
         if (localStorage.getItem('firstNameError')) {
-            localStorage.setItem('firstNameError', '')
+            localStorage.setItem('firstNameError', '');
         }
         if (localStorage.getItem('lastNameError')) {
-            localStorage.setItem('lastNameError', '')
+            localStorage.setItem('lastNameError', '');
         }
         if (localStorage.getItem('holderError')) {
-            localStorage.setItem('holderError', '')
+            localStorage.setItem('holderError', '');
         }
         if (localStorage.getItem('numberError')) {
-            localStorage.setItem('numberError', '')
+            localStorage.setItem('numberError', '');
         }
         if (localStorage.getItem('addressError')) {
-            localStorage.setItem('addressError', '')
+            localStorage.setItem('addressError', '');
         }
     }
+    handleOrderDetailsClick() {
+        var error = 'This field is required!';
+        if (localStorage.getItem('firstName') !== '' &&
+            localStorage.getItem('lastName') !== '' &&
+            localStorage.getItem('address') !== '' &&
+            localStorage.getItem('firstNameError') === '' &&
+            localStorage.getItem('lastNameError') === '' &&
+            localStorage.getItem('addressError') === '') {
+            return 1;
+        } else {
+            if (localStorage.getItem('firstNameError') !== '' || localStorage.getItem('firstName') === '') {
+                localStorage.setItem('firstNameError', error);
+            }
+            if (localStorage.getItem('lastNameError')  !== '' || localStorage.getItem('lastName') === '') {
+                localStorage.setItem('lastNameError', error);
+            }
+            if (localStorage.getItem('addressError') !== '' || localStorage.getItem('address') === '') {
+                localStorage.setItem('addressError', error);
+            }
+            this.forceUpdate();
+            return 0;
+        }
+    }
+
+
 
     handlePayClick() {
         this.setState({ amount: 999999 });
@@ -75,8 +100,8 @@ class HorizontalLinearStepper extends React.Component {
             localStorage.getItem('cvvError') === '' &&
             localStorage.getItem('holderError') === '' &&
             localStorage.getItem('numberError') === '' &&
-            localStorage.getItem('exp_month') !== 0 &&
-            localStorage.getItem('exp_year') !== 0) {
+            localStorage.getItem('exp_month') !== '' &&
+            localStorage.getItem('exp_year') !== '') {
             axios.post(`/api/Order/FinishOrder`,
                     {
                         cvv: localStorage.getItem('cvv'),
@@ -96,10 +121,10 @@ class HorizontalLinearStepper extends React.Component {
             if (localStorage.getItem('cvvError') !== '' || localStorage.getItem('cvv') === '') {
                 localStorage.setItem('cvvError', error);
             }
-            if (this.state.holderError !== '' || this.state.holder === '') {
+            if (localStorage.getItem('holderError') !== '' || localStorage.getItem('holder') === '') {
                 localStorage.setItem('holderError', error);
             }
-            if (this.state.numberError !== '' || this.state.number === '') {
+            if (localStorage.getItem('numberError') !== '' || localStorage.getItem('number') === '') {
                 localStorage.setItem('numberError', error);
             }
             return 0;
@@ -109,18 +134,27 @@ class HorizontalLinearStepper extends React.Component {
     handleNext = () => {
         const { stepIndex } = this.state;
 
-        if (stepIndex === 2) {
+        if (stepIndex === 1) {
+            if (this.handleOrderDetailsClick()) {
+                this.setState({
+                    stepIndex: stepIndex + 1,
+                    finished: stepIndex >= 2
+                });
+            }
+
+        }
+        else if (stepIndex === 2) {
             if (this.handlePayClick()) {
                 this.setState({
                     stepIndex: stepIndex + 1,
-                    finished: stepIndex >= 2,
+                    finished: stepIndex >= 2
                 });
             }
             
         } else {
             this.setState({
                 stepIndex: stepIndex + 1,
-                finished: stepIndex >= 2,
+                finished: stepIndex >= 2
             });
         }
 

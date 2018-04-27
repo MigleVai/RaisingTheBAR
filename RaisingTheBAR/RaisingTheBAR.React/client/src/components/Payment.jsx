@@ -136,7 +136,6 @@ export default class Payment extends React.Component {
         return (
             //  <Jumbotron>
             <div style={styles.displayStyles}>
-                <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Check out</h3>
                 </div>
@@ -202,7 +201,7 @@ export default class Payment extends React.Component {
 
                     <br />
                     <section>
-                        Total amount: {this.state.amount}
+                        Total amount: {localStorage.getItem('totalCost')}
                     </section>
 
                     <div><span>{localStorage.getItem('response')}</span></div>
