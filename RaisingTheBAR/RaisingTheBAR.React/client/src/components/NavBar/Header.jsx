@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import RightHeader from './RightHeader';
 
@@ -90,9 +91,17 @@ export default class Header extends React.Component {
             <hr />
             {
               this.state.categories.map((category) => {
-                return <Link to={"/products/" + category.name} key={category.id} onClick={this.handleDrawerClose}><MenuItem>{category.name}</MenuItem></Link>
+                return <MenuItem
+                  rightIcon={<ArrowDropRight />}
+                  menuItems={[
+                    <Link to={"/products/" + category.name} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem><hr /></Link>,
+                    category.children.map((category) => {
+                      return <MenuItem onClick={this.handleDrawerClose}>{category.name}</MenuItem>
+                    })
+                  ]} 
+                >{category.name}</MenuItem>
               })
-            }
+              }
           </Drawer>
         </AppBar>
         <ErrorMessage responseError={this.state.responseError} />
