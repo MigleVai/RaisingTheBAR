@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import TextField from 'material-ui/TextField';
-import ErrorMessage from './ErrorMessage';
 
 export default class OrderDetailsForm extends React.Component {
     constructor(props) {
@@ -13,7 +12,9 @@ export default class OrderDetailsForm extends React.Component {
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
+
     }
+
 
     componentDidMount() {
         if (localStorage.getItem('address')) {
@@ -28,9 +29,10 @@ export default class OrderDetailsForm extends React.Component {
     }
 
     handleAddressChange(event) {
-        this.setState({ address: event.target.value });
+        
         localStorage.setItem('address', event.target.value);
-        var re = RegExp('/^$|\s+/ ');
+        this.setState({ address: event.target.value });
+        var re = RegExp('[A-Za-z]');
         if (!re.test(event.target.value)) {
             localStorage.setItem('addressError', 'Not a valid address!');
         } else {
@@ -42,9 +44,10 @@ export default class OrderDetailsForm extends React.Component {
     }
 
     handleFirstNameChange(event) {
-        this.setState({ firstName: event.target.value });
+        
         localStorage.setItem('firstName', event.target.value);
-        var re = RegExp('/^$|\s+/ ');
+        this.setState({ firstName: event.target.value });
+        var re = RegExp('[A-Za-z]');
         if (!re.test(event.target.value)) {
             localStorage.setItem('firstNameError', 'Not a valid name!');
         } else {
@@ -56,9 +59,10 @@ export default class OrderDetailsForm extends React.Component {
     }
 
     handleLastNameChange(event) {
-        this.setState({ lastName: event.target.value });
+        
         localStorage.setItem('lastName', event.target.value);
-        var re = RegExp('/^$|\s+/ ');
+        this.setState({ lastName: event.target.value });
+        var re = RegExp('[A-Za-z]');
         if (!re.test(event.target.value)) {
             localStorage.setItem('lastNameError', 'Not a valid last name!');
         } else {
@@ -82,9 +86,7 @@ export default class OrderDetailsForm extends React.Component {
 
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
-                <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Order info</h3>
                 </div>
