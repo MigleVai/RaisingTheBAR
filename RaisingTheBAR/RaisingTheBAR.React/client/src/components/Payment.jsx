@@ -1,10 +1,7 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import axios from 'axios';
-import ErrorMessage from './ErrorMessage';
 import isValidLuhn from './functions/IsValidLuhn.js';
 
 export default class Payment extends React.Component {
@@ -134,7 +131,6 @@ export default class Payment extends React.Component {
 
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
                     <h3 style={styles.textStyle}>Check out</h3>

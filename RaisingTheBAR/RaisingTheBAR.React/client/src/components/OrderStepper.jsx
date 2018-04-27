@@ -203,7 +203,7 @@ class HorizontalLinearStepper extends React.Component {
                     {finished ? (
                         <p>
                             <a
-                                href="#"
+                                href=""
                                 onClick={(event) => {
                                     event.preventDefault();
                                     this.setState({ stepIndex: 0, finished: false });
@@ -215,7 +215,7 @@ class HorizontalLinearStepper extends React.Component {
                     ) : (
                             <div>
                                 
-                                <p>{this.getStepContent(stepIndex)}</p>
+                                <div>{this.getStepContent(stepIndex)}</div>
                                 <div style={{ marginTop: 12 }}>
                                     <FlatButton
                                         label="Back"

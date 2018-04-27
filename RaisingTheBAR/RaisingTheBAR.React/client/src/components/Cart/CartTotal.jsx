@@ -1,7 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import { Link } from 'react-router-dom';
-import FlatButton from 'material-ui/FlatButton';
+
 
 export default class CartTotal extends React.Component {
     render() {

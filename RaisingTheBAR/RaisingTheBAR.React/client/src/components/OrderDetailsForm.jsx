@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import TextField from 'material-ui/TextField';
-import ErrorMessage from './ErrorMessage';
 
 export default class OrderDetailsForm extends React.Component {
     constructor(props) {
@@ -87,7 +86,6 @@ export default class OrderDetailsForm extends React.Component {
 
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <div>
                     <h3 style={styles.textStyle}>Order info</h3>
