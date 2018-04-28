@@ -92,7 +92,6 @@ class HorizontalLinearStepper extends React.Component {
 
 
     handlePayClick() {
-        this.setState({ amount: 999999 });
         var error = 'This field is required!';
         if (localStorage.getItem('cvv') !== '' &&
             localStorage.getItem('holder') !== '' &&
@@ -102,14 +101,20 @@ class HorizontalLinearStepper extends React.Component {
             localStorage.getItem('numberError') === '' &&
             localStorage.getItem('exp_month') !== '' &&
             localStorage.getItem('exp_year') !== '') {
+
             axios.post(`/api/Order/FinishOrder`,
-                    {
-                        cvv: localStorage.getItem('cvv'),
-                        exp_month: localStorage.getItem('exp_month'),
-                        exp_year: localStorage.getItem('exp_year'),
-                        holder: localStorage.getItem('holder'),
-                        number: localStorage.getItem('number')
-                    })
+                {
+                    FirstName: localStorage.getItem('firstName'),
+                    LastName: localStorage.getItem('lastName'),
+                    Address: localStorage.getItem('address'),
+                    PaymentRequest: {
+                        Cvv: localStorage.getItem('cvv'),
+                        ExpMonth: localStorage.getItem('exp_month'),
+                        ExpYear: localStorage.getItem('exp_year'),
+                        Holder: localStorage.getItem('holder'),
+                        Number: localStorage.getItem('number')
+                    }
+                })
                 .then(res => {
                     localStorage.setItem('response', res.data);
                 })
@@ -201,17 +206,10 @@ class HorizontalLinearStepper extends React.Component {
                 </Stepper>
                 <div style={contentStyle}>
                     {finished ? (
-                        <p>
-                            <a
-                                href=""
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    this.setState({ stepIndex: 0, finished: false });
-                                }}
-                            >
-                                Click here
-              </a> to reset the example.
-            </p>
+                        <div>
+                            <p> {localStorage.getItem('responseError')}</p>
+                            <p> {localStorage.getItem('response')}</p>
+                        </div>
                     ) : (
                             <div>
                                 

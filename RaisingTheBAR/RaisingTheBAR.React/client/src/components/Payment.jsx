@@ -64,10 +64,12 @@ export default class Payment extends React.Component {
 
     handleExpMonthChange(event, index, value) {
         this.setState({ exp_month: value });
+        localStorage.setItem('exp_month', value);
     }
 
     handleExpYearChange(event, index, value) {
         this.setState({ exp_year: value });
+        localStorage.setItem('exp_year', value);
     }
 
     handleHolderChange(event) {

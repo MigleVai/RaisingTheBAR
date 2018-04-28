@@ -26,7 +26,7 @@ namespace RaisingTheBAR.BLL.Controllers
             Configuration = configuration;
             _dbContext = dbContext;
         }
-
+        
         [Authorize]
         [HttpPost("[action]")]
         public IActionResult FinishOrder([FromBody]OrderRequest request)
@@ -107,7 +107,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return Ok("Payment successful, thank you for your patronage!");
             }
 
             return BadRequest("Nothing changed");
