@@ -3,12 +3,13 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import matchSorter from 'match-sorter';
 import axios from 'axios';
+import FlatButton from 'material-ui/FlatButton';
+import OrderList from './OrderList'
 
 export default class UserList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
     }
   }
   componentDidMount() {
@@ -20,14 +21,27 @@ export default class UserList extends React.Component {
       .then(res => {
         const users = res.data;
         this.setState({ users: users });
+        // console.log(this.state.users);
       })
       .catch(error => {
         console.log("error with getting user data!")
         console.log(error)
       });
   }
+  handleBlockEvent(email, block) {
+    var blockUri = '/api/Administrator/ChangeBlock';
+    axios.post(blockUri, {
+      email: email,
+      block: block
+    }).catch(error => {
+      console.log("error with blocking/unblocking user!")
+      console.log(error)
+    });
+  }
 
   render() {
+    console.log(this.state.users);
+
     const styles = {
       tdStyles: {
         margin: 'auto',
@@ -64,6 +78,7 @@ export default class UserList extends React.Component {
       }, {
         Header: 'Blocked',
         accessor: 'blocked',
+        Cell: user => <div>{String(user.original.blocked)}</div>,
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
@@ -86,7 +101,16 @@ export default class UserList extends React.Component {
             String(row[filter.id]) === filter.value}
           SubComponent={row => {
             return (
-              <h1>future implementation of orders + block button</h1>
+              <div>
+                <h1>future implementation of orders + block button</h1>
+                {
+                  row.original.blocked === false ?
+                  <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(row.original.email, row.original.blocked)}/>
+                  :
+                  <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(row.original.email, row.original.blocked)}/>
+                }
+                <OrderList row={row.original} />
+              </div>
             )
           }}
         />
