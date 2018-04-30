@@ -22,13 +22,13 @@ export default class Logged extends React.Component {
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
-        <Link to="/orders">
+        <Link to="/shop/orders">
           <MenuItem primaryText="Orders" />
         </Link>
-        <Link to="/settings">
+        <Link to="/shop/settings">
           <MenuItem primaryText="Settings" />
         </Link>
-        <Link to="/">
+        <Link to="/shop">
           <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} />
         </Link>
       </IconMenu>

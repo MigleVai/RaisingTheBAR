@@ -119,7 +119,7 @@ export default class SignIn extends React.Component {
                     <br />
                     <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
                     <div>
-                        <Link to={"/register"}>
+                        <Link to={"/shop/register"}>
                             <FlatButton style={styles.flatButStyle} labelStyle={styles.labelStyle} label="Don't have an account?" />
                         </Link>
                     </div>

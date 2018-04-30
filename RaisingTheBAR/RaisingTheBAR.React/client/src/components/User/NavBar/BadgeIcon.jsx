@@ -85,7 +85,7 @@ export default class BadgeIcon extends React.Component {
             }
         return (
             <div >
-                <Link to="/cart" >
+                <Link to="/shop/cart" >
                     <Badge
                         badgeContent={this.props.productAmount}//this.state.totalAmountProducts}
                         primary={true}

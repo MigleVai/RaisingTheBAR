@@ -27,7 +27,7 @@ export default class Breadcrumb extends React.Component {
         return (
             <div>
                 <h5 style={styles.h6Styles}>
-                <Link to={"/"}>Home</Link>{result}
+                <Link to={"/shop"}>Home</Link>{result}
                 </h5>
             </div>
         )

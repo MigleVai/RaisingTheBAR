@@ -75,7 +75,7 @@ export default class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title={<Link to={"/"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
+          title={<Link to={"/shop"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
           titleStyle={styles.align}
           onLeftIconButtonClick={this.handleDrawerToggle}
           iconElementRight={<RightHeader action={this.handler} productAmount={this.props.productAmount} handleLogging={this.props.handleLogging} islogged={this.props.islogged} />}
@@ -87,14 +87,14 @@ export default class Header extends React.Component {
             open={this.state.open}
             onRequestChange={(open) => this.setState({ open })}
           >
-            <Link to={"/products/all"} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem></Link>
+            <Link to={"/shop/products/all"} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem></Link>
             <hr />
             {
               this.state.categories.map((category) => {
                 return <MenuItem
                   rightIcon={<ArrowDropRight />}
                   menuItems={[
-                    <Link to={"/products/" + category.name} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem><hr /></Link>,
+                    <Link to={"/shop/products/" + category.name} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem><hr /></Link>,
                     category.children.map((category) => {
                       return <MenuItem onClick={this.handleDrawerClose}>{category.name}</MenuItem>
                     })
