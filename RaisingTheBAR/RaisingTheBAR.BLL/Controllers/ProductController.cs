@@ -92,7 +92,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(result);
         }
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
@@ -131,7 +131,7 @@ namespace RaisingTheBAR.BLL.Controllers
             return BadRequest("Nothing changed in database");
         }
 
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost("[Action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
