@@ -136,8 +136,8 @@ export default class CartTable extends React.Component {
                 accessor: 'price',
                 style: styles.tdStyles,
                 Cell: row => {
-                    if (row.original.discountPrice !== null && row.original.discountPrice !== undefined) {
-                        return <p>{row.original.discountPrice}</p>;
+                    if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
+                        return <p>{row.original.discountedPrice}</p>;
                     } else {
                         return <p>{row.original.price}</p>;
                     }

@@ -152,11 +152,11 @@ export default class ItemPage extends React.Component {
                 accessor: 'price',
                 style: styles.tdStyles,
                 Cell: row => {
-                    if (row.original.discountPrice !== null && row.original.discountPrice !== undefined) {
+                    if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
                         return <div>
                             <s>{row.original.price}</s>
                             <br />
-                            {row.original.discountPrice}
+                            {row.original.discountedPrice}
                         </div>
                     } else {
                         return row.original.price;

@@ -39,8 +39,8 @@ export default class AdminProductRow extends React.Component {
           id: this.props.product.id
         }} />
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-          type: "discountPrice",
-          value: this.props.product.discountPrice,
+          type: "discountedPrice",
+          value: this.props.product.discountedPrice,
           id: this.props.product.id
         }} />
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{

@@ -86,10 +86,10 @@ export default class Item extends React.Component {
         }
     }
     discountExists(price) {
-        if (this.state.product.discountPrice !== null) {
+        if (this.state.product.discountedPrice !== null) {
             return <div>
                 <p><s>Cost:  {price}€</s></p>
-                <p>Discount: {this.state.product.discountPrice}€</p>
+                <p>Discount: {this.state.product.discountedPrice}€</p>
             </div>;
         } else {
             return <p>Cost:  {price}€</p>;
