@@ -7,6 +7,7 @@ using RaisingTheBAR.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RaisingTheBAR.Core.Enums;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -23,18 +24,21 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
         public IActionResult GetProducts()
         {
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x => x.Images);
 
             var products = productContext
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
                     Id = y.Id.ToString(),
-                    Image = y.Thumbnail,
+                    Images = new List<string>
+                    {
+                        y.Images.FirstOrDefault(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64
+                    },
                     Name = y.DisplayName,
                     Price = y.Price,
                     Description = y.Description,
-                    DiscountPrice = y.Discount != null ? y.Discount.DiscountedPrice : (decimal?)null
+                    DiscountedPrice = y.DiscountedPrice == 0 ? 0 : y.DiscountedPrice
                 })
                 .ToList();
 
@@ -47,7 +51,7 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             var pcContext = _dbContext.Set<ProductCategory>()
                 .Include(p => p.Product)
-                .ThenInclude(prod => prod.Discount)
+                .ThenInclude(prod => prod.Images)
                 .Include(c => c.Category)
                 .Include(cc => cc.Category.ChildCategories);
 
@@ -57,10 +61,13 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     Featured = false,
                     Id = y.Product.Id.ToString(),
-                    Image = y.Product.Thumbnail,
+                    Images = new List<string>()
+                    {
+                        y.Product.Images.FirstOrDefault(z=>z.Type != ImageTypeEnum.Thumbnail).ImageBase64
+                    },
                     Name = y.Product.DisplayName,
                     Price = y.Product.Price,
-                    DiscountPrice = y.Product.Discount != null ? y.Product.Discount.DiscountedPrice : (decimal?)null
+                    DiscountedPrice = y.Product.DiscountedPrice == 0 ? y.Product.Price : y.Product.DiscountedPrice
                 })
                 .ToList();
 
@@ -71,7 +78,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(string), 400)]
         public IActionResult GetProduct(string productId)
         {
-            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
+            var productContext = _dbContext.Set<Product>().Include(x => x.Images);
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(productId));
 
             if (product == null)
@@ -83,11 +90,11 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 Featured = false,
                 Id = product.Id.ToString(),
-                Image = product.Image,
+                Images = product.Images.Where(x => x.Type != ImageTypeEnum.Thumbnail).Select(x => x.ImageBase64).ToList(),
                 Name = product.DisplayName,
                 Price = product.Price,
                 Description = product.Description,
-                DiscountPrice = product.Discount?.DiscountedPrice
+                DiscountedPrice = product.DiscountedPrice
             };
 
             return Ok(result);
@@ -104,20 +111,25 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 Description = request.Description,
                 DisplayName = request.DisplayName,
-                Image = request.Image,
+                DiscountedPrice = request.DiscountedPrice,
                 Price = request.Price,
-                Thumbnail = request.Thumbnail
+                IsFeatured = request.IsFeatured
             };
 
             var productContext = _dbContext.Set<Product>();
-
-            if (request.DiscountPrice != null || request.DiscountPrice != 0)
+            var thumbnail = new Image()
             {
-                product.Discount = new Discount
-                {
-                    DiscountedPrice = (decimal)request.DiscountPrice
-                };
-            }
+                Product = product,
+                ImageBase64 = request.Thumbnail,
+                Type = ImageTypeEnum.Thumbnail
+            };
+            var mainimage = new Image()
+            {
+                Product = product,
+                ImageBase64 = request.Image,
+                Type = ImageTypeEnum.MainImage
+            };
+            product.Images = new List<Image>() { mainimage, thumbnail };
 
             productContext.Add(product);
 
@@ -145,31 +157,48 @@ namespace RaisingTheBAR.BLL.Controllers
                 Description = request.Description,
                 DisplayName = request.DisplayName,
                 Id = Guid.Parse(request.Id),
-                Image = request.Image,
                 Price = request.Price,
-                Thumbnail = request.Thumbnail,
-                Timestamp = request.Timestamp
+                Timestamp = request.Timestamp,
+                DiscountedPrice = request.DiscountedPrice,
+                IsFeatured = request.IsFeatured
             };
-            var discountContext = _dbContext.Set<Discount>();
-            var discount = discountContext.FirstOrDefault(x => x.ProductId == product.Id);
-            if (request.DiscountPrice != null && request.DiscountPrice != 0)
+            var imageContext = _dbContext.Set<Image>();
+            var images = imageContext.Where(x => x.ProductId == product.Id);
+
+            foreach (var image in images)
             {
-                if (discount == null)
+                switch (image.Type)
                 {
-                    product.Discount = new Discount {DiscountedPrice = (decimal)request.DiscountPrice};
-                }
-                else
-                {
-                    discount.DiscountedPrice = (decimal)request.DiscountPrice;
-                    _dbContext.Update(discount);
+                    case ImageTypeEnum.Thumbnail:
+                        image.ImageBase64 = request.Thumbnail;
+                        break;
+                    case ImageTypeEnum.MainImage:
+                        image.ImageBase64 = request.Image;
+                        break;
+                    case ImageTypeEnum.OtherImage:
+                        break;
                 }
             }
-            else
+
+            if (!images.Any(x => x.ImageBase64.Equals(request.Image)))
             {
-                if (discount != null)
+                imageContext.Add(new Image()
                 {
-                    _dbContext.Remove(discount);
-                }
+                    Product = product,
+                    ProductId = product.Id,
+                    ImageBase64 = request.Image,
+                    Type = ImageTypeEnum.MainImage
+                });
+            }
+            if (!images.Any(x => x.ImageBase64.Equals(request.Thumbnail)))
+            {
+                imageContext.Add(new Image()
+                {
+                    Product = product,
+                    ProductId = product.Id,
+                    ImageBase64 = request.Thumbnail,
+                    Type = ImageTypeEnum.Thumbnail
+                });
             }
             var productContext = _dbContext.Set<Product>();
 

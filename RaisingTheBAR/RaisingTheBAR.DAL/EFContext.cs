@@ -17,13 +17,11 @@ namespace RaisingTheBAR.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductOrder> ProductOrders { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Discount> Discount { get; set; }
+        public DbSet<Image> Images { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<ProductCriteria> ProductCriterias { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Discount>()
-                .HasKey(x => x.ProductId);
 
             modelBuilder.Entity<Cart>()
                 .HasKey(x => x.UserId);

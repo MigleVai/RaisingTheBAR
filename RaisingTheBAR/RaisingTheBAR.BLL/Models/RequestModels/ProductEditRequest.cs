@@ -9,7 +9,8 @@
         public string Thumbnail { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public decimal? DiscountPrice { get; set; }
+        public decimal DiscountedPrice { get; set; }
+        public bool IsFeatured { get; set; }
         public byte[] Timestamp { get; set; }
 
     }

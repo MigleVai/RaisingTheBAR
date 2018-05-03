@@ -6,6 +6,7 @@ using RaisingTheBAR.BLL.Models.ResponseModels;
 using RaisingTheBAR.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
+using RaisingTheBAR.Core.Enums;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -85,7 +86,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult GetProducts()
         {
-            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
+            var productContext = _dbContext.Set<Product>().Include(x => x.Images);
 
             var products = productContext.Select(x => new FullProductResponse()
             {
@@ -93,10 +94,10 @@ namespace RaisingTheBAR.BLL.Controllers
                 Price = x.Price,
                 Id = x.Id.ToString(),
                 Description = x.Description,
-                Image = x.Image,
+                Image = x.Images.FirstOrDefault(y=>y.Type == ImageTypeEnum.MainImage).ImageBase64,
                 IsEnabled = x.IsEnabled,
-                Thumbnail = x.Thumbnail,
-                DiscountPrice = x.Discount != null ? x.Discount.DiscountedPrice : (decimal?)0,
+                Thumbnail = x.Images.FirstOrDefault(y=>y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
+                DiscountedPrice = x.DiscountedPrice,
                 Timestamp = x.Timestamp
             });
 

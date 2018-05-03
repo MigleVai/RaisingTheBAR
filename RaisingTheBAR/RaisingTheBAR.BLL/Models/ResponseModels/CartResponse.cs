@@ -15,6 +15,6 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public decimal Total { get; set; }
-        public decimal? DiscountPrice { get; set; }
+        public decimal DiscountedPrice { get; set; }
     }
 }

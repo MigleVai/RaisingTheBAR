@@ -26,7 +26,7 @@ namespace RaisingTheBAR.BLL.Controllers
             Configuration = configuration;
             _dbContext = dbContext;
         }
-        
+
         [Authorize]
         [HttpPost("[action]")]
         public IActionResult FinishOrder([FromBody]OrderRequest request)
@@ -54,7 +54,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Cart is empty");
             }
-            
+
             var amountToPay = Math.Round(user.Cart.ProductCarts.Sum(y => y.Product.Price * y.Amount) * 100);
 
             //Get this error in PaymentService later
@@ -96,7 +96,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     Amount = x.Amount,
                     ProductId = x.ProductId,
-                    SinglePrice = x.Product.Discount?.DiscountedPrice ?? x.Product.Price
+                    SinglePrice = x.Product.DiscountedPrice == 0 ? x.Product.Price : x.Product.DiscountedPrice
                 }).ToList()
             };
 
@@ -159,7 +159,8 @@ namespace RaisingTheBAR.BLL.Controllers
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Orders)
                 .ThenInclude(x => x.ProductOrders)
-                .ThenInclude(x => x.Product);
+                .ThenInclude(x => x.Product)
+                .ThenInclude(x => x.Images);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -187,11 +188,11 @@ namespace RaisingTheBAR.BLL.Controllers
                 OrderState = order.State.ToString(),
                 TotalPrice = order.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
                 LastUpdateDate = order.LastModifiedDate,
-                Products = order.ProductOrders.Select(x=> new ProductListResponse()
+                Products = order.ProductOrders.Select(x => new ProductListResponse()
                 {
                     Price = x.SinglePrice,
                     Id = x.Product.Id.ToString(),
-                    Image = x.Product.Thumbnail,
+                    Image = x.Product.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
                     Name = x.Product.DisplayName,
                     Amount = x.Amount,
                     TotalPrice = x.SinglePrice * x.Amount

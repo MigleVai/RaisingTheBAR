@@ -283,8 +283,7 @@ namespace RaisingTheBAR.BLL.Controllers
             var userContext = _dbContext.Set<User>()
                 .Include(x => x.Cart)
                 .Include(x => x.Cart.ProductCarts)
-                .ThenInclude(pc => pc.Product)
-                .ThenInclude(prod => prod.Discount);
+                .ThenInclude(pc => pc.Product);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -312,8 +311,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 Name = x.Product.DisplayName,
                 Amount = x.Amount,
                 ProductId = x.ProductId.ToString(),
-                DiscountPrice = x.Product.Discount?.DiscountedPrice,
-                Total = (x.Product.Discount?.DiscountedPrice ?? x.Product.Price) * x.Amount,
+                DiscountedPrice = x.Product.DiscountedPrice,
+                Total = (x.Product.DiscountedPrice == 0 ? x.Product.Price : x.Product.DiscountedPrice) * x.Amount,
                 Price = x.Product.Price
             }).ToList();
 
@@ -362,7 +361,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [HttpPost("[action]")]
         public IActionResult GenerateCart([FromBody]List<ProductToCartRequest> request)
         {
-            var productContext = _dbContext.Set<Product>().Include(x => x.Discount);
+            var productContext = _dbContext.Set<Product>();
 
             var products = new List<CartProduct>();
             foreach (var req in request)
@@ -376,8 +375,8 @@ namespace RaisingTheBAR.BLL.Controllers
                         Name = dbProduct.DisplayName,
                         Amount = req.Amount,
                         ProductId = dbProduct.Id.ToString(),
-                        DiscountPrice = dbProduct.Discount?.DiscountedPrice,
-                        Total = (dbProduct.Discount?.DiscountedPrice ?? dbProduct.Price) * req.Amount,
+                        DiscountedPrice = dbProduct.DiscountedPrice,
+                        Total = (dbProduct.DiscountedPrice == 0 ? dbProduct.Price : dbProduct.DiscountedPrice) * req.Amount,
                         Price = dbProduct.Price
                     });
                 }

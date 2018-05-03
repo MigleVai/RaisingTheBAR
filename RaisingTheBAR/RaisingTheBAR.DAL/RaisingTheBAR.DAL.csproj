@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20180421105818_FixedProductDiscountModel.Designer.cs" />
     <Compile Remove="Migrations\20180421110250_VirtualTest.cs" />
     <Compile Remove="Migrations\20180421110250_VirtualTest.Designer.cs" />
+    <Compile Remove="Migrations\20180503125646_MultipleImages.cs" />
+    <Compile Remove="Migrations\20180503125646_MultipleImages.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
