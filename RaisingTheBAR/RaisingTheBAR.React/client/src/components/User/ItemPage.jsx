@@ -8,6 +8,7 @@ import matchSorter from 'match-sorter';
 import Breadcrumb from './Breadcrumb';
 import ErrorMessage from './ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
+import ToPriceDisplay from './functions/ToPriceDisplay';
 
 export default class ItemPage extends React.Component {
     constructor(props) {
@@ -154,12 +155,12 @@ export default class ItemPage extends React.Component {
                 Cell: row => {
                     if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
                         return <div>
-                            <s>{row.original.price}</s>
+                            <s>{ToPriceDisplay(row.original.price)}</s>
                             <br />
-                            {row.original.discountedPrice}
+                            {ToPriceDisplay(row.original.discountedPrice)}
                         </div>
                     } else {
-                        return row.original.price;
+                        return ToPriceDisplay(row.original.price);
                     }
                 },
                 maxWidth: 200,

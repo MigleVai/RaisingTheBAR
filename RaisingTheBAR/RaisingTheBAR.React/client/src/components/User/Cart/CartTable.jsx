@@ -6,6 +6,7 @@ import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import ToPriceDisplay from '../functions/ToPriceDisplay';
 
 export default class CartTable extends React.Component {
     constructor(props) {
@@ -137,9 +138,9 @@ export default class CartTable extends React.Component {
                 style: styles.tdStyles,
                 Cell: row => {
                     if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
-                        return <p>{row.original.discountedPrice}</p>;
+                        return <p>{ToPriceDisplay(row.original.discountedPrice)}</p>;
                     } else {
-                        return <p>{row.original.price}</p>;
+                        return <p>{ToPriceDisplay(row.original.price)}</p>;
                     }
                 },
                 maxWidth: 200,

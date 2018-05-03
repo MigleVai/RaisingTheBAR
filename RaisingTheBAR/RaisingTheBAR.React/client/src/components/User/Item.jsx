@@ -5,6 +5,7 @@ import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from './ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
+import ToPriceDisplay from './functions/ToPriceDisplay';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -85,14 +86,14 @@ export default class Item extends React.Component {
             }
         }
     }
-    discountExists(price) {
+    discountExists() {
         if (this.state.product.discountedPrice !== null) {
             return <div>
-                <p><s>Cost:  {price}€</s></p>
-                <p>Discount: {this.state.product.discountedPrice}€</p>
+                <p><s>Cost:  {ToPriceDisplay(this.state.product.price)}</s></p>
+                <p>Discount: {ToPriceDisplay(this.state.product.discountedPrice)}</p>
             </div>;
         } else {
-            return <p>Cost:  {price}€</p>;
+            return <p>Cost:  {ToPriceDisplay(this.state.product.price)}</p>;
         }
     }
 
@@ -153,7 +154,6 @@ export default class Item extends React.Component {
         var path = this.props.location.pathname;
         var productId = this.props.match.params.productId;
         var rez = path.replace(productId, '').slice(0, -1);
-        const price = parseFloat(this.state.product.price).toFixed(2);
         var valueInput = 1;
         return (
             <div>
@@ -165,7 +165,7 @@ export default class Item extends React.Component {
                 <div style={styles.textStyle}>
                     <h3 style={styles.h3Style}>{this.state.product.name}</h3>
                     <div style={{ paddingTop: '4%' }}>
-                        {this.discountExists(price)}
+                        {this.discountExists()}
                         <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
                         <br />
                         <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
