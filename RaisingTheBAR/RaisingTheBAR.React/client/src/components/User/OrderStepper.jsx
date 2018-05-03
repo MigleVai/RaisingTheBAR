@@ -19,6 +19,7 @@ class HorizontalLinearStepper extends React.Component {
             finished: false,
             stepIndex: 0
         }
+        this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
 
     componentDidMount() {
@@ -78,7 +79,7 @@ class HorizontalLinearStepper extends React.Component {
             if (localStorage.getItem('firstNameError') !== '' || localStorage.getItem('firstName') === '') {
                 localStorage.setItem('firstNameError', error);
             }
-            if (localStorage.getItem('lastNameError')  !== '' || localStorage.getItem('lastName') === '') {
+            if (localStorage.getItem('lastNameError') !== '' || localStorage.getItem('lastName') === '') {
                 localStorage.setItem('lastNameError', error);
             }
             if (localStorage.getItem('addressError') !== '' || localStorage.getItem('address') === '') {
@@ -155,7 +156,7 @@ class HorizontalLinearStepper extends React.Component {
                     finished: stepIndex >= 2
                 });
             }
-            
+
         } else {
             this.setState({
                 stepIndex: stepIndex + 1,
@@ -176,34 +177,74 @@ class HorizontalLinearStepper extends React.Component {
     getStepContent(stepIndex) {
         switch (stepIndex) {
             case 0:
-                return (<UserShoppingCart/>);
+                return (<UserShoppingCart productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
             case 1:
-                return (<OrderDetailsForm/>);
+                return (<OrderDetailsForm />);
             case 2:
-                return (<Payment/>);
+                return (<Payment />);
             default:
                 return 'You\'re a long way from home sonny jim!';
         }
     }
+    handleShowing(){
+        
+    }
+
+    mobileOrderSum(mobile) {
+        if (mobile === true) {
+            return <RaisedButton
+                label='Summary'
+                primary={true}
+                onClick={this.handleShowing}
+            />
+        }
+        return null;
+    }
 
     render() {
+        var floatStepper = 'left';
+        var widthStepper = '60%';
+        var paddingLeft = '10%';
+        var mobile = false;
+        if (window.innerWidth <= 450) {
+            floatStepper = 'none';
+            widthStepper = 'none';
+            paddingLeft = 'none';
+            mobile = true;
+        }
         const { finished, stepIndex } = this.state;
         const contentStyle = { margin: '0 16px' };
-
+        //197 eilute -> , maxWidth: 700
         return (
-            <div style={{ width: '100%', maxWidth: 700, margin: 'auto' }}>
-                <Breadcrumb pathname={this.props.location.pathname} />
-                <Stepper activeStep={stepIndex}>
-                    <Step>
-                        <StepLabel>Shopping cart</StepLabel>
-                    </Step>
-                    <Step>
-                        <StepLabel>Order details</StepLabel>
-                    </Step>
-                    <Step>
-                        <StepLabel>Payment</StepLabel>
-                    </Step>
-                </Stepper>
+            <div style={{ width: '100%', margin: 'auto' }}>
+                {/* <Breadcrumb pathname={this.props.location.pathname} /> */}
+                <div>
+                    <Stepper activeStep={stepIndex} style={{ float: floatStepper, width: widthStepper, paddingLeft: paddingLeft }}>
+                        <Step>
+                            <StepLabel>Cart</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>Details</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>Payment</StepLabel>
+                        </Step>
+                    </Stepper>
+                    <div style={{ paddingTop: '2.4%', paddingRight: '10%' }}>
+                        <FlatButton
+                            label="Back"
+                            disabled={stepIndex === 0}
+                            onClick={this.handlePrev}
+                            style={{ marginRight: 12 }}
+                        />
+                        <RaisedButton
+                            label={stepIndex === 2 ? 'Finish' : 'Next'}
+                            primary={true}
+                            onClick={this.handleNext}
+                        />
+                        {this.mobileOrderSum(mobile)}
+                    </div>
+                </div>
                 <div style={contentStyle}>
                     {finished ? (
                         <div>
@@ -212,21 +253,8 @@ class HorizontalLinearStepper extends React.Component {
                         </div>
                     ) : (
                             <div>
-                                
+
                                 <div>{this.getStepContent(stepIndex)}</div>
-                                <div style={{ marginTop: 12 }}>
-                                    <FlatButton
-                                        label="Back"
-                                        disabled={stepIndex === 0}
-                                        onClick={this.handlePrev}
-                                        style={{ marginRight: 12 }}
-                                    />
-                                    <RaisedButton
-                                        label={stepIndex === 2 ? 'Finish' : 'Next'}
-                                        primary={true}
-                                        onClick={this.handleNext}
-                                    />
-                                </div>
                             </div>
                         )}
                 </div>

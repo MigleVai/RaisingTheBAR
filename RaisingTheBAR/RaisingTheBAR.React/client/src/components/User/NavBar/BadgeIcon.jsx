@@ -82,10 +82,10 @@ export default class BadgeIcon extends React.Component {
                     padding: 'none',
                     paddingRight: '24px',
                 }
-            }
+            }// cart in 88 eilute
         return (
             <div >
-                <Link to="/shop/cart" >
+                <Link to="/shop/stepper" >
                     <Badge
                         badgeContent={this.props.productAmount}//this.state.totalAmountProducts}
                         primary={true}

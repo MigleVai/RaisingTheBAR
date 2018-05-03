@@ -54,6 +54,7 @@ export default class UserShoppingCart extends React.Component {
             });
     }
     componentDidMount() {
+        console.log('user Cart - ' + this.props.islogged);
         if (this.props.islogged === true) {
             // logged in/registered - amount is saved in 'amount'
             this.getData();

@@ -132,7 +132,7 @@ export default class ItemPage extends React.Component {
             {
                 Header: 'Thumbnail',
                 Cell: (row) => {
-                    return <div><img key={row.original.id} alt="thumb" src={row.original.image} /></div>
+                    return <div><img key={row.original.id} alt="thumb" src={row.original.images[0]} /></div>
                 },
                 resizable: false,
                 sortable: false,
@@ -153,7 +153,8 @@ export default class ItemPage extends React.Component {
                 accessor: 'price',
                 style: styles.tdStyles,
                 Cell: row => {
-                    if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
+                    console.log(row.original);
+                    if (row.original.discountedPrice !== null && row.original.discountedPrice !== 0) {
                         return <div>
                             <s>{ToPriceDisplay(row.original.price)}</s>
                             <br />

@@ -46,6 +46,7 @@ export default class User extends Component {
   handleLogging = (logged) => { this.setState({ logged: logged }) }
 
   render() {
+    //cart 62 eilute
     return (
       <div className="App">
         <header>
@@ -58,10 +59,10 @@ export default class User extends Component {
         <Route path="/shop/products/:category/:productId" render={(props) => <Item handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route exact path="/shop/products/:category" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route exact path="/shop/products" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
-        <Route path="/shop/cart" render={(props) => <UserShoppingCart productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
+        <Route path="/shop/stepper" render={(props) => <OrderStepper productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/orders" component={OrderHistory} />
         <Route path="/shop/settings" component={Settings} />
-        <Route path="/shop/stepper" component={OrderStepper} />
+        {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/shop/signin" /> : <Payment />)} />
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-
+import ToPriceDisplay from '../functions/ToPriceDisplay';
 
 export default class CartTotal extends React.Component {
     render() {
@@ -12,7 +12,8 @@ export default class CartTotal extends React.Component {
                 position: 'fixed',
                 width: '20%',
                 right: '5%',
-                display: 'inline-grid'
+                display: 'inline-grid',
+                top: '27%'
             }
         };
         var productName = 'products';
@@ -25,7 +26,7 @@ export default class CartTotal extends React.Component {
                     <h3>Order Summary</h3>
                     <hr/>
                     <p>{this.props.totalAmount} {productName}</p>
-                    <p>Product Total: <b>{this.props.totalPrice}</b></p>
+                    <p>Product Total: <b>{ToPriceDisplay(this.props.totalPrice)}</b></p>
                 </Paper>
             </div>
         )
