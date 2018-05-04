@@ -192,35 +192,38 @@ export default class ItemPage extends React.Component {
             }
         ];
         return (
-            <div style={styles.pageStyle}>
+            <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
-                <ErrorMessage responseError={this.state.responseError} />
-                < ReactTable
-                    data={data}
-                    columns={columns}
-                    defaultPageSize={10}
-                    className="-striped -highlight"
-                    style={{ display: 'contents' }}
-                    filterable
-                    defaultFilterMethod={(filter, row) =>
-                        String(row[filter.id]) === filter.value}
-                    getTdProps={(state, rowInfo, column, instance) => {
-                        return {
-                            onClick: (e, handleOriginal) => {
-                                if (rowInfo.original !== undefined) {
-                                    if (column.id === 'name') {
-                                        this.props.history.push(this.props.location.pathname + '/' + rowInfo.original.id);
-                                    }
-                                    if (column.id === 'id') {
-                                        var product = this.state.products.find((item) => item.id === rowInfo.original.id);
-                                        this.addProduct(product.id);
-                                        this.handleClick();
+                <hr />
+                <div style={styles.pageStyle}>
+                    <ErrorMessage responseError={this.state.responseError} />
+                    < ReactTable
+                        data={data}
+                        columns={columns}
+                        defaultPageSize={10}
+                        className="-striped -highlight"
+                        style={{ display: 'contents' }}
+                        filterable
+                        defaultFilterMethod={(filter, row) =>
+                            String(row[filter.id]) === filter.value}
+                        getTdProps={(state, rowInfo, column, instance) => {
+                            return {
+                                onClick: (e, handleOriginal) => {
+                                    if (rowInfo.original !== undefined) {
+                                        if (column.id === 'name') {
+                                            this.props.history.push(this.props.location.pathname + '/' + rowInfo.original.id);
+                                        }
+                                        if (column.id === 'id') {
+                                            var product = this.state.products.find((item) => item.id === rowInfo.original.id);
+                                            this.addProduct(product.id);
+                                            this.handleClick();
+                                        }
                                     }
                                 }
                             }
-                        }
-                    }}
-                />
+                        }}
+                    />
+                </div>
             </div>
         )
     }

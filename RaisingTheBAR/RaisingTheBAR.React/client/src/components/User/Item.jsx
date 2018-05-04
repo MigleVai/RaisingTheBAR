@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from './ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
 import ToPriceDisplay from './functions/ToPriceDisplay';
+import Paper from 'material-ui/Paper';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -149,6 +150,11 @@ export default class Item extends React.Component {
                 paddingLeft: '3%',
                 paddingTop: '4%',
                 wordWrap: 'break-word',
+            },
+            paperStyle: {
+                margin: 20,
+                textAlign: 'center',
+                display: 'flex'
             }
         }
         var path = this.props.location.pathname;
@@ -160,23 +166,26 @@ export default class Item extends React.Component {
                 <ErrorMessage responseError={this.state.responseError} />
                 <Breadcrumb pathname={rez} />
                 <hr />
-                <div style={styles.divStyle}><img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(this.state.product.image)} />
+                <div style={styles.divStyle}>
+                    <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(this.state.product.image)} />
                 </div>
-                <div style={styles.textStyle}>
-                    <h3 style={styles.h3Style}>{this.state.product.name}</h3>
-                    <div style={{ paddingTop: '4%' }}>
-                        {this.discountExists()}
-                        <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
-                        <br />
-                        <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
-                        <Snackbar
-                            open={this.state.open}
-                            message={"Added " + this.state.product.name + " to cart!"}
-                            autoHideDuration={4000}
-                            onRequestClose={this.handleRequestClose}
-                        />
+                <Paper style={styles.paperStyle} zDepth={1}>
+                    <div style={styles.textStyle}>
+                        <h3 style={styles.h3Style}>{this.state.product.name}</h3>
+                        <div style={{ paddingTop: '4%' }}>
+                            {this.discountExists()}
+                            <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
+                            <br />
+                            <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
+                            <Snackbar
+                                open={this.state.open}
+                                message={"Added " + this.state.product.name + " to cart!"}
+                                autoHideDuration={4000}
+                                onRequestClose={this.handleRequestClose}
+                            />
+                        </div>
                     </div>
-                </div>
+                </Paper>
                 <div>
                     <p>Description:</p>
                     <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>

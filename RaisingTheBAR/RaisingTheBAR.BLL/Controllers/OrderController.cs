@@ -231,7 +231,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 StartedDate = x.StartedDate,
                 OrderState = x.State.ToString(),
                 OrderPrice = x.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
-                ProductAmount = x.ProductOrders.Count()
+                ProductAmount = x.ProductOrders.Count(),
+                OrderId = x.Id
             });
 
             return Ok(orders);

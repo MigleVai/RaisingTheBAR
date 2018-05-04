@@ -8,5 +8,6 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
         public int ProductAmount { get; set; }
         public decimal OrderPrice { get; set; }
         public string OrderState { get; set; }
+        public Guid OrderId { get; set; }
     }
 }

@@ -8,6 +8,7 @@ export default class OrderHistory extends React.Component {
         return (
             <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
+                <hr />
                 <OrderHistoryList />
             </div>
         );
