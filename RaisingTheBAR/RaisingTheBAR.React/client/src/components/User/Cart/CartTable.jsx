@@ -110,12 +110,18 @@ export default class CartTable extends React.Component {
         );
     }
     render() {
+        var paddingLeftTable = '5%';
+        var widthTable = '70%';
+        if(this.props.mobile === true){
+            paddingLeftTable = 'none';
+            widthTable = '100%';
+        }
         const styles = {
             tableStyle: {
-                width: '70%',
+                width: widthTable,
                 display: 'inline-block',
                 position: 'relative',
-                paddingLeft: '5%',
+                paddingLeft: paddingLeftTable,
                 float: 'left'
             },
             tdStyles: {

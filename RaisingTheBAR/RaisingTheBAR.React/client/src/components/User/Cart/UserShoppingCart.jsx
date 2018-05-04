@@ -85,13 +85,23 @@ export default class UserShoppingCart extends React.Component {
         return false;
     }
     render() {
-        return (
-            <div>
-                <ErrorMessage responseError={this.state.responseError} />
-                <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged}/>
-                <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} />
-            </div>
-        );
+        if (this.props.mobile === false) {
+            return (
+                <div>
+                    <ErrorMessage responseError={this.state.responseError} />
+                    <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
+                    <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} mobile={this.props.mobile} />
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <ErrorMessage responseError={this.state.responseError} />
+                    <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} mobile={this.props.mobile} />
+                    <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
+                </div>);
+
+        }
     }
 }
 

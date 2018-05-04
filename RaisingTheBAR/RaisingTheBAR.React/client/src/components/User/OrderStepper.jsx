@@ -19,7 +19,7 @@ class HorizontalLinearStepper extends React.Component {
             finished: false,
             stepIndex: 0
         }
-        this.mobileOrderSum = this.mobileOrderSum.bind(this);
+        //this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
 
     componentDidMount() {
@@ -174,10 +174,10 @@ class HorizontalLinearStepper extends React.Component {
         }
     };
 
-    getStepContent(stepIndex) {
+    getStepContent(stepIndex, mobile) {
         switch (stepIndex) {
             case 0:
-                return (<UserShoppingCart productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
+                return (<UserShoppingCart mobile={mobile} productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
             case 1:
                 return (<OrderDetailsForm />);
             case 2:
@@ -186,35 +186,27 @@ class HorizontalLinearStepper extends React.Component {
                 return 'You\'re a long way from home sonny jim!';
         }
     }
-    handleShowing(){
-        
-    }
-
-    mobileOrderSum(mobile) {
-        if (mobile === true) {
-            return <RaisedButton
-                label='Summary'
-                primary={true}
-                onClick={this.handleShowing}
-            />
-        }
-        return null;
-    }
 
     render() {
         var floatStepper = 'left';
         var widthStepper = '60%';
         var paddingLeft = '10%';
+        var paddingTopButton = '2.4%';
+        var paddingRightButton = '10%';
+        var floatButton = 'none';
         var mobile = false;
         if (window.innerWidth <= 450) {
             floatStepper = 'none';
             widthStepper = 'none';
             paddingLeft = 'none';
+            paddingTopButton = 'none';
+            paddingRightButton = 'none';
+            floatButton = 'left';
             mobile = true;
         }
         const { finished, stepIndex } = this.state;
         const contentStyle = { margin: '0 16px' };
-        //197 eilute -> , maxWidth: 700
+        //197 eilute -> , maxWidth: 70%
         return (
             <div style={{ width: '100%', margin: 'auto' }}>
                 {/* <Breadcrumb pathname={this.props.location.pathname} /> */}
@@ -230,7 +222,7 @@ class HorizontalLinearStepper extends React.Component {
                             <StepLabel>Payment</StepLabel>
                         </Step>
                     </Stepper>
-                    <div style={{ paddingTop: '2.4%', paddingRight: '10%' }}>
+                    <div style={{ paddingTop: paddingTopButton, paddingRight: paddingRightButton, float: floatButton }}>
                         <FlatButton
                             label="Back"
                             disabled={stepIndex === 0}
@@ -242,7 +234,6 @@ class HorizontalLinearStepper extends React.Component {
                             primary={true}
                             onClick={this.handleNext}
                         />
-                        {this.mobileOrderSum(mobile)}
                     </div>
                 </div>
                 <div style={contentStyle}>
@@ -253,8 +244,7 @@ class HorizontalLinearStepper extends React.Component {
                         </div>
                     ) : (
                             <div>
-
-                                <div>{this.getStepContent(stepIndex)}</div>
+                                <div>{this.getStepContent(stepIndex, mobile)}</div>
                             </div>
                         )}
                 </div>

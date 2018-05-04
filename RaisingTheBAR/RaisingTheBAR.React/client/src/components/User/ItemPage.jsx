@@ -32,7 +32,6 @@ export default class ItemPage extends React.Component {
                 .then(res => {
                     const result = res.data;
                     this.props.handleAmount(result);
-                    console.log(result);
                     // localStorage.setItem('amount', result);
                 })
                 .catch(error => {
@@ -153,7 +152,6 @@ export default class ItemPage extends React.Component {
                 accessor: 'price',
                 style: styles.tdStyles,
                 Cell: row => {
-                    console.log(row.original);
                     if (row.original.discountedPrice !== null && row.original.discountedPrice !== 0) {
                         return <div>
                             <s>{ToPriceDisplay(row.original.price)}</s>
