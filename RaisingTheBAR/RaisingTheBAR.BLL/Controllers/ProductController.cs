@@ -90,7 +90,7 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("No such product exists");
             }
-            var images = product.Images?.Where(x => x.Type != ImageTypeEnum.Thumbnail).OrderBy(x=>x.Type).Select(x => x.ImageBase64).ToList();
+            var images = product.Images?.Where(x => x.Type != ImageTypeEnum.Thumbnail).OrderBy(x => x.Type).Select(x => x.ImageBase64).ToList();
             var result = new ProductResponse
             {
                 Featured = false,
@@ -251,6 +251,35 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             }
             return BadRequest("Timeout");
+        }
+        [Authorize(Roles = "Administrator")]
+        [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult DeleteProduct([FromBody]string request)
+        {
+
+            var productContext = _dbContext.Set<Product>();
+
+            var product = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), request, StringComparison.InvariantCultureIgnoreCase));
+
+            if(product == null)
+            {
+                return BadRequest("No such product exists");
+            }
+
+            productContext.Remove(product);
+
+            var result = _dbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nothing changed in database");
         }
     }
 }
