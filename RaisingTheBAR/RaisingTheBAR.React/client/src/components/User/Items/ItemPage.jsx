@@ -5,10 +5,10 @@ import "react-table/react-table.css";
 import IconButton from 'material-ui/IconButton';
 import AddShopppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import matchSorter from 'match-sorter';
-import Breadcrumb from './Breadcrumb';
-import ErrorMessage from './ErrorMessage';
+import Breadcrumb from '../Breadcrumb';
+import ErrorMessage from '../ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
-import ToPriceDisplay from './functions/ToPriceDisplay';
+import ToPriceDisplay from '../functions/ToPriceDisplay';
 
 export default class ItemPage extends React.Component {
     constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import isValidLuhn from './functions/IsValidLuhn.js';
+import isValidLuhn from '../functions/IsValidLuhn.js';
 
 export default class Payment extends React.Component {
     constructor(props) {

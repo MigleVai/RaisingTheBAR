@@ -5,12 +5,12 @@ import Header from './NavBar/Header';
 import ImgCarousel from './ImgCarousel';
 import SignIn from './LoginSignup/SignIn';
 import Register from './LoginSignup/Register';
-import Payment from './Payment';
-import ItemPage from './ItemPage';
-import Item from './Item';
-import OrderStepper from './OrderStepper';
+import Payment from './OrderStepper/Payment';
+import ItemPage from './Items/ItemPage';
+import Item from './Items/Item';
+import OrderStepper from './OrderStepper/OrderStepper';
 import axios from 'axios';
-import OrderHistory from './OrderHistory';
+import OrderHistory from './OrderHistory/OrderHistory';
 import Settings from './SettingsInfo/Settings';
 
 export default class User extends Component {
@@ -59,7 +59,7 @@ export default class User extends Component {
         <Route exact path="/shop/products/:category" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route exact path="/shop/products" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/stepper" render={(props) => <OrderStepper productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
-        <Route path="/shop/orders" component={OrderHistory} />
+        <Route path="/shop/orders" render={(props) => <OrderHistory logged={this.state.logged} {...props}/> } />
         <Route path="/shop/settings" component={Settings} />
         {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (

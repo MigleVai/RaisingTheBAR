@@ -1,5 +1,5 @@
 import React from 'react';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from '../Breadcrumb';
 import OrderHistoryList from './OrderHistoryList';
 
 export default class OrderHistory extends React.Component {
@@ -9,7 +9,7 @@ export default class OrderHistory extends React.Component {
             <div>
                 <Breadcrumb pathname={this.props.location.pathname} />
                 <hr />
-                <OrderHistoryList />
+                <OrderHistoryList logged = {this.props.logged}/>
             </div>
         );
     }

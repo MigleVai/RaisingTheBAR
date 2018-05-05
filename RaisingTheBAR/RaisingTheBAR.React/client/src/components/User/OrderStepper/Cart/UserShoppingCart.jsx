@@ -2,7 +2,7 @@ import React from 'react';
 import CartTable from './CartTable';
 import CartTotal from './CartTotal';
 import axios from 'axios';
-import ErrorMessage from '../ErrorMessage';
+import ErrorMessage from '../../ErrorMessage';
 
 export default class UserShoppingCart extends React.Component {
     constructor(props) {
