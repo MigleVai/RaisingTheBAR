@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RaisingTheBAR.Core.Enums;
+using Microsoft.Extensions.Configuration;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
@@ -16,9 +17,13 @@ namespace RaisingTheBAR.BLL.Controllers
     public class ProductController : Controller
     {
         private readonly DbContext _dbContext;
-        public ProductController(DbContext dbContext)
+        private IConfiguration Configuration { get; }
+
+        public ProductController(DbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            Configuration = configuration;
+
         }
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
@@ -33,12 +38,12 @@ namespace RaisingTheBAR.BLL.Controllers
                     Id = y.Id.ToString(),
                     Images = new List<string>
                     {
-                        y.Images.FirstOrDefault(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64
+                        y.Images.FirstOrDefault(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64 ?? Configuration["DefaultThumbnail"]
                     },
                     Name = y.DisplayName,
                     Price = y.Price,
                     Description = y.Description,
-                    DiscountedPrice = y.DiscountedPrice == 0 ? 0 : y.DiscountedPrice
+                    DiscountedPrice = y.DiscountedPrice
                 })
                 .ToList();
 
@@ -63,11 +68,11 @@ namespace RaisingTheBAR.BLL.Controllers
                     Id = y.Product.Id.ToString(),
                     Images = new List<string>()
                     {
-                        y.Product.Images.FirstOrDefault(z=>z.Type != ImageTypeEnum.Thumbnail).ImageBase64
+                         y.Product.Images.FirstOrDefault(z => z.Type == ImageTypeEnum.Thumbnail).ImageBase64 ?? Configuration["DefaultThumbnail"]
                     },
                     Name = y.Product.DisplayName,
                     Price = y.Product.Price,
-                    DiscountedPrice = y.Product.DiscountedPrice == 0 ? y.Product.Price : y.Product.DiscountedPrice
+                    DiscountedPrice = y.Product.DiscountedPrice
                 })
                 .ToList();
 
@@ -85,12 +90,12 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("No such product exists");
             }
-
+            var images = product.Images?.Where(x => x.Type != ImageTypeEnum.Thumbnail).OrderBy(x=>x.Type).Select(x => x.ImageBase64).ToList();
             var result = new ProductResponse
             {
                 Featured = false,
                 Id = product.Id.ToString(),
-                Images = product.Images.Where(x => x.Type != ImageTypeEnum.Thumbnail).Select(x => x.ImageBase64).ToList(),
+                Images = images.Any() ? images : new List<string> { Configuration["DefaultImage"] },
                 Name = product.DisplayName,
                 Price = product.Price,
                 Description = product.Description,

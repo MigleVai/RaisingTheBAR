@@ -36,34 +36,45 @@
     <Compile Include="app.js" />
     <Compile Include="client\src\App.js" />
     <Compile Include="client\src\App.test.js" />
-    <Compile Include="client\src\components\Breadcrumb.jsx" />
-    <Compile Include="client\src\components\Cart\CartTable.jsx" />
-    <Compile Include="client\src\components\Cart\CartTotal.jsx" />
-    <Compile Include="client\src\components\Cart\UserShoppingCart.jsx" />
-    <Compile Include="client\src\components\ErrorMessage.jsx" />
-    <Compile Include="client\src\components\functions\IsValidLuhn.js" />
+    <Compile Include="client\src\components\Admin\Admin.jsx" />
+    <Compile Include="client\src\components\Admin\AdminPanel.jsx" />
+    <Compile Include="client\src\components\Admin\OrderList.jsx" />
+    <Compile Include="client\src\components\Admin\ProductTable\AdminProductRow.jsx" />
+    <Compile Include="client\src\components\Admin\ProductTable\AdminProductTable.jsx" />
+    <Compile Include="client\src\components\Admin\ProductTable\EditableCell.jsx" />
+    <Compile Include="client\src\components\Admin\ProductTable\EditProducts.jsx" />
+    <Compile Include="client\src\components\Admin\ProductTable\ProductSearchBar.jsx" />
+    <Compile Include="client\src\components\Admin\UserList.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\Filter.jsx" />
     <Compile Include="client\src\components\IDK if this will be used still\ItemList.jsx" />
-    <Compile Include="client\src\components\ImgCarousel.jsx" />
-    <Compile Include="client\src\components\Item.jsx" />
-    <Compile Include="client\src\components\ItemPage.jsx" />
-    <Compile Include="client\src\components\LoginSignup\Register.jsx" />
-    <Compile Include="client\src\components\LoginSignup\SignIn.jsx" />
-    <Compile Include="client\src\components\NavBar\Header.jsx" />
-    <Compile Include="client\src\components\NavBar\Logged.jsx" />
-    <Compile Include="client\src\components\NavBar\SearchBar.jsx" />
-    <Compile Include="client\src\components\OrderDetailsForm.jsx">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="client\src\components\OrderHistory.jsx" />
-    <Compile Include="client\src\components\OrderHistoryList.jsx" />
-    <Compile Include="client\src\components\OrderStepper.jsx">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="client\src\components\Payment.jsx" />
-    <Compile Include="client\src\components\SettingsInfo\PasswordInfo.jsx" />
-    <Compile Include="client\src\components\SettingsInfo\PersonalInfo.jsx" />
-    <Compile Include="client\src\components\SettingsInfo\Settings.jsx" />
+    <Compile Include="client\src\components\User\Breadcrumb.jsx" />
+    <Compile Include="client\src\components\User\Cart\CartTable.jsx" />
+    <Compile Include="client\src\components\User\Cart\CartTotal.jsx" />
+    <Compile Include="client\src\components\User\Cart\UserShoppingCart.jsx" />
+    <Compile Include="client\src\components\User\ErrorMessage.jsx" />
+    <Compile Include="client\src\components\User\functions\addTempCartCheck.js" />
+    <Compile Include="client\src\components\User\functions\IsValidLuhn.js" />
+    <Compile Include="client\src\components\User\functions\ToPriceDisplay.js" />
+    <Compile Include="client\src\components\User\ImgCarousel.jsx" />
+    <Compile Include="client\src\components\User\Item.jsx" />
+    <Compile Include="client\src\components\User\ItemPage.jsx" />
+    <Compile Include="client\src\components\User\LoginSignup\Register.jsx" />
+    <Compile Include="client\src\components\User\LoginSignup\SignIn.jsx" />
+    <Compile Include="client\src\components\User\NavBar\BadgeIcon.jsx" />
+    <Compile Include="client\src\components\User\NavBar\Header.jsx" />
+    <Compile Include="client\src\components\User\NavBar\Logged.jsx" />
+    <Compile Include="client\src\components\User\NavBar\RightHeader.jsx" />
+    <Compile Include="client\src\components\User\NavBar\SearchBar.jsx" />
+    <Compile Include="client\src\components\User\OrderDetails.jsx" />
+    <Compile Include="client\src\components\User\OrderDetailsForm.jsx" />
+    <Compile Include="client\src\components\User\OrderHistory.jsx" />
+    <Compile Include="client\src\components\User\OrderHistoryList.jsx" />
+    <Compile Include="client\src\components\User\OrderStepper.jsx" />
+    <Compile Include="client\src\components\User\Payment.jsx" />
+    <Compile Include="client\src\components\User\SettingsInfo\PasswordInfo.jsx" />
+    <Compile Include="client\src\components\User\SettingsInfo\PersonalInfo.jsx" />
+    <Compile Include="client\src\components\User\SettingsInfo\Settings.jsx" />
+    <Compile Include="client\src\components\User\User.jsx" />
     <Compile Include="client\src\index.js" />
     <Compile Include="client\src\registerServiceWorker.js" />
     <Content Include="client\.gitignore" />
@@ -85,13 +96,16 @@
     <Folder Include="client\public\" />
     <Folder Include="client\src\" />
     <Folder Include="client\src\components\" />
-    <Folder Include="client\src\components\Cart\" />
-    <Folder Include="client\src\components\functions\" />
+    <Folder Include="client\src\components\Admin\" />
+    <Folder Include="client\src\components\Admin\ProductTable\" />
     <Folder Include="client\src\components\IDK if this will be used still\" />
-    <Folder Include="client\src\components\LoginSignup\" />
-    <Folder Include="client\src\components\NavBar\" />
-    <Folder Include="client\src\components\SettingsInfo\" />
     <Folder Include="client\public\resources\" />
+    <Folder Include="client\src\components\User\" />
+    <Folder Include="client\src\components\User\Cart\" />
+    <Folder Include="client\src\components\User\functions\" />
+    <Folder Include="client\src\components\User\LoginSignup\" />
+    <Folder Include="client\src\components\User\NavBar\" />
+    <Folder Include="client\src\components\User\SettingsInfo\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

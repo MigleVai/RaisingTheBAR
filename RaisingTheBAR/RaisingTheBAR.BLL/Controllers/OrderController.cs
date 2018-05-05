@@ -192,7 +192,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 {
                     Price = x.SinglePrice,
                     Id = x.Product.Id.ToString(),
-                    Image = x.Product.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
+                    Image = x.Product.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.Thumbnail).ImageBase64 ?? Configuration["DefaultThumbnail"],
                     Name = x.Product.DisplayName,
                     Amount = x.Amount,
                     TotalPrice = x.SinglePrice * x.Amount
