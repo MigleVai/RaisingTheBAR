@@ -119,7 +119,7 @@ export default class ItemPage extends React.Component {
                 margin: 'auto',
             },
             imgStyle: {
-                width: '20%'
+                width: '50px'
             },
             pageStyle: {
                 paddingLeft: setPadding + 'px',
@@ -131,7 +131,7 @@ export default class ItemPage extends React.Component {
             {
                 Header: 'Thumbnail',
                 Cell: (row) => {
-                    return <div><img key={row.original.id} alt="thumb" src={row.original.images[0]} /></div>
+                    return <div><img style={styles.imgStyle} key={row.original.id} alt="thumb" src={row.original.images[0]} /></div>
                 },
                 resizable: false,
                 sortable: false,

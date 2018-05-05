@@ -5,7 +5,6 @@ import Header from './NavBar/Header';
 import ImgCarousel from './ImgCarousel';
 import SignIn from './LoginSignup/SignIn';
 import Register from './LoginSignup/Register';
-import UserShoppingCart from './Cart/UserShoppingCart';
 import Payment from './Payment';
 import ItemPage from './ItemPage';
 import Item from './Item';

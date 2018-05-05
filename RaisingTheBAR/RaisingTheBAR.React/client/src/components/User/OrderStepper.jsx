@@ -8,7 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Payment from './Payment';
 import OrderDetailsForm from './OrderDetailsForm';
-import Breadcrumb from './Breadcrumb';
 import UserShoppingCart from './Cart/UserShoppingCart';
 import axios from 'axios';
 

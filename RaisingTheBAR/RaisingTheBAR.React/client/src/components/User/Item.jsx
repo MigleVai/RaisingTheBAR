@@ -7,6 +7,7 @@ import ErrorMessage from './ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
 import ToPriceDisplay from './functions/ToPriceDisplay';
 import Paper from 'material-ui/Paper';
+import Slider from 'react-slick';
 
 export default class Item extends React.Component {
     constructor(props) {
@@ -88,7 +89,7 @@ export default class Item extends React.Component {
         }
     }
     discountExists() {
-        if (this.state.product.discountedPrice !== null) {
+        if (this.state.product.discountedPrice !== 0) {
             return <div>
                 <p><s>Cost:  {ToPriceDisplay(this.state.product.price)}</s></p>
                 <p>Discount: {ToPriceDisplay(this.state.product.discountedPrice)}</p>
@@ -125,10 +126,7 @@ export default class Item extends React.Component {
                 margin: 'inherit'
             },
             imgStyle: {
-                paddingLeft: '10%',
-                paddingTop: '3%',
-                paddingRight: '5%',
-                maxWidth: '100%'
+                maxWidth: '75%'
             },
             divStyle: {
                 maxWidth: setwidth + 'px',
@@ -136,6 +134,9 @@ export default class Item extends React.Component {
                 maxHeight: setheight + 'px',
                 minHeight: setheight + 'px',
                 float: 'left',
+                paddingLeft: '10%',
+                paddingTop: '3%',
+                paddingRight: '5%',
             },
             textStyle: {
                 textAlign: 'left',
@@ -154,20 +155,35 @@ export default class Item extends React.Component {
             paperStyle: {
                 margin: 20,
                 textAlign: 'center',
-                display: 'flex'
-            }
+                display: 'flex',
+                padding: 10
+            },
         }
         var path = this.props.location.pathname;
         var productId = this.props.match.params.productId;
         var rez = path.replace(productId, '').slice(0, -1);
         var valueInput = 1;
+        var settings = {
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: false,
+            arrows: false
+        };
+        if( this.state.product.images)
+        var images = this.state.product.images.map((image) => 
+            <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(image)} />
+        );
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
                 <Breadcrumb pathname={rez} />
                 <hr />
                 <div style={styles.divStyle}>
-                    <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(this.state.product.image)} />
+                    <Slider {...settings}>
+                        {images} 
+                    </Slider>                  
                 </div>
                 <Paper style={styles.paperStyle} zDepth={1}>
                     <div style={styles.textStyle}>
