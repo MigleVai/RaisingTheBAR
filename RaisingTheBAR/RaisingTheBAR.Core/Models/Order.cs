@@ -26,6 +26,7 @@ namespace RaisingTheBAR.Core.Models
         public virtual User User { get; set; }
 
         public virtual ICollection<ProductOrder> ProductOrders { get; set; }
+        public virtual Rating Rating { get; set; }
 
     }
 }
