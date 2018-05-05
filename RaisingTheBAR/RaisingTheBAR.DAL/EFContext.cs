@@ -20,8 +20,12 @@ namespace RaisingTheBAR.DAL
         public DbSet<Image> Images { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<ProductCriteria> ProductCriterias { get; set; }
+        public DbSet<Rating> Rating { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Rating>()
+                .HasKey(x => x.OrderId);
 
             modelBuilder.Entity<Cart>()
                 .HasKey(x => x.UserId);
