@@ -193,6 +193,7 @@ class HorizontalLinearStepper extends React.Component {
         var paddingTopButton = '2.4%';
         var paddingRightButton = '10%';
         var floatButton = 'none';
+        var marginResultText = '20%';
         var mobile = false;
         if (window.innerWidth <= 450) {
             floatStepper = 'none';
@@ -201,6 +202,7 @@ class HorizontalLinearStepper extends React.Component {
             paddingTopButton = 'none';
             paddingRightButton = 'none';
             floatButton = 'left';
+            marginResultText = '30%';
             mobile = true;
         }
         const { finished, stepIndex } = this.state;
@@ -222,22 +224,28 @@ class HorizontalLinearStepper extends React.Component {
                         </Step>
                     </Stepper>
                     <div style={{ paddingTop: paddingTopButton, paddingRight: paddingRightButton, float: floatButton }}>
-                        <FlatButton
-                            label="Back"
-                            disabled={stepIndex === 0}
-                            onClick={this.handlePrev}
-                            style={{ marginRight: 12 }}
-                        />
-                        <RaisedButton
-                            label={stepIndex === 2 ? 'Finish' : 'Next'}
-                            primary={true}
-                            onClick={this.handleNext}
-                        />
+                        {stepIndex < 3 &&
+                            <div>
+                                <FlatButton
+                                    label="Back"
+                                    disabled={stepIndex === 0}
+                                    onClick={this.handlePrev}
+                                />
+                                <RaisedButton
+                                    label={stepIndex === 2 ? 'Finish' : 'Next'}
+                                    primary={true}
+                                    disabled={localStorage.getItem('amount') === '0'}
+                                    onClick={this.handleNext}
+                                />
+                            </div>
+                        }
+
+
                     </div>
                 </div>
                 <div style={contentStyle}>
                     {finished ? (
-                        <div>
+                        <div style={{ margin: marginResultText }}>
                             <p> {localStorage.getItem('responseError')}</p>
                             <p> {localStorage.getItem('response')}</p>
                         </div>
