@@ -12,10 +12,18 @@ export default class UserShoppingCart extends React.Component {
             totalCost: 0,
             totalAmountProducts: 0,
             responseError: '',
+            toUpdateDeleted: false
         }
         this.getData = this.getData.bind(this);
         this.getDataAmount = this.getDataAmount.bind(this);
         this.getNotLoggedData = this.getNotLoggedData.bind(this);
+        this.getInformationAndUpdate = this.getInformationAndUpdate.bind(this);
+        this.mustUpdate = this.mustUpdate.bind(this);
+    }
+    mustUpdate() {
+        this.setState(state => ({
+            toUpdateDeleted: true
+        }));
     }
     // NOT logged in/registered
     getNotLoggedData(array) {
@@ -53,8 +61,24 @@ export default class UserShoppingCart extends React.Component {
                 this.setState({ responseError: error.response.data });
             });
     }
-    componentDidMount() {
-        console.log('user Cart - ' + this.props.islogged);
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.islogged !== nextProps.islogged) {
+            return true;
+        }
+        if (this.state.products.length !== nextState.products.length) {
+            return true;
+        }
+        if (this.state.totalCost !== nextState.totalCost) {
+            return true;
+        }
+        if (nextState.toUpdateDeleted === true) {
+            this.setState({ toUpdateDeleted: false });
+            return true;
+        }
+        return false;
+    }
+
+    getInformationAndUpdate() {
         if (this.props.islogged === true) {
             // logged in/registered - amount is saved in 'amount'
             this.getData();
@@ -77,19 +101,21 @@ export default class UserShoppingCart extends React.Component {
             }
         }
     }
-    shouldComponentUpdate() {
-        if (this.state.totalAmountProducts !== localStorage.getItem('amount')
-            || this.state.totalAmountProducts !== localStorage.getItem('productAmount')) {
-            return true;
-        }
-        return false;
+
+    componentDidUpdate() {
+        this.getInformationAndUpdate();
+        this.props.update();
     }
+    componentDidMount() {
+        this.getInformationAndUpdate();
+    }
+
     render() {
         if (this.props.mobile === false) {
             return (
                 <div>
                     <ErrorMessage responseError={this.state.responseError} />
-                    <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
+                    <CartTable mustUpdate={this.mustUpdate} update={this.props.update} handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
                     <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} mobile={this.props.mobile} />
                 </div>
             );
@@ -98,7 +124,7 @@ export default class UserShoppingCart extends React.Component {
                 <div>
                     <ErrorMessage responseError={this.state.responseError} />
                     <CartTotal totalPrice={this.state.totalCost} totalAmount={this.props.productAmount} mobile={this.props.mobile} />
-                    <CartTable handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
+                    <CartTable mustUpdate={this.mustUpdate} update={this.props.update} handleAmount={this.props.handleAmount} cart={this.state.products} islogged={this.props.islogged} mobile={this.props.mobile} />
                 </div>);
 
         }

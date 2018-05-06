@@ -77,7 +77,6 @@ export default class Register extends React.Component {
                     this.props.handleLogging(true);
                     //WHY THI NO WORK
                     var tempCart = addTempCartCheck(true);
-                    console.log("tempCart: " + tempCart);
                     if(Number(tempCart)){
                         this.props.handleAmount(Number(tempCart));
                     }else{

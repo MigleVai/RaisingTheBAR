@@ -20,7 +20,6 @@ export default class RightHeader extends React.Component {
                     display: 'inline-flex'
                 },
             }
-            // console.log("right"+this.props.productAmount);
         return (
             <div style={styles.displayStyle}>
                 <SearchBar />

@@ -33,8 +33,8 @@ export default class CartTable extends React.Component {
                         var am = localStorage.getItem('amount');
                         am = am - 1;
                         localStorage.setItem('amount', am);
-                        this.setState({ delete: true });
                     }
+                    this.props.mustUpdate();
                 })
                 .catch(error => {
                     this.setState({ responseError: error.response.data });
@@ -56,38 +56,33 @@ export default class CartTable extends React.Component {
                     cartOfProducts.splice(index, 1);
                     localStorage.setItem('productAmount', cartOfProducts.length);
                     var tempArray = this.state.products;
-                    var removableItem = tempArray.find(function(element){
-                        if(element.productId === productID){
+                    var removableItem = tempArray.find(function (element) {
+                        if (element.productId === productID) {
                             return element;
                         }
                         return null;
                     });
                     var removeIndex = tempArray.indexOf(removableItem);
                     tempArray.splice(removeIndex, 1);
-                    this.setState({ delete: true, products: tempArray });
+                    this.setState({ products: tempArray });
                     this.props.handleAmount(tempArray.length);
                 } else {
                     cartOfProducts[index].Amount = amount;
                 }
             }
+            this.props.mustUpdate();
             localStorage.setItem('cartNotLogged', JSON.stringify(cartOfProducts));
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.cart !== nextProps.cart) {
+        if (nextProps.cart.length !== this.props.cart.length) { //Number(amount) !== this.state.products.length && 
             this.setState({ products: nextProps.cart });
+            this.props.update();
             return true;
         }
-        if (nextProps.cart !== this.state.products) {
-            return true;
-        }
-        if (nextState.delete === true) {
-            this.setState({ delete: false });
-            return true;
-        }
+
         return false;
     }
-
     renderEditable(cellInfo) {
         return (
             <Paper zDepth={1}><div
@@ -112,7 +107,7 @@ export default class CartTable extends React.Component {
     render() {
         var paddingLeftTable = '5%';
         var widthTable = '70%';
-        if(this.props.mobile === true){
+        if (this.props.mobile === true) {
             paddingLeftTable = 'none';
             widthTable = '100%';
         }
@@ -128,7 +123,7 @@ export default class CartTable extends React.Component {
                 margin: 'auto',
             },
         };
-        const data = this.state.products;
+        var data = this.props.cart;
         const columns = [
             {
                 Header: 'Name',
@@ -143,7 +138,7 @@ export default class CartTable extends React.Component {
                 accessor: 'price',
                 style: styles.tdStyles,
                 Cell: row => {
-                    if (row.original.discountedPrice !== null && row.original.discountedPrice !== undefined) {
+                    if (row.original.discountedPrice !== 0) {
                         return <p>{ToPriceDisplay(row.original.discountedPrice)}</p>;
                     } else {
                         return <p>{ToPriceDisplay(row.original.price)}</p>;
@@ -178,12 +173,11 @@ export default class CartTable extends React.Component {
                 },
             },
         ];
-
         return (
             <div style={styles.tableStyle}>
                 <ErrorMessage responseError={this.state.responseError} />
                 < ReactTable
-                    data={data}
+                    data={this.props.cart}
                     columns={columns}
                     defaultPageSize={10}
                     className="-striped -highlight"

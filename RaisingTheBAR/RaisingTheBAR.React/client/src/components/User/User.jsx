@@ -42,7 +42,12 @@ export default class User extends Component {
     this.setState({ productAmount: settableAmount });
   }
 
-  handleLogging = (logged) => { this.setState({ logged: logged }) }
+  handleLogging = (logged) => {
+    if (logged === false) {
+      this.setState({ productAmount: 0 });
+    }
+    this.setState({ logged: logged });
+  }
 
   render() {
     //cart 62 eilute
@@ -59,7 +64,7 @@ export default class User extends Component {
         <Route exact path="/shop/products/:category" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route exact path="/shop/products" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/stepper" render={(props) => <OrderStepper productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
-        <Route path="/shop/orders" render={(props) => <OrderHistory logged={this.state.logged} {...props}/> } />
+        <Route path="/shop/orders" render={(props) => <OrderHistory logged={this.state.logged} {...props} />} />
         <Route path="/shop/settings" component={Settings} />
         {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (

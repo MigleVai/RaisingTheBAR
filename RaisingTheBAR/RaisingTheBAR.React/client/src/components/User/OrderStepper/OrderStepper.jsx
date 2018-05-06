@@ -16,11 +16,17 @@ class HorizontalLinearStepper extends React.Component {
         super(props);
         this.state = {
             finished: false,
-            stepIndex: 0
+            stepIndex: 0,
+            update: false
         }
+        this.updateChild = this.updateChild.bind(this);
         //this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
-
+    updateChild(){
+        this.setState(state => ({
+            update: !state.update
+          }));
+    }
     componentDidMount() {
         if (localStorage.getItem('cvv')) {
             localStorage.setItem('cvv', '');
@@ -176,7 +182,7 @@ class HorizontalLinearStepper extends React.Component {
     getStepContent(stepIndex, mobile) {
         switch (stepIndex) {
             case 0:
-                return (<UserShoppingCart mobile={mobile} productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
+                return (<UserShoppingCart update={this.updateChild} mobile={mobile} productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
             case 1:
                 return (<OrderDetailsForm />);
             case 2:
