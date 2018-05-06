@@ -92,6 +92,7 @@ export default class Header extends React.Component {
             {
               this.state.categories.map((category) => {
                 return <MenuItem
+                  key = {category.id}
                   rightIcon={<ArrowDropRight />}
                   menuItems={[
                     <Link to={"/shop/products/" + category.name} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem><hr /></Link>,
