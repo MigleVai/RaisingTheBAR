@@ -31,6 +31,7 @@ export default class AdminAuthentication extends React.Component {
                 .then(res => {
                     const result = res.data;
                     localStorage.setItem('jwtToken', result.token);
+                    localStorage.setItem('role', 'administrator');
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
                     this.props.history.push('/');

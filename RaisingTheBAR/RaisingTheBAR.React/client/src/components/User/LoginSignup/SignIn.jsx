@@ -35,6 +35,7 @@ export default class SignIn extends React.Component {
                 .then(res => {
                     const result = res.data;
                     localStorage.setItem('jwtToken', result.token);
+                    localStorage.setItem('role', 'user');
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
                     var tempCart = addTempCartCheck(true);

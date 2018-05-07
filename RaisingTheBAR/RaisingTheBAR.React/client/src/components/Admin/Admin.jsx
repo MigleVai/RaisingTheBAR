@@ -12,11 +12,11 @@ export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logged: false
+      logged: false,
     }
   }
   componentDidMount() {
-    if (localStorage.getItem('jwtToken')) {
+    if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'administrator')) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       this.setState({ logged: true });
     }
@@ -50,7 +50,7 @@ export default class Admin extends React.Component {
               style={styles.barStyle}
             >
             </AppBar>
-            <h1>Admin page!</h1>
+            <h2>My role is {localStorage.getItem('role')}</h2>
             <Route path="/admin/userlist" render={(props) => <UserList  {...props} />} />
             <Route path="/admin/editproducts" render={(props) => <EditProducts  {...props} />} />
           </div>

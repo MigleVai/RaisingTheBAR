@@ -26,7 +26,7 @@ export default class User extends Component {
     this.handleAmount = this.handleAmount.bind(this);
   }
   componentDidMount() {
-    if (localStorage.getItem('jwtToken')) {
+    if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'user')) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       this.setState({ logged: true });
       axios.get(`/api/Cart/GetProductAmountInCart`)
