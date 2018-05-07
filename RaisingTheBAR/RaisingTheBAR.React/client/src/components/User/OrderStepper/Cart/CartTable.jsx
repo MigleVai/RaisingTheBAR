@@ -123,7 +123,7 @@ export default class CartTable extends React.Component {
                 margin: 'auto',
             },
         };
-        var data = this.props.cart;
+       // var data = this.props.cart;
         const columns = [
             {
                 Header: 'Name',

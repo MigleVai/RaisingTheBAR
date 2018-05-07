@@ -19,25 +19,27 @@ export default class Header extends React.Component {
       open: false,
       categories: [],
       responseError: '',
-      update: false
+      update: false,
+      openDropDown: false
     };
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
-    this.handler = this.handler.bind(this)
+    this.handler = this.handler.bind(this);
+    this.checkSubCategories = this.checkSubCategories.bind(this);
   }
   handler() {
     this.setState({
       update: true
     })
   }
-  shouldComponentUpdate(nextProps){
-    if(this.props.islogged === nextProps.islogged || this.props.islogged !== nextProps.islogged){
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.islogged === nextProps.islogged || this.props.islogged !== nextProps.islogged) {
       return true;
     }
-    if(this.state.open !== nextProps.open){
+    if (this.state.open !== nextState.open) {
       return true;
     }
-    if(this.state.update){
-      this.setState({update: false});
+    if (this.state.update) {
+      this.setState({ update: false });
       return true;
     }
     return false;
@@ -53,9 +55,15 @@ export default class Header extends React.Component {
       });
   }
 
-  handleDrawerToggle = () => this.setState({ open: !this.state.open });
+  handleDrawerToggle = () => this.setState({ open: !this.state.open })
 
   handleDrawerClose = () => this.setState({ open: false });
+
+  checkSubCategories(subCategories) {
+    if (subCategories.length > 0) {
+      return <hr />;
+    }
+  }
 
   render() {
     const styles = {
@@ -92,17 +100,22 @@ export default class Header extends React.Component {
             {
               this.state.categories.map((category) => {
                 return <MenuItem
-                  key = {category.id}
+                  key={category.id}
                   rightIcon={<ArrowDropRight />}
+                  onClick={(openDropDown) => this.setState({ openDropDown: !openDropDown })}
                   menuItems={[
-                    <Link to={"/shop/products/" + category.name} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem><hr /></Link>,
-                    category.children.map((category) => {
-                      return <MenuItem onClick={this.handleDrawerClose}>{category.name}</MenuItem>
+                    <Link to={"/shop/products/" + category.name}
+                      onClick={this.handleDrawerClose}>
+                      <MenuItem>Everything</MenuItem>
+                      {this.checkSubCategories(category.children)}
+                    </Link>,
+                    category.children.map((subCategory) => {
+                      return <Link to={"/shop/products/" + subCategory.name}><MenuItem onClick={this.handleDrawerToggle}>{subCategory.name}</MenuItem></Link>
                     })
-                  ]} 
+                  ]}
                 >{category.name}</MenuItem>
               })
-              }
+            }
           </Drawer>
         </AppBar>
         <ErrorMessage responseError={this.state.responseError} />
