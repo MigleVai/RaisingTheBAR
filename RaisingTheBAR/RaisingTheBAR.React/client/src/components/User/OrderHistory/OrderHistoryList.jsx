@@ -55,6 +55,10 @@ export default class OrderHistoryList extends React.Component {
                 Header: "Order Date",
                 accessor: "startedDate",
                 style: styles.tdStyles,
+                Cell: row => {
+                    var dateParts = row.original.startedDate.split(/T|Z/);    
+                    return dateParts[0];      
+                }
             },
             {
                 Header: "Amount",

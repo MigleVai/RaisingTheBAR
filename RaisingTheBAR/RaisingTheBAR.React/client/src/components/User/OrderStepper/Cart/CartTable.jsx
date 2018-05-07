@@ -80,7 +80,11 @@ export default class CartTable extends React.Component {
             this.props.update();
             return true;
         }
-
+        if(nextState.responseError !== ''){
+            this.props.update();
+            this.setState({responseError: ''});
+            return true;
+        }
         return false;
     }
     renderEditable(cellInfo) {
@@ -90,12 +94,15 @@ export default class CartTable extends React.Component {
                 contentEditable
                 suppressContentEditableWarning
                 onBlur={e => {
-                    const data = [...this.props.cart];
-                    if (Number(e.target.innerHTML) > 0) {
-                        data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-                        this.sendAmount(cellInfo.row._original.productId, e.target.innerHTML);
-                    } else {
-                        this.setState({ responseError: 'Not valid amount' });
+                    if (Number(e.target.innerHTML) !== cellInfo.row._original.amount) {
+                        const data = [...this.props.cart];
+                        if (Number(e.target.innerHTML) > 0) {
+                            data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+                            this.sendAmount(cellInfo.row._original.productId, e.target.innerHTML);
+                        } else {
+                            e.target.innerHTML = cellInfo.row._original.amount;
+                            this.setState({ responseError: 'Not valid amount' });
+                        }
                     }
                 }}
                 dangerouslySetInnerHTML={{
@@ -123,7 +130,7 @@ export default class CartTable extends React.Component {
                 margin: 'auto',
             },
         };
-       // var data = this.props.cart;
+        // var data = this.props.cart;
         const columns = [
             {
                 Header: 'Name',
@@ -139,9 +146,9 @@ export default class CartTable extends React.Component {
                 style: styles.tdStyles,
                 Cell: row => {
                     if (row.original.discountedPrice !== 0) {
-                        return <p>{ToPriceDisplay(row.original.discountedPrice)}</p>;
+                        return <span>{ToPriceDisplay(row.original.discountedPrice)}</span>;
                     } else {
-                        return <p>{ToPriceDisplay(row.original.price)}</p>;
+                        return <span>{ToPriceDisplay(row.original.price)}</span>;
                     }
                 },
                 maxWidth: 200,
@@ -168,6 +175,7 @@ export default class CartTable extends React.Component {
                 maxWidth: 200,
                 resizable: false,
                 filterable: false,
+                sortable: false,
                 Cell: row => {
                     return <div><FlatButton label="Remove" /></div>
                 },
@@ -179,7 +187,7 @@ export default class CartTable extends React.Component {
                 < ReactTable
                     data={this.props.cart}
                     columns={columns}
-                    defaultPageSize={10}
+                    defaultPageSize={5}
                     className="-striped -highlight"
                     style={{ display: 'contents' }}
                     filterable

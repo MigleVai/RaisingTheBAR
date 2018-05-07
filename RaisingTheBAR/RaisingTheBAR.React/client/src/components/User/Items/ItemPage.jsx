@@ -178,7 +178,7 @@ export default class ItemPage extends React.Component {
                         <Snackbar
                             open={this.state.open}
                             message="Added product to cart!"
-                            autoHideDuration={4000}
+                            autoHideDuration={1000}
                             onRequestClose={this.handleRequestClose}
                         />
                     </div>

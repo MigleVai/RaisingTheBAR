@@ -95,8 +95,8 @@ export default class Header extends React.Component {
             open={this.state.open}
             onRequestChange={(open) => this.setState({ open })}
           >
-            <Link to={"/shop/products/all"} onClick={this.handleDrawerClose}><MenuItem>Everything</MenuItem></Link>
-            <hr />
+            <Link to={"/shop/products/all"} onClick={this.handleDrawerClose}><MenuItem style={{marginTop: '1px'}}>Everything</MenuItem></Link>
+            <hr style={{marginTop: '0px'}} />
             {
               this.state.categories.map((category) => {
                 return <MenuItem

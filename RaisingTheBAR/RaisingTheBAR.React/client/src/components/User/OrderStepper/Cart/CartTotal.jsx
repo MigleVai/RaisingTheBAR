@@ -26,6 +26,7 @@ export default class CartTotal extends React.Component {
         const styles = {
             paperStyle: {
                 textAlign: 'center',
+                padding: '10px'
             },
             pageStyle: {
                 position: 'fixed',

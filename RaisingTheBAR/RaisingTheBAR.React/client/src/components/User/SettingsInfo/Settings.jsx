@@ -16,12 +16,16 @@ export default class Settings extends React.Component {
 
     clickInfo() {
         this.refs.personal.style.fontWeight = 'bold';
+        this.refs.personal.style.textDecoration = 'underline';
         this.refs.password.style.fontWeight = 'normal';
+        this.refs.password.style.textDecoration = 'none';
         this.setState({ info: true });
     }
     clickPass() {
         this.refs.password.style.fontWeight = 'bold';
+        this.refs.password.style.textDecoration = 'underline';
         this.refs.personal.style.fontWeight = 'normal';
+        this.refs.personal.style.textDecoration = 'none';
         this.setState({ info: false });
     }
     render() {
@@ -29,10 +33,16 @@ export default class Settings extends React.Component {
         var widthPaper = 'none';
         var floatPaper = 'none';
         var displayPaper = 'block';
+        var displayContent = 'block';
+        var topPaddingcContent = 'none';
+        var paddingLeftContent = '10%';
         if (windowWidth > 450) {
             widthPaper = '450px';
-            floatPaper = 'left';
+            floatPaper = 'right';
             displayPaper = 'inline-block';
+            topPaddingcContent = '5%';
+            displayContent = 'inline-block';
+            paddingLeftContent = 'none';
         }
         const styles = {
             paperStyle: {
@@ -41,10 +51,13 @@ export default class Settings extends React.Component {
                 padding: '5%',
             },
             contentStyle: {
-                display: 'inline-block',
+                display: displayContent,
                 position: 'relative',
                 textAlign: 'left',
-                paddingLeft: '2%',
+                paddingRight: '3%',
+                fontSize: '18px',
+                paddingTop: topPaddingcContent,
+                paddingLeft: paddingLeftContent
             }
         };
         var shown;
@@ -58,18 +71,18 @@ export default class Settings extends React.Component {
                 <Breadcrumb pathname={this.props.location.pathname} />
                 <hr />
                 <div style={{ margin: 'auto', width: widthPaper, display: 'block' }}>
-                    <div style={{ display: displayPaper, float: floatPaper }}>
-                        <Paper style={styles.paperStyle} zDepth={1}>
-                            {shown}
-                        </Paper>
-                    </div>
                     <div style={styles.contentStyle}>
                         <div onClick={this.clickInfo} style={{ cursor: 'pointer' }}>
-                            <p style={{ fontWeight: 'bold' }} ref="personal">Personal Information</p>
+                            <p style={{ fontWeight: 'bold', textDecoration: 'underline'}} ref="personal">Personal Information</p>
                         </div>
                         <div onClick={this.clickPass} style={{ cursor: 'pointer' }}>
                             <p style={{ fontWeight: 'normal' }} ref="password">Change Password</p>
                         </div>
+                    </div>
+                    <div style={{ display: displayPaper, float: floatPaper }}>
+                        <Paper style={styles.paperStyle} zDepth={1}>
+                            {shown}
+                        </Paper>
                     </div>
                 </div>
             </div>
