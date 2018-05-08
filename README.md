@@ -5,7 +5,7 @@
 ## Spotting bugs
 ne per daug post'u getAllCategories, getProductAmountInCart, getCart?
 
-itemPage kai paspaudi ant tuscios eilutes meta error
+~~itemPage kai paspaudi ant tuscios eilutes meta error~~
 
 img carousel normaliai realizuot
 
