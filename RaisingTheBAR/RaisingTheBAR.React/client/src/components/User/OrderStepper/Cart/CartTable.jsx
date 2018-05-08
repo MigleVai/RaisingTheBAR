@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import matchSorter from 'match-sorter';
 import axios from 'axios';
 import ErrorMessage from '../../ErrorMessage';
 import FlatButton from 'material-ui/FlatButton';
@@ -137,9 +136,7 @@ export default class CartTable extends React.Component {
                 accessor: 'name',
                 style: styles.tdStyles,
                 resizable: false,
-                filterMethod: (filter, rows) =>
-                    matchSorter(rows, filter.value, { keys: ['name'] }),
-                filterAll: true,
+                filterable: false
             }, {
                 Header: 'Price',
                 accessor: 'price',
@@ -153,9 +150,7 @@ export default class CartTable extends React.Component {
                 },
                 maxWidth: 200,
                 resizable: false,
-                filterMethod: (filter, rows) =>
-                    matchSorter(rows, filter.value, { keys: ['price'] }),
-                filterAll: true
+                filterable: false
             },
             {
                 Header: 'Amount',
@@ -164,9 +159,7 @@ export default class CartTable extends React.Component {
                 maxWidth: 200,
                 Cell: this.renderEditable,
                 resizable: false,
-                filterMethod: (filter, rows) =>
-                    matchSorter(rows, filter.value, { keys: ['amount'] }),
-                filterAll: true
+                filterable: false
             },
             {
                 Header: 'Remove',
@@ -190,9 +183,6 @@ export default class CartTable extends React.Component {
                     defaultPageSize={5}
                     className="-striped -highlight"
                     style={{ display: 'contents' }}
-                    filterable
-                    defaultFilterMethod={(filter, row) =>
-                        String(row[filter.id]) === filter.value}
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
