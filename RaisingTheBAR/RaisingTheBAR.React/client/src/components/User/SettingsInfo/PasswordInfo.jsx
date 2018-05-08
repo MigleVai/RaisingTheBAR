@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class PersonalInfo extends React.Component {
     constructor(props) {
@@ -11,20 +12,35 @@ export default class PersonalInfo extends React.Component {
             oldpassword: '',
             newpassword: '',
             repeatpassword: '',
-            responseError: ''
+            responseError: '',
+            open: false,
         };
         this.handleLoggingChange = this.handleLoggingChange.bind(this);
         this.handleOLDPasswordChange = this.handleOLDPasswordChange.bind(this);
         this.handleNEWPasswordChange = this.handleNEWPasswordChange.bind(this);
         this.handleREPEATPasswordChange = this.handleREPEATPasswordChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleRequestClose = this.handleRequestClose.bind(this);
     }
 
+    handleClick = () => {
+        this.setState({
+            open: true,
+        });
+    };
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
     handleLoggingChange(props) {
         axios.post(`/api/User/ChangePassword`, {
             OldPassword: this.state.oldpassword,
             NewPassword: this.state.newpassword
         })
             .then(res => {
+                this.handleClick();
             })
             .catch(error => {
                 this.setState({ responseError: error.response.data });
@@ -43,6 +59,11 @@ export default class PersonalInfo extends React.Component {
         this.setState({ repeatpassword: event.target.value });
     }
     render() {
+        const styles = {
+            textStyle: {
+                width: '100%',
+            },
+        };
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
@@ -54,25 +75,34 @@ export default class PersonalInfo extends React.Component {
                         floatingLabelText="Old Password"
                         type="password"
                         floatingLabelFixed={true}
+                        style={styles.textStyle}
                     />
-                    <br/>
+                    <br />
                     <TextField
                         value={this.state.newpassword}
                         onChange={this.handleNEWPasswordChange}
                         floatingLabelText="New Password"
                         type="password"
                         floatingLabelFixed={true}
+                        style={styles.textStyle}
                     />
-                    <br/>
+                    <br />
                     <TextField
                         value={this.state.repeatpassword}
                         onChange={this.handleREPEATPasswordChange}
                         floatingLabelText="Repeat New Password"
                         type="password"
                         floatingLabelFixed={true}
+                        style={styles.textStyle}
                     />
-                    <br/>
+                    <br />
                     <RaisedButton label="Submit" onClick={this.handleLoggingChange} />
+                    <Snackbar
+                            open={this.state.open}
+                            message="Password changed!"
+                            autoHideDuration={1000}
+                            onRequestClose={this.handleRequestClose}
+                        />
                 </form>
             </div>
         );

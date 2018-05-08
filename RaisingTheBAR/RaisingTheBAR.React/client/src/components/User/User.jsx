@@ -65,7 +65,7 @@ export default class User extends Component {
         <Route exact path="/shop/products" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/stepper" render={(props) => <OrderStepper productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/orders" render={(props) => <OrderHistory logged={this.state.logged} {...props} />} />
-        <Route path="/shop/settings" component={Settings} />
+        <Route path="/shop/settings" render={(props) => <Settings islogged={this.state.logged} {...props} />} />
         {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/shop/signin" /> : <Payment />)} />

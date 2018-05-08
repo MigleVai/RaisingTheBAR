@@ -3,15 +3,19 @@ import Breadcrumb from '../Breadcrumb';
 import Paper from 'material-ui/Paper';
 import PersonalInfo from './PersonalInfo';
 import PasswordInfo from './PasswordInfo';
+import YourInfo from './YourInfo';
 
 export default class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: true,
+            info: false,
+            your: true,
+            pass: false
         }
         this.clickInfo = this.clickInfo.bind(this);
         this.clickPass = this.clickPass.bind(this);
+        this.clickYour = this.clickYour.bind(this);
     }
 
     clickInfo() {
@@ -19,14 +23,33 @@ export default class Settings extends React.Component {
         this.refs.personal.style.textDecoration = 'underline';
         this.refs.password.style.fontWeight = 'normal';
         this.refs.password.style.textDecoration = 'none';
+        this.refs.your.style.fontWeight = 'normal';
+        this.refs.your.style.textDecoration = 'none';
         this.setState({ info: true });
+        this.setState({pass: false});
+        this.setState({your: false});
     }
     clickPass() {
         this.refs.password.style.fontWeight = 'bold';
         this.refs.password.style.textDecoration = 'underline';
         this.refs.personal.style.fontWeight = 'normal';
         this.refs.personal.style.textDecoration = 'none';
+        this.refs.your.style.fontWeight = 'normal';
+        this.refs.your.style.textDecoration = 'none';
         this.setState({ info: false });
+        this.setState({pass: true});
+        this.setState({your: false});
+    }
+    clickYour(){
+        this.refs.your.style.fontWeight = 'bold';
+        this.refs.your.style.textDecoration = 'underline';
+        this.refs.personal.style.fontWeight = 'normal';
+        this.refs.personal.style.textDecoration = 'none';
+        this.refs.password.style.fontWeight = 'normal';
+        this.refs.password.style.textDecoration = 'none';
+        this.setState({ info: false });
+        this.setState({pass: false});
+        this.setState({your: true});
     }
     render() {
         var windowWidth = window.innerWidth;
@@ -63,8 +86,12 @@ export default class Settings extends React.Component {
         var shown;
         if (this.state.info) {
             shown = <PersonalInfo />;
-        } else {
+        }
+        if(this.state.pass){
             shown = <PasswordInfo />;
+        }
+        if(this.state.your){
+            shown = <YourInfo islogged={this.props.islogged}/>;
         }
         return (
             <div>
@@ -72,14 +99,17 @@ export default class Settings extends React.Component {
                 <hr />
                 <div style={{ margin: 'auto', width: widthPaper, display: 'block' }}>
                     <div style={styles.contentStyle}>
+                        <div onClick={this.clickYour} style={{ cursor: 'pointer' }}>
+                            <p style={{ fontWeight: 'bold', textDecoration: 'underline' }} ref="your">Your Information</p>
+                        </div>
                         <div onClick={this.clickInfo} style={{ cursor: 'pointer' }}>
-                            <p style={{ fontWeight: 'bold', textDecoration: 'underline'}} ref="personal">Personal Information</p>
+                            <p style={{ fontWeight: 'normal' }} ref="personal">Change Information</p>
                         </div>
                         <div onClick={this.clickPass} style={{ cursor: 'pointer' }}>
                             <p style={{ fontWeight: 'normal' }} ref="password">Change Password</p>
                         </div>
                     </div>
-                    <div style={{ display: displayPaper, float: floatPaper }}>
+                    <div style={{ display: displayPaper, float: floatPaper, width: '59%' }}>
                         <Paper style={styles.paperStyle} zDepth={1}>
                             {shown}
                         </Paper>

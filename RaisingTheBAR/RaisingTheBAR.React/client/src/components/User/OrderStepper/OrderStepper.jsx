@@ -201,7 +201,7 @@ class HorizontalLinearStepper extends React.Component {
         var floatButton = 'none';
         var marginResultText = '20%';
         var mobile = false;
-        if (window.innerWidth <= 450) {
+        if (window.innerWidth <= 650) {
             floatStepper = 'none';
             widthStepper = 'none';
             paddingLeft = 'none';
@@ -229,7 +229,7 @@ class HorizontalLinearStepper extends React.Component {
                             <StepLabel>Payment</StepLabel>
                         </Step>
                     </Stepper>
-                    <div style={{ paddingTop: paddingTopButton, paddingRight: paddingRightButton, float: floatButton }}>
+                    <div style={{ paddingTop: paddingTopButton, paddingRight: paddingRightButton, float: floatButton, display: 'initial' }}>
                         {stepIndex < 3 &&
                             <div>
                                 <FlatButton

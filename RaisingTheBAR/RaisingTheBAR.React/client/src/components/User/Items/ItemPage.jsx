@@ -164,9 +164,7 @@ export default class ItemPage extends React.Component {
                 },
                 maxWidth: 200,
                 resizable: false,
-                filterMethod: (filter, rows) =>
-                    matchSorter(rows, filter.value, { keys: ['price'] }),
-                filterAll: true
+                filterable: false,
             },
             {
                 Header: "Add to Cart",
@@ -209,7 +207,7 @@ export default class ItemPage extends React.Component {
                         getTdProps={(state, rowInfo, column, instance) => {
                             return {
                                 onClick: (e, handleOriginal) => {
-                                    if (rowInfo.original !== undefined) {
+                                    if (rowInfo !== undefined && rowInfo.original !== undefined) {
                                         if (column.id === 'name') {
                                             this.props.history.push(this.props.location.pathname + '/' + rowInfo.original.id);
                                         }
