@@ -143,8 +143,9 @@ export default class Item extends React.Component {
                 display: 'inline-block',
                 float: 'left',
                 wordWrap: 'break-word',
-                maxWidth: '40%',
+                //maxWidth: '40%',
                 paddingTop: '1%',
+                width: '100%'
             },
             desStyle: {
                 display: 'inline-block',
@@ -171,10 +172,10 @@ export default class Item extends React.Component {
             autoplay: false,
             arrows: false
         };
-        if( this.state.product.images)
-        var images = this.state.product.images.map((image) => 
-            <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(image)} />
-        );
+        if (this.state.product.images)
+            var images = this.state.product.images.map((image) =>
+                <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(image)} />
+            );
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
@@ -182,15 +183,27 @@ export default class Item extends React.Component {
                 <hr />
                 <div style={styles.divStyle}>
                     <Slider {...settings}>
-                        {images} 
-                    </Slider>                  
+                        {images}
+                    </Slider>
                 </div>
                 <Paper style={styles.paperStyle} zDepth={1}>
                     <div style={styles.textStyle}>
                         <h3 style={styles.h3Style}>{this.state.product.name}</h3>
                         <div style={{ paddingTop: '4%' }}>
-                            {this.discountExists()}
-                            <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
+                            <div style={{ display: 'inline' }}>
+                                {this.discountExists()}
+                                <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
+                            </div>
+                            <div style={{
+                                display: 'inline-block',
+                                float: 'right',
+                                position: 'absolute',
+                                paddingLeft: '5%',
+                                top: '35%'
+                            }}>
+                                <p>Description:</p>
+                                <p style={{ paddingLeft: '3%', wordWrap: 'break-word' }}>{this.state.product.description}</p>
+                            </div>
                             <br />
                             <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
                             <Snackbar
@@ -202,10 +215,6 @@ export default class Item extends React.Component {
                         </div>
                     </div>
                 </Paper>
-                <div>
-                    <p>Description:</p>
-                    <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>
-                </div>
             </div>
         )
     }
