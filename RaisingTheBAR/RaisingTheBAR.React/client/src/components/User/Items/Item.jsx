@@ -113,51 +113,62 @@ export default class Item extends React.Component {
 
     render() {
         var setwidth = window.innerWidth * 0.4;
-        var setheight = window.innerHeight * 0.6;
-        if (setheight > setwidth) {
-            setheight = setwidth;
+        var setheight = window.innerHeight * 0.2;
+        var paddingLeftImg = '5%';
+        var paddingRightImg = '3%';
+        var paddingTopImg = '3%';
+        var setTotalWidth = 'none';
+        var floatImg = 'left';
+        var paddingDownImg = 'none';
+        var displayDescrip = 'inline-block';
+        var displayCostQuantity = 'block';
+        if (window.innerWidth < 750) {
+            setwidth = 'none';
+            paddingLeftImg = '20%';
+            paddingRightImg = 'none';
+            paddingTopImg = 'none';
+            setTotalWidth = '80%';
+            floatImg = 'none';
+            paddingDownImg = '5%';
+            displayCostQuantity = 'inline';
+            if (window.innerWidth < 470) {
+                displayDescrip = 'contents';
+            }
         }
         const styles = {
             h3Style: {
-                display: 'inline-block',
+                display: 'block',
                 textAlign: 'left',
-                width: '100%',
-                padding: 'none',
-                margin: 'inherit'
+                paddingLeft: '2%',
+                position: 'absolute'
             },
             imgStyle: {
-                maxWidth: '75%'
+                maxWidth: setwidth,
+                maxHeight: setheight,
+                paddingLeft: '5px',
+                paddingRight: '5px'
             },
             divStyle: {
                 maxWidth: setwidth + 'px',
                 minWidth: setwidth + 'px',
-                maxHeight: setheight + 'px',
-                minHeight: setheight + 'px',
-                float: 'left',
-                paddingLeft: '10%',
-                paddingTop: '3%',
-                paddingRight: '5%',
-            },
-            textStyle: {
-                textAlign: 'left',
-                display: 'inline-block',
-                float: 'left',
-                wordWrap: 'break-word',
-                maxWidth: '40%',
-                paddingTop: '1%',
-            },
-            desStyle: {
-                display: 'inline-block',
-                paddingLeft: '3%',
-                paddingTop: '4%',
-                wordWrap: 'break-word',
+                float: floatImg,
+                width: setTotalWidth,
+                paddingLeft: paddingLeftImg,
+                paddingTop: paddingTopImg,
+                paddingRight: paddingRightImg,
+                paddingBottom: paddingDownImg
             },
             paperStyle: {
                 margin: 20,
-                textAlign: 'center',
+                textAlign: 'left',
                 display: 'flex',
                 padding: 10
             },
+            descriptionStyle: {
+                paddingLeft: '3%',
+                wordWrap: 'break-word',
+                maxWidth: '80%'
+            }
         }
         var path = this.props.location.pathname;
         var productId = this.props.match.params.productId;
@@ -171,10 +182,10 @@ export default class Item extends React.Component {
             autoplay: false,
             arrows: false
         };
-        if( this.state.product.images)
-        var images = this.state.product.images.map((image) => 
-            <img style={styles.imgStyle} key={this.state.product.id} alt="product" src={(image)} />
-        );
+        if (this.state.product.images)
+            var images = this.state.product.images.map((image, i) =>
+                <img style={styles.imgStyle} key={i} alt="product" src={(image)} />
+            );
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
@@ -182,30 +193,37 @@ export default class Item extends React.Component {
                 <hr />
                 <div style={styles.divStyle}>
                     <Slider {...settings}>
-                        {images} 
-                    </Slider>                  
+                        {images}
+                    </Slider>
                 </div>
                 <Paper style={styles.paperStyle} zDepth={1}>
-                    <div style={styles.textStyle}>
-                        <h3 style={styles.h3Style}>{this.state.product.name}</h3>
-                        <div style={{ paddingTop: '4%' }}>
+                    <h3 style={styles.h3Style}>{this.state.product.name}</h3>
+                    <div style={{ paddingTop: '9%', width: '90%' }}>
+                        <div style={{ display: displayCostQuantity, paddingTop: '3%', paddingLeft: '4%' }}>
                             {this.discountExists()}
-                            <p style={{ display: 'inline-block' }}>Quantity:</p><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} />
-                            <br />
-                            <RaisedButton label="Add to Cart" onClick={this.requestForProduct} />
-                            <Snackbar
-                                open={this.state.open}
-                                message={"Added " + this.state.product.name + " to cart!"}
-                                autoHideDuration={4000}
-                                onRequestClose={this.handleRequestClose}
-                            />
+                            <p style={{ display: 'inline-block' }}>Quantity:  </p><span style={{marginLeft: '2%'}}><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} /></span>
                         </div>
+                        <div style={{
+                            display: displayDescrip,
+                            float: 'right',
+                            paddingLeft: '5%',
+                            paddingRight: '2%',
+                            maxWidth: '60%',
+                            marginTop: '-10%',
+                        }}>
+                            <p>Description:</p>
+                            <p>{this.state.product.description}</p>
+                        </div>
+                        <br />
+                        <RaisedButton style={{ marginLeft: '6%' }} label="Add to Cart" onClick={this.requestForProduct} />
+                        <Snackbar
+                            open={this.state.open}
+                            message={"Added " + this.state.product.name + " to cart!"}
+                            autoHideDuration={4000}
+                            onRequestClose={this.handleRequestClose}
+                        />
                     </div>
                 </Paper>
-                <div>
-                    <p>Description:</p>
-                    <p style={{ paddingLeft: '3%' }}>{this.state.product.description}</p>
-                </div>
             </div>
         )
     }
