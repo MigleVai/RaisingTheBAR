@@ -13,8 +13,9 @@ export default class EditProducts extends React.Component {
 
     this.state = {
       openSaveDialog: false,
-      filterText : "",
-      products : []
+      filterText: "",
+      products: [],
+      inTransaction: false
     };
   }
 
@@ -51,7 +52,11 @@ export default class EditProducts extends React.Component {
     })
     product.isSaved = false
   };
-  handlePosts() {
+  handleTransactionState(val) {
+    this.setState({ inTransaction: val });
+  }
+  handlePosts = () => {
+    this.handleTransactionState(true);
     var addUri = '/api/Product/AddProduct';
     var editUri = '/api/Product/EditProduct';
     var deleteUri = '/api/Product/DeleteProduct';
@@ -72,7 +77,7 @@ export default class EditProducts extends React.Component {
             console.log(error)
           });
         }
-        if (product.isAdded === undefined) {
+        if (product.isAdded === undefined && product.checked !== true) {
           axios.post(editUri, {
             id: product.id,
             displayName: product.displayName,
@@ -157,7 +162,8 @@ export default class EditProducts extends React.Component {
         label="Save changes"
         primary={true}
         keyboardFocused={true}
-        onClick={() => this.handlePosts()}
+        onClick={() =>{  if(!this.state.inTransaction){ this.handlePosts(); this.handleTransactionState(!this.state.inTransaction);}}}
+        disabled={this.state.inTransaction}
       />,
     ];
     return (
