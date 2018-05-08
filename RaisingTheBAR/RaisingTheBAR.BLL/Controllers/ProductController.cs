@@ -31,7 +31,7 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Images);
 
-            var products = productContext.Where(x => x.IsFeatured).Take(5)
+            var products = productContext.Where(x => x.IsEnabled).Where(x => x.IsFeatured).Take(5)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
@@ -53,7 +53,7 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Images);
 
-            var products = productContext
+            var products = productContext.Where(x => x.IsEnabled)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
@@ -84,6 +84,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
 
             var products = pcContext.Where(x => x.Category.Name == categoryName || x.Category.ParentCategory.Name == categoryName)
+                .Where(x=>x.Product.IsEnabled)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
@@ -140,7 +141,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 DisplayName = request.DisplayName,
                 DiscountedPrice = request.DiscountedPrice,
                 Price = request.Price,
-                IsFeatured = request.IsFeatured
+                IsFeatured = request.IsFeatured,
+                IsEnabled = request.IsEnabled
             };
 
             var productContext = _dbContext.Set<Product>();
@@ -187,7 +189,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 Price = request.Price,
                 Timestamp = request.Timestamp,
                 DiscountedPrice = request.DiscountedPrice,
-                IsFeatured = request.IsFeatured
+                IsFeatured = request.IsFeatured,
             };
             var imageContext = _dbContext.Set<Image>();
             var images = imageContext.Where(x => x.ProductId == product.Id);
@@ -283,7 +285,7 @@ namespace RaisingTheBAR.BLL.Controllers
         public IActionResult DeleteProduct([FromBody]string request)
         {
 
-            var productContext = _dbContext.Set<Product>();
+            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCarts);
 
             var product = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), request, StringComparison.InvariantCultureIgnoreCase));
 
@@ -292,7 +294,39 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("No such product exists");
             }
 
-            productContext.Remove(product);
+            product.IsEnabled = false;
+            if(product.ProductCarts != null)
+            {
+                _dbContext.RemoveRange(product.ProductCarts);
+            }
+            var result = _dbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nothing changed in database");
+        }
+        [Authorize(Roles = "administrator")]
+        [HttpPost("[Action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult UnDeleteProduct([FromBody]string request)
+        {
+
+            var productContext = _dbContext.Set<Product>();
+
+            var product = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), request, StringComparison.InvariantCultureIgnoreCase));
+
+            if (product == null)
+            {
+                return BadRequest("No such product exists");
+            }
+
+            product.IsEnabled = true;
 
             var result = _dbContext.SaveChanges();
 

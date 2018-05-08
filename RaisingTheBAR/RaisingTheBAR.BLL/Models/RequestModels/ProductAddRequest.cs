@@ -8,7 +8,7 @@
         public decimal Price { get; set; }
         public decimal DiscountedPrice { get; set; }
         public bool IsFeatured { get; set; }
-
+        public bool IsEnabled { get; set; }
         public string Thumbnail { get; set; }
         public string Image { get; set; }
 

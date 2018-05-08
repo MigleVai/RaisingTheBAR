@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RaisingTheBAR.BLL.Filters;
 using RaisingTheBAR.DAL;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Text;
@@ -30,7 +31,10 @@ namespace RaisingTheBAR.BLL
                        .AllowAnyHeader();
             }));
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new LoggingActionFilter());
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -42,7 +46,6 @@ namespace RaisingTheBAR.BLL
             optionsBuilder.UseSqlServer(str);
 
             services.AddScoped<DbContext, EFContext>(s => new EFContext(optionsBuilder.Options));
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
