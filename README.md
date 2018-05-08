@@ -2,6 +2,28 @@
 
 #### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
 
+## Spotting bugs
+ne per daug post'u getAllCategories, getProductAmountInCart, getCart?
+
+itemPage kai paspaudi ant tuscios eilutes meta error
+
+img carousel normaliai realizuot
+
+itemPage price search nereik
+
+personal info arba kazkur rodytu su kokiu email prisijunges, varda pavarde rodytu
+personal info kad butu dialog, jog paejo personal information idet ir perkrautu komponenta
+settings info nera kai pirma kart prisijungi
+
+paymente apacioj cvv kazkodel raso, sutvarkyt paveiksleli
+paymente leidzia susimoket neprisijungus?
+paymentas kai submittini ner dialog kazkokio
+paymentas nedingsta krepselyje prekes kai submittini
+paymentas leidzia nusipirkt neprisijungus lyg ir?
+
+carte filtravimas ir searchas ar reikalingas?
+carte jei ner nieko ar reikia stepperio ir next?
+
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
  * Reikalavimai
