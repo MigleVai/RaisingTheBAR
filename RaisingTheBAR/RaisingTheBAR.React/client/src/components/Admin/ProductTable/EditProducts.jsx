@@ -46,8 +46,13 @@ export default class EditProducts extends React.Component {
   handleCheckedRowFeatured(product) {
     var index = this.state.products.indexOf(product);
     this.setState({
-      products: update(this.state.products, { [index]: { featured: { $set: product.featured } } })
+      products: update(this.state.products, {
+        [index]: {
+          isFeatured: { $set: product.isFeatured },
+        }
+      })
     })
+    product.isSaved = false
   };
   handlePosts() {
     var addUri = '/api/Product/AddProduct';
@@ -63,7 +68,8 @@ export default class EditProducts extends React.Component {
             description: product.description,
             price: product.price,
             thumbnail: product.thumbnail,
-            discountedPrice: product.discountedPrice
+            discountedPrice: product.discountedPrice,
+            isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with adding product!")
             console.log(error)
@@ -78,7 +84,8 @@ export default class EditProducts extends React.Component {
             description: product.description,
             price: product.price,
             discountedPrice: product.discountedPrice,
-            timestamp: product.timestamp
+            timestamp: product.timestamp,
+            isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with edditing product!")
             console.log(error)
@@ -110,12 +117,12 @@ export default class EditProducts extends React.Component {
     var product = {
       id: id,
       displayName: "",
-      image: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/wgALCABAAEABASIA/8QAGQABAQEBAQEAAAAAAAAAAAAAAgABAwQG/9oACAEBAAAAAfoMFT3A9rmw6qEfP053oUOSKbnmbmljpVze4Knv/8QAHhAAAgICAwEBAAAAAAAAAAAAAAECEQMxEBIhIBP/2gAIAQEAAQUCNFtlFFtG+NCV/LVGx+y+l5JbyWdpNTcu3aY3Ix6e1vJPqv0YslyeV3GbMbck9vyRR1RSOqEkhey2J18t2a42U0Wy2U2a4//EACAQAAICAgICAwAAAAAAAAAAAAABESEQMSAyElFBQqH/2gAIAQEABj8CxR2Z2ZfCXxlYjnAxePs+y9FHzuR7m8IZWytiH+DksROdGjSKROIfGFwo6s6svP8A/8QAIxABAAIBAwQDAQEAAAAAAAAAAQARITFBURBhgZEgcdGhsf/aAAgBAQABPyGKC3SbJRyy+/gl9vJNks5IILG+igt0iL0nHxse05ggsmBsMvzyNjkmt7zDZmLBbKxre3X+QoyxTR5udlVZ9cSnTS8OIrebzys1veaXvGKlrbtGqqP09fscmAfyEE03V3zFIpYP+y+7w2ml7zA2OGVKGxFdQ+JcUiuKmjtaYmiB9EyNhgiAplj0vPxse14gAo6ICmbpZwzm8E4vJN0o4IAKOn//2gAIAQEAAAAQGCB+78c0ABj/xAAlEAEAAQMCBgMBAQAAAAAAAAABEQAhQTFxUWGBkcHRELHwIKH/2gAIAQEAAT8QpwoDLWC9Zenup/oA8VH9APisF6z29UYEHJ8OWgEtACv+W/8AKIV/y3oy0iSVyU7zjy/3yU7Tn3V+29grVwixZIWHk6VKJiQ16Cz/AFaK0IwwSMSHUA7VlJwUBjF+tl0vJRnTcgSGuQRwi4zepApcX2Aq3be41bvvcKuKSbFsJdO26VprLakVcS8JPRWkI5myMlO5RikLMroDkdbXw1GlW4XEcXEaUI1kBA1JwtX772GuSHaceqQswTpNDhCTSDpXEem4b0yMjIRXiAttUne9YCa5Kd5z6pyUiQ0gNfL+X/lEa+H8vRkoAg+HAiOGsF6z391F9gPmpvsA81gvWXr6owIBg+P/2Q==",
-      thumbnail: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/wgALCABAAEABASIA/8QAGQABAQEBAQEAAAAAAAAAAAAAAgABAwQG/9oACAEBAAAAAfoMFT3A9rmw6qEfP053oUOSKbnmbmljpVze4Knv/8QAHhAAAgICAwEBAAAAAAAAAAAAAAECEQMxEBIhIBP/2gAIAQEAAQUCNFtlFFtG+NCV/LVGx+y+l5JbyWdpNTcu3aY3Ix6e1vJPqv0YslyeV3GbMbck9vyRR1RSOqEkhey2J18t2a42U0Wy2U2a4//EACAQAAICAgICAwAAAAAAAAAAAAABESEQMSAyElFBQqH/2gAIAQEABj8CxR2Z2ZfCXxlYjnAxePs+y9FHzuR7m8IZWytiH+DksROdGjSKROIfGFwo6s6svP8A/8QAIxABAAIBAwQDAQEAAAAAAAAAAQARITFBURBhgZEgcdGhsf/aAAgBAQABPyGKC3SbJRyy+/gl9vJNks5IILG+igt0iL0nHxse05ggsmBsMvzyNjkmt7zDZmLBbKxre3X+QoyxTR5udlVZ9cSnTS8OIrebzys1veaXvGKlrbtGqqP09fscmAfyEE03V3zFIpYP+y+7w2ml7zA2OGVKGxFdQ+JcUiuKmjtaYmiB9EyNhgiAplj0vPxse14gAo6ICmbpZwzm8E4vJN0o4IAKOn//2gAIAQEAAAAQGCB+78c0ABj/xAAlEAEAAQMCBgMBAQAAAAAAAAABEQAhQTFxUWGBkcHRELHwIKH/2gAIAQEAAT8QpwoDLWC9Zenup/oA8VH9APisF6z29UYEHJ8OWgEtACv+W/8AKIV/y3oy0iSVyU7zjy/3yU7Tn3V+29grVwixZIWHk6VKJiQ16Cz/AFaK0IwwSMSHUA7VlJwUBjF+tl0vJRnTcgSGuQRwi4zepApcX2Aq3be41bvvcKuKSbFsJdO26VprLakVcS8JPRWkI5myMlO5RikLMroDkdbXw1GlW4XEcXEaUI1kBA1JwtX772GuSHaceqQswTpNDhCTSDpXEem4b0yMjIRXiAttUne9YCa5Kd5z6pyUiQ0gNfL+X/lEa+H8vRkoAg+HAiOGsF6z391F9gPmpvsA81gvWXr6owIBg+P/2Q==",
+      image: "",
+      thumbnail: "",
       description: "",
       price: 0,
       discountedPrice: 0,
-      featured: false,
+      isFeatured: false,
       isAdded: true
     }
     this.state.products.push(product);
@@ -141,7 +148,6 @@ export default class EditProducts extends React.Component {
       return product;
     });
     this.setState({ products: newProducts });
-    //  console.log(this.state.products);
   };
   handleSaveDialogOpen = () => {
     this.setState({ openSaveDialog: true });

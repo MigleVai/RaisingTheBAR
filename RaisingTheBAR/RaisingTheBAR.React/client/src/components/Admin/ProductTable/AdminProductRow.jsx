@@ -22,7 +22,7 @@ export default class AdminProductRow extends React.Component {
     this.props.onCheckedDel(this.props.product);
   }
   onCheckedFeaturedEvent() {
-    this.props.product.featured = !this.props.product.featured;
+    this.props.product.isFeatured = !this.props.product.isFeatured;
     this.props.onCheckedFeatured(this.props.product);
   }
   render() {
@@ -61,7 +61,7 @@ export default class AdminProductRow extends React.Component {
         <td>
           <Checkbox
             onCheck={this.onCheckedFeaturedEvent.bind(this)}
-            checked={this.props.product.featured}
+            checked={this.props.product.isFeatured}
             iconStyle={{ fill: 'orange' }}
             checkedIcon={<Star />}
             uncheckedIcon={<StarBorder />}
