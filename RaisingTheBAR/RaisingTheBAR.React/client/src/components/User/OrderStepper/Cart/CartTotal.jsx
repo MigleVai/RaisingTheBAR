@@ -21,7 +21,6 @@ export default class CartTotal extends React.Component {
     handleClose = () => {
         this.setState({ open: false });
     };
-
     render() {
         const styles = {
             paperStyle: {

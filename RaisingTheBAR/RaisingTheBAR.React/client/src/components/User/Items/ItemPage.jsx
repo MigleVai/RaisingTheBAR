@@ -138,7 +138,6 @@ export default class ItemPage extends React.Component {
                 resizable: false,
                 sortable: false,
                 filterable: false,
-                style: styles.imgStyle,
                 maxWidth: 100,
                 style: {height: '60'}
             },
