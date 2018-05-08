@@ -38,10 +38,7 @@ export default class EditProducts extends React.Component {
     this.setState({ filterText: filterText });
   };
   handleCheckedRowDel(product) {
-    var index = this.state.products.indexOf(product);
-    this.setState({
-      products: update(this.state.products, { [index]: { isCheckedForDeletion: { $set: product.checked } } })
-    })
+    product.isSaved = false 
   };
   handleCheckedRowFeatured(product) {
     var index = this.state.products.indexOf(product);
@@ -57,7 +54,7 @@ export default class EditProducts extends React.Component {
   handlePosts() {
     var addUri = '/api/Product/AddProduct';
     var editUri = '/api/Product/EditProduct';
-    // var deleteUri = '/api/Product/DeleteProduct';
+    var deleteUri = '/api/Product/DeleteProduct';
     var products = this.state.products.slice();
     products.forEach(function (product) {
       if (product.isSaved !== undefined && product.isSaved === false) {
@@ -91,25 +88,18 @@ export default class EditProducts extends React.Component {
             console.log(error)
           });
         }
-        // if (product.isCheckedForDeletion === true) {
-        //   axios.post(deleteUri, {
-        //     id: product.id,
-        //     displayName: product.displayName,
-        //     image: product.image,
-        //     thumbnail: product.thumbnail,
-        //     description: product.description,
-        //     price: product.price,
-        //     discountedPrice: product.discountedPrice,
-        //     timestamp: product.timestamp
-        //   }).catch(error => {
-        //     console.log("error with deleting product!")
-        //     console.log(error)
-        //   });
-        // }
+        if (product.checked === true) {
+          axios.post(deleteUri, {
+            request: product.id
+          }
+          ).catch(error => {
+            console.log("error with deleting product!")
+            console.log(error)
+          });
+        }
       }
     })
     this.handleSaveDialogClose();
-
   };
 
   handleAddEvent(evt) {
