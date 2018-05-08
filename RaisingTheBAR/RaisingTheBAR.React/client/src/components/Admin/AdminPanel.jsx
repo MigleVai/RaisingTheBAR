@@ -10,6 +10,7 @@ export default class AdminPanel extends React.Component {
   }
   handleLoggingChange(props) {
     localStorage.removeItem('jwtToken');
+    localStorage.removeItem('role');
     axios.defaults.headers.common['Authorization'] = '';
     this.props.handleLogging(false);
   }
