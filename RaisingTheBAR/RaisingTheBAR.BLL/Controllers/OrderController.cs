@@ -237,5 +237,84 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(orders);
         }
+        [Authorize]
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<OrderListResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        public IActionResult GetUnratedOrder()
+        {
+            var userContext = _dbContext.Set<User>()
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.Rating);
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            var orders = user.Orders.Where(x=>x.Rating == null && x.State == OrderStateEnum.Completed).Select(x => new OrderListResponse
+            {
+                StartedDate = x.StartedDate,
+                OrderState = x.State.ToString(),
+                OrderPrice = x.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
+                OrderId = x.Id
+            });
+
+            return Ok(orders);
+        }
+        [Authorize]
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<OrderListResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        public IActionResult RateOrder([FromBody]RateOrderRequest request)
+        {
+            var userContext = _dbContext.Set<User>()
+                .Include(x => x.Orders)
+                .ThenInclude(x => x.Rating);
+
+            var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (userEmail == null)
+            {
+                return BadRequest("Your session has ended please try to login again");
+            }
+
+            var user = userContext.FirstOrDefault(x => x.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Your session has ended");
+            }
+
+            var order = user.Orders.FirstOrDefault(x =>
+                string.Equals(x.Id.ToString(), request.OrderId, StringComparison.InvariantCultureIgnoreCase));
+
+            if (order == null)
+            {
+                return BadRequest("No such order exists");
+            }
+
+            order.Rating = new Rating()
+            {
+                OrderId = order.Id,
+                Rate = request.Rating,
+                WasRated = true
+            };
+
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
     }
 }

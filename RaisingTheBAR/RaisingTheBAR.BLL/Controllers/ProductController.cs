@@ -27,6 +27,28 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
+        public IActionResult GetFeaturedProducts()
+        {
+            var productContext = _dbContext.Set<Product>().Include(x => x.Images);
+
+            var products = productContext.Where(x => x.IsFeatured).Take(5)
+                .Select(y => new ProductResponse
+                {
+                    Featured = false,
+                    Id = y.Id.ToString(),
+                    Images = new List<string>
+                    {
+                        y.Images.FirstOrDefault(x => x.Type == ImageTypeEnum.MainImage).ImageBase64 ?? Configuration["DefaultImage"]
+                    },
+                    Name = y.DisplayName,
+                    Price = y.Price,
+                    DiscountedPrice = y.DiscountedPrice
+                }).ToList();
+
+            return Ok(products);
+        }
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProductResponse>), 200)]
         public IActionResult GetProducts()
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.Images);
