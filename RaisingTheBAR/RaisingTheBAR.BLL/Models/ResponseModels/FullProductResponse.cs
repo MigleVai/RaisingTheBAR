@@ -10,6 +10,7 @@
         public decimal DiscountedPrice { get; set; }
         public string DisplayName { get; set; }
         public bool IsEnabled { get; set; }
+        public bool IsFeatured { get; set; }
         public byte[] Timestamp { get; set; }
 
     }

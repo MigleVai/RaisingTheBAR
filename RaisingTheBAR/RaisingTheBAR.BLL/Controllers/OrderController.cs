@@ -113,7 +113,7 @@ namespace RaisingTheBAR.BLL.Controllers
             return BadRequest("Nothing changed");
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "administrator")]
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
