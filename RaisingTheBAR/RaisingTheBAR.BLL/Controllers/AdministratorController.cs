@@ -20,7 +20,7 @@ namespace RaisingTheBAR.BLL.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost]
+        [HttpPost("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
@@ -98,7 +98,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 IsEnabled = x.IsEnabled,
                 Thumbnail = x.Images.FirstOrDefault(y=>y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
                 DiscountedPrice = x.DiscountedPrice,
-                Timestamp = x.Timestamp
+                Timestamp = x.Timestamp,
+                IsFeatured = x.IsFeatured
             });
 
             return Ok(products);

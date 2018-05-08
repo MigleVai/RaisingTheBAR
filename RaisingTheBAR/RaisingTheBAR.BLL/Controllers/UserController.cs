@@ -231,7 +231,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 issuer: "RaiseTheBAR",
                 audience: "RaiseTheBAR",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(240),
                 signingCredentials: creds);
 
             return token;
