@@ -210,5 +210,61 @@ namespace RaisingTheBAR.BLL.Controllers
             var outputStream = new FileStream(@"temp.xlsx", FileMode.Open);
             return new FileStreamResult(outputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+        [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult ImportFromExcel([FromBody]string excelBase64)
+        {
+            var productContext = _dbContext.Set<Product>();
+            try
+            {
+                var data = Convert.FromBase64String(excelBase64);
+                var productList = new List<Product>();
+                try
+                {
+                    using (var stream = new MemoryStream(data))
+                    {
+                        using (var ep = new ExcelPackage(stream))
+                        {
+                            var ws = ep.Workbook.Worksheets.FirstOrDefault();
+                            var i = 2;
+                            while (ws.Cells[i, 1].Value != null)
+                            {
+                                var product = new Product
+                                {
+                                    DisplayName = ws.Cells[i, 1].Value.ToString(),
+                                    Description = ws.Cells[i, 2].Value.ToString(),
+                                    Price = Convert.ToDecimal(ws.Cells[i, 3].Value),
+                                    DiscountedPrice = Convert.ToDecimal(ws.Cells[i, 4].Value),
+                                    IsFeatured = Convert.ToBoolean(ws.Cells[i, 5].Value),
+                                    IsEnabled = Convert.ToBoolean(ws.Cells[i, 6].Value)
+                                };
+                                productList.Add(product);
+                                i++;
+                            }
+                        }
+                    }
+                    productContext.AddRange(productList);
+                    var result = _dbContext.SaveChanges();
+
+                    if (result > 0)
+                    {
+                        return Ok();
+                    }
+
+                    return BadRequest("Something wrong in db");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest("Bad excel data!" + e.Message);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Invalid File" + e.Message);
+            }
+        }
     }
 }
