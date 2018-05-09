@@ -67,26 +67,41 @@ export default class UserList extends React.Component {
         filterAll: true
       },
       {
-        Header: 'First name',
-        accessor: 'firstName',
-        style: styles.tdStyles,
-        resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['firstName'] }),
-        filterAll: true,
-      }, {
-        Header: 'Last Name',
-        accessor: 'lastName',
+        Header: 'Order count',
+        accessor: 'orderCount',
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
         filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['lastName'] }),
+          matchSorter(rows, filter.value, { keys: ['orderCount'] }),
+        filterAll: true,
+      }, {
+        Header: 'Total cost of orders',
+        accessor: 'totalCostOfOrders',
+        style: styles.tdStyles,
+        maxWidth: 200,
+        resizable: false,
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ['totalCostOfOrders'] }),
         filterAll: true
       }, {
-        Header: 'Blocked',
+        Header: 'Average cost of orders',
+        accessor: 'averageCostOfOrders',
+        style: styles.tdStyles,
+        maxWidth: 200,
+        resizable: false,
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ['averageCostOfOrders'] }),
+        filterAll: true
+      }, {
+        Header: 'Block',
         accessor: 'blocked',
-        Cell: user => <div>{String(user.original.blocked)}</div>,
+        Cell: user => <div>{
+          user.original.blocked === false ?
+            <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(user.original)} />
+            :
+            <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(user.original)} />
+        }</div>,
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
@@ -110,13 +125,6 @@ export default class UserList extends React.Component {
           SubComponent={row => {
             return (
               <div>
-                <h1>future implementation of orders + block button</h1>
-                {
-                  row.original.blocked === false ?
-                    <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(row.original)} />
-                    :
-                    <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(row.original)} />
-                }
                 <UserOrderDetails user={row.original} />
               </div>
             )
