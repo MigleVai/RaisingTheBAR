@@ -28,20 +28,19 @@ export default class UserList extends React.Component {
         console.log(error)
       });
   }
-  handleBlockEvent(email, block) {
+  handleBlockEvent(email, blocked) {
     var blockUri = '/api/Administrator/ChangeBlock';
     axios.post(blockUri, {
       email: email,
-      block: block
+      blocked: !blocked
     }).catch(error => {
       console.log("error with blocking/unblocking user!")
       console.log(error)
     });
-  }
+    this.componentDidMount()
+    }
 
   render() {
-    console.log(this.state.users);
-
     const styles = {
       tdStyles: {
         margin: 'auto',
