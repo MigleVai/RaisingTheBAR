@@ -146,19 +146,48 @@ namespace RaisingTheBAR.BLL.Controllers
             };
 
             var productContext = _dbContext.Set<Product>();
+            var imageList = new List<Image>();
+
             var thumbnail = new Image()
             {
                 Product = product,
                 ImageBase64 = request.Thumbnail,
                 Type = ImageTypeEnum.Thumbnail
             };
-            var mainimage = new Image()
+            imageList.Add(thumbnail);
+            if (request.Images.Count == 1)
             {
-                Product = product,
-                ImageBase64 = request.Image,
-                Type = ImageTypeEnum.MainImage
-            };
-            product.Images = new List<Image>() { mainimage, thumbnail };
+                var image = new Image()
+                {
+                    Product = product,
+                    ImageBase64 = request.Images.FirstOrDefault(),
+                    Type = ImageTypeEnum.MainImage
+                };
+                imageList.Add(image);
+            }
+            else if (request.Images.Count > 1)
+            {
+                var mainImage = new Image()
+                {
+                    Product = product,
+                    ImageBase64 = request.Images.FirstOrDefault(),
+                    Type = ImageTypeEnum.MainImage
+                };
+                imageList.Add(mainImage);
+                request.Images.Remove(request.Images.FirstOrDefault());
+                foreach (var tempImage in request.Images)
+                {
+                    var image = new Image()
+                    {
+                        Product = product,
+                        ImageBase64 = tempImage,
+                        Type = ImageTypeEnum.OtherImage
+                    };
+                    imageList.Add(image);
+                }
+            }
+
+            product.Images = imageList;
 
             productContext.Add(product);
 
@@ -194,41 +223,50 @@ namespace RaisingTheBAR.BLL.Controllers
             var imageContext = _dbContext.Set<Image>();
             var images = imageContext.Where(x => x.ProductId == product.Id);
 
-            foreach (var image in images)
+            if (request.Images != null && request.Images.Any())
             {
-                switch (image.Type)
+                imageContext.RemoveRange(images.Where(x=>x.Type != ImageTypeEnum.Thumbnail));
+
+                var mainImage = new Image()
                 {
-                    case ImageTypeEnum.Thumbnail:
-                        image.ImageBase64 = request.Thumbnail;
-                        break;
-                    case ImageTypeEnum.MainImage:
-                        image.ImageBase64 = request.Image;
-                        break;
-                    case ImageTypeEnum.OtherImage:
-                        break;
+                    Product = product,
+                    ProductId = product.Id,
+                    ImageBase64 = request.Images.FirstOrDefault(),
+                    Type = ImageTypeEnum.MainImage
+                };
+                imageContext.Add(mainImage);
+                request.Images.Remove(request.Images.FirstOrDefault());
+
+                foreach (var requestImage in request.Images)
+                {
+                    imageContext.Add(new Image()
+                    {
+                        Product = product,
+                        ProductId = product.Id,
+                        ImageBase64 = requestImage,
+                        Type = ImageTypeEnum.OtherImage
+                    });
                 }
             }
 
-            if (!images.Any(x => x.ImageBase64.Equals(request.Image)))
+            if (!string.IsNullOrEmpty(request.Thumbnail))
             {
-                imageContext.Add(new Image()
+                if (!images.Any(x => x.Type == ImageTypeEnum.Thumbnail))
                 {
-                    Product = product,
-                    ProductId = product.Id,
-                    ImageBase64 = request.Image,
-                    Type = ImageTypeEnum.MainImage
-                });
-            }
-            if (!images.Any(x => x.ImageBase64.Equals(request.Thumbnail)))
-            {
-                imageContext.Add(new Image()
+                    imageContext.Add(new Image()
+                    {
+                        Product = product,
+                        ProductId = product.Id,
+                        ImageBase64 = request.Thumbnail,
+                        Type = ImageTypeEnum.Thumbnail
+                    });
+                }
+                else
                 {
-                    Product = product,
-                    ProductId = product.Id,
-                    ImageBase64 = request.Thumbnail,
-                    Type = ImageTypeEnum.Thumbnail
-                });
+                    images.First(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64 = request.Thumbnail;
+                }
             }
+
             var productContext = _dbContext.Set<Product>();
 
             try
