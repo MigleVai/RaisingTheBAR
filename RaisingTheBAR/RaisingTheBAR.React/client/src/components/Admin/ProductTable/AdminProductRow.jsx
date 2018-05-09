@@ -26,8 +26,17 @@ export default class AdminProductRow extends React.Component {
     this.props.onCheckedFeatured(this.props.product);
   }
   render() {
+    const styles = {
+      redStyle: {
+        backgroundColor: '#FF0000'
+      },
+      whiteStyle: {
+        backgroundColor: '#FFFFFF'
+      }
+    };
+    // console.log(this.props.product)
     return (
-      <tr className="eachRow">
+      <tr style={this.props.product.inConflict ? styles.redStyle : styles.whiteStyle}>
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "displayName",
           value: this.props.product.displayName,

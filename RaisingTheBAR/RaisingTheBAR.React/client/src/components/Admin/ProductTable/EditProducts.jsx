@@ -55,6 +55,9 @@ export default class EditProducts extends React.Component {
   handleTransactionState(val) {
     this.setState({ inTransaction: val });
   }
+  handleEditConflict(product) {
+    product.inConflict = true
+  }
   handlePosts = () => {
     this.handleTransactionState(true);
     var addUri = '/api/Product/AddProduct';
@@ -91,6 +94,9 @@ export default class EditProducts extends React.Component {
           }).catch(error => {
             console.log("error with edditing product!")
             console.log(error)
+            if(error.status === 409) {
+              this.handleEditConflict(product);
+            }
           });
         }
         if (product.checkedForDisable === true) {
@@ -176,7 +182,8 @@ export default class EditProducts extends React.Component {
           onCheckedRowFeatured={this.handleCheckedRowFeatured.bind(this)}
           onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}
-          filterText={this.state.filterText} />
+          filterText={this.state.filterText}
+          onEditConflict={this.handleEditConflict.bind(this)} />
         <Dialog
           title="Save confirmation"
           actions={saveDialogActions}

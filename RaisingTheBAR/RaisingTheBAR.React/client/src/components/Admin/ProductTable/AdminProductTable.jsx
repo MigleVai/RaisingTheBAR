@@ -3,10 +3,16 @@ import AdminProductRow from './AdminProductRow';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export default class AdminProductTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
   onSaveEvent() {
     this.props.onSave();
   }
-
+  blahEditConflict(product) {
+    this.props.onEditConflict(product);
+  }
   render() {
     var onProductTableUpdate = this.props.onProductTableUpdate;
     var checkedRowDisable = this.props.onCheckedRowDisable;
