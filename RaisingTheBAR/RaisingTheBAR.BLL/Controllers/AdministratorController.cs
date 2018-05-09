@@ -12,7 +12,7 @@ using OfficeOpenXml;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    [Authorize(Roles = "administrator")]
+    //[Authorize(Roles = "administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
@@ -61,21 +61,15 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult GetUsers()
         {
-            var userContext = _dbContext.Set<User>().Include(x => x.Orders).ThenInclude(o => o.ProductOrders).ThenInclude(po => po.Product);
+            var userContext = _dbContext.Set<User>().Include(x => x.Orders).ThenInclude(o => o.ProductOrders);
 
             var userResponses = userContext.Select(x => new UserResponse
             {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
                 Blocked = x.Blocked,
                 Email = x.Email,
-                Orders = x.Orders.Select(y => new OrderViewResponse
-                {
-                    Amount = y.ProductOrders.Count,
-                    TotalPrice = y.ProductOrders.Sum(z => z.Amount * z.Product.Price),
-                    OrderDate = y.StartedDate,
-                    OrderState = y.State.ToString()
-                }).ToList()
+                OrderCount = x.Orders != null ? x.Orders.Count() : 0,
+                TotalCostOfOrders = x.Orders != null && x.Orders.Any(p=>p.ProductOrders.Any()) ? x.Orders.Sum(z => z.ProductOrders.Sum(y => y.Amount * y.SinglePrice)) : 0M,
+                AverageCostOfOrders = x.Orders != null && x.Orders.Any(p => p.ProductOrders.Any()) ? x.Orders.Average(z => z.ProductOrders.Sum(y => y.Amount * y.SinglePrice)) : 0M
             });
 
             return Ok(userResponses);
@@ -96,9 +90,9 @@ namespace RaisingTheBAR.BLL.Controllers
                 Price = x.Price,
                 Id = x.Id.ToString(),
                 Description = x.Description,
-                Image = x.Images.FirstOrDefault(y=>y.Type == ImageTypeEnum.MainImage).ImageBase64,
+                Image = x.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.MainImage).ImageBase64,
                 IsEnabled = x.IsEnabled,
-                Thumbnail = x.Images.FirstOrDefault(y=>y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
+                Thumbnail = x.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
                 DiscountedPrice = x.DiscountedPrice,
                 Timestamp = x.Timestamp,
                 IsFeatured = x.IsFeatured
@@ -142,7 +136,7 @@ namespace RaisingTheBAR.BLL.Controllers
                     ws.Cells[1, 5].Value = "Is it featured";
                     ws.Cells[1, 6].Value = "Is it enabled";
 
-                    for(int i = 2; i < products.Length + 2; i++)
+                    for (int i = 2; i < products.Length + 2; i++)
                     {
                         ws.Cells[i, 1].Value = products[i - 2].DisplayName;
                         ws.Cells[i, 2].Value = products[i - 2].Description;

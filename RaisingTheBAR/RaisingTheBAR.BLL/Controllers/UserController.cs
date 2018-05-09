@@ -41,7 +41,10 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("No user found with this E-mail");
             }
-
+            if(user.Blocked == true)
+            {
+                return BadRequest("User is blocked");
+            }
             string hashedString = GenerateHash(request.Password, user.Id);
 
             if (user.Password == hashedString && user.Role.RoleName == request.Role)
