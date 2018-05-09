@@ -254,6 +254,7 @@ class HorizontalLinearStepper extends React.Component {
                         <div style={{ margin: marginResultText }}>
                             <p> {localStorage.getItem('responseError')}</p>
                             <p> {localStorage.getItem('response')}</p>
+                            {localStorage.setItem('amount',0)}
                         </div>
                     ) : (
                             <div>
