@@ -28,7 +28,9 @@ export default class SingleOrderList extends React.Component {
     render() {
         const styles = {
             imgStyle: {
-                width: '50px'
+                width: '80px',
+                height: '50px',
+                margin: 'auto'
             },
             tdStyles: {
                 margin: 'auto',
@@ -64,12 +66,12 @@ export default class SingleOrderList extends React.Component {
         const dataSingle = this.state.singleOrder;
         return (
             <div>
-                    <ReactTable
-                        data={dataSingle}
-                        columns={columnsSingle}
-                        defaultPageSize={this.props.amount}
-                        showPagination={false}
-                    />
+                <ReactTable
+                    data={dataSingle}
+                    columns={columnsSingle}
+                    defaultPageSize={this.props.amount}
+                    showPagination={false}
+                />
             </div>
         );
     }

@@ -115,6 +115,9 @@ export default class UserShoppingCart extends React.Component {
         if(this.props.productAmount === 0 && this.state.totalCost !== 0){
             amount = this.state.products.length;
         }
+        if(this.props.productAmount !== 0 && this.state.totalCost === 0){
+            amount = 0;
+        }
         if (this.props.mobile === false) {
             return (
                 <div>

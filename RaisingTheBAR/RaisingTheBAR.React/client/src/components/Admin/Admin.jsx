@@ -2,6 +2,7 @@ import React from 'react';
 import UserList from './UserList';
 import AdminPanel from './AdminPanel';
 import EditProducts from './ProductTable/EditProducts';
+import Excel from './Excel';
 import AppBar from 'material-ui/AppBar';
 import AdminAuthentication from './AdminAuthentication';
 import FlatButton from 'material-ui/FlatButton';
@@ -50,9 +51,10 @@ export default class Admin extends React.Component {
               style={styles.barStyle}
             >
             </AppBar>
-            <h2>My role is {localStorage.getItem('role')}</h2>
+            {/* <Route path="/admin" render={(props) => <OrderList/>} /> */}
             <Route path="/admin/userlist" render={(props) => <UserList  {...props} />} />
             <Route path="/admin/editproducts" render={(props) => <EditProducts  {...props} />} />
+            <Route path="/admin/excel" render={(props) => <Excel {...props} />} />
           </div>
           :
           <AdminAuthentication handleLogging={this.handleLogging} />

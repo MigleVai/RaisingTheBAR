@@ -94,7 +94,7 @@ export default class Register extends React.Component {
             if (this.state.emailError !== '' || this.state.email === '') {
                 this.setState({ emailError: error });
             }
-            if (this.state.passwordErrorError !== '' || this.state.password === '') {
+            if (this.state.passwordError !== '' || this.state.password === '') {
                 this.setState({ passwordError: error });
             }
             if (this.state.repeatError !== '' || this.state.repeat === '') {
