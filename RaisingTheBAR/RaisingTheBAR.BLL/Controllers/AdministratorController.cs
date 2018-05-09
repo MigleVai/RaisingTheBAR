@@ -12,7 +12,7 @@ using OfficeOpenXml;
 
 namespace RaisingTheBAR.BLL.Controllers
 {
-    //[Authorize(Roles = "administrator")]
+    [Authorize(Roles = "administrator")]
     [Produces("application/json")]
     [Route("api/Administrator")]
     public class AdministratorController : Controller
@@ -74,7 +74,33 @@ namespace RaisingTheBAR.BLL.Controllers
 
             return Ok(userResponses);
         }
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<UserResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult GetOrders()
+        {
+            var orderContext = _dbContext.Set<Order>().Include(x=>x.ProductOrders).ThenInclude(o=>o.Product);
 
+            var orderResponses = orderContext.OrderBy(x => x.State).Select(x => new OrderResponse
+            {
+                StartedDate = x.StartedDate,
+                LastUpdateDate = x.LastModifiedDate,
+                OrderState = x.State.ToString(),
+                Products = x.ProductOrders.Select(z=> new ProductListResponse
+                {
+                    Id = z.ProductId.ToString(),
+                    Amount = z.Amount,
+                    Name = z.Product.DisplayName,
+                    Price = z.SinglePrice,
+                    TotalPrice = z.SinglePrice * z.Amount
+                }).ToList(),
+                TotalPrice = x.ProductOrders.Sum(z=>z.SinglePrice * z.Amount)
+            });
+
+            return Ok(orderResponses);
+        }
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<FullProductResponse>), 200)]
         [ProducesResponseType(typeof(string), 400)]
