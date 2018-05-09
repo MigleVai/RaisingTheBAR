@@ -1,6 +1,5 @@
 import React from 'react';
 import AdminProductRow from './AdminProductRow';
-import ActionDelete from 'material-ui/svg-icons/action/delete';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export default class AdminProductTable extends React.Component {
@@ -10,7 +9,7 @@ export default class AdminProductTable extends React.Component {
 
   render() {
     var onProductTableUpdate = this.props.onProductTableUpdate;
-    var checkedRowDel = this.props.onCheckedRowDel;
+    var checkedRowDisable = this.props.onCheckedRowDisable;
     var checkedRowFeatured = this.props.onCheckedRowFeatured;
     var filterText = this.props.filterText;
     var product = this.props.products.map(function(product) {
@@ -20,7 +19,7 @@ export default class AdminProductTable extends React.Component {
       return (<AdminProductRow
         onProductTableUpdate={onProductTableUpdate}
         product={product}
-        onCheckedDel={checkedRowDel.bind(this)}
+        onCheckedDisable={checkedRowDisable.bind(this)}
         onCheckedFeatured={checkedRowFeatured.bind(this)}
         key={product.id} />)
     });
@@ -38,7 +37,7 @@ export default class AdminProductTable extends React.Component {
               <th>Image base64</th>
               <th>Thumbnail base64</th>
               <th style={{width: 4 + "%"}} >Featured</th>
-              <th style={{width: 4 + "%"}} ><ActionDelete /></th>
+              <th style={{width: 4 + "%"}} >Is disabled</th>
             </tr>
           </thead>
 

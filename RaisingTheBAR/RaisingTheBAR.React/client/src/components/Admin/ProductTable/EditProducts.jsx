@@ -38,7 +38,7 @@ export default class EditProducts extends React.Component {
   handleUserInput(filterText) {
     this.setState({ filterText: filterText });
   };
-  handleCheckedRowDel(product) {
+  handleCheckedRowDisable(product) {
     product.isSaved = false 
   };
   handleCheckedRowFeatured(product) {
@@ -77,7 +77,7 @@ export default class EditProducts extends React.Component {
             console.log(error)
           });
         }
-        if (product.isAdded === undefined && product.checked !== true) {
+        if (product.isAdded === undefined && product.checkedForDisable !== true) {
           axios.post(editUri, {
             id: product.id,
             displayName: product.displayName,
@@ -93,12 +93,12 @@ export default class EditProducts extends React.Component {
             console.log(error)
           });
         }
-        if (product.checked === true) {
+        if (product.checkedForDisable === true) {
           axios.post(deleteUri, {
             request: product.id
           }
           ).catch(error => {
-            console.log("error with deleting product!")
+            console.log("error with disabling product!")
             console.log(error)
           });
         }
@@ -172,7 +172,7 @@ export default class EditProducts extends React.Component {
         <AdminProductTable
           onProductTableUpdate={this.handleProductTable.bind(this)}
           onRowAdd={this.handleAddEvent.bind(this)}
-          onCheckedRowDel={this.handleCheckedRowDel.bind(this)}
+          onCheckedRowDisable={this.handleCheckedRowDisable.bind(this)}
           onCheckedRowFeatured={this.handleCheckedRowFeatured.bind(this)}
           onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}

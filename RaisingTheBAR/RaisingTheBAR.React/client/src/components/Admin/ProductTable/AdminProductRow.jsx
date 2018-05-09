@@ -8,18 +8,18 @@ export default class AdminProductRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false
+      checkedForDisable: false
     }
   }
 
-  onCheckedDelEvent() {
+  onCheckedDisableEvent() {
     this.setState((oldState) => {
       return {
-        checked: !oldState.checked,
+        checkedForDisable: !oldState.checkedForDisable,
       };
     });
-    this.props.product.checked = !this.state.checked;
-    this.props.onCheckedDel(this.props.product);
+    this.props.product.checkedForDisable = !this.state.checkedForDisable;
+    this.props.onCheckedDisable(this.props.product);
   }
   onCheckedFeaturedEvent() {
     this.props.product.isFeatured = !this.props.product.isFeatured;
@@ -67,10 +67,10 @@ export default class AdminProductRow extends React.Component {
             uncheckedIcon={<StarBorder />}
           />
         </td>
-        <td className="del-cell">
+        <td>
           <Checkbox
-            onCheck={this.onCheckedDelEvent.bind(this)}
-            checked={this.state.checked}
+            onCheck={this.onCheckedDisableEvent.bind(this)}
+            checked={this.state.checkedForDisable}
             iconStyle={{ fill: 'red' }}
           />
         </td>
