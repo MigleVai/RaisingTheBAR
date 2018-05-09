@@ -5,6 +5,7 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
 {
     public class UserResponse
     {
+        public string UserId { get; set; }
         public string Email { get; set; }
         public bool Blocked { get; set; }
         public int OrderCount { get; set; }

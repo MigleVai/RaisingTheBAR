@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RaisingTheBAR.BLL.Models.RequestModels;
@@ -65,6 +66,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var userResponses = userContext.Select(x => new UserResponse
             {
+                UserId = x.Id.ToString(),
                 Blocked = x.Blocked,
                 Email = x.Email,
                 OrderCount = x.Orders != null ? x.Orders.Count() : 0,
@@ -75,15 +77,45 @@ namespace RaisingTheBAR.BLL.Controllers
             return Ok(userResponses);
         }
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<UserResponse>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<OrderResponse>), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         public IActionResult GetOrders()
         {
-            var orderContext = _dbContext.Set<Order>().Include(x=>x.ProductOrders).ThenInclude(o=>o.Product);
+            var orderContext = _dbContext.Set<Order>().Include(x => x.ProductOrders).ThenInclude(o => o.Product);
 
             var orderResponses = orderContext.OrderBy(x => x.State).Select(x => new OrderResponse
+            {
+                StartedDate = x.StartedDate,
+                LastUpdateDate = x.LastModifiedDate,
+                OrderState = x.State.ToString(),
+                Products = x.ProductOrders.Select(z => new ProductListResponse
+                {
+                    Id = z.ProductId.ToString(),
+                    Amount = z.Amount,
+                    Name = z.Product.DisplayName,
+                    Price = z.SinglePrice,
+                    TotalPrice = z.SinglePrice * z.Amount
+                }).ToList(),
+                TotalPrice = x.ProductOrders.Sum(z => z.SinglePrice * z.Amount)
+            });
+
+            return Ok(orderResponses);
+        }
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<OrderResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult GetOrdersByUser(string userId)
+        {
+            var orderContext = _dbContext.Set<Order>().Include(x=>x.ProductOrders).ThenInclude(o=>o.Product);
+            var orders = orderContext
+                .Where(x => string.Equals(x.UserId.ToString(), userId, StringComparison.InvariantCultureIgnoreCase))
+                .OrderBy(x => x.State)
+                .ToList();
+            var orderResponses = orders.Select(x => new OrderResponse
             {
                 StartedDate = x.StartedDate,
                 LastUpdateDate = x.LastModifiedDate,
