@@ -34,7 +34,6 @@ export default class AdminProductRow extends React.Component {
         backgroundColor: '#FFFFFF'
       }
     };
-    // console.log(this.props.product)
     return (
       <tr style={this.props.product.inConflict ? styles.redStyle : styles.whiteStyle}>
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{

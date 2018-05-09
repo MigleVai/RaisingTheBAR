@@ -10,9 +10,6 @@ export default class AdminProductTable extends React.Component {
   onSaveEvent() {
     this.props.onSave();
   }
-  blahEditConflict(product) {
-    this.props.onEditConflict(product);
-  }
   render() {
     var onProductTableUpdate = this.props.onProductTableUpdate;
     var checkedRowDisable = this.props.onCheckedRowDisable;
