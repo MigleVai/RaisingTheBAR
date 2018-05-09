@@ -4,12 +4,14 @@ import "react-table/react-table.css";
 import matchSorter from 'match-sorter';
 import axios from 'axios';
 import FlatButton from 'material-ui/FlatButton';
-import OrderList from './OrderList'
+import UserOrderDetails from './UserOrderDetails'
+import update from 'immutability-helper';
 
 export default class UserList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      users: []
     }
   }
   componentDidMount() {
@@ -28,17 +30,24 @@ export default class UserList extends React.Component {
         console.log(error)
       });
   }
-  handleBlockEvent(email, blocked) {
+  handleBlockEvent(user) {
     var blockUri = '/api/Administrator/ChangeBlock';
     axios.post(blockUri, {
-      email: email,
-      blocked: !blocked
+      email: user.email,
+      blocked: !user.blocked
     }).catch(error => {
       console.log("error with blocking/unblocking user!")
       console.log(error)
     });
-    this.componentDidMount()
-    }
+    var index = this.state.users.indexOf(user);
+    this.setState({
+      users: update(this.state.users, {
+        [index]: {
+          blocked: { $set: !user.blocked },
+        }
+      })
+    })
+  }
 
   render() {
     const styles = {
@@ -104,11 +113,11 @@ export default class UserList extends React.Component {
                 <h1>future implementation of orders + block button</h1>
                 {
                   row.original.blocked === false ?
-                  <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(row.original.email, row.original.blocked)}/>
-                  :
-                  <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(row.original.email, row.original.blocked)}/>
+                    <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(row.original)} />
+                    :
+                    <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(row.original)} />
                 }
-                <OrderList row={row.original} />
+                <UserOrderDetails user={row.original} />
               </div>
             )
           }}
