@@ -13,6 +13,7 @@ export default class EditProducts extends React.Component {
 
     this.state = {
       openSaveDialog: false,
+      openEditConflictDialog: false,
       filterText: "",
       products: [],
       inTransaction: false
@@ -39,7 +40,7 @@ export default class EditProducts extends React.Component {
     this.setState({ filterText: filterText });
   };
   handleCheckedRowDisable(product) {
-    product.isSaved = false 
+    product.isSaved = false
   };
   handleCheckedRowFeatured(product) {
     var index = this.state.products.indexOf(product);
@@ -57,6 +58,7 @@ export default class EditProducts extends React.Component {
   }
   handleEditConflict(product) {
     product.inConflict = true
+    this.handleEditConflictDialogOpen()
   }
   handlePosts = () => {
     this.handleTransactionState(true);
@@ -94,7 +96,7 @@ export default class EditProducts extends React.Component {
           }).catch(error => {
             console.log("error with edditing product!")
             console.log(error)
-            if(error.status === 409) {
+            if (error.status === 409) {
               this.handleEditConflict(product);
             }
           });
@@ -153,9 +155,14 @@ export default class EditProducts extends React.Component {
   handleSaveDialogOpen = () => {
     this.setState({ openSaveDialog: true });
   };
-
   handleSaveDialogClose = () => {
     this.setState({ openSaveDialog: false });
+  };
+  handleEditConflictDialogOpen = () => {
+    this.setState({ openEditConflictDialog: true });
+  };
+  handleEditConflictDialogClose = () => {
+    this.setState({ openEditConflictDialog: false });
   };
   render() {
     const saveDialogActions = [
@@ -168,7 +175,7 @@ export default class EditProducts extends React.Component {
         label="Save changes"
         primary={true}
         keyboardFocused={true}
-        onClick={() =>{  if(!this.state.inTransaction){ this.handlePosts(); this.handleTransactionState(!this.state.inTransaction);}}}
+        onClick={() => { if (!this.state.inTransaction) { this.handlePosts(); this.handleTransactionState(!this.state.inTransaction); } }}
         disabled={this.state.inTransaction}
       />,
     ];
@@ -192,6 +199,20 @@ export default class EditProducts extends React.Component {
           onRequestClose={this.handleSaveDialogClose}
         >
           Do you really want to save changes?
+        </Dialog>
+        <Dialog
+          title="Conflict with editing products"
+          actions={
+            <FlatButton
+              label="Got it"
+              primary={true}
+              onClick={() => this.handleEditConflictDialogClose()}
+            />}
+          modal={false}
+          open={this.state.openEditConflictDialog}
+          onRequestClose={this.handleEditConflictDialogClose}
+        >
+          One or more product edits failed, because they had already been changed by somebody else. Please refresh the page to try again.
         </Dialog>
       </div>
     );
