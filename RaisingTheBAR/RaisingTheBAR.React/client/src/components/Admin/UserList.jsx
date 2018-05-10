@@ -4,7 +4,7 @@ import "react-table/react-table.css";
 import matchSorter from 'match-sorter';
 import axios from 'axios';
 import FlatButton from 'material-ui/FlatButton';
-import UserOrderDetails from './UserOrderDetails'
+import UserOrders from './UserOrders'
 import update from 'immutability-helper';
 
 export default class UserList extends React.Component {
@@ -23,7 +23,6 @@ export default class UserList extends React.Component {
       .then(res => {
         const users = res.data;
         this.setState({ users: users });
-        // console.log(this.state.users);
       })
       .catch(error => {
         console.log("error with getting user data!")
@@ -55,7 +54,6 @@ export default class UserList extends React.Component {
         margin: 'auto',
       }
     };
-
     const columns = [
       {
         Header: 'Email',
@@ -125,7 +123,7 @@ export default class UserList extends React.Component {
           SubComponent={row => {
             return (
               <div>
-                <UserOrderDetails user={row.original} />
+                <UserOrders user={row.original} />
               </div>
             )
           }}

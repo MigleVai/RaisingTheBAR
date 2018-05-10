@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class OrderList extends React.Component {
+export default class UserOrderDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,10 +36,10 @@ export default class OrderList extends React.Component {
 
           <tbody>
             <tr className="eachRow">
-              <td value={this.props.row.amount} />
-              <td value={this.props.row.totalPrice} />
-              <td value={this.props.row.orderDate} />
-              <td value={this.props.row.orderState} />
+              <td value={this.props.user.orders.amount} />
+              <td value={this.props.user.orders.totalPrice} />
+              <td value={this.props.user.orders.orderDate} />
+              <td value={this.props.user.orders.orderState} />
             </tr>
           </tbody>
 
