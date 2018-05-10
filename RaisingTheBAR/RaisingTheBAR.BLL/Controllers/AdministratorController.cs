@@ -210,6 +210,36 @@ namespace RaisingTheBAR.BLL.Controllers
             var outputStream = new FileStream(@"temp.xlsx", FileMode.Open);
             return new FileStreamResult(outputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(FileStreamResult), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult ProductImportTemplate()
+        {
+            using (var stream = new FileStream(@"temp.xlsx", FileMode.Create))
+            {
+                using (var ep = new ExcelPackage(stream))
+                {
+                    var ws = ep.Workbook.Worksheets.Add("Products");
+                    ws.Column(1).Width = 50;
+                    ws.Column(2).Width = 50;
+                    ws.Column(3).Width = 20;
+                    ws.Column(4).Width = 20;
+                    ws.Column(5).Width = 20;
+                    ws.Column(6).Width = 20;
+                    ws.Cells[1, 1].Value = "Name";
+                    ws.Cells[1, 2].Value = "Description";
+                    ws.Cells[1, 3].Value = "Price";
+                    ws.Cells[1, 4].Value = "Discounted Price";
+                    ws.Cells[1, 5].Value = "Is it featured";
+                    ws.Cells[1, 6].Value = "Is it enabled";
+                    ep.Save();
+                }
+            }
+            var outputStream = new FileStream(@"temp.xlsx", FileMode.Open);
+            return new FileStreamResult(outputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
