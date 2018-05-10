@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Link } from 'react-router-dom';
 
 import Header from './NavBar/Header';
 import ImgCarousel from './ImgCarousel';
@@ -12,6 +12,8 @@ import OrderStepper from './OrderStepper/OrderStepper';
 import axios from 'axios';
 import OrderHistory from './OrderHistory/OrderHistory';
 import Settings from './SettingsInfo/Settings';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class User extends Component {
   constructor(props) {
@@ -20,10 +22,14 @@ export default class User extends Component {
       {
         logged: false,
         productAmount: 0,
+        open: false
       };
 
     this.handleLogging = this.handleLogging.bind(this);
     this.handleAmount = this.handleAmount.bind(this);
+    this.checkError = this.checkError.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.checkErrorOnTheGo = this.checkErrorOnTheGo.bind(this);
   }
   componentDidMount() {
     if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'user')) {
@@ -32,12 +38,19 @@ export default class User extends Component {
       axios.get(`/api/Cart/GetProductAmountInCart`)
         .then(res => {
           this.setState({ productAmount: res.data });
+        })
+        .catch(error => {
+          if (error.response !== undefined && error.response.status === 401) {
+            this.setState({ open: true });
+          }
         });
     }
+
     if (localStorage.getItem('productAmount')) {
       this.setState({ productAmount: localStorage.getItem('productAmount') });
     }
   }
+
   handleAmount(settableAmount) {
     this.setState({ productAmount: settableAmount });
   }
@@ -49,7 +62,49 @@ export default class User extends Component {
     this.setState({ logged: logged });
   }
 
+  handleClose = () => {
+    this.setState({ open: false, logged: false });
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('role');
+    localStorage.removeItem('amount');
+  };
+
+  checkErrorOnTheGo() {
+    axios.interceptors.response.use(undefined, function (error) {
+      if (error.response.status === 401) {
+        this.setState({ open: true });
+      }
+    });
+  }
+  checkError() {
+    if (this.state.open) {
+      const actions = [
+        <Link to={"/shop/signin"}><FlatButton
+          label="Submit"
+          primary={true}
+          keyboardFocused={true}
+          onClick={this.handleClose}
+        /></Link>,
+      ];
+      return (
+        <div>
+          <Dialog
+            title="Notification"
+            actions={actions}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}
+          >
+            Your session has ended! 
+            <br/>
+            Please re-login.
+        </Dialog>
+        </div>
+      );
+    }
+  }
   render() {
+   // this.checkErrorOnTheGo();
     //cart 62 eilute
     return (
       <div className="App">
@@ -69,7 +124,7 @@ export default class User extends Component {
         {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/shop/signin" /> : <Payment />)} />
-
+        {this.checkError()}
       </div>
     );
   }
