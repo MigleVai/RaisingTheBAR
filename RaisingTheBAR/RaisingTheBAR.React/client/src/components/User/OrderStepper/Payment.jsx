@@ -8,13 +8,6 @@ export default class Payment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cvv: '',
-            exp_month: 0,
-            exp_year: 0,
-            holder: '',
-            amount: 100,
-            number: '',
-            response: ''
         };
         this.handleCvvChange = this.handleCvvChange.bind(this);
         this.handleExpMonthChange = this.handleExpMonthChange.bind(this);
@@ -23,81 +16,50 @@ export default class Payment extends React.Component {
         this.handleNumberChange = this.handleNumberChange.bind(this);
     }
 
-    componentDidMount() {
-        if (localStorage.getItem('cvv')) {
-            this.setState({ cvv: localStorage.getItem('cvv') });
-        }
-        if (localStorage.getItem('exp_month')) {
-            this.setState({ exp_month: localStorage.getItem('exp_month') });
-        }
-        if (localStorage.getItem('exp_year')) {
-            this.setState({ exp_year: localStorage.getItem('exp_year') });
-        }
-        if (localStorage.getItem('holder')) {
-            this.setState({ holder: localStorage.getItem('holder') });
-        }
-        if (localStorage.getItem('amount')) {
-            this.setState({ amount: localStorage.getItem('amount') });
-        }
-        if (localStorage.getItem('number')) {
-            this.setState({ number: localStorage.getItem('number') });
-        }
-        if (localStorage.getItem('response')) {
-            this.setState({ response: localStorage.getItem('response') });
-        }
-    }
-
-
+    
     handleCvvChange(event) {
-        localStorage.setItem('cvv', event.target.value);
-        this.setState({ cvv: event.target.value });
+        this.props.handleCvv(event.target.value);
         var re = RegExp('\\b[0-9]{3}\\b');
         if (!re.test(event.target.value)) {
-            localStorage.setItem('cvvError', 'Not a valid cvv!');
+            this.props.handleCvvError('Not a valid cvv!');
         } else {
-            localStorage.setItem('cvvError', '');
+            this.props.handleCvvError('');
         }
         if (event.target.value === '') {
-            localStorage.setItem('cvvError', '');
+            this.props.handleCvvError('');
         }
     }
 
     handleExpMonthChange(event, index, value) {
-        this.setState({ exp_month: value });
-        localStorage.setItem('exp_month', value);
+        this.props.handleExpMonth(event, index, value);
     }
 
     handleExpYearChange(event, index, value) {
-        this.setState({ exp_year: value });
-        localStorage.setItem('exp_year', value);
+        this.props.handleExpYear(event, index, value);
     }
 
     handleHolderChange(event) {
-        localStorage.setItem('holder', event.target.value);
-        this.setState({ holder: event.target.value });
+        this.props.handleHolder(event.target.value);
         if (event.target.value.length <= 2 && event.target.value.length >= 32) {
-            localStorage.setItem('holderError', 'Not a valid holder!');
+            this.props.handleHolderError('Not a valid holder!');
         } else {
-            localStorage.setItem('holderError', '');
+            this.props.handleHolderError('');
         }
         if (event.target.value === '') {
-            localStorage.setItem('holderError', '');
+            this.props.handleHolderError('');
         }
     }
 
     handleNumberChange(event) {
-        localStorage.setItem('number', event.target.value);
-        this.setState({ number: event.target.value });
+        this.props.handleNumber(event.target.value);
         var re = RegExp('\\b[0-9]{16}\\b');
         if (!re.test(event.target.value) || !isValidLuhn(event.target.value)) {
-            localStorage.setItem('numberError', 'Not a valid card number!');
+            this.props.handleNumberError('Not a valid card number!');
         } else {
-            this.setState({ numberError: '' });
-            localStorage.setItem('numberError', '');
+            this.props.handleNumberError('');
         }
         if (event.target.value === '') {
-            this.setState({ numberError: '' });
-            localStorage.setItem('numberError', '');
+            this.props.handleNumberError('Not a valid card number!');
         }
     }
 
@@ -144,7 +106,7 @@ export default class Payment extends React.Component {
                         floatingLabelText="Credit Card Holder"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('holderError')} />
+                        errorText={this.props.holderError} />
                     <br />
                     <TextField
                         value={this.state.number}
@@ -152,7 +114,7 @@ export default class Payment extends React.Component {
                         floatingLabelText="Credit Card Number"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('numberError')} />
+                        errorText={this.props.numberError} />
                     <br />
                     <TextField
                         value={this.state.cvv}
@@ -160,10 +122,10 @@ export default class Payment extends React.Component {
                         floatingLabelText="Cvv"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('cvvError')} />
+                        errorText={this.props.cvvError} />
                     <br />
 
-                    <DropDownMenu style={styles.customWidth} value={this.state.exp_year} onChange={this
+                    <DropDownMenu style={styles.customWidth} value={this.props.expYear} onChange={this
                         .handleExpYearChange}>
                         <MenuItem value={0} primaryText="Expiration year" />
                         <MenuItem value={2018} primaryText="2018" />
@@ -180,7 +142,7 @@ export default class Payment extends React.Component {
                         <MenuItem value={2029} primaryText="2029" />
                     </DropDownMenu>
 
-                    <DropDownMenu style={styles.customWidth} value={this.state.exp_month} onChange={this
+                    <DropDownMenu style={styles.customWidth} value={this.props.expMonth} onChange={this
                         .handleExpMonthChange}>
                         <MenuItem value={0} primaryText="Expiration month" />
                         <MenuItem value={1} primaryText="1" />
@@ -202,8 +164,8 @@ export default class Payment extends React.Component {
                         Total amount: {localStorage.getItem('totalCost')}
                     </section>
 
-                    <div><span>{localStorage.getItem('response')}</span></div>
-                    <div><img style={styles.imgStyle} src="resources/cvv.jpg" alt="Cvv" /></div>
+                    <div><span>{this.props.response}</span></div>
+                    <div><img style={styles.imgStyle} src="../resources/cvv.jpg" alt="Cvv" /></div>
                 </form>
             </div>
         );

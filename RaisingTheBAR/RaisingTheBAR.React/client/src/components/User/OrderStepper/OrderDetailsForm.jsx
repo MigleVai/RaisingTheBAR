@@ -4,72 +4,52 @@ import TextField from 'material-ui/TextField';
 export default class OrderDetailsForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            address: '',
-            firstName: '',
-            lastName: ''
-        };
+        this.state = {};
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
-
     }
 
-
-    componentDidMount() {
-        if (localStorage.getItem('address')) {
-            this.setState({ address: localStorage.getItem('address') });
-        }
-        if (localStorage.getItem('firstName')) {
-            this.setState({ firstName: localStorage.getItem('firstName') });
-        }
-        if (localStorage.getItem('lastName')) {
-            this.setState({ lastName: localStorage.getItem('lastName') });
-        }
-    }
 
     handleAddressChange(event) {
-        
-        localStorage.setItem('address', event.target.value);
-        this.setState({ address: event.target.value });
+        this.props.handleAddress(event.target.value);
         var re = RegExp('[A-Za-z]');
-        if (!re.test(event.target.value)) {
-            localStorage.setItem('addressError', 'Not a valid address!');
+        if (!re.test(this.props.address)) {
+            this.props.handleAddressError('Not a valid address!');
         } else {
-            localStorage.setItem('addressError', '');
+            this.props.handleAddressError('');
         }
-        if (event.target.value === '') {
-            localStorage.setItem('addressError', '');
+        if (this.props.address === '') {
+            this.props.handleAddressError('');
         }
     }
 
+    
+
     handleFirstNameChange(event) {
-        
-        localStorage.setItem('firstName', event.target.value);
-        this.setState({ firstName: event.target.value });
+        this.props.handleFirstName(event.target.value);
+        //this.setState({ firstName: event.target.value });
         var re = RegExp('[A-Za-z]');
-        if (!re.test(event.target.value)) {
-            localStorage.setItem('firstNameError', 'Not a valid name!');
+        if (!re.test(this.props.firstName)) {
+            this.props.handleFirstNameError('Not a valid name!');
         } else {
-            localStorage.setItem('firstNameError', '');
+            this.props.handleFirstNameError('');
         }
         if (event.target.value === '') {
-            localStorage.setItem('firstNameError', '');
+            this.props.handleFirstNameError('');
         }
     }
 
     handleLastNameChange(event) {
-        
-        localStorage.setItem('lastName', event.target.value);
-        this.setState({ lastName: event.target.value });
+        this.props.handleLastName(event.target.value);
         var re = RegExp('[A-Za-z]');
         if (!re.test(event.target.value)) {
-            localStorage.setItem('lastNameError', 'Not a valid last name!');
+            this.props.handleLastNameError('Not a valid last name!');
         } else {
-            localStorage.setItem('lastNameError', '');
+            this.props.handleLastNameError('');
         }
         if (event.target.value === '') {
-            localStorage.setItem('lastNameError', '');
+            this.props.handleLastNameError('');
         }
     }
 
@@ -92,28 +72,28 @@ export default class OrderDetailsForm extends React.Component {
                 </div>
                 <form >
                     <TextField
-                        value={this.state.address}
+                        value={this.props.address}
                         onChange={(event) => this.handleAddressChange(event)}
                         floatingLabelText="Address"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('addressError')} />
+                        errorText={this.props.addressError} />
                     <br />
                     <TextField
-                        value={this.state.firstName}
+                        value={this.props.firstName}
                         onChange={(event) => this.handleFirstNameChange(event)}
                         floatingLabelText="First Name"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('firstNameError')} />
+                        errorText={this.props.firstNameError} />
                     <br />
                     <TextField
-                        value={this.state.lastName}
+                        value={this.props.lastName}
                         onChange={(event) => this.handleLastNameChange(event)}
                         floatingLabelText="Last Name"
                         floatingLabelFixed={true}
                         style={styles.textFieldSytle}
-                        errorText={localStorage.getItem('lastNameError')} />
+                        errorText={this.props.lastNameError} />
                 </form>
             </div>
         );
