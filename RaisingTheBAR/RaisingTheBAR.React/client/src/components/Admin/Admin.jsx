@@ -1,5 +1,6 @@
 import React from 'react';
 import UserList from './UserList';
+import OrderList from './OrderList';
 import AdminPanel from './AdminPanel';
 import EditProducts from './ProductTable/EditProducts';
 import Excel from './Excel';
@@ -45,13 +46,13 @@ export default class Admin extends React.Component {
         {this.state.logged ?
           <div>
             <AppBar
-              title={<Link to={"/admin"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR" /></Link>}
+              title={<Link to={"/admin"}><FlatButton hoverColor='none' labelStyle={styles.textStyle} label="Raising the BAR admin page" /></Link>}
               titleStyle={styles.align}
               iconElementRight={<AdminPanel handleLogging={this.handleLogging} isLogged={this.state.logged} />}
               style={styles.barStyle}
             >
             </AppBar>
-            {/* <Route path="/admin" render={(props) => <OrderList/>} /> */}
+            <Route exact path="/admin" render={(props) => <OrderList {...props}/>} />
             <Route path="/admin/userlist" render={(props) => <UserList  {...props} />} />
             <Route path="/admin/editproducts" render={(props) => <EditProducts  {...props} />} />
             <Route path="/admin/excel" render={(props) => <Excel {...props} />} />

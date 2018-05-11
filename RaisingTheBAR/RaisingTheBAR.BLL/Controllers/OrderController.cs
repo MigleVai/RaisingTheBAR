@@ -147,7 +147,14 @@ namespace RaisingTheBAR.BLL.Controllers
                 order.FinishedDate = DateTimeOffset.Now;
             }
 
-            return Ok();
+            var result = _dbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nothing changed");
         }
         [Authorize]
         [HttpGet("[action]")]

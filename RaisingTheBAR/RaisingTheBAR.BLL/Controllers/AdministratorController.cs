@@ -87,6 +87,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             var orderResponses = orderContext.OrderBy(x => x.State).Select(x => new OrderResponse
             {
+                OrderId = x.Id.ToString(),
                 StartedDate = x.StartedDate,
                 LastUpdateDate = x.LastModifiedDate,
                 OrderState = x.State.ToString(),
