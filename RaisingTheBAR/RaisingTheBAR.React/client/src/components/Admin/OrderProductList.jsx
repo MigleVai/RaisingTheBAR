@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import ToPriceDisplay from '../User/functions/ToPriceDisplay';

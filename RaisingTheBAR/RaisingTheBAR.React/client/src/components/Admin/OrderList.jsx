@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
-import matchSorter from 'match-sorter';
 import OrderProductList from './OrderProductList'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -33,12 +32,11 @@ export default class OrderList extends React.Component {
   handleOrderStateChange = (order, event, index, value) => {
     console.log(order.orderId)
     console.log(value)
-    if (value)
 
-      var index = this.state.orders.indexOf(order)
+      var indexOfOrder = this.state.orders.indexOf(order)
     this.setState({
       orders: update(this.state.orders, {
-        [index]: {
+        [indexOfOrder]: {
           orderState: { $set: value },
         }
       })

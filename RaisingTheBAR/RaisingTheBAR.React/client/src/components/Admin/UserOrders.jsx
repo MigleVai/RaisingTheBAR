@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
-import matchSorter from 'match-sorter';
 
 export default class UserOrders extends React.Component {
   constructor(props) {
