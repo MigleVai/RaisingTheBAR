@@ -3,7 +3,6 @@ import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import { Card } from 'material-ui/Card';
-import PropTypes from 'prop-types';
 
 export default class Excel extends React.Component {
   constructor(props) {
@@ -57,9 +56,6 @@ export default class Excel extends React.Component {
     }
   }
 
-
-
-
   //   const uploads = this.state.accepted.map(file => {
   //     return axios.post('/api/Administrator/ImportFromExcel', formData, {
   //       headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -75,7 +71,6 @@ export default class Excel extends React.Component {
   //     // ... perform after upload is successful operation
   //   });
   // }
-
 
   renderAccepted() {
     return this.state.accepted.map(b =>
@@ -118,13 +113,15 @@ export default class Excel extends React.Component {
   render() {
     return (
       <div>
+        <span style={{display: 'flex', justifyContent: 'center', fontSize: 20, fontWeight: 'bold'}}> Downloads: </span>
         <FlatButton label="Export products" onClick={this.handleExcelExport} />
         <FlatButton label="Download template" onClick={this.handleExcelTemplateDownload} />
         <Card>
-          <FlatButton label="Import products" onClick={this.handleExcelImport.bind(this)} />
+          <FlatButton style={{ margin: 20 + 'px', backgroundColor: "#00FF00" }} label="Import excel files" onClick={this.handleExcelImport.bind(this)} />
           <section>
-            <div className="dropzone">
+            <div style={{ display: 'flex', justifyContent: 'center' }} className="dropzone">
               <Dropzone
+
                 onDrop={(accepted, rejected) => {
                   this.onDrop(accepted, rejected)
                 }}
@@ -145,11 +142,15 @@ export default class Excel extends React.Component {
             <aside>
               <h2>Accepted files</h2>
               <ul>
-                {this.renderAccepted()}
+                {
+                  this.renderAccepted().length ? this.renderAccepted() : "No accepted files yet"
+                }
               </ul>
               <h2>Rejected files</h2>
               <ul>
-                {this.renderRejected()}
+                {
+                  this.renderRejected().length ? this.renderRejected() : "No rejected files yet"
+                }
               </ul>
             </aside>
           </section>
@@ -158,9 +159,4 @@ export default class Excel extends React.Component {
 
     )
   }
-
 }
-Excel.propTypes = {
-  base64Files: PropTypes.arrayOf(PropTypes.string)
-};
-
