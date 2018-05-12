@@ -1,18 +1,14 @@
 import React from 'react';
 
 export default class ProductSearchBar extends React.Component {
-    handleChange() {
-      this.props.onUserInput(this.refs.filterTextInput.value);
-    }
-    render() {
-      return (
-        <div>
-  
-          <input type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)}/>
-  
-        </div>
-  
-      );
-    }
-  
+  handleChange() {
+    this.props.onUserInput(this.refs.filterTextInput.value);
   }
+  render() {
+    return (
+      <div style={{paddingTop: 20 + 'px'}}>
+        <input type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)} />
+      </div>
+    );
+  }
+}

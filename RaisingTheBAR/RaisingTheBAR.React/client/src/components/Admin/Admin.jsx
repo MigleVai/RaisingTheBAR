@@ -50,6 +50,7 @@ export default class Admin extends React.Component {
               titleStyle={styles.align}
               iconElementRight={<AdminPanel handleLogging={this.handleLogging} isLogged={this.state.logged} />}
               style={styles.barStyle}
+              iconElementLeft={(<div />)}
             >
             </AppBar>
             <Route exact path="/admin" render={(props) => <OrderList {...props}/>} />
