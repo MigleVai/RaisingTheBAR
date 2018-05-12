@@ -167,6 +167,7 @@ class HorizontalLinearStepper extends React.Component {
                 })
                 .then(res => {
                     this.handleResponse(res.data);
+                    this.props.handleAmount(0);
                 })
                 .catch(error => {
                     this.handleResponseError(error.response.data);
