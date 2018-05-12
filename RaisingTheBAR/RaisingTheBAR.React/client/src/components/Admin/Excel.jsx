@@ -3,13 +3,15 @@ import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import { Card } from 'material-ui/Card';
+import PropTypes from 'prop-types';
 
 export default class Excel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       accepted: [],
-      rejected: []
+      rejected: [],
+      base64Files: []
     }
   }
   handleExcelExport() {
@@ -41,27 +43,40 @@ export default class Excel extends React.Component {
     });
   }
   // @@@@@@@@@@@ here update 
-  // handleExcelImport() {
-  //   axios({
-  //     url: '/api/Administrator/ImportFromExcel',
-  //     method: 'GET',
-  //     responseType: 'blob', // important
-  //   }).then((response) => {
-  //     const url = window.URL.createObjectURL(new Blob([response.data]));
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', 'generated-excel.xlsx');
-  //     document.body.appendChild(link);
-  //     link.click();
+  handleExcelImport() {
+    var importUri = '/api/Administrator/ImportFromExcel';
+    if (this.state.base64Files.length > 0) {
+      this.state.base64Files.forEach(base64 => {
+        console.log(base64)
+        axios.post(importUri, base64
+        ).catch(error => {
+          console.log("error with importing excel!")
+          console.log(error)
+        })
+      })
+    }
+  }
+
+
+
+
+  //   const uploads = this.state.accepted.map(file => {
+  //     return axios.post('/api/Administrator/ImportFromExcel', formData, {
+  //       headers: { "X-Requested-With": "XMLHttpRequest" },
+  //     }).then(response => {
+  //       const data = response.data;
+  //       const fileURL = data.secure_url // You should store this URL for future references in your app
+  //       console.log(data);
+  //     })
+  //   });
+
+  //   // Once all the files are uploaded 
+  //   axios.all(uploaders).then(() => {
+  //     // ... perform after upload is successful operation
   //   });
   // }
-  // onDrop(acceptedFiles) {
-  //   var temp = acceptedFiles.slice()
-  //   var newFiles = this.state.acceptedFiles.slice();
-  //   newFiles.push(temp);
-  //   this.setState({ acceptedFiles: newFiles })
 
-  // }
+
   renderAccepted() {
     return this.state.accepted.map(b =>
       b.map(f =>
@@ -76,40 +91,42 @@ export default class Excel extends React.Component {
       )
     )
   }
-  render() {
-    console.log(this.state.accepted)
-    console.log(this.state.rejected)
+  onDrop(accepted, rejected) {
+    accepted.forEach(file => {
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (e) => {
+        var dataUrl = e.target.result;
+        const base64Data = dataUrl.substr(dataUrl.indexOf('base64,') + 'base64,'.length);
+        this.setState({
+          base64Files: [...this.state.base64Files, base64Data]
+        })
+      }
+    })
 
+    if (rejected.length !== 0) {
+      this.setState(prevState => ({
+        rejected: [...prevState.rejected, rejected]
+      }))
+    }
+    if (accepted.length !== 0) {
+      this.setState(prevState => ({
+        accepted: [...prevState.accepted, accepted]
+      }))
+    }
+  }
+  render() {
     return (
       <div>
         <FlatButton label="Export products" onClick={this.handleExcelExport} />
-        <FlatButton label="Download product import template" onClick={this.handleExcelTemplateDownload} />
-        <FlatButton label="Import products" onClick={this.handleExcelImport} />
+        <FlatButton label="Download template" onClick={this.handleExcelTemplateDownload} />
         <Card>
+          <FlatButton label="Import products" onClick={this.handleExcelImport.bind(this)} />
           <section>
             <div className="dropzone">
               <Dropzone
                 onDrop={(accepted, rejected) => {
-                  if (rejected.length !== 0) {
-                    this.setState(prevState => ({
-                      rejected: [...prevState.rejected, rejected]
-                    }))
-                  }
-                  if (accepted.length !== 0) {
-                    this.setState(prevState => ({
-                      accepted: [...prevState.accepted, accepted]
-                    }))
-                  }
-                  // var tempAccepted = accepted.slice()
-                  // var tempRejected = rejected.slice()
-                  // var newAccepted = this.state.accepted.slice();
-                  // var newRejected = this.state.rejected.slice();
-                  // newAccepted.push(tempAccepted);
-                  // newRejected.push(tempRejected);
-                  // this.setState({
-                  //   accepted: newAccepted,
-                  //   rejected: newRejected
-                  // })
+                  this.onDrop(accepted, rejected)
                 }}
                 accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                 {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
@@ -121,25 +138,29 @@ export default class Excel extends React.Component {
                   }
                   return acceptedFiles.length || rejectedFiles.length
                     ? `Accepted ${acceptedFiles.length}, rejected ${rejectedFiles.length} files`
-                    : "Try dropping some files, or click to select files to upload.";
+                    : "Drop your .xlsx files here, or click to select files to upload.";
                 }}
               </Dropzone>
             </div>
             <aside>
               <h2>Accepted files</h2>
               <ul>
-                {this.renderAccepted}
+                {this.renderAccepted()}
               </ul>
               <h2>Rejected files</h2>
               <ul>
-                {this.renderRejected}
+                {this.renderRejected()}
               </ul>
             </aside>
           </section>
         </Card>
-      </div>
+      </div >
 
     )
   }
 
 }
+Excel.propTypes = {
+  base64Files: PropTypes.arrayOf(PropTypes.string)
+};
+
