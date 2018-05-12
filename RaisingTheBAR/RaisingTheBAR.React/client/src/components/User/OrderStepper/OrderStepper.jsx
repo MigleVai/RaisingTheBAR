@@ -175,13 +175,13 @@ class HorizontalLinearStepper extends React.Component {
             return 1;
         } else {
             if (this.state.cvvError !== '' || this.state.cvv === '') {
-                this.state.cvvError = error;
+                this.handleCvvError(error);
             }
             if (this.state.holderError !== '' || this.state.holder === '') {
-                this.state.holderError = error;
+                this.handleHolderError(error);
             }
             if (this.state.numberError !== '' || this.state.number === '') {
-                this.state.numberError = error;
+                this.handleNumberError(error);
             }
             return 0;
         }

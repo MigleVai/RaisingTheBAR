@@ -101,7 +101,7 @@ export default class Payment extends React.Component {
                 </div>
                 <form className="form-horizontal">
                     <TextField
-                        value={this.state.holder}
+                        value={this.props.holder}
                         onChange={(event) => this.handleHolderChange(event)}
                         floatingLabelText="Credit Card Holder"
                         floatingLabelFixed={true}
@@ -109,7 +109,7 @@ export default class Payment extends React.Component {
                         errorText={this.props.holderError} />
                     <br />
                     <TextField
-                        value={this.state.number}
+                        value={this.props.number}
                         onChange={(event) => this.handleNumberChange(event)}
                         floatingLabelText="Credit Card Number"
                         floatingLabelFixed={true}
@@ -117,7 +117,7 @@ export default class Payment extends React.Component {
                         errorText={this.props.numberError} />
                     <br />
                     <TextField
-                        value={this.state.cvv}
+                        value={this.props.cvv}
                         onChange={(event) => this.handleCvvChange(event)}
                         floatingLabelText="Cvv"
                         floatingLabelFixed={true}
