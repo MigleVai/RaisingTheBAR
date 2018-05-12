@@ -55,7 +55,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Cart is empty");
             }
 
-            var amountToPay = Math.Round(user.Cart.ProductCarts.Sum(y => y.Product.Price * y.Amount) * 100);
+            var amountToPay = Math.Round(user.Cart.ProductCarts.Sum(y => y.Product.Price * y.Amount));
 
             //Get this error in PaymentService later
             if (amountToPay > 999999)

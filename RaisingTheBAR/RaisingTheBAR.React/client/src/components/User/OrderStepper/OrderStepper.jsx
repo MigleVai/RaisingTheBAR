@@ -25,8 +25,8 @@ class HorizontalLinearStepper extends React.Component {
             lastNameError: "",
             addressError: "",
             cvv: "",
-            expMonth: "",
-            expYear: "",
+            expMonth: 0,
+            expYear: 0,
             holder: "",
             number: "",
             cvvError: "",
@@ -149,8 +149,8 @@ class HorizontalLinearStepper extends React.Component {
             this.state.cvvError === '' &&
             this.state.holderError === '' &&
             this.state.numberError === '' &&
-            this.state.exp_month !== '' &&
-            this.state.exp_year !== '') {
+            this.state.expMonth !== '' &&
+            this.state.expYear !== '') {
 
             axios.post(`/api/Order/FinishOrder`,
                 {
@@ -159,17 +159,17 @@ class HorizontalLinearStepper extends React.Component {
                     Address: this.state.address,
                     PaymentRequest: {
                         Cvv: this.state.cvv,
-                        ExpMonth: this.state.exp_month,
-                        ExpYear: this.state.exp_year,
+                        ExpMonth: this.state.expMonth,
+                        ExpYear: this.state.expYear,
                         Holder: this.state.holder,
                         Number: this.state.number
                     }
                 })
                 .then(res => {
-                    this.state.response = res.data;
+                    this.handleResponse(res.data);
                 })
                 .catch(error => {
-                    this.state.responseError = error.response.data;
+                    this.handleResponseError(error.response.data);
                 });
             return 1;
         } else {
@@ -211,6 +211,7 @@ class HorizontalLinearStepper extends React.Component {
                 stepIndex: stepIndex + 1,
                 finished: stepIndex >= 2
             });
+            
         }
 
 
@@ -301,7 +302,7 @@ class HorizontalLinearStepper extends React.Component {
                         <div style={{ margin: marginResultText }}>
                             <p> {this.state.responseError}</p>
                             <p> {this.state.response}</p>
-                            {this.amount = 0}
+                            {this.forceRefresh}
                         </div>
                     ) : (
                             <div>
