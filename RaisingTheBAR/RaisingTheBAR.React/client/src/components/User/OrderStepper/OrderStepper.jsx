@@ -63,12 +63,6 @@ class HorizontalLinearStepper extends React.Component {
     handleCvv(value) {
         this.setState({ cvv: value });
     }
-    handleExpMonth(value) {
-        this.setState({ expMonth: value });
-    }
-    handleExpYear(value) {
-        this.setState({ expYear: value });
-    }
     handleFirstName(value) {
         this.setState({ firstName: value });
     }
@@ -126,13 +120,13 @@ class HorizontalLinearStepper extends React.Component {
             return 1;
         } else {
             if (this.state.firstNameError !== '' || this.state.firstName === '') {
-                this.state.firstNameError = error;
+                this.handleFirstNameError(error);
             }
             if (this.state.lastNameError !== '' || this.state.lastName === '') {
-                this.state.lastNameError = error;
+                this.handleLastNameError(error);
             }
             if (this.state.addressError !== '' || this.state.address === '') {
-                this.state.addressError = error;
+                this.handleAddressError(error);
             }
             this.forceUpdate();
             return 0;
