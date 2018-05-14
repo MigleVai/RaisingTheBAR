@@ -11,7 +11,6 @@ export default class EditProducts extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       openSaveDialog: false,
       openEditConflictDialog: false,
@@ -21,7 +20,6 @@ export default class EditProducts extends React.Component {
       responseError: ''
     };
   }
-
   componentDidMount() {
     this.getData();
   }
@@ -37,7 +35,28 @@ export default class EditProducts extends React.Component {
         this.setState({ responseError: error.response.data });
       });
   }
-
+  handleImageChange(product) {
+    var index = this.state.products.indexOf(product)
+    this.setState({
+      products: update(this.state.products, {
+        [index]: {
+          images: { $set: product.images },
+        }
+      })
+    })
+    product.isSaved = false
+  }
+  handleThumbnailChange(product) {
+    var index = this.state.products.indexOf(product)
+    this.setState({
+      products: update(this.state.products, {
+        [index]: {
+          thumbnail: { $set: product.thumbnail },
+        }
+      })
+    })
+    product.isSaved = false
+  }
   handleUserInput(filterText) {
     this.setState({ filterText: filterText });
   };
@@ -80,7 +99,7 @@ export default class EditProducts extends React.Component {
         if (product.isAdded === true && product.isAdded !== undefined) {
           axios.post(addUri, {
             displayName: product.displayName,
-            image: product.image,
+            images: product.images,
             description: product.description,
             price: product.price,
             thumbnail: product.thumbnail,
@@ -95,7 +114,7 @@ export default class EditProducts extends React.Component {
           axios.post(editUri, {
             id: product.id,
             displayName: product.displayName,
-            image: product.image,
+            images: product.images,
             thumbnail: product.thumbnail,
             description: product.description,
             price: product.price,
@@ -121,7 +140,7 @@ export default class EditProducts extends React.Component {
     var product = {
       id: id,
       displayName: "",
-      image: "",
+      images: [],
       thumbnail: "",
       description: "",
       price: 0,
@@ -131,7 +150,6 @@ export default class EditProducts extends React.Component {
     }
     this.state.products.push(product);
     this.setState(this.state.products);
-
   }
 
   handleProductTable(evt) {
@@ -142,7 +160,6 @@ export default class EditProducts extends React.Component {
     };
     var products = this.state.products.slice();
     var newProducts = products.map(function (product) {
-
       for (var key in product) {
         if (key === item.name && product.id === item.id) {
           product[key] = item.value;
@@ -189,6 +206,8 @@ export default class EditProducts extends React.Component {
           onRowAdd={this.handleAddEvent.bind(this)}
           onCheckedRowDisable={this.handleCheckedRowDisable.bind(this)}
           onCheckedRowFeatured={this.handleCheckedRowFeatured.bind(this)}
+          onImageChange={this.handleImageChange.bind(this)}
+          onThumbnailChange={this.handleThumbnailChange.bind(this)}
           onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}
           filterText={this.state.filterText}
