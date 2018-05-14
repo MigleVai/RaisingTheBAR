@@ -42,6 +42,14 @@ export default class EditProducts extends React.Component {
     this.setState({ filterText: filterText });
   };
   handleCheckedRowDisable(product) {
+    var index = this.state.products.indexOf(product)
+    this.setState({
+      products: update(this.state.products, {
+        [index]: {
+          isEnabled: { $set: product.isEnabled },
+        }
+      })
+    })
     product.isSaved = false
   };
   handleCheckedRowFeatured(product) {
@@ -66,7 +74,6 @@ export default class EditProducts extends React.Component {
     this.handleTransactionState(true);
     var addUri = '/api/Product/AddProduct';
     var editUri = '/api/Product/EditProduct';
-    var deleteUri = '/api/Product/DeleteProduct';
     var products = this.state.products.slice();
     products.forEach(function (product) {
       if (product.isSaved !== undefined && product.isSaved === false) {
@@ -84,7 +91,7 @@ export default class EditProducts extends React.Component {
             this.setState({ responseError: error.response.data });
           });
         }
-        if (product.isAdded === undefined && product.checkedForDisable !== true) {
+        if (product.isAdded === undefined) {
           axios.post(editUri, {
             id: product.id,
             displayName: product.displayName,
@@ -94,22 +101,14 @@ export default class EditProducts extends React.Component {
             price: product.price,
             discountedPrice: product.discountedPrice,
             timestamp: product.timestamp,
-            isFeatured: product.isFeatured
+            isFeatured: product.isFeatured,
+            isEnabled: product.isEnabled
           }).catch(error => {
             console.log("error with edditing product!")
             this.setState({ responseError: error.response.data });
             if (error.status === 409) {
               this.handleEditConflict(product);
             }
-          });
-        }
-        if (product.checkedForDisable === true) {
-          axios.post(deleteUri, {
-            request: product.id
-          }
-          ).catch(error => {
-            console.log("error with disabling product!")
-            console.log(error)
           });
         }
       }

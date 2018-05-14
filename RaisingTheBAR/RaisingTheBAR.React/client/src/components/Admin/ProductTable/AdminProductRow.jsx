@@ -7,18 +7,11 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 export default class AdminProductRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      checkedForDisable: false
-    }
+    this.state = {}
   }
 
   onCheckedDisableEvent() {
-    this.setState((oldState) => {
-      return {
-        checkedForDisable: !oldState.checkedForDisable,
-      };
-    });
-    this.props.product.checkedForDisable = !this.state.checkedForDisable;
+    this.props.product.isEnabled = !this.props.product.isEnabled
     this.props.onCheckedDisable(this.props.product);
   }
   onCheckedFeaturedEvent() {
@@ -78,16 +71,11 @@ export default class AdminProductRow extends React.Component {
         <td>
           <Checkbox
             onCheck={this.onCheckedDisableEvent.bind(this)}
-            checked={this.state.checkedForDisable}
+            checked={!this.props.product.isEnabled}
             iconStyle={{ fill: 'red' }}
           />
         </td>
       </tr>
-
-
-
     );
-
   }
-
 }
