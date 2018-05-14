@@ -289,7 +289,7 @@ class HorizontalLinearStepper extends React.Component {
                                 <RaisedButton
                                     label={stepIndex === 2 ? 'Finish' : 'Next'}
                                     primary={true}
-                                    disabled={this.props.productAmount === 0}
+                                    disabled={this.props.productAmount === 0 || this.props.islogged === false}
                                     onClick={this.handleNext}
                                 />
                             </div>
