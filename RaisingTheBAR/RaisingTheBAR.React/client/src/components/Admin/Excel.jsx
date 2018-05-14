@@ -3,6 +3,7 @@ import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import { Card } from 'material-ui/Card';
+import ErrorMessage from '../User/ErrorMessage';
 
 export default class Excel extends React.Component {
   constructor(props) {
@@ -10,14 +11,15 @@ export default class Excel extends React.Component {
     this.state = {
       accepted: [],
       rejected: [],
-      base64Files: []
+      base64Files: [],
+      responseError: ''
     }
   }
   handleExcelExport() {
     axios({
       url: '/api/Administrator/GenerateExcel',
       method: 'GET',
-      responseType: 'blob', // important
+      responseType: 'blob',
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -25,13 +27,16 @@ export default class Excel extends React.Component {
       link.setAttribute('download', 'generated-excel.xlsx');
       document.body.appendChild(link);
       link.click();
-    });
+    }).catch(error => {
+      console.log("error with exporting excel!")
+      this.setState({ responseError: error.response.data });
+    })
   }
   handleExcelTemplateDownload() {
     axios({
       url: '/api/Administrator/ProductImportTemplate',
       method: 'GET',
-      responseType: 'blob', // important
+      responseType: 'blob',
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -39,39 +44,24 @@ export default class Excel extends React.Component {
       link.setAttribute('download', 'excel-template.xlsx');
       document.body.appendChild(link);
       link.click();
-    });
+    }).catch(error => {
+      console.log("error with downloading excel template!")
+      this.setState({ responseError: error.response.data });
+    })
   }
-  // @@@@@@@@@@@ here update 
   handleExcelImport() {
     var importUri = '/api/Administrator/ImportFromExcel';
     if (this.state.base64Files.length > 0) {
       this.state.base64Files.forEach(base64 => {
         console.log(base64)
-          axios.post(importUri, {excelBase64 : base64}
+        axios.post(importUri, { excelBase64: base64 }
         ).catch(error => {
           console.log("error with importing excel!")
-          console.log(error)
+          this.setState({ responseError: error.response.data });
         })
       })
     }
   }
-
-  //   const uploads = this.state.accepted.map(file => {
-  //     return axios.post('/api/Administrator/ImportFromExcel', formData, {
-  //       headers: { "X-Requested-With": "XMLHttpRequest" },
-  //     }).then(response => {
-  //       const data = response.data;
-  //       const fileURL = data.secure_url // You should store this URL for future references in your app
-  //       console.log(data);
-  //     })
-  //   });
-
-  //   // Once all the files are uploaded 
-  //   axios.all(uploaders).then(() => {
-  //     // ... perform after upload is successful operation
-  //   });
-  // }
-
   renderAccepted() {
     return this.state.accepted.map(b =>
       b.map(f =>
@@ -113,7 +103,8 @@ export default class Excel extends React.Component {
   render() {
     return (
       <div>
-        <span style={{display: 'flex', justifyContent: 'center', fontSize: 20, fontWeight: 'bold'}}> Downloads: </span>
+        <ErrorMessage responseError={this.state.responseError} />
+        <span style={{ display: 'flex', justifyContent: 'center', fontSize: 20, fontWeight: 'bold' }}> Downloads: </span>
         <FlatButton label="Export products" onClick={this.handleExcelExport} />
         <FlatButton label="Download template" onClick={this.handleExcelTemplateDownload} />
         <Card>

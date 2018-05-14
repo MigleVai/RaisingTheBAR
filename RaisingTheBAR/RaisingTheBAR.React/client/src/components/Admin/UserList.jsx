@@ -6,12 +6,14 @@ import axios from 'axios';
 import FlatButton from 'material-ui/FlatButton';
 import UserOrders from './UserOrders'
 import update from 'immutability-helper';
+import ErrorMessage from '../User/ErrorMessage';
 
 export default class UserList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      responseError: ''
     }
   }
   componentDidMount() {
@@ -26,7 +28,7 @@ export default class UserList extends React.Component {
       })
       .catch(error => {
         console.log("error with getting user data!")
-        console.log(error)
+        this.setState({ responseError: error.response.data });
       });
   }
   handleBlockEvent(user) {
@@ -36,7 +38,7 @@ export default class UserList extends React.Component {
       blocked: !user.blocked
     }).catch(error => {
       console.log("error with blocking/unblocking user!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     });
     var index = this.state.users.indexOf(user);
     this.setState({
@@ -111,6 +113,7 @@ export default class UserList extends React.Component {
 
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         < ReactTable
           data={this.state.users}
           columns={columns}

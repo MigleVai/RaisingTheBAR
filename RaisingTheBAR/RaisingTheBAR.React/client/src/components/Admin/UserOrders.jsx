@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
+import ErrorMessage from '../User/ErrorMessage';
 
 export default class UserOrders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders: []
+      orders: [],
+      responseError: ''
     }
   }
   componentDidMount() {
@@ -21,12 +23,11 @@ export default class UserOrders extends React.Component {
     }).then(res => {
       const orders = res.data;
       this.setState({ orders: orders });
-      console.log("this is result:");
-      console.log(res.data);
     }
     ).catch(error => {
       console.log("error with getting user orders!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
+
     });
   }
   render() {
@@ -67,6 +68,7 @@ export default class UserOrders extends React.Component {
 
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         < ReactTable
           data={this.state.orders}
           columns={columns}

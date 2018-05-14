@@ -5,6 +5,7 @@ import axios from 'axios';
 import update from 'immutability-helper';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class EditProducts extends React.Component {
 
@@ -16,7 +17,8 @@ export default class EditProducts extends React.Component {
       openEditConflictDialog: false,
       filterText: "",
       products: [],
-      inTransaction: false
+      inTransaction: false,
+      responseError: ''
     };
   }
 
@@ -31,8 +33,8 @@ export default class EditProducts extends React.Component {
         this.setState({ products: products });
       })
       .catch(error => {
-        console.log("error with getting product data!")
-        console.log(error)
+        console.log("Error with getting products")
+        this.setState({ responseError: error.response.data });
       });
   }
 
@@ -79,7 +81,7 @@ export default class EditProducts extends React.Component {
             isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with adding product!")
-            console.log(error)
+            this.setState({ responseError: error.response.data });
           });
         }
         if (product.isAdded === undefined && product.checkedForDisable !== true) {
@@ -95,7 +97,7 @@ export default class EditProducts extends React.Component {
             isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with edditing product!")
-            console.log(error)
+            this.setState({ responseError: error.response.data });
             if (error.status === 409) {
               this.handleEditConflict(product);
             }
@@ -181,6 +183,7 @@ export default class EditProducts extends React.Component {
     ];
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         <ProductSearchBar filterText={this.state.filterText} onUserInput={this.handleUserInput.bind(this)} />
         <AdminProductTable
           onProductTableUpdate={this.handleProductTable.bind(this)}

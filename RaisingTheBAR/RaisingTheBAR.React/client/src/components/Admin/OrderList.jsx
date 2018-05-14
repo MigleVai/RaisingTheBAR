@@ -6,12 +6,14 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import update from 'immutability-helper';
 import ToPriceDisplay from '../User/functions/ToPriceDisplay';
+import ErrorMessage from '../User/ErrorMessage';
 
 export default class OrderList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders: []
+      orders: [],
+      responseError: ''
     }
   }
   componentDidMount() {
@@ -26,14 +28,11 @@ export default class OrderList extends React.Component {
     }
     ).catch(error => {
       console.log("error with getting all orders!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     });
   }
   handleOrderStateChange = (order, event, index, value) => {
-    console.log(order.orderId)
-    console.log(value)
-
-      var indexOfOrder = this.state.orders.indexOf(order)
+    var indexOfOrder = this.state.orders.indexOf(order)
     this.setState({
       orders: update(this.state.orders, {
         [indexOfOrder]: {
@@ -50,7 +49,7 @@ export default class OrderList extends React.Component {
       orderState: orderState
     }).catch(error => {
       console.log("error with changing order state!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     })
   }
   render() {
@@ -119,6 +118,7 @@ export default class OrderList extends React.Component {
 
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         < ReactTable
           data={this.state.orders}
           columns={columns}
