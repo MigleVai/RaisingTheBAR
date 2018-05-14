@@ -84,7 +84,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
 
             var products = pcContext.Where(x => x.Category.Name == categoryName || x.Category.ParentCategory.Name == categoryName)
-                .Where(x=>x.Product.IsEnabled)
+                .Where(x => x.Product.IsEnabled)
                 .Select(y => new ProductResponse
                 {
                     Featured = false,
@@ -219,13 +219,14 @@ namespace RaisingTheBAR.BLL.Controllers
                 Timestamp = request.Timestamp,
                 DiscountedPrice = request.DiscountedPrice,
                 IsFeatured = request.IsFeatured,
+                IsEnabled = request.IsEnabled
             };
             var imageContext = _dbContext.Set<Image>();
             var images = imageContext.Where(x => x.ProductId == product.Id);
 
             if (request.Images != null && request.Images.Any())
             {
-                imageContext.RemoveRange(images.Where(x=>x.Type != ImageTypeEnum.Thumbnail));
+                imageContext.RemoveRange(images.Where(x => x.Type != ImageTypeEnum.Thumbnail));
 
                 var mainImage = new Image()
                 {
@@ -264,6 +265,15 @@ namespace RaisingTheBAR.BLL.Controllers
                 else
                 {
                     images.First(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64 = request.Thumbnail;
+                }
+            }
+
+            var productAndPcContext = _dbContext.Set<Product>().Include(x => x.ProductCarts);
+            if (product.IsEnabled == false)
+            {
+                if (productAndPcContext.First(x => x.Id == product.Id).ProductCarts != null)
+                {
+                    _dbContext.RemoveRange(productAndPcContext.First(x => x.Id == product.Id).ProductCarts);
                 }
             }
 
@@ -313,67 +323,6 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             }
             return BadRequest("Timeout");
-        }
-        [Authorize(Roles = "administrator")]
-        [HttpPost("[Action]")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
-        public IActionResult DeleteProduct([FromBody]string request)
-        {
-
-            var productContext = _dbContext.Set<Product>().Include(x=>x.ProductCarts);
-
-            var product = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), request, StringComparison.InvariantCultureIgnoreCase));
-
-            if(product == null)
-            {
-                return BadRequest("No such product exists");
-            }
-
-            product.IsEnabled = false;
-            if(product.ProductCarts != null)
-            {
-                _dbContext.RemoveRange(product.ProductCarts);
-            }
-            var result = _dbContext.SaveChanges();
-
-            if (result > 0)
-            {
-                return Ok();
-            }
-
-            return BadRequest("Nothing changed in database");
-        }
-        [Authorize(Roles = "administrator")]
-        [HttpPost("[Action]")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
-        public IActionResult UnDeleteProduct([FromBody]string request)
-        {
-
-            var productContext = _dbContext.Set<Product>();
-
-            var product = productContext.FirstOrDefault(x => string.Equals(x.Id.ToString(), request, StringComparison.InvariantCultureIgnoreCase));
-
-            if (product == null)
-            {
-                return BadRequest("No such product exists");
-            }
-
-            product.IsEnabled = true;
-
-            var result = _dbContext.SaveChanges();
-
-            if (result > 0)
-            {
-                return Ok();
-            }
-
-            return BadRequest("Nothing changed in database");
         }
     }
 }

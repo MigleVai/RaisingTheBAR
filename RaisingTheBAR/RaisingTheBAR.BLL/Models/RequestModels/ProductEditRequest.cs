@@ -13,6 +13,7 @@ namespace RaisingTheBAR.BLL.Models.RequestModels
         public decimal Price { get; set; }
         public decimal DiscountedPrice { get; set; }
         public bool IsFeatured { get; set; }
+        public bool IsEnabled { get; set; }
         public byte[] Timestamp { get; set; }
 
     }
