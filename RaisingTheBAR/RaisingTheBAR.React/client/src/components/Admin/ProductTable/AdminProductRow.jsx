@@ -2,9 +2,9 @@ import React from 'react';
 import EditableCell from './EditableCell';
 import Checkbox from 'material-ui/Checkbox';
 import Star from 'material-ui/svg-icons/toggle/star';
+import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import Dropzone from 'react-dropzone'
-import FlatButton from 'material-ui/FlatButton';
 
 export default class AdminProductRow extends React.Component {
   constructor(props) {
@@ -80,25 +80,27 @@ export default class AdminProductRow extends React.Component {
           id: this.props.product.id
         }} />
         <td>
+          <div style={{float: "left", width: 50 + "%"}}>{this.props.product.imageCount ? "Current: " + this.props.product.imageCount : "None yet"}</div>
           <Dropzone
-            style={{ height: 5 + "px" }}
+            style={{ height: 5 + "px", float: "left", width: 50 + "%" }}
             maxSize={1048576}
             onDrop={(accepted, rejected) => {
               this.onDropImageEvent(accepted, rejected)
             }}
             accept="image/*">
-            <FlatButton label="Add/change"  />
+            <AddAPhoto />
           </Dropzone>
         </td>
         <td >
+        <div style={{float: "left", width: 50 + "%"}}>{this.props.product.thumbnailCount ? "Existing" : "None yet"}</div>
           <Dropzone
-            style={{ height: 5 + "px" }}
+            style={{ height: 5 + "px", float: "left", width: 50 + "%" }}
             maxSize={1048576}
             onDrop={(accepted, rejected) => {
               this.onDropThumbnailEvent(accepted, rejected)
             }}
             accept="image/*">
-            <FlatButton label="Add/change"  />
+            <AddAPhoto />
           </Dropzone>
         </td>
         <td>
