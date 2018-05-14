@@ -15,11 +15,11 @@
 personal info kad butu dialog, jog paejo personal information idet ir perkrautu komponenta
 settings info nera kai pirma kart prisijungi~~
 
-paymente apacioj cvv kazkodel raso, sutvarkyt paveiksleli 
-paymente leidzia susimoket neprisijungus? 
-paymentas kai submittini ner dialog kazkokio 
-paymentas nedingsta krepselyje prekes kai submittini 
-paymentas leidzia nusipirkt neprisijungus lyg ir? 
+~~paymente apacioj cvv kazkodel raso, sutvarkyt paveiksleli
+paymente leidzia susimoket neprisijungus?
+paymentas kai submittini ner dialog kazkokio
+paymentas nedingsta krepselyje prekes kai submittini~~
+
 
 ~~carte filtravimas ir searchas ar reikalingas?
 carte jei ner nieko ar reikia stepperio ir next?~~
