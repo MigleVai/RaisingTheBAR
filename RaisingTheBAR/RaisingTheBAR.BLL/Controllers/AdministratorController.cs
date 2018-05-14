@@ -149,9 +149,9 @@ namespace RaisingTheBAR.BLL.Controllers
                 Price = x.Price,
                 Id = x.Id.ToString(),
                 Description = x.Description,
-                Image = x.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.MainImage).ImageBase64,
+                ImageCount = x.Images.Count(y => y.Type != ImageTypeEnum.Thumbnail),
                 IsEnabled = x.IsEnabled,
-                Thumbnail = x.Images.FirstOrDefault(y => y.Type == ImageTypeEnum.Thumbnail).ImageBase64,
+                ThumbnailCount = x.Images.Count(y => y.Type == ImageTypeEnum.Thumbnail),
                 DiscountedPrice = x.DiscountedPrice,
                 Timestamp = x.Timestamp,
                 IsFeatured = x.IsFeatured
