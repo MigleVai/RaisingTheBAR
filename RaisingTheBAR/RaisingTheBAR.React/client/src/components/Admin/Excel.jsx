@@ -47,7 +47,7 @@ export default class Excel extends React.Component {
     if (this.state.base64Files.length > 0) {
       this.state.base64Files.forEach(base64 => {
         console.log(base64)
-        axios.post(importUri, base64
+          axios.post(importUri, {excelBase64 : base64}
         ).catch(error => {
           console.log("error with importing excel!")
           console.log(error)

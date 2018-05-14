@@ -246,12 +246,12 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
-        public IActionResult ImportFromExcel([FromBody]string excelBase64)
+        public IActionResult ImportFromExcel([FromBody]ExcelImportRequest request)
         {
             var productContext = _dbContext.Set<Product>();
             try
             {
-                var data = Convert.FromBase64String(excelBase64);
+                var data = Convert.FromBase64String(request.ExcelBase64);
                 var productList = new List<Product>();
                 try
                 {
