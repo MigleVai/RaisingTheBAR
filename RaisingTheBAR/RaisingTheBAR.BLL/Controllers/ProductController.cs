@@ -269,13 +269,13 @@ namespace RaisingTheBAR.BLL.Controllers
             }
 
             var productAndPcContext = _dbContext.Set<Product>().Include(x => x.ProductCarts);
-            if (product.IsEnabled == false)
-            {
-                if (productAndPcContext.First(x => x.Id == product.Id).ProductCarts != null)
-                {
-                    _dbContext.RemoveRange(productAndPcContext.First(x => x.Id == product.Id).ProductCarts);
-                }
-            }
+            //if (product.IsEnabled == false)
+            //{
+            //    if (productAndPcContext.First(x => x.Id == product.Id).ProductCarts != null)
+            //    {
+            //        _dbContext.RemoveRange(productAndPcContext.First(x => x.Id == product.Id).ProductCarts);
+            //    }
+            //}
 
             var productContext = _dbContext.Set<Product>();
 
