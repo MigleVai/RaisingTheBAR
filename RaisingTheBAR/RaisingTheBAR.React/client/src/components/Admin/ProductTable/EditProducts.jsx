@@ -41,6 +41,9 @@ export default class EditProducts extends React.Component {
       products: update(this.state.products, {
         [index]: {
           images: { $set: product.images },
+        },
+        [index]: {
+          imageCount: {$set: product.imageCount}
         }
       })
     })
@@ -51,7 +54,10 @@ export default class EditProducts extends React.Component {
     this.setState({
       products: update(this.state.products, {
         [index]: {
-          thumbnail: { $set: product.thumbnail },
+          thumbnail: { $set: product.thumbnail }
+        },
+        [index]: {
+          thumbnailCount: {$set: product.thumbnailCount}
         }
       })
     })
@@ -211,7 +217,8 @@ export default class EditProducts extends React.Component {
           onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}
           filterText={this.state.filterText}
-          onEditConflict={this.handleEditConflict.bind(this)} />
+          onEditConflict={this.handleEditConflict.bind(this)}
+        />
         <Dialog
           title="Save confirmation"
           actions={saveDialogActions}

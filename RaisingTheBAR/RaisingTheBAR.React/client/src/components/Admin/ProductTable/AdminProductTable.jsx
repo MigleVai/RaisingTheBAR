@@ -40,14 +40,14 @@ export default class AdminProductTable extends React.Component {
         <table style={{ width: 100 + "%" }} className="table table-bordered">
           <thead>
             <tr>
-              <th >Display name</th>
+              <th style={{ width: 12 + "%" }}>Display name</th>
               <th style={{ width: 7 + "%" }}>Price</th>
               <th style={{ width: 7 + "%" }}>Discount price</th>
-              <th style={{ width: 20 + "%" }}>Description</th>
-              <th style={{ width: 20 + "%" }}>Images</th>
-              <th style={{ width: 20 + "%" }}>Thumbnail</th>
-              <th style={{ width: 4 + "%" }} >Featured</th>
-              <th style={{ width: 4 + "%" }} >Is disabled</th>
+              <th style={{ width: 40 + "%" }}>Description</th>
+              <th style={{ width: 15 + "%" }}>Images</th>
+              <th style={{ width: 15 + "%" }}>Thumbnail</th>
+              <th style={{ width: 2 + "%" }} >Featured</th>
+              <th style={{ width: 2 + "%" }} >Is disabled</th>
             </tr>
           </thead>
 
