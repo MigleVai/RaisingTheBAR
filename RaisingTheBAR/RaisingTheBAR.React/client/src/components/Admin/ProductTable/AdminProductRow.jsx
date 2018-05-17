@@ -49,22 +49,22 @@ export default class AdminProductRow extends React.Component {
       fileReader.onload = (e) => {
         var dataUrl = e.target.result;
         this.props.product.images.push(dataUrl)
-        this.props.product.imageCount ++
+        this.props.product.imageCount++
         this.props.onDropImage(this.props.product);
       }
     })
   }
   render() {
-    const styles = {
-      redStyle: {
-        backgroundColor: '#FF0000'
-      },
-      whiteStyle: {
+    let trStyle = {
         backgroundColor: '#FFFFFF'
+      };
+    if(this.props.product.inConflict) {
+      trStyle= {
+        backgroundColor: '#FF0000'
       }
-    };
+    }
     return (
-      <tr style={this.props.product.inConflict ? styles.redStyle : styles.whiteStyle}>
+      <tr style={trStyle}>
         <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "displayName",
           value: this.props.product.displayName,
@@ -85,28 +85,30 @@ export default class AdminProductRow extends React.Component {
           value: this.props.product.description,
           id: this.props.product.id
         }} />
-        <td >
+        <td style={{ verticalAlign: "middle", textAlign: "center" }}>
           <Toolbar style={{ display: "inline", padding: 0, backgroundColor: "#fffff", height: 3, boxSizing: "content-box" }}>
             <ToolbarGroup>
               <div >{"Currently: " + this.props.product.imageCount}</div>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
               <Dropzone
-                style={{ float: "right" }}
+                style={{ float: "right"}}
                 maxSize={1048576}
                 onDrop={(accepted, rejected) => {
                   this.onDropImageEvent(accepted, rejected)
                 }}
                 accept="image/*">
-                <AddAPhoto />
+                <IconButton style={{padding: 0, width: 25, height: 25}} tooltip="Any image up to 1MB">
+                  <AddAPhoto />
+                </IconButton>
               </Dropzone>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
-              <IconButton onClick={this.onImageEraseEvent.bind(this)} style={{ width: "inherit", height: "inherit", float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
+              <IconButton onClick={this.onImageEraseEvent.bind(this)} style={{ width: 25, height: 25, float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
                 <DeleteForever />
               </IconButton>
             </ToolbarGroup>
           </Toolbar>
         </td>
-        <td >
+        <td style={{ verticalAlign: "middle", textAlign: "center" }}>
           <Toolbar style={{ display: "inline", padding: 0, backgroundColor: "#fffff", height: 3, boxSizing: "content-box" }}>
             <ToolbarGroup>
               <div >{this.props.product.thumbnailCount ? "Existing" : "Non yet"}</div>
@@ -118,16 +120,18 @@ export default class AdminProductRow extends React.Component {
                   this.onDropThumbnailEvent(accepted, rejected)
                 }}
                 accept="image/*">
-                <AddAPhoto />
+                <IconButton style={{padding: 0, width: 25, height: 25}} tooltip="Any image up to 1MB">
+                  <AddAPhoto />
+                </IconButton>
               </Dropzone>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
-              <IconButton onClick={this.onThumbnailEraseEvent.bind(this)} style={{ width: "inherit", height: "inherit", float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
+              <IconButton onClick={this.onImageEraseEvent.bind(this)} style={{ width: 25, height: 25, float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
                 <DeleteForever />
               </IconButton>
             </ToolbarGroup>
           </Toolbar>
         </td>
-        <td>
+        <td style={{ verticalAlign: "middle", alignContent: "center" }}>
           <Checkbox
             onCheck={this.onCheckedFeaturedEvent.bind(this)}
             checked={this.props.product.isFeatured}
@@ -136,7 +140,7 @@ export default class AdminProductRow extends React.Component {
             uncheckedIcon={<StarBorder />}
           />
         </td>
-        <td>
+        <td style={{ verticalAlign: "middle", alignContent: "center" }}>
           <Checkbox
             onCheck={this.onCheckedDisableEvent.bind(this)}
             checked={!this.props.product.isEnabled}

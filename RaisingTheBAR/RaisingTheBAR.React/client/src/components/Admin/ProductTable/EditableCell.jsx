@@ -9,7 +9,7 @@ export default class EditableCell extends React.Component {
       value = this.props.cellData.value
     }
     return (
-      <td >
+      <td style={{ verticalAlign: "middle", textAlign: "center" }}>
         <input style={{ display: "table-cell", width: 100 + "%" }}
           type='text'
           name={this.props.cellData.type}

@@ -6,8 +6,8 @@ export default class ProductSearchBar extends React.Component {
   }
   render() {
     return (
-      <div style={{paddingTop: 20 + 'px'}}>
-        <input type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)} />
+      <div style={{margin: 7}}>
+        <input style={{width:300}} type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange.bind(this)} />
       </div>
     );
   }

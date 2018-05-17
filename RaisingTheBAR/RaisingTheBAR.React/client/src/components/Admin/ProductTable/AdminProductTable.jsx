@@ -36,18 +36,19 @@ export default class AdminProductTable extends React.Component {
 
     return (
       <div>
+        <RaisedButton style={{margin: 8}} label="Save changes" backgroundColor="#FF0000" onClick={this.onSaveEvent.bind(this)} />
         <button style={{width: 100 + 'px',}} type="button" onClick={this.props.onRowAdd} className="btn btn-success pull-right">Add</button>
-        <table style={{ width: 100 + "%" }} className="table table-bordered">
-          <thead>
-            <tr>
-              <th style={{ width: 12 + "%" }}>Display name</th>
-              <th style={{ width: 7 + "%" }}>Price</th>
-              <th style={{ width: 7 + "%" }}>Discount price</th>
-              <th style={{ width: 40 + "%" }}>Description</th>
-              <th style={{ width: 15 + "%" }}>Images</th>
-              <th style={{ width: 15 + "%" }}>Thumbnail</th>
-              <th style={{ width: 2 + "%" }} >Featured</th>
-              <th style={{ width: 2 + "%" }} >Is disabled</th>
+        <table style={{ width: 100 + "%"}} className="table table-bordered">
+          <thead >
+            <tr style={{verticalAlign: "middle", textAlign: "center"}}>
+              <th style={{ width: 12 + "%", verticalAlign: "middle", textAlign: "center" }}>Display name</th>
+              <th style={{ width: 7 + "%", verticalAlign: "middle", textAlign: "center" }}>Price</th>
+              <th style={{ width: 7 + "%", verticalAlign: "middle", textAlign: "center" }}>Discount price</th>
+              <th style={{ width: 40 + "%", verticalAlign: "middle", textAlign: "center" }}>Description</th>
+              <th style={{ width: 15 + "%", verticalAlign: "middle", textAlign: "center" }}>Images</th>
+              <th style={{ width: 15 + "%", verticalAlign: "middle", textAlign: "center" }}>Thumbnail</th>
+              <th style={{ width: 2 + "%", verticalAlign: "middle", textAlign: "center" }} >Featured</th>
+              <th style={{ width: 2 + "%", verticalAlign: "middle", textAlign: "center" }} >Is disabled</th>
             </tr>
           </thead>
 
@@ -56,7 +57,6 @@ export default class AdminProductTable extends React.Component {
           </tbody>
 
         </table>
-        <RaisedButton style={{paddingBottom: 20 + 'px'}} label="Save changes" backgroundColor="#FF0000" onClick={this.onSaveEvent.bind(this)} />
       </div>
     );
   }
