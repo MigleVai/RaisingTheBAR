@@ -42,6 +42,7 @@ export default class AdminProductRow extends React.Component {
     })
   }
   onDropImageEvent(accepted, rejected) {
+    this.props.product.imageCount = 0
     this.props.product.images = []
     accepted.forEach(file => {
       var fileReader = new FileReader();
@@ -125,7 +126,7 @@ export default class AdminProductRow extends React.Component {
                 </IconButton>
               </Dropzone>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
-              <IconButton onClick={this.onImageEraseEvent.bind(this)} style={{ width: 25, height: 25, float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
+              <IconButton onClick={this.onThumbnailEraseEvent.bind(this)} style={{ width: 25, height: 25, float: "right", boxSizing: "content-box", display: "inline", padding: 0 }} tooltip="Erase all">
                 <DeleteForever />
               </IconButton>
             </ToolbarGroup>
