@@ -8,9 +8,15 @@ import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import Dropzone from 'react-dropzone'
 import IconButton from 'material-ui/IconButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class AdminProductRow extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      openSnackbar: false
+    }
+  }
   onCheckedDisableEvent() {
     this.props.product.isEnabled = !this.props.product.isEnabled;
     this.props.onCheckedDisable(this.props.product);
@@ -30,6 +36,9 @@ export default class AdminProductRow extends React.Component {
     this.props.onDropThumbnail(this.props.product);
   }
   onDropThumbnailEvent(accepted, rejected) {
+    if (rejected.length !== 0) {
+      this.handleSnackbarOpen()
+    }
     accepted.forEach(file => {
       var fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -42,6 +51,9 @@ export default class AdminProductRow extends React.Component {
     })
   }
   onDropImageEvent(accepted, rejected) {
+    if (rejected.length !== 0) {
+      this.handleSnackbarOpen()
+    }
     this.props.product.imageCount = 0
     this.props.product.images = []
     accepted.forEach(file => {
@@ -55,12 +67,23 @@ export default class AdminProductRow extends React.Component {
       }
     })
   }
+  handleSnackbarClose = () => {
+    this.setState({
+      openSnackbar: false
+    });
+  }
+  handleSnackbarOpen = () => {
+    this.setState({
+      openSnackbar: true
+    });
+  };
+
   render() {
     let trStyle = {
-        backgroundColor: '#FFFFFF'
-      };
-    if(this.props.product.inConflict) {
-      trStyle= {
+      backgroundColor: '#FFFFFF'
+    };
+    if (this.props.product.inConflict) {
+      trStyle = {
         backgroundColor: '#FF0000'
       }
     }
@@ -92,13 +115,13 @@ export default class AdminProductRow extends React.Component {
               <div >{"Currently: " + this.props.product.imageCount}</div>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
               <Dropzone
-                style={{ float: "right"}}
+                style={{ float: "right" }}
                 maxSize={1048576}
                 onDrop={(accepted, rejected) => {
                   this.onDropImageEvent(accepted, rejected)
                 }}
                 accept="image/*">
-                <IconButton style={{padding: 0, width: 25, height: 25}} tooltip="Any image up to 1MB">
+                <IconButton style={{ padding: 0, width: 25, height: 25 }} tooltip="Any image up to 1MB">
                   <AddAPhoto />
                 </IconButton>
               </Dropzone>
@@ -121,7 +144,7 @@ export default class AdminProductRow extends React.Component {
                   this.onDropThumbnailEvent(accepted, rejected)
                 }}
                 accept="image/*">
-                <IconButton style={{padding: 0, width: 25, height: 25}} tooltip="Any image up to 1MB">
+                <IconButton style={{ padding: 0, width: 25, height: 25 }} tooltip="Any image up to 1MB">
                   <AddAPhoto />
                 </IconButton>
               </Dropzone>
@@ -148,6 +171,12 @@ export default class AdminProductRow extends React.Component {
             iconStyle={{ fill: 'red' }}
           />
         </td>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message="Some files were rejected, maybe they were not images, or over 1 MB size"
+          autoHideDuration={4000}
+          onRequestClose={this.handleSnackbarClose}
+        />
       </tr>
     );
   }
