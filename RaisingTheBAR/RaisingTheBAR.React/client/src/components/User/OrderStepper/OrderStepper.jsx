@@ -33,6 +33,8 @@ class HorizontalLinearStepper extends React.Component {
             holderError: "",
             numberError: "",
             responseError: "",
+            expYearError: "",
+            expMonthError: "",
             response: ""
         }
         this.updateChild = this.updateChild.bind(this);
@@ -51,6 +53,8 @@ class HorizontalLinearStepper extends React.Component {
         this.handleNumberError = this.handleNumberError.bind(this);
         this.handleAddressError = this.handleAddressError.bind(this);
         this.handleResponseError = this.handleResponseError.bind(this);
+        this.handleExpYearError = this.handleExpYearError.bind(this);
+        this.handleExpMonthError = this.handleExpMonthError.bind(this);
         this.handleResponse = this.handleResponse.bind(this);
         //this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
@@ -105,6 +109,12 @@ class HorizontalLinearStepper extends React.Component {
     handleResponseError(value) {
         this.setState({ responseError: value });
     }
+    handleExpYearError(value) {
+        this.setState({ expYearError: value });
+    }
+    handleExpMonthError(value) {
+        this.setState({ expMonthError: value });
+    }
     handleResponse(value) {
         this.setState({ response: value });
     }
@@ -143,8 +153,10 @@ class HorizontalLinearStepper extends React.Component {
             this.state.cvvError === '' &&
             this.state.holderError === '' &&
             this.state.numberError === '' &&
-            this.state.expMonth !== '' &&
-            this.state.expYear !== '') {
+            this.state.expYearError === '' &&
+            this.state.expMonthError === '' &&
+            this.state.expYear !== 0 &&
+            this.state.expMonth !== 0) {
 
             axios.post(`/api/Order/FinishOrder`,
                 {
@@ -176,6 +188,12 @@ class HorizontalLinearStepper extends React.Component {
             }
             if (this.state.numberError !== '' || this.state.number === '') {
                 this.handleNumberError(error);
+            }
+            if (this.state.expYearError !== '' || this.state.expYear === 0) {
+                this.handleExpYearError(error);
+            }
+            if (this.state.expMonthError !== '' || this.state.expMonth === 0) {
+                this.handleExpMonthError(error);
             }
             return 0;
         }
@@ -227,9 +245,9 @@ class HorizontalLinearStepper extends React.Component {
                 return (<OrderDetailsForm firstName={this.state.firstName} lastName={this.state.lastName} address={this.state.address} firstNameError={this.state.firstNameError} lastNameError={this.state.lastNameError} addressError={this.state.addressError} handleFirstName={this.handleFirstName} handleLastName={this.handleLastName} handleAddress={this.handleAddress} handleFirstNameError={this.handleFirstNameError} handleLastNameError={this.handleLastNameError} handleAddressError={this.handleAddressError}/>);
             case 2:
                 return (<Payment cvv={this.state.cvv} expMonth={this.state.expMonth} expYear={this.state.expYear} holder={this.state.holder} number={this.state.number}
-                    cvvError={this.state.cvvError} holderError={this.state.holderError} numberError={this.state.numberError}
+                    cvvError={this.state.cvvError} holderError={this.state.holderError} numberError={this.state.numberError} expYearError={this.state.expYearError} expMonthError={this.state.expMonthError}
                     handleCvv={this.handleCvv} handleExpMonth={this.handleExpMonth} handleExpYear={this.handleExpYear} handleHolder={this.handleHolder} handleNumber={this.handleNumber}
-                    handleCvvError={this.handleCvvError} handleHolderError={this.handleHolderError} handleNumberError={this.handleNumberError}/>);
+                    handleCvvError={this.handleCvvError} handleHolderError={this.handleHolderError} handleNumberError={this.handleNumberError} handleExpYearError={this.handleExpYearError} handleExpMonthError={this.handleExpMonthError}/>);
             default:
                 return 'You\'re a long way from home sonny jim!';
         }
