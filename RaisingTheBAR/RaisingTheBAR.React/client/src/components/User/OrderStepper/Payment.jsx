@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import isValidLuhn from '../functions/IsValidLuhn.js';
+import toPriceDisplay from '../functions/ToPriceDisplay.js';
 
 export default class Payment extends React.Component {
     constructor(props) {
@@ -177,7 +178,7 @@ export default class Payment extends React.Component {
 
                     <br />
                     <section>
-                        Total amount: {localStorage.getItem('totalCost')}
+                        Total amount: {toPriceDisplay(localStorage.getItem('totalCost'))}
                     </section>
 
                     <div><span>{this.props.response}</span></div>
