@@ -62,9 +62,9 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult GetUsers()
         {
-            var userContext = _dbContext.Set<User>().Include(x => x.Orders).ThenInclude(o => o.ProductOrders);
-
-            var userResponses = userContext.Select(x => new UserResponse
+            var userContext = _dbContext.Set<User>().Include(x=>x.Role).Include(x => x.Orders).ThenInclude(o => o.ProductOrders);
+            
+            var userResponses = userContext.Where(x => x.Role.RoleName == "user").Select(x => new UserResponse
             {
                 UserId = x.Id.ToString(),
                 Blocked = x.Blocked,

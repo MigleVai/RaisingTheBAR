@@ -316,7 +316,8 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 OrderId = order.Id,
                 Rate = request.Rating,
-                WasRated = true
+                WasRated = true,
+                Comment  = request.Comment
             };
 
             _dbContext.SaveChanges();
