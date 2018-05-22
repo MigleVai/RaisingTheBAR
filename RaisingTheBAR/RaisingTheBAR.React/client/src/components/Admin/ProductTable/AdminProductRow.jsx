@@ -1,5 +1,6 @@
 import React from 'react';
-import EditableCell from './EditableCell';
+import EditableTextCell from './EditableTextCell';
+import EditableNumberCell from './EditableNumberCell';
 import Checkbox from 'material-ui/Checkbox';
 import Star from 'material-ui/svg-icons/toggle/star';
 import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
@@ -89,22 +90,22 @@ export default class AdminProductRow extends React.Component {
     }
     return (
       <tr style={trStyle}>
-        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+        <EditableTextCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "displayName",
           value: this.props.product.displayName,
           id: this.props.product.id
         }} />
-        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+        <EditableNumberCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "price",
           value: this.props.product.price,
           id: this.props.product.id
         }} />
-        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+        <EditableNumberCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "discountedPrice",
           value: this.props.product.discountedPrice,
           id: this.props.product.id
         }} />
-        <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
+        <EditableTextCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
           type: "description",
           value: this.props.product.description,
           id: this.props.product.id
