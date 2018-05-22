@@ -62,15 +62,15 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult GetUsers()
         {
-            var userContext = _dbContext.Set<User>().Include(x=>x.Role).Include(x => x.Orders).ThenInclude(o => o.ProductOrders);
-            
+            var userContext = _dbContext.Set<User>().Include(x => x.Role).Include(x => x.Orders).ThenInclude(o => o.ProductOrders);
+
             var userResponses = userContext.Where(x => x.Role.RoleName == "user").Select(x => new UserResponse
             {
                 UserId = x.Id.ToString(),
                 Blocked = x.Blocked,
                 Email = x.Email,
                 OrderCount = x.Orders != null ? x.Orders.Count() : 0,
-                TotalCostOfOrders = x.Orders != null && x.Orders.Any(p=>p.ProductOrders.Any()) ? x.Orders.Sum(z => z.ProductOrders.Sum(y => y.Amount * y.SinglePrice)) : 0M,
+                TotalCostOfOrders = x.Orders != null && x.Orders.Any(p => p.ProductOrders.Any()) ? x.Orders.Sum(z => z.ProductOrders.Sum(y => y.Amount * y.SinglePrice)) : 0M,
                 AverageCostOfOrders = x.Orders != null && x.Orders.Any(p => p.ProductOrders.Any()) ? x.Orders.Average(z => z.ProductOrders.Sum(y => y.Amount * y.SinglePrice)) : 0M
             });
 
@@ -111,7 +111,7 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult GetOrdersByUser(string userId)
         {
-            var orderContext = _dbContext.Set<Order>().Include(x=>x.ProductOrders).ThenInclude(o=>o.Product);
+            var orderContext = _dbContext.Set<Order>().Include(x => x.ProductOrders).ThenInclude(o => o.Product);
             var orders = orderContext
                 .Where(x => string.Equals(x.UserId.ToString(), userId, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(x => x.State)
@@ -121,7 +121,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 StartedDate = x.StartedDate,
                 LastUpdateDate = x.LastModifiedDate,
                 OrderState = x.State.ToString(),
-                Products = x.ProductOrders.Select(z=> new ProductListResponse
+                Products = x.ProductOrders.Select(z => new ProductListResponse
                 {
                     Id = z.ProductId.ToString(),
                     Amount = z.Amount,
@@ -129,7 +129,7 @@ namespace RaisingTheBAR.BLL.Controllers
                     Price = z.SinglePrice,
                     TotalPrice = z.SinglePrice * z.Amount
                 }).ToList(),
-                TotalPrice = x.ProductOrders.Sum(z=>z.SinglePrice * z.Amount)
+                TotalPrice = x.ProductOrders.Sum(z => z.SinglePrice * z.Amount)
             });
 
             return Ok(orderResponses);
@@ -296,6 +296,14 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 return BadRequest("Invalid File" + e.Message);
             }
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        public IActionResult CheckToken()
+        {
+            return Ok();
         }
     }
 }
