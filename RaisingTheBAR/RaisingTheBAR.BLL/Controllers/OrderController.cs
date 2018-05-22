@@ -218,8 +218,8 @@ namespace RaisingTheBAR.BLL.Controllers
         public IActionResult GetAllOrders()
         {
             var userContext = _dbContext.Set<User>()
-                .Include(x => x.Orders)
-                .ThenInclude(x => x.ProductOrders);
+                .Include(x => x.Orders).ThenInclude(o => o.ProductOrders)
+                .Include(x => x.Orders).ThenInclude(y => y.Rating);
 
             var userEmail = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
@@ -241,7 +241,8 @@ namespace RaisingTheBAR.BLL.Controllers
                 OrderState = x.State.ToString(),
                 OrderPrice = x.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
                 ProductAmount = x.ProductOrders.Count(),
-                OrderId = x.Id
+                OrderId = x.Id,
+                IsRated = x.Rating?.WasRated ?? false
             });
 
             return Ok(orders);
@@ -319,7 +320,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 OrderId = order.Id,
                 Rate = request.Rating,
                 WasRated = true,
-                Comment  = request.Comment
+                Comment = request.Comment
             };
 
             _dbContext.SaveChanges();
