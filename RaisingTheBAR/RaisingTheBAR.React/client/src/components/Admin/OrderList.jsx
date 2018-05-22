@@ -5,7 +5,8 @@ import OrderProductList from './OrderProductList'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import update from 'immutability-helper';
-import ToPriceDisplay from '../User/functions/ToPriceDisplay';
+import ToPriceDisplay from '../../functions/ToPriceDisplay';
+import ToDateDisplay from '../../functions/ToDateDisplay';
 import ErrorMessage from '../User/ErrorMessage';
 
 export default class OrderList extends React.Component {
@@ -62,9 +63,9 @@ export default class OrderList extends React.Component {
       {
         Header: 'Started',
         accessor: 'startedDate',
-        // Cell: row => {
-        //   return row.original.startedDate.toLocaleDateString('en-GB');
-        // },
+        Cell: row => {
+          return ToDateDisplay(row.original.startedDate)
+        },
         style: styles.tdStyles,
         resizable: false,
         filterable: false,
@@ -72,17 +73,9 @@ export default class OrderList extends React.Component {
         Header: 'Last updated',
         accessor: 'lastUpdateDate',
         style: styles.tdStyles,
-        // Cell: row => {
-        //   return (
-        //     <span>
-        //       {new Intl.DateTimeFormat('en-GB', {
-        //         year: 'numeric',
-        //         month: 'long',
-        //         day: '2-digit'
-        //       }).format(row.original.lastUpdateDate)}
-        //     </span>
-        //   )
-        // },
+        Cell: row => {
+          return row.original.lastUpdateDate ? ToDateDisplay(row.original.lastUpdateDate) : ""
+        },
         resizable: false,
         filterable: false
       }, {
