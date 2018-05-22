@@ -9,17 +9,21 @@ using RaisingTheBAR.BLL.Filters;
 using RaisingTheBAR.DAL;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Text;
+using RaisingTheBAR.BLL.Services;
 
 namespace RaisingTheBAR.BLL
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment currentEnvironment)
         {
             Configuration = configuration;
+            _currentEnvironment = currentEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+
+        private readonly IHostingEnvironment _currentEnvironment;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,14 +31,11 @@ namespace RaisingTheBAR.BLL
             services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
             {
                 builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
             }));
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new LoggingActionFilter());
-            });
+            services.AddMvc(options => { options.Filters.Add(new LoggingActionFilter()); });
 
             services.AddSwaggerGen(c =>
             {
@@ -46,21 +47,31 @@ namespace RaisingTheBAR.BLL
             optionsBuilder.UseSqlServer(str);
 
             services.AddScoped<DbContext, EFContext>(s => new EFContext(optionsBuilder.Options));
+
+            if (_currentEnvironment.IsProduction())
+            { 
+                services.AddSingleton<IPaymentService, PaymentService>();
+            }
+            else
+            {
+                services.AddSingleton<IPaymentService, MockPaymentService>();
+            }
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    .AddJwtBearer(options =>
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = "RaiseTheBAR",
-                        ValidAudience = "RaiseTheBAR",
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
-                    };
-                });
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = "RaiseTheBAR",
+                            ValidAudience = "RaiseTheBAR",
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
+                        };
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

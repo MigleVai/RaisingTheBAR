@@ -21,10 +21,12 @@ namespace RaisingTheBAR.BLL.Controllers
         public IConfiguration Configuration { get; }
 
         private readonly DbContext _dbContext;
-        public OrderController(IConfiguration configuration, DbContext dbContext)
+        private readonly IPaymentService _paymentService;
+        public OrderController(IConfiguration configuration, DbContext dbContext, IPaymentService paymentService)
         {
             Configuration = configuration;
             _dbContext = dbContext;
+            _paymentService = paymentService;
         }
 
         [Authorize]
@@ -78,7 +80,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 number = request.PaymentRequest.Number
             };
 
-            var paymentResult = PaymentService.ExecutePayment(paymentData, credentials);
+            var paymentResult = _paymentService.ExecutePayment(paymentData, credentials);
             if (!paymentResult)
             {
                 return BadRequest("Your Payment was cancelled please check your data");
