@@ -135,6 +135,10 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
         {
+            if (request.Price < 0.01M || request.DiscountedPrice < 0)
+            {
+                return BadRequest("Bad price");
+            }
             var product = new Product()
             {
                 Description = request.Description,
@@ -210,6 +214,10 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
         public IActionResult EditProduct([FromBody]ProductEditRequest request)
         {
+            if (request.Price < 0.01M || request.DiscountedPrice < 0)
+            {
+                return BadRequest("Bad price");
+            }
             var product = new Product()
             {
                 Description = request.Description,
