@@ -5,7 +5,7 @@ import NumericInput from 'react-numeric-input';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorMessage from '../ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 import Paper from 'material-ui/Paper';
 import Slider from 'react-slick';
 

@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
-import addTempCartCheck from '../functions/addTempCartCheck.js';
+import addTempCartCheck from '../../../functions/addTempCartCheck.js';
 
 export default class SignIn extends React.Component {
     constructor(props) {

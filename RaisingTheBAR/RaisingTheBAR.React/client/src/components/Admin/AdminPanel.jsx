@@ -33,9 +33,10 @@ export default class AdminPanel extends React.Component {
     return (
       <div style={styles.displayStyle}>
         <Link to="/admin/userlist" ><FlatButton label="User list" /></Link>
-        <Link to="/admin/editproducts" ><FlatButton label="Edit products" /></Link>
+        <Link to="/admin/editproducts" ><FlatButton label="Product edit" /></Link>
         <Link to="/admin/excel" ><FlatButton label="Excel" /></Link>
         <Link to="/admin" ><FlatButton label="Order list" /></Link>
+        <Link to="/admin/categories" ><FlatButton label="Category edit" /></Link>
         <div>
           {this.props.isLogged ? 
             <Link to="/admin" ><FlatButton label="Log out" onClick={this.handleLoggingChange.bind(this)} /></Link>

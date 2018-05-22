@@ -1,8 +1,9 @@
 import React from 'react';
-import UserList from './UserList';
-import OrderList from './OrderList';
+import UserList from './Users/UserList';
+import OrderList from './Orders/OrderList';
 import AdminPanel from './AdminPanel';
-import EditProducts from './ProductTable/EditProducts';
+import EditProducts from './Products/EditProducts';
+import EditCategories from './Categories/EditCategories';
 import Excel from './Excel';
 import AppBar from 'material-ui/AppBar';
 import AdminAuthentication from './AdminAuthentication';
@@ -25,14 +26,14 @@ export default class Admin extends React.Component {
     if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'administrator')) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       this.setState({ logged: true });
-        axios.get(`/api/Administrator/CheckToken`)
-          .then(res => {
-          })
-          .catch(error => {
-            if (error.response !== undefined && error.response.status === 401) {
-              this.setState({ open: true });
-            }
-          });
+      axios.get(`/api/Administrator/CheckToken`)
+        .then(res => {
+        })
+        .catch(error => {
+          if (error.response !== undefined && error.response.status === 401) {
+            this.setState({ open: true });
+          }
+        });
     }
   }
   handleLogging = (logged) => {
@@ -62,8 +63,8 @@ export default class Admin extends React.Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
           >
-            Your session has ended! 
-            <br/>
+            Your session has ended!
+            <br />
             Please re-login.
         </Dialog>
         </div>
@@ -97,15 +98,16 @@ export default class Admin extends React.Component {
               iconElementLeft={(<div />)}
             >
             </AppBar>
-            <Route exact path="/admin" render={(props) => <OrderList {...props}/>} />
+            <Route exact path="/admin" render={(props) => <OrderList {...props} />} />
             <Route path="/admin/userlist" render={(props) => <UserList  {...props} />} />
             <Route path="/admin/editproducts" render={(props) => <EditProducts  {...props} />} />
             <Route path="/admin/excel" render={(props) => <Excel {...props} />} />
+            <Route path="/admin/categories" render={(props) => <EditCategories {...props} />} />
           </div>
           :
           <AdminAuthentication handleLogging={this.handleLogging} />
         }
-         {this.checkError()}
+        {this.checkError()}
       </div>
     )
   }

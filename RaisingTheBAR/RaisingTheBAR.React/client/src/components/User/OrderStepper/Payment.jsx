@@ -2,8 +2,8 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import isValidLuhn from '../functions/IsValidLuhn.js';
-import toPriceDisplay from '../functions/ToPriceDisplay.js';
+import isValidLuhn from '../../../functions/IsValidLuhn.js';
+import toPriceDisplay from '../../../functions/ToPriceDisplay.js';
 
 export default class Payment extends React.Component {
     constructor(props) {
