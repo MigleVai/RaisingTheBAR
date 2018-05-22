@@ -282,14 +282,16 @@ namespace RaisingTheBAR.BLL.Controllers
                 }
             }
 
-            var productAndPcContext = _dbContext.Set<Product>().Include(x => x.ProductCarts);
-            //if (product.IsEnabled == false)
-            //{
-            //    if (productAndPcContext.First(x => x.Id == product.Id).ProductCarts != null)
-            //    {
-            //        _dbContext.RemoveRange(productAndPcContext.First(x => x.Id == product.Id).ProductCarts);
-            //    }
-            //}
+            var productAndPcContext = _dbContext.Set<ProductCart>();
+            if (product.IsEnabled == false)
+            {
+                var pc = productAndPcContext.Where(x =>
+                    string.Equals(x.ProductId.ToString(), request.Id, StringComparison.InvariantCultureIgnoreCase));
+                if (pc.Any())
+                {
+                    _dbContext.RemoveRange(pc);
+                }
+            }
 
             var productContext = _dbContext.Set<Product>();
 
@@ -325,9 +327,7 @@ namespace RaisingTheBAR.BLL.Controllers
                             {
                                 exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue?.ToString(), ActualValue = databaseValue?.ToString() });
                             }
-
                         }
-                        // 409: Conflict - object has already changed from the current view - display smart
                         return StatusCode(409, exception);
                     }
                     else
