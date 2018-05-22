@@ -113,7 +113,7 @@ export default class Item extends React.Component {
 
     render() {
         var setwidth = window.innerWidth * 0.4;
-        var setheight = window.innerHeight * 0.2;
+        var setheight = window.innerHeight * 0.6;
         var paddingLeftImg = '5%';
         var paddingRightImg = '3%';
         var paddingTopImg = '3%';
@@ -124,6 +124,7 @@ export default class Item extends React.Component {
         var displayCostQuantity = 'block';
         if (window.innerWidth < 750) {
             setwidth = 'none';
+            setheight = setheight * 0.4;
             paddingLeftImg = '20%';
             paddingRightImg = 'none';
             paddingTopImg = 'none';
@@ -149,8 +150,9 @@ export default class Item extends React.Component {
                 paddingRight: '5px'
             },
             divStyle: {
-                maxWidth: setwidth + 'px',
-                minWidth: setwidth + 'px',
+                maxWidth: setwidth,
+                minWidth: setwidth,
+                maxHeight: setheight,
                 float: floatImg,
                 width: setTotalWidth,
                 paddingLeft: paddingLeftImg,
@@ -182,10 +184,11 @@ export default class Item extends React.Component {
             autoplay: false,
             arrows: false
         };
-        if (this.state.product.images)
+        if (this.state.product.images) {
             var images = this.state.product.images.map((image, i) =>
                 <img style={styles.imgStyle} key={i} alt="product" src={(image)} />
             );
+        }
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
@@ -201,7 +204,7 @@ export default class Item extends React.Component {
                     <div style={{ paddingTop: '9%', width: '90%' }}>
                         <div style={{ display: displayCostQuantity, paddingTop: '3%', paddingLeft: '4%' }}>
                             {this.discountExists()}
-                            <p style={{ display: 'inline-block' }}>Quantity:  </p><span style={{marginLeft: '2%'}}><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} /></span>
+                            <p style={{ display: 'inline-block' }}>Quantity:  </p><span style={{ marginLeft: '2%' }}><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} /></span>
                         </div>
                         <div style={{
                             display: displayDescrip,

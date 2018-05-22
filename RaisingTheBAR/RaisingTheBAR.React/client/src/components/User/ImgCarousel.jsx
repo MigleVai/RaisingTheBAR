@@ -2,7 +2,6 @@ import React from 'react'
 import Slider from 'react-slick'
 import axios from 'axios';
 import ErrorMessage from './ErrorMessage';
-import { Link } from 'react-router-dom';
 
 export default class ImgCarousel extends React.Component {
     constructor(props) {
@@ -35,6 +34,7 @@ export default class ImgCarousel extends React.Component {
     }
 
     render() {
+        var innerHeight = window.innerHeight * 0.7;
         var settings = {
             dots: true,
             infinite: true,
@@ -43,29 +43,30 @@ export default class ImgCarousel extends React.Component {
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 5001,
-            arrows: false
+            arrows: false,
         };
         const styles = {
             imgStyle: {
                 margin: 'auto',
                 maxWidth: '70%',
-                maxHeight: 'auto'
+                maxHeight: innerHeight*0.8,
+                cursor: 'pointer'
             }
         };
         return (
             <div>
                 <ErrorMessage responseError={this.state.responseError} />
-                <Slider {...settings}>
-                    {this.state.featuredProducts.map((product) => {
-                        return (
-                                <div key={product.id}>
+                <Slider {...settings} >
+                    {/* <div > */}
+                        {this.state.featuredProducts.map((product) => {
+                            return (
+                                <div key={product.id} style={{height: innerHeight}}>
                                     <h3>{product.name}</h3>
-                                    <Link to={'shop/products/all/'+product.id}>
-                                    <img style={styles.imgStyle} src={product.images} alt="Featured product" />
-                                    </Link>
+                                    <img style={styles.imgStyle} src={product.images} alt="Featured product" onClick={() => this.props.history.push('/shop/products/all/' + product.id)} />
                                     {this.checkIfDiscount(product)}
                                 </div>);
-                    })}
+                        })}
+                    {/* </div> */}
                 </Slider>
             </div>
         );
