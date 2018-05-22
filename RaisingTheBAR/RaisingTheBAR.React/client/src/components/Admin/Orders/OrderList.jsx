@@ -5,9 +5,9 @@ import OrderProductList from './OrderProductList'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import update from 'immutability-helper';
-import ToPriceDisplay from '../../functions/ToPriceDisplay';
-import ToDateDisplay from '../../functions/ToDateDisplay';
-import ErrorMessage from '../User/ErrorMessage';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
+import ToDateDisplay from '../../../functions/ToDateDisplay';
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class OrderList extends React.Component {
   constructor(props) {

@@ -9,9 +9,9 @@ export default class EditableNumberCell extends React.Component {
       value = this.props.cellData.value
     }
     const numberInputStyle = {
-      "-webkit-appearance": "none",
+      WebkitAppearance: "none",
       margin: 0,
-      "-moz-appearance": "textfield",
+      MozAppearance: "textfield",
       display: "table-cell", 
       width: 100 + "%" 
     }

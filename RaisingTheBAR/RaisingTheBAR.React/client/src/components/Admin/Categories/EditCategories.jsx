@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactTable from 'react-table';
-import ErrorMessage from '../User/ErrorMessage';
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class AdminPanel extends React.Component {
   constructor(props) {
@@ -10,6 +10,21 @@ export default class AdminPanel extends React.Component {
       responseError: '',
       categories: []
     }
+  }
+  componentDidMount() {
+    this.getData()
+  }
+  getData() {
+    var uri = '/api/Category/GetAllCategories';
+    axios.get(uri
+    ).then(res => {
+      const categories = res.data;
+      this.setState({ categories: categories });
+    }
+    ).catch(error => {
+      console.log("error with getting all categories!")
+      this.setState({ responseError: error.response.request.statusText });
+    });
   }
   render() {
     const styles = {
