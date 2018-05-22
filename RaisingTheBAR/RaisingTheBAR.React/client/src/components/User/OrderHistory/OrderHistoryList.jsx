@@ -3,7 +3,7 @@ import axios from 'axios';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import SingleOrderList from './SingleOrderList';
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 
 export default class OrderHistoryList extends React.Component {
     constructor() {

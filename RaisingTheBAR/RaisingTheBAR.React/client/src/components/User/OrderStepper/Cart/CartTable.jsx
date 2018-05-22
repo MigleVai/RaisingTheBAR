@@ -5,7 +5,7 @@ import axios from 'axios';
 import ErrorMessage from '../../ErrorMessage';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-import ToPriceDisplay from '../../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../../functions/ToPriceDisplay';
 
 export default class CartTable extends React.Component {
     constructor(props) {

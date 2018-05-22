@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
-import addTempCartCheck from '../functions/addTempCartCheck.js';
+import addTempCartCheck from '../../../functions/addTempCartCheck.js';
 
 export default class Register extends React.Component {
     constructor(props) {
