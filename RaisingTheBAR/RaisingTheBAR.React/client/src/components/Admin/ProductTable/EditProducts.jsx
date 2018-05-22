@@ -122,7 +122,7 @@ export default class EditProducts extends React.Component {
             isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with adding product!")
-            this.setState({ responseError: error.response.data });
+            this.setState({ responseError: error.response.request.statusText });
           });
         }
         if (product.isAdded === undefined) {
