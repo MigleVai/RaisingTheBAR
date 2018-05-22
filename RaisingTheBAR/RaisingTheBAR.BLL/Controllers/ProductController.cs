@@ -227,44 +227,58 @@ namespace RaisingTheBAR.BLL.Controllers
             if (request.Images != null && request.Images.Any())
             {
                 imageContext.RemoveRange(images.Where(x => x.Type != ImageTypeEnum.Thumbnail));
-
-                var mainImage = new Image()
+                if (!string.Equals(request.Images.First(), "delete", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Product = product,
-                    ProductId = product.Id,
-                    ImageBase64 = request.Images.FirstOrDefault(),
-                    Type = ImageTypeEnum.MainImage
-                };
-                imageContext.Add(mainImage);
-                request.Images.Remove(request.Images.FirstOrDefault());
-
-                foreach (var requestImage in request.Images)
-                {
-                    imageContext.Add(new Image()
+                    var mainImage = new Image()
                     {
                         Product = product,
                         ProductId = product.Id,
-                        ImageBase64 = requestImage,
-                        Type = ImageTypeEnum.OtherImage
-                    });
+                        ImageBase64 = request.Images.FirstOrDefault(),
+                        Type = ImageTypeEnum.MainImage
+                    };
+                    imageContext.Add(mainImage);
+                    request.Images.Remove(request.Images.FirstOrDefault());
+
+                    foreach (var requestImage in request.Images)
+                    {
+                        imageContext.Add(new Image()
+                        {
+                            Product = product,
+                            ProductId = product.Id,
+                            ImageBase64 = requestImage,
+                            Type = ImageTypeEnum.OtherImage
+                        });
+                    }
                 }
             }
 
             if (!string.IsNullOrEmpty(request.Thumbnail))
             {
-                if (!images.Any(x => x.Type == ImageTypeEnum.Thumbnail))
+                var thumbnail = images.FirstOrDefault(x => x.Type == ImageTypeEnum.Thumbnail);
+
+                if (string.Equals(request.Thumbnail, "delete", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    imageContext.Add(new Image()
+                    if (thumbnail != null)
                     {
-                        Product = product,
-                        ProductId = product.Id,
-                        ImageBase64 = request.Thumbnail,
-                        Type = ImageTypeEnum.Thumbnail
-                    });
+                        imageContext.Remove(thumbnail);
+                    }
                 }
                 else
                 {
-                    images.First(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64 = request.Thumbnail;
+                    if (thumbnail == null)
+                    {
+                        imageContext.Add(new Image()
+                        {
+                            Product = product,
+                            ProductId = product.Id,
+                            ImageBase64 = request.Thumbnail,
+                            Type = ImageTypeEnum.Thumbnail
+                        });
+                    }
+                    else
+                    {
+                        thumbnail.ImageBase64 = request.Thumbnail;
+                    }
                 }
             }
 
