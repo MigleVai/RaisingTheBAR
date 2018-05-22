@@ -49,7 +49,7 @@ export default class ImgCarousel extends React.Component {
             imgStyle: {
                 margin: 'auto',
                 maxWidth: '70%',
-                maxHeight: innerHeight*0.8,
+                maxHeight: innerHeight*0.7,
                 cursor: 'pointer'
             }
         };

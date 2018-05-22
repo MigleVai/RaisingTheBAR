@@ -116,18 +116,20 @@ export default class Item extends React.Component {
         var setheight = window.innerHeight * 0.6;
         var paddingLeftImg = '5%';
         var paddingRightImg = '3%';
-        var paddingTopImg = '3%';
         var setTotalWidth = 'none';
         var floatImg = 'left';
         var paddingDownImg = 'none';
         var displayDescrip = 'inline-block';
         var displayCostQuantity = 'block';
+        var paperDisplay = 'flow-root';
+        var widthH3 = setwidth;
         if (window.innerWidth < 750) {
+            widthH3 = '100%';
+            paperDisplay = 'inherit';
             setwidth = 'none';
             setheight = setheight * 0.4;
             paddingLeftImg = '20%';
             paddingRightImg = 'none';
-            paddingTopImg = 'none';
             setTotalWidth = '80%';
             floatImg = 'none';
             paddingDownImg = '5%';
@@ -141,7 +143,9 @@ export default class Item extends React.Component {
                 display: 'block',
                 textAlign: 'left',
                 paddingLeft: '2%',
-                position: 'absolute'
+                wordWrap: 'break-word',
+                wordBreak: 'break-word',
+                maxWidth: widthH3
             },
             imgStyle: {
                 maxWidth: setwidth,
@@ -156,20 +160,14 @@ export default class Item extends React.Component {
                 float: floatImg,
                 width: setTotalWidth,
                 paddingLeft: paddingLeftImg,
-                paddingTop: paddingTopImg,
                 paddingRight: paddingRightImg,
                 paddingBottom: paddingDownImg
             },
             paperStyle: {
                 margin: 20,
                 textAlign: 'left',
-                display: 'flex',
+                display: paperDisplay,
                 padding: 10
-            },
-            descriptionStyle: {
-                paddingLeft: '3%',
-                wordWrap: 'break-word',
-                maxWidth: '80%'
             }
         }
         var path = this.props.location.pathname;
@@ -200,8 +198,8 @@ export default class Item extends React.Component {
                     </Slider>
                 </div>
                 <Paper style={styles.paperStyle} zDepth={1}>
-                    <h3 style={styles.h3Style}>{this.state.product.name}</h3>
-                    <div style={{ paddingTop: '9%', width: '90%' }}>
+                    <div><h3 style={styles.h3Style}>{this.state.product.name}</h3></div>
+                    <div style={{ width: '90%' }}>
                         <div style={{ display: displayCostQuantity, paddingTop: '3%', paddingLeft: '4%' }}>
                             {this.discountExists()}
                             <p style={{ display: 'inline-block' }}>Quantity:  </p><span style={{ marginLeft: '2%' }}><NumericInput mobile min={1} max={100} value={valueInput} style={{ input: { width: '100px' } }} onChange={valueInput => this.getValueAsNumber(valueInput)} /></span>
@@ -213,6 +211,8 @@ export default class Item extends React.Component {
                             paddingRight: '2%',
                             maxWidth: '60%',
                             marginTop: '-10%',
+                            wordWrap: 'break-word',
+                            wordBreak: 'break-word',
                         }}>
                             <p>Description:</p>
                             <p>{this.state.product.description}</p>
