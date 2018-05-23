@@ -58,7 +58,7 @@ paymentas nedingsta krepselyje prekes kai submittini~~
 ~~carte filtravimas ir searchas ar reikalingas?
 carte jei ner nieko ar reikia stepperio ir next?~~
 
-Order'io produktu paveiksleliai neriboto plocio
+~~Order'io produktu paveiksleliai neriboto plocio~~
 
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)
