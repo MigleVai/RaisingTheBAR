@@ -100,7 +100,7 @@ export default class AdminProductRow extends React.Component {
         <td style={{ verticalAlign: "middle", textAlign: "center" }}>
           <Toolbar style={{ display: "inline", padding: 0, backgroundColor: "#fffff", height: 3, boxSizing: "content-box" }}>
             <ToolbarGroup>
-              <div >{"Currently: " + this.props.product.imageCount}</div>
+              <div >{this.props.product.imageCount ? ("Currently: " + this.props.product.imageCount) :("Currently: 0")}</div>
               <ToolbarSeparator style={{ float: "right", display: "inline", marginLeft: 2, marginRight: 2 }} />
               <Dropzone
                 style={{ float: "right" }}

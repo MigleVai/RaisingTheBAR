@@ -122,7 +122,7 @@ export default class EditProducts extends React.Component {
             isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with adding product!")
-            this.setState({ responseError: error.response.request.statusText });
+            this.setState({ responseError: error.response.request.statusText + " Please refresh the page"});
           });
         }
         if (product.isAdded === undefined) {
@@ -142,16 +142,18 @@ export default class EditProducts extends React.Component {
             console.log(error.response.request)
             this.setState({ responseError: error.response.request.statusText })
             if (error.response.request.status === 409) {
-              console.log("handleEditConflict gonna be called")
               this.handleEditConflict(product);
             }
           });
         }
+        product.isAdded = undefined
+        product.isSaved = undefined
+        this.setState({products: products })
       }
     })
   };
 
-  handleAddEvent(evt) {
+  handleAddEvent() {
     var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
     var product = {
       id: id,
@@ -165,8 +167,7 @@ export default class EditProducts extends React.Component {
       isAdded: true
     }
     this.state.products.push(product);
-    // bulshit cia
-    this.setState(this.state.products);
+    this.setState({products: this.state.products});
   }
 
   handleProductTable(evt) {
