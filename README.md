@@ -3,21 +3,37 @@
 #### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
 
 ## Spotting bugs with Vytautas
+
 Raise the bar to raising the bar in sign in
+
 Remove errrors after success
+
 Pašalinti errora iš carto
+
 Maybe add first name and last name to order info
+
 Credit card number nice format
+
 Carto skaičius po prisijungimo nusinulina
+
 Next not active po prisijungimo carte
+
 Su cartu prisijungus errorai
+
 User options must close after click
+
 On login make snackbar appear if there are unrated
+
 Order info center on mobile
+
 CVV image too small on mobile
+
 Nice loading image on mobile
+
 Make it on desktop
+
 Change information on the left on left
+
 Repeating password incorrect
 
 ## Spotting bugs
