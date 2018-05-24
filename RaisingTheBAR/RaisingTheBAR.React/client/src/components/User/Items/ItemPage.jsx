@@ -8,7 +8,7 @@ import matchSorter from 'match-sorter';
 import Breadcrumb from '../Breadcrumb';
 import ErrorMessage from '../ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 
 export default class ItemPage extends React.Component {
     constructor(props) {

@@ -13,6 +13,7 @@ namespace RaisingTheBAR.Core.Models
         [Required]
         public virtual Order Order { get; set; }
         public int? Rate { get; set; }
+        public string Comment { get; set; }
         public bool WasRated { get; set; }
     }
 }

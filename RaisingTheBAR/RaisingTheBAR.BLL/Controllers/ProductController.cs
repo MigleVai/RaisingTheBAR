@@ -135,6 +135,14 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult AddProduct([FromBody]ProductAddRequest request)
         {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            if (request.Price < 0.01M || request.DiscountedPrice < 0)
+            {
+                return BadRequest("Bad price entered");
+            }
             var product = new Product()
             {
                 Description = request.Description,
@@ -195,7 +203,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return Ok(product);
             }
 
             return BadRequest("Nothing changed in database");
@@ -210,6 +218,14 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(List<ConcurrencyConflictResponse>), 409)]
         public IActionResult EditProduct([FromBody]ProductEditRequest request)
         {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            if (request.Price < 0.01M || request.DiscountedPrice < 0)
+            {
+                return BadRequest("Bad price entered");
+            }
             var product = new Product()
             {
                 Description = request.Description,
@@ -227,55 +243,71 @@ namespace RaisingTheBAR.BLL.Controllers
             if (request.Images != null && request.Images.Any())
             {
                 imageContext.RemoveRange(images.Where(x => x.Type != ImageTypeEnum.Thumbnail));
-
-                var mainImage = new Image()
+                if (!string.Equals(request.Images.First(), "delete", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Product = product,
-                    ProductId = product.Id,
-                    ImageBase64 = request.Images.FirstOrDefault(),
-                    Type = ImageTypeEnum.MainImage
-                };
-                imageContext.Add(mainImage);
-                request.Images.Remove(request.Images.FirstOrDefault());
-
-                foreach (var requestImage in request.Images)
-                {
-                    imageContext.Add(new Image()
+                    var mainImage = new Image()
                     {
                         Product = product,
                         ProductId = product.Id,
-                        ImageBase64 = requestImage,
-                        Type = ImageTypeEnum.OtherImage
-                    });
+                        ImageBase64 = request.Images.FirstOrDefault(),
+                        Type = ImageTypeEnum.MainImage
+                    };
+                    imageContext.Add(mainImage);
+                    request.Images.Remove(request.Images.FirstOrDefault());
+
+                    foreach (var requestImage in request.Images)
+                    {
+                        imageContext.Add(new Image()
+                        {
+                            Product = product,
+                            ProductId = product.Id,
+                            ImageBase64 = requestImage,
+                            Type = ImageTypeEnum.OtherImage
+                        });
+                    }
                 }
             }
 
             if (!string.IsNullOrEmpty(request.Thumbnail))
             {
-                if (!images.Any(x => x.Type == ImageTypeEnum.Thumbnail))
+                var thumbnail = images.FirstOrDefault(x => x.Type == ImageTypeEnum.Thumbnail);
+
+                if (string.Equals(request.Thumbnail, "delete", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    imageContext.Add(new Image()
+                    if (thumbnail != null)
                     {
-                        Product = product,
-                        ProductId = product.Id,
-                        ImageBase64 = request.Thumbnail,
-                        Type = ImageTypeEnum.Thumbnail
-                    });
+                        imageContext.Remove(thumbnail);
+                    }
                 }
                 else
                 {
-                    images.First(x => x.Type == ImageTypeEnum.Thumbnail).ImageBase64 = request.Thumbnail;
+                    if (thumbnail == null)
+                    {
+                        imageContext.Add(new Image()
+                        {
+                            Product = product,
+                            ProductId = product.Id,
+                            ImageBase64 = request.Thumbnail,
+                            Type = ImageTypeEnum.Thumbnail
+                        });
+                    }
+                    else
+                    {
+                        thumbnail.ImageBase64 = request.Thumbnail;
+                    }
                 }
             }
 
-            var productAndPcContext = _dbContext.Set<Product>().Include(x => x.ProductCarts);
-            //if (product.IsEnabled == false)
-            //{
-            //    if (productAndPcContext.First(x => x.Id == product.Id).ProductCarts != null)
-            //    {
-            //        _dbContext.RemoveRange(productAndPcContext.First(x => x.Id == product.Id).ProductCarts);
-            //    }
-            //}
+            var productAndPcContext = _dbContext.Set<ProductCart>();
+            if (product.IsEnabled == false)
+            {
+                var pc = productAndPcContext.Where(x =>
+                    string.Equals(x.ProductId.ToString(), request.Id, StringComparison.InvariantCultureIgnoreCase));
+                if (pc.Any())
+                {
+                    _dbContext.RemoveRange(pc);
+                }
+            }
 
             var productContext = _dbContext.Set<Product>();
 
@@ -287,7 +319,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
                 if (result > 0)
                 {
-                    return Ok();
+                    return Ok(product);
                 }
 
                 return BadRequest("Nothing changed in database");
@@ -311,9 +343,7 @@ namespace RaisingTheBAR.BLL.Controllers
                             {
                                 exception.Add(new ConcurrencyConflictResponse() { Property = property.Name, ProposedValue = proposedValue?.ToString(), ActualValue = databaseValue?.ToString() });
                             }
-
                         }
-                        // 409: Conflict - object has already changed from the current view - display smart
                         return StatusCode(409, exception);
                     }
                     else

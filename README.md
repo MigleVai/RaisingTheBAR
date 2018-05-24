@@ -2,6 +2,54 @@
 
 #### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
 
+## Spotting bugs with Vytautas
+
+~~Raise the bar to raising the bar in sign in~~
+
+~~Remove errrors after success~~
+
+Pašalinti errora iš carto -- ???
+
+~~Maybe add first name and last name to order info~~
+
+Credit card number nice format -- idk
+
+Carto skaičius po prisijungimo nusinulina
+
+Next not active po prisijungimo carte
+
+Su cartu prisijungus errorai
+
+~~User options must close after click~~
+
+On login make snackbar appear if there are unrated
+
+Order info center on mobile
+
+CVV image too small on mobile
+
+Nice loading image on mobile, Make it on desktop
+
+Change information on the left on mobile
+
+Repeating password incorrect
+
+Error parsing nicer
+
+Set timestamp after product edit and timestamp and id after add
+
+Duplication on add and edit
+
+~~Date display pirkeju sarase~~
+
+~~Price display pirkeju sarase~~
+
+~~Filtrus ir sortus isimti is pirkeju saraso~~
+
+~~Add email to order list~~
+
+Greitaveika product edite
+
 ## Spotting bugs
 ~~ne per daug post'u getAllCategories, getProductAmountInCart, getCart?~~ maybe someday we will fix this
 
@@ -24,7 +72,7 @@ paymentas nedingsta krepselyje prekes kai submittini~~
 ~~carte filtravimas ir searchas ar reikalingas?
 carte jei ner nieko ar reikia stepperio ir next?~~
 
-Order'io produktu paveiksleliai neriboto plocio
+~~Order'io produktu paveiksleliai neriboto plocio~~
 
 ## ToDo
  * [**Tasks**](https://trello.com/b/rwyLDWmq/untitled-board)

@@ -19,6 +19,10 @@ export default class EditProducts extends React.Component {
       inTransaction: false,
       responseError: ''
     };
+    this.handlePosts = this.handlePosts.bind(this);
+    this.handleEditConflict = this.handleEditConflict.bind(this);
+    this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
+    this.handleTransactionState = this.handleTransactionState.bind(this);
   }
   componentDidMount() {
     this.getData();
@@ -35,12 +39,21 @@ export default class EditProducts extends React.Component {
         this.setState({ responseError: error.response.data });
       });
   }
+  handleSaveButtonClick = () => {
+    this.handleTransactionState(true);
+    this.handleSaveDialogClose();
+    this.handleTransactionState(false);
+    this.handlePosts();
+  }
   handleImageChange(product) {
     var index = this.state.products.indexOf(product)
     this.setState({
       products: update(this.state.products, {
         [index]: {
           images: { $set: product.images },
+        },
+        [index]: {
+          imageCount: { $set: product.imageCount }
         }
       })
     })
@@ -51,7 +64,10 @@ export default class EditProducts extends React.Component {
     this.setState({
       products: update(this.state.products, {
         [index]: {
-          thumbnail: { $set: product.thumbnail },
+          thumbnail: { $set: product.thumbnail }
+        },
+        [index]: {
+          thumbnailCount: { $set: product.thumbnailCount }
         }
       })
     })
@@ -90,11 +106,11 @@ export default class EditProducts extends React.Component {
     this.handleEditConflictDialogOpen()
   }
   handlePosts = () => {
-    this.handleTransactionState(true);
+    this.setState({ responseError: '' })
     var addUri = '/api/Product/AddProduct';
     var editUri = '/api/Product/EditProduct';
     var products = this.state.products.slice();
-    products.forEach(function (product) {
+    products.forEach((product) => {
       if (product.isSaved !== undefined && product.isSaved === false) {
         if (product.isAdded === true && product.isAdded !== undefined) {
           axios.post(addUri, {
@@ -107,6 +123,7 @@ export default class EditProducts extends React.Component {
             isFeatured: product.isFeatured
           }).catch(error => {
             console.log("error with adding product!")
+            product.isAdded = true
             this.setState({ responseError: error.response.data });
           });
         }
@@ -124,18 +141,26 @@ export default class EditProducts extends React.Component {
             isEnabled: product.isEnabled
           }).catch(error => {
             console.log("error with edditing product!")
-            this.setState({ responseError: error.response.data });
-            if (error.status === 409) {
+            console.log(error)
+            if (error.message) {
+              this.setState({ responseError: error.message })
+            }
+            if (error.response.data === "Bad price") {
+              this.setState({ responseError: error.response.data })
+            }
+            if (error.response.request.status === 409) {
               this.handleEditConflict(product);
             }
           });
+
         }
+        product.isSaved = undefined
       }
     })
-    this.handleSaveDialogClose();
+    this.setState({ products: products })
   };
 
-  handleAddEvent(evt) {
+  handleAddEvent() {
     var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
     var product = {
       id: id,
@@ -146,10 +171,11 @@ export default class EditProducts extends React.Component {
       price: 0,
       discountedPrice: 0,
       isFeatured: false,
-      isAdded: true
+      isAdded: true,
+      isEnabled: true
     }
     this.state.products.push(product);
-    this.setState(this.state.products);
+    this.setState({ products: this.state.products });
   }
 
   handleProductTable(evt) {
@@ -181,6 +207,7 @@ export default class EditProducts extends React.Component {
   };
   handleEditConflictDialogClose = () => {
     this.setState({ openEditConflictDialog: false });
+    window.location.reload();
   };
   render() {
     const saveDialogActions = [
@@ -193,7 +220,7 @@ export default class EditProducts extends React.Component {
         label="Save changes"
         primary={true}
         keyboardFocused={true}
-        onClick={() => { if (!this.state.inTransaction) { this.handlePosts(); this.handleTransactionState(!this.state.inTransaction); } }}
+        onClick={() => this.handleSaveButtonClick()}
         disabled={this.state.inTransaction}
       />,
     ];
@@ -211,7 +238,8 @@ export default class EditProducts extends React.Component {
           onSave={this.handleSaveDialogOpen.bind(this)}
           products={this.state.products}
           filterText={this.state.filterText}
-          onEditConflict={this.handleEditConflict.bind(this)} />
+          onEditConflict={this.handleEditConflict.bind(this)}
+        />
         <Dialog
           title="Save confirmation"
           actions={saveDialogActions}
@@ -233,7 +261,7 @@ export default class EditProducts extends React.Component {
           open={this.state.openEditConflictDialog}
           onRequestClose={this.handleEditConflictDialogClose}
         >
-          One or more product edits failed, because they had already been changed by somebody else. Please refresh the page to try again.
+          One or more product edits failed, because they had already been changed by somebody else. <b>We will refresh the page for you.</b>
         </Dialog>
       </div>
     );

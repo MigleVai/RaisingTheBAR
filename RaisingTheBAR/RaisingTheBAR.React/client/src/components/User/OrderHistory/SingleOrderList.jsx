@@ -2,12 +2,14 @@ import React from "react";
 import axios from 'axios';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
+import ErrorMessage from '../ErrorMessage';
 
 export default class SingleOrderList extends React.Component {
     constructor() {
         super();
         this.state = {
+            responseError: '',
             singleOrder: []
         };
     }
@@ -22,7 +24,7 @@ export default class SingleOrderList extends React.Component {
                 this.setState({ singleOrder: products })
             })
             .catch(function (error) {
-                // show error
+                this.setState({ responseError: error.response.data });
             });
     }
     render() {
@@ -66,6 +68,7 @@ export default class SingleOrderList extends React.Component {
         const dataSingle = this.state.singleOrder;
         return (
             <div>
+                <ErrorMessage responseError={this.state.responseError} />
                 <ReactTable
                     data={dataSingle}
                     columns={columnsSingle}

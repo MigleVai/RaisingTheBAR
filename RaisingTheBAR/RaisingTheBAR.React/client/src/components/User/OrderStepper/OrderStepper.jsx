@@ -10,6 +10,8 @@ import Payment from './Payment';
 import OrderDetailsForm from './OrderDetailsForm';
 import UserShoppingCart from './Cart/UserShoppingCart';
 import axios from 'axios';
+import { Redirect } from 'react-router';
+
 
 class HorizontalLinearStepper extends React.Component {
     constructor(props) {
@@ -33,7 +35,10 @@ class HorizontalLinearStepper extends React.Component {
             holderError: "",
             numberError: "",
             responseError: "",
-            response: ""
+            expYearError: "",
+            expMonthError: "",
+            response: "",
+            redirect: false
         }
         this.updateChild = this.updateChild.bind(this);
         this.handleCvv = this.handleCvv.bind(this);
@@ -51,6 +56,8 @@ class HorizontalLinearStepper extends React.Component {
         this.handleNumberError = this.handleNumberError.bind(this);
         this.handleAddressError = this.handleAddressError.bind(this);
         this.handleResponseError = this.handleResponseError.bind(this);
+        this.handleExpYearError = this.handleExpYearError.bind(this);
+        this.handleExpMonthError = this.handleExpMonthError.bind(this);
         this.handleResponse = this.handleResponse.bind(this);
         //this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
@@ -105,10 +112,16 @@ class HorizontalLinearStepper extends React.Component {
     handleResponseError(value) {
         this.setState({ responseError: value });
     }
+    handleExpYearError(value) {
+        this.setState({ expYearError: value });
+    }
+    handleExpMonthError(value) {
+        this.setState({ expMonthError: value });
+    }
     handleResponse(value) {
         this.setState({ response: value });
     }
-    
+
     handleOrderDetailsClick() {
         var error = 'This field is required!';
         if (this.state.firstName !== '' &&
@@ -143,8 +156,10 @@ class HorizontalLinearStepper extends React.Component {
             this.state.cvvError === '' &&
             this.state.holderError === '' &&
             this.state.numberError === '' &&
-            this.state.expMonth !== '' &&
-            this.state.expYear !== '') {
+            this.state.expYearError === '' &&
+            this.state.expMonthError === '' &&
+            this.state.expYear !== 0 &&
+            this.state.expMonth !== 0) {
 
             axios.post(`/api/Order/FinishOrder`,
                 {
@@ -177,6 +192,12 @@ class HorizontalLinearStepper extends React.Component {
             if (this.state.numberError !== '' || this.state.number === '') {
                 this.handleNumberError(error);
             }
+            if (this.state.expYearError !== '' || this.state.expYear === 0) {
+                this.handleExpYearError(error);
+            }
+            if (this.state.expMonthError !== '' || this.state.expMonth === 0) {
+                this.handleExpMonthError(error);
+            }
             return 0;
         }
     }
@@ -206,7 +227,7 @@ class HorizontalLinearStepper extends React.Component {
                 stepIndex: stepIndex + 1,
                 finished: stepIndex >= 2
             });
-            
+
         }
 
 
@@ -224,17 +245,26 @@ class HorizontalLinearStepper extends React.Component {
             case 0:
                 return (<UserShoppingCart update={this.updateChild} mobile={mobile} productAmount={this.props.productAmount} handleAmount={this.props.handleAmount} islogged={this.props.islogged} />);
             case 1:
-                return (<OrderDetailsForm firstName={this.state.firstName} lastName={this.state.lastName} address={this.state.address} firstNameError={this.state.firstNameError} lastNameError={this.state.lastNameError} addressError={this.state.addressError} handleFirstName={this.handleFirstName} handleLastName={this.handleLastName} handleAddress={this.handleAddress} handleFirstNameError={this.handleFirstNameError} handleLastNameError={this.handleLastNameError} handleAddressError={this.handleAddressError}/>);
+                return (<OrderDetailsForm firstName={this.state.firstName} lastName={this.state.lastName} address={this.state.address} firstNameError={this.state.firstNameError} lastNameError={this.state.lastNameError} addressError={this.state.addressError} handleFirstName={this.handleFirstName} handleLastName={this.handleLastName} handleAddress={this.handleAddress} handleFirstNameError={this.handleFirstNameError} handleLastNameError={this.handleLastNameError} handleAddressError={this.handleAddressError} />);
             case 2:
                 return (<Payment cvv={this.state.cvv} expMonth={this.state.expMonth} expYear={this.state.expYear} holder={this.state.holder} number={this.state.number}
-                    cvvError={this.state.cvvError} holderError={this.state.holderError} numberError={this.state.numberError}
+                    cvvError={this.state.cvvError} holderError={this.state.holderError} numberError={this.state.numberError} expYearError={this.state.expYearError} expMonthError={this.state.expMonthError}
                     handleCvv={this.handleCvv} handleExpMonth={this.handleExpMonth} handleExpYear={this.handleExpYear} handleHolder={this.handleHolder} handleNumber={this.handleNumber}
-                    handleCvvError={this.handleCvvError} handleHolderError={this.handleHolderError} handleNumberError={this.handleNumberError}/>);
+                    handleCvvError={this.handleCvvError} handleHolderError={this.handleHolderError} handleNumberError={this.handleNumberError} handleExpYearError={this.handleExpYearError} handleExpMonthError={this.handleExpMonthError} />);
             default:
                 return 'You\'re a long way from home sonny jim!';
         }
     }
 
+
+    getLabel() {
+        if (this.props.islogged === false) {
+            return 'Please Sign in to continue';
+        } else {
+            return 'Back';
+        }
+
+    }
     render() {
         var floatStepper = 'left';
         var widthStepper = '60%';
@@ -260,6 +290,7 @@ class HorizontalLinearStepper extends React.Component {
         return (
             <div style={{ width: '100%', margin: 'auto' }}>
                 {/* <Breadcrumb pathname={this.props.location.pathname} /> */}
+
                 <div>
                     <Stepper activeStep={stepIndex} style={{ float: floatStepper, width: widthStepper, paddingLeft: paddingLeft }}>
                         <Step>
@@ -274,19 +305,28 @@ class HorizontalLinearStepper extends React.Component {
                     </Stepper>
                     <div style={{ paddingTop: paddingTopButton, paddingRight: paddingRightButton, float: floatButton, display: 'initial' }}>
                         {stepIndex < 3 &&
+
                             <div>
                                 <FlatButton
-                                    label="Back"
+                                    label={this.getLabel()}
+                                    //label='Back'
                                     disabled={stepIndex === 0}
                                     onClick={this.handlePrev}
+
                                 />
-                                <RaisedButton
-                                    label={stepIndex === 2 ? 'Finish' : 'Next'}
-                                    primary={true}
-                                    disabled={this.props.productAmount === 0 || this.props.islogged === false}
-                                    onClick={this.handleNext}
-                                />
+
+
+                                {this.props.islogged === true &&
+                                    <RaisedButton
+                                label={this.stepIndex === 2 ? 'Finish' : 'Next'}
+                                        primary={true}
+                                        disabled={this.props.productAmount === 0 || this.props.islogged === false}
+                                        onClick={this.handleNext}
+                                    />
+                                }
+
                             </div>
+
                         }
 
 
@@ -294,10 +334,16 @@ class HorizontalLinearStepper extends React.Component {
                 </div>
                 <div style={contentStyle}>
                     {finished ? (
+
+
                         <div style={{ margin: marginResultText }}>
-                            <p> {this.state.responseError}</p>
+
                             <p> {this.state.response}</p>
-                            {this.forceRefresh}
+                            <p> You will be redirected shortly.</p>
+                            <img style={{ width: '100%' }} alt="Loading..." src="https://camo.githubusercontent.com/95a5827b9ac945165d531184c9288bae16f03f11/68747470733a2f2f692e726564642e69742f6f756e71316d77356b6478792e676966" />
+                            <span hidden>{this.state.redirect ? (<Redirect to="/shop" />) : (setTimeout(function () {
+                                this.setState({ redirect: true }); //After 5 seconds, set redirect to true
+                            }.bind(this), 5000))}</span>
                         </div>
                     ) : (
                             <div>

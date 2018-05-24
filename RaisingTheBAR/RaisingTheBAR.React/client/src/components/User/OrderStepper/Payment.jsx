@@ -1,8 +1,9 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import isValidLuhn from '../functions/IsValidLuhn.js';
+import isValidLuhn from '../../../functions/IsValidLuhn.js';
+import toPriceDisplay from '../../../functions/ToPriceDisplay.js';
 
 export default class Payment extends React.Component {
     constructor(props) {
@@ -32,10 +33,26 @@ export default class Payment extends React.Component {
 
     handleExpMonthChange(event, index, value) {
         this.props.handleExpMonth(event, index, value);
+        if (index === 0) {
+            this.props.handleExpMonthError('Expiration month not chosen!');
+        } else {
+            this.props.handleExpMonthError('');
+        }
+        if (event.target.value === '') {
+            this.props.handleExpMonthError('');
+        }
     }
 
     handleExpYearChange(event, index, value) {
         this.props.handleExpYear(event, index, value);
+        if (index === 0) {
+            this.props.handleExpYearError('Expiration year not chosen!');
+        } else {
+            this.props.handleExpYearError('');
+        }
+        if (event.target.value === '') {
+            this.props.handleExpYearError('');
+        }
     }
 
     handleHolderChange(event) {
@@ -125,8 +142,8 @@ export default class Payment extends React.Component {
                         errorText={this.props.cvvError} />
                     <br />
 
-                    <DropDownMenu style={styles.customWidth} value={this.props.expYear} onChange={this
-                        .handleExpYearChange}>
+                    <SelectField  style={styles.customWidth} value={this.props.expYear} onChange={this
+                        .handleExpYearChange} errorText={this.props.expYearError}>
                         <MenuItem value={0} primaryText="Expiration year" />
                         <MenuItem value={2018} primaryText="2018" />
                         <MenuItem value={2019} primaryText="2019" />
@@ -140,10 +157,10 @@ export default class Payment extends React.Component {
                         <MenuItem value={2027} primaryText="2027" />
                         <MenuItem value={2028} primaryText="2028" />
                         <MenuItem value={2029} primaryText="2029" />
-                    </DropDownMenu>
-
-                    <DropDownMenu style={styles.customWidth} value={this.props.expMonth} onChange={this
-                        .handleExpMonthChange}>
+                    </SelectField >
+                    
+                    <SelectField  style={styles.customWidth} value={this.props.expMonth} onChange={this
+                        .handleExpMonthChange} errorText={this.props.expMonthError}>
                         <MenuItem value={0} primaryText="Expiration month" />
                         <MenuItem value={1} primaryText="1" />
                         <MenuItem value={2} primaryText="2" />
@@ -157,11 +174,11 @@ export default class Payment extends React.Component {
                         <MenuItem value={10} primaryText="10" />
                         <MenuItem value={11} primaryText="11" />
                         <MenuItem value={12} primaryText="12" />
-                    </DropDownMenu>
+                    </SelectField >
 
                     <br />
                     <section>
-                        Total amount: {localStorage.getItem('totalCost')}
+                        Total amount: {toPriceDisplay(localStorage.getItem('totalCost'))}
                     </section>
 
                     <div><span>{this.props.response}</span></div>

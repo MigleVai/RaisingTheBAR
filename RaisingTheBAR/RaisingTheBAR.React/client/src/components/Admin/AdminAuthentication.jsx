@@ -37,7 +37,9 @@ export default class AdminAuthentication extends React.Component {
                     this.props.history.push('/admin');
                 })
                 .catch(error => {
-                    this.setState({responseError: error.response.data});
+                  if(error.response.request.statusText) {
+                    this.setState({responseError: error.response.request.statusText});
+                  }
                 });
         } else {
             var error = 'This field is required!';

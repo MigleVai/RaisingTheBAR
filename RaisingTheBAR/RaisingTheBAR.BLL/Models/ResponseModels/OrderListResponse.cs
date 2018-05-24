@@ -9,5 +9,6 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
         public decimal OrderPrice { get; set; }
         public string OrderState { get; set; }
         public Guid OrderId { get; set; }
+        public bool IsRated { get; set; }
     }
 }

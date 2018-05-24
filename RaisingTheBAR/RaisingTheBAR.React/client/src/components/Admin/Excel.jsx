@@ -108,19 +108,15 @@ export default class Excel extends React.Component {
         <FlatButton label="Export products" onClick={this.handleExcelExport} />
         <FlatButton label="Download template" onClick={this.handleExcelTemplateDownload} />
         <Card>
-          <FlatButton style={{ margin: 20 + 'px', backgroundColor: "#00FF00" }} label="Import excel files" onClick={this.handleExcelImport.bind(this)} />
+          <FlatButton style={{ margin: 20 + 'px', backgroundColor: "#00FF00" }} label="Send imports" onClick={this.handleExcelImport.bind(this)} />
           <section>
             <div style={{ display: 'flex', justifyContent: 'center' }} className="dropzone">
               <Dropzone
-
                 onDrop={(accepted, rejected) => {
                   this.onDrop(accepted, rejected)
                 }}
                 accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                 {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
-                  if (isDragActive) {
-                    return "This file is authorized";
-                  }
                   if (isDragReject) {
                     return "This file is not authorized";
                   }
