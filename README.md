@@ -24,15 +24,15 @@ Su cartu prisijungus errorai -- ???
 
 ~~On login make snackbar appear if there are unrated~~
 
-Order info center on mobile
+~~Order info center on mobile~~
 
 CVV image too small on mobile
 
 Nice loading image on mobile, Make it on desktop
 
-Change information on the left on mobile
+~~Change information on the left on mobile~~ kind of
 
-Repeating password incorrect
+~~Repeating password incorrect~~ < - i think its done
 
 Error parsing nicer
 
