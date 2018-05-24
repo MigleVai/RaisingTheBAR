@@ -199,7 +199,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
-                return Ok();
+                return Ok(product);
             }
 
             return BadRequest("Nothing changed in database");
@@ -311,7 +311,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
                 if (result > 0)
                 {
-                    return Ok();
+                    return Ok(product);
                 }
 
                 return BadRequest("Nothing changed in database");

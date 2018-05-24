@@ -11,5 +11,6 @@ namespace RaisingTheBAR.BLL.Models.ResponseModels
         public List<ProductListResponse> Products { get; set; }
         public decimal TotalPrice { get; set; }
         public string OrderState { get; set; }
+        public string OrderEmail { get; set; }
     }
 }
