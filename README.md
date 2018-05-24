@@ -28,13 +28,27 @@ Order info center on mobile
 
 CVV image too small on mobile
 
-Nice loading image on mobile
+Nice loading image on mobile, Make it on desktop
 
-Make it on desktop
-
-Change information on the left on left
+Change information on the left on mobile
 
 Repeating password incorrect
+
+Error parsing nicer
+
+Set timestamp after product edit and timestamp and id after add
+
+Duplication on add and edit
+
+Date display pirkeju sarase
+
+Price display pirkeju sarase
+
+Filtrus ir sortus isimti is pirkeju saraso
+
+Add email to order list
+
+Greitaveika product edite
 
 ## Spotting bugs
 ~~ne per daug post'u getAllCategories, getProductAmountInCart, getCart?~~ maybe someday we will fix this
