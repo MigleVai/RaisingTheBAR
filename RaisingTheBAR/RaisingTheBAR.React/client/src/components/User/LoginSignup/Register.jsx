@@ -122,7 +122,7 @@ export default class Register extends React.Component {
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Register</h3>
-                    <h6 style={styles.textStyle}>to Raise the BAR</h6>
+                    <h6 style={styles.textStyle}>to Raising the BAR</h6>
                 </div>
                 <form>
                     <TextField

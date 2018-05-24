@@ -7,6 +7,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default class Logged extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      open: false
+    };
+  }
 
   handleLoggingChange(props) {
     localStorage.removeItem('jwtToken');
@@ -17,21 +23,25 @@ export default class Logged extends React.Component {
 
   render() {
     return (
+      <div onBlur={() => this.setState({open: false})}>
       <IconMenu
+        open={this.state.open}
         iconButtonElement={<IconButton><Person /></IconButton>}
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        onClick={() => this.setState({open: true})}
       >
         <Link to="/shop/orders">
-          <MenuItem primaryText="Orders" />
+          <MenuItem primaryText="Orders" onClick={() => this.setState({open: false})}/>
         </Link>
         <Link to="/shop/settings">
-          <MenuItem primaryText="Settings" />
+          <MenuItem primaryText="Settings" onClick={() => this.setState({open: false})} />
         </Link>
         <Link to="/shop">
           <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} />
         </Link>
       </IconMenu>
+      </div>
     );
   }
 }

@@ -17,7 +17,7 @@ export default class OrderHistoryList extends React.Component {
             responseError: '',
             orders: [],
             open: false,
-            rating: 0,
+            rating: 1,
             comment: '',
             orderId: '',
             button: false

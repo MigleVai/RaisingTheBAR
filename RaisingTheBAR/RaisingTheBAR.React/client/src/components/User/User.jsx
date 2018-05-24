@@ -14,6 +14,7 @@ import OrderHistory from './OrderHistory/OrderHistory';
 import Settings from './SettingsInfo/Settings';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class User extends Component {
   constructor(props) {
@@ -22,7 +23,9 @@ export default class User extends Component {
       {
         logged: false,
         productAmount: 0,
-        open: false
+        open: false,
+        unrated: 0,
+        snackOpen: false
       };
 
     this.handleLogging = this.handleLogging.bind(this);
@@ -30,7 +33,23 @@ export default class User extends Component {
     this.checkError = this.checkError.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.checkErrorOnTheGo = this.checkErrorOnTheGo.bind(this);
+    this.getUnrated = this.getUnrated.bind(this);
+    this.checkUnrated = this.checkUnrated.bind(this);
   }
+
+  getUnrated() {
+    axios.get(`/api/Order/GetUnratedOrder`)
+      .then(res => {
+        const gotOrders = res.data;
+        if (gotOrders > 0) {
+          this.setState({ unrated: gotOrders, snackOpen: true });
+        }
+      })
+      .catch(function (error) {
+        this.setState({ responseError: error.response.data });
+      });
+  }
+
   componentDidMount() {
     if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'user')) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
@@ -44,10 +63,28 @@ export default class User extends Component {
             this.setState({ open: true });
           }
         });
+      this.getUnrated();
     }
 
     if (localStorage.getItem('productAmount')) {
       this.setState({ productAmount: localStorage.getItem('productAmount') });
+    }
+  }
+
+  checkUnrated() {
+    if (this.state.unrated > 0) {
+      var orderWord = "orders";
+      if(this.state.unrated === 1){
+        orderWord = "order";
+      }
+      return (
+        <Snackbar
+          open={this.state.snackOpen}
+          message={"You have " + this.state.unrated + " unrated "+ orderWord +"!"}
+          autoHideDuration={3000}
+          onRequestClose={() => this.setState({snackOpen: false})}
+        />
+      );
     }
   }
 
@@ -95,8 +132,8 @@ export default class User extends Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
           >
-            Your session has ended! 
-            <br/>
+            Your session has ended!
+            <br />
             Please re-login.
         </Dialog>
         </div>
@@ -104,8 +141,6 @@ export default class User extends Component {
     }
   }
   render() {
-   // this.checkErrorOnTheGo();
-    //cart 62 eilute
     return (
       <div className="App">
         <header>
@@ -125,6 +160,7 @@ export default class User extends Component {
         <Route path="/shop/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/shop/signin" /> : <Payment />)} />
         {this.checkError()}
+        {this.checkUnrated()}
       </div>
     );
   }

@@ -40,8 +40,10 @@ export default class SignIn extends React.Component {
                     this.props.handleLogging(true);
                     var tempCart = addTempCartCheck(true);
                     if(Number(tempCart)){
+                        console.log("signin - " + tempCart);
                         this.props.handleAmount(Number(tempCart));
                     }else{
+                        console.log("signin else - " + tempCart);
                         this.setState({ responseError: tempCart});
                     }
                     this.props.history.push('/');
@@ -98,7 +100,7 @@ export default class SignIn extends React.Component {
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Sign In</h3>
-                    <h6 style={styles.textStyle}>to Raise the BAR</h6>
+                    <h6 style={styles.textStyle}>to Raising the BAR</h6>
                 </div>
                 <form>
                     <TextField

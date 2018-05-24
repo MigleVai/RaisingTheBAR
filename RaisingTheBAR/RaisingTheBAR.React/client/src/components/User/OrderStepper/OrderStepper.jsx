@@ -265,6 +265,20 @@ class HorizontalLinearStepper extends React.Component {
         }
 
     }
+
+    componentDidMount() {
+        axios.get(`/api/User/GetUserData`)
+            .then(res => {
+                const user = res.data;
+                if (user.firstName !== null) {
+                    this.setState({firstName: user.firstname});
+                }
+                if (user.lastName !== null) {
+                    this.setState({lastName: user.lastname});
+                }
+            });
+    }
+
     render() {
         var floatStepper = 'left';
         var widthStepper = '60%';

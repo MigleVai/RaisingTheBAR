@@ -249,7 +249,7 @@ namespace RaisingTheBAR.BLL.Controllers
         }
         [Authorize]
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<OrderListResponse>), 200)]
+        [ProducesResponseType(typeof(int), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult GetUnratedOrder()
@@ -272,13 +272,7 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("Your session has ended");
             }
 
-            var orders = user.Orders.Where(x=>x.Rating == null && x.State == OrderStateEnum.Completed).Select(x => new OrderListResponse
-            {
-                StartedDate = x.StartedDate,
-                OrderState = x.State.ToString(),
-                OrderPrice = x.ProductOrders.Sum(y => y.Amount * y.SinglePrice),
-                OrderId = x.Id
-            });
+            var orders = user.Orders.Count(x => x.Rating == null && x.State == OrderStateEnum.Completed);
 
             return Ok(orders);
         }

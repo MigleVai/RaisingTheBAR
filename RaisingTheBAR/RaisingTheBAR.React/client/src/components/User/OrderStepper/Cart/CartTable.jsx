@@ -98,10 +98,15 @@ export default class CartTable extends React.Component {
                         if (Number(e.target.innerHTML) > 0) {
                             data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                             this.sendAmount(cellInfo.row._original.productId, e.target.innerHTML);
+                            this.setState({responseError: ''});
+                            this.forceUpdate();
                         } else {
                             e.target.innerHTML = cellInfo.row._original.amount;
                             this.setState({ responseError: 'Not valid amount' });
                         }
+                    }else{
+                        this.setState({responseError: ''});
+                        this.forceUpdate();
                     }
                 }}
                 dangerouslySetInnerHTML={{
