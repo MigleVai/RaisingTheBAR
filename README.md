@@ -32,7 +32,7 @@ Nice loading image on mobile, Make it on desktop
 
 ~~Change information on the left on mobile~~ kind of
 
-Repeating password incorrect
+~~Repeating password incorrect~~ < - i think its done
 
 Error parsing nicer
 
