@@ -26,8 +26,7 @@ export default class OrderList extends React.Component {
     ).then(res => {
       const orders = res.data;
       this.setState({ orders: orders });
-    }
-    ).catch(error => {
+    }).catch(error => {
       console.log("error with getting all orders!")
       this.setState({ responseError: error.response.data });
     });
@@ -61,6 +60,12 @@ export default class OrderList extends React.Component {
     };
     const columns = [
       {
+        Header: 'Email',
+        accessor: 'orderEmail',
+        style: styles.tdStyles,
+        resizable: false,
+        filterable: false,
+      },{
         Header: 'Started',
         accessor: 'startedDate',
         Cell: row => {

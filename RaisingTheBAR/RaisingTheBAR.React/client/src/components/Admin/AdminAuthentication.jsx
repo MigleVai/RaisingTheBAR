@@ -34,7 +34,7 @@ export default class AdminAuthentication extends React.Component {
                     localStorage.setItem('role', 'administrator');
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
-                    this.props.history.push('/');
+                    this.props.history.push('/admin');
                 })
                 .catch(error => {
                   if(error.response.request.statusText) {

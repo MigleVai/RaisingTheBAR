@@ -4,25 +4,25 @@
 
 ## Spotting bugs with Vytautas
 
-Raise the bar to raising the bar in sign in
+~~Raise the bar to raising the bar in sign in~~
 
-Remove errrors after success
+~~Remove errrors after success~~
 
-Pašalinti errora iš carto
+Pašalinti errora iš carto -- ???
 
-Maybe add first name and last name to order info
+~~Maybe add first name and last name to order info~~
 
-Credit card number nice format
+Credit card number nice format -- idk
 
-Carto skaičius po prisijungimo nusinulina
+~~Carto skaičius po prisijungimo nusinulina~~
 
-Next not active po prisijungimo carte
+~~Next not active po prisijungimo carte~~
 
-Su cartu prisijungus errorai
+Su cartu prisijungus errorai -- ???
 
-User options must close after click
+~~User options must close after click~~
 
-On login make snackbar appear if there are unrated
+~~On login make snackbar appear if there are unrated~~
 
 Order info center on mobile
 
@@ -40,13 +40,13 @@ Set timestamp after product edit and timestamp and id after add
 
 Duplication on add and edit
 
-Date display pirkeju sarase
+~~Date display pirkeju sarase~~
 
-Price display pirkeju sarase
+~~Price display pirkeju sarase~~
 
-Filtrus ir sortus isimti is pirkeju saraso
+~~Filtrus ir sortus isimti is pirkeju saraso~~
 
-Add email to order list
+~~Add email to order list~~
 
 Greitaveika product edite
 
