@@ -4,15 +4,15 @@
 
 ## Spotting bugs with Vytautas
 
-Raise the bar to raising the bar in sign in
+~~Raise the bar to raising the bar in sign in~~
 
-Remove errrors after success
+~~Remove errrors after success~~
 
-Pašalinti errora iš carto
+Pašalinti errora iš carto -- ???
 
-Maybe add first name and last name to order info
+~~Maybe add first name and last name to order info~~
 
-Credit card number nice format
+Credit card number nice format -- idk
 
 Carto skaičius po prisijungimo nusinulina
 
