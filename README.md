@@ -40,13 +40,13 @@ Set timestamp after product edit and timestamp and id after add
 
 Duplication on add and edit
 
-Date display pirkeju sarase
+~~Date display pirkeju sarase~~
 
-Price display pirkeju sarase
+~~Price display pirkeju sarase~~
 
-Filtrus ir sortus isimti is pirkeju saraso
+~~Filtrus ir sortus isimti is pirkeju saraso~~
 
-Add email to order list
+~~Add email to order list~~
 
 Greitaveika product edite
 
