@@ -24,7 +24,7 @@ Su cartu prisijungus errorai -- ???
 
 ~~On login make snackbar appear if there are unrated~~
 
-Order info center on mobile
+~~Order info center on mobile~~
 
 CVV image too small on mobile
 
