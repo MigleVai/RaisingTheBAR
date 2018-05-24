@@ -22,7 +22,7 @@ Su cartu prisijungus errorai
 
 ~~User options must close after click~~
 
-On login make snackbar appear if there are unrated
+~~On login make snackbar appear if there are unrated~~
 
 Order info center on mobile
 
