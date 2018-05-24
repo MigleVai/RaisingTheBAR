@@ -30,7 +30,7 @@ CVV image too small on mobile
 
 Nice loading image on mobile, Make it on desktop
 
-Change information on the left on mobile
+~~Change information on the left on mobile~~ kind of
 
 Repeating password incorrect
 
