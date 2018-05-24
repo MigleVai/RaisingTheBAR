@@ -20,7 +20,7 @@ Next not active po prisijungimo carte
 
 Su cartu prisijungus errorai
 
-User options must close after click
+~~User options must close after click~~
 
 On login make snackbar appear if there are unrated
 
