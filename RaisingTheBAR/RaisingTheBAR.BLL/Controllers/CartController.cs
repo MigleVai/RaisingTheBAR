@@ -24,7 +24,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
         [Authorize]
         [HttpPost("[action]")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(int), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         public IActionResult AddTemporaryCartToDatabase([FromBody] List<ProductToCartRequest> request)

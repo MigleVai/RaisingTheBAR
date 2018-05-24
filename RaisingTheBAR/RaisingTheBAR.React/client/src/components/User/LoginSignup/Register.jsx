@@ -3,7 +3,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
-import addTempCartCheck from '../functions/addTempCartCheck.js';
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -23,11 +22,11 @@ export default class Register extends React.Component {
         this.passwordRepeatValidation = this.passwordRepeatValidation.bind(this);
     }
     passwordRepeatValidation(event) {
-        this.setState({repeat: event.target.value});
+        this.setState({ repeat: event.target.value });
         if (this.state.password !== event.target.value) {
             this.setState({ repeatError: 'Passwords do not match!' });
         }
-        else{
+        else {
             this.setState({ repeatError: '' });
         }
         if (event.target.value === "") {
@@ -37,15 +36,15 @@ export default class Register extends React.Component {
     handlePasswordChange(event) {
         this.setState({ password: event.target.value, passwordError: '' });
         var re = RegExp('^((?=.*[\\d])|(?=.*[!@#$%^&*,\\.\\=\\+]))(?=.*[A-Z])(?=.*[a-z])[\\w!@#$%^&*\\.\\=\\+]{8,}$');
-        if(!re.test(event.target.value)) {
+        if (!re.test(event.target.value)) {
             this.setState({ passwordError: 'Not a valid password!' });
-        }else {
+        } else {
             this.setState({ passwordError: '' });
         }
         if (event.target.value === '') {
             this.setState({ passwordError: '' });
         }
-       
+
     }
     handleEmailChange(event) {
         this.setState({ email: event.target.value });
@@ -76,14 +75,20 @@ export default class Register extends React.Component {
                     localStorage.setItem('role', 'user');
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
-                    //WHY THI NO WORK
-                    var tempCart = addTempCartCheck(true);
-                    if(Number(tempCart)){
-                        this.props.handleAmount(Number(tempCart));
-                    }else{
-                        this.setState({ responseError: tempCart});
+                    var array = localStorage.getItem('cartNotLogged');
+                    if (array !== null) {
+                        axios.post(`/api/Cart/AddTemporaryCartToDatabase`, JSON.parse(array))
+                            .then(res => {
+                                this.props.handleAmount(res.data);
+                            })
+                            .catch(error => {
+                                return error.response.data;
+                            });
                     }
-                    this.props.history.push('/');
+                    else{
+                        this.props.getDataAmount();
+                    }
+                    this.props.history.push('/shop');
                     localStorage.removeItem('productAmount');
                     localStorage.removeItem('cartNotLogged');
                 })
