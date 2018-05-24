@@ -14,11 +14,11 @@ Pašalinti errora iš carto -- ???
 
 Credit card number nice format -- idk
 
-Carto skaičius po prisijungimo nusinulina
+~~Carto skaičius po prisijungimo nusinulina~~
 
-Next not active po prisijungimo carte
+~~Next not active po prisijungimo carte~~
 
-Su cartu prisijungus errorai
+Su cartu prisijungus errorai -- ???
 
 ~~User options must close after click~~
 
