@@ -25,7 +25,7 @@ export default class User extends Component {
         productAmount: 0,
         open: false,
         unrated: 0,
-        snackOpen: false
+        snackOpen: false,
       };
 
     this.handleLogging = this.handleLogging.bind(this);
@@ -40,12 +40,10 @@ export default class User extends Component {
     axios.get(`/api/Order/GetUnratedOrder`)
       .then(res => {
         const gotOrders = res.data;
+        console.log(gotOrders);
         if (gotOrders > 0) {
           this.setState({ unrated: gotOrders, snackOpen: true });
         }
-      })
-      .catch(function (error) {
-        this.setState({ responseError: error.response.data });
       });
   }
 
@@ -60,7 +58,6 @@ export default class User extends Component {
       this.handleAmount(localStorage.getItem('productAmount'));
     }
   }
-  handleAmount = (settableAmount) => {
 
   checkUnrated() {
     if (this.state.unrated > 0) {
@@ -79,7 +76,7 @@ export default class User extends Component {
     }
   }
 
-  handleAmount(settableAmount) {
+  handleAmount = (settableAmount) => {
     this.setState({ productAmount: settableAmount });
   }
 
@@ -106,6 +103,7 @@ export default class User extends Component {
       .catch(error => {
         this.setState({ responseError: error.response.data });
       });
+      this.getUnrated();
   }
   checkErrorOnTheGo() {
     axios.interceptors.response.use(undefined, function (error) {
