@@ -58,14 +58,19 @@ export default class Settings extends React.Component {
         var displayPaper = 'block';
         var displayContent = 'block';
         var topPaddingcContent = 'none';
-        var paddingLeftContent = '10%';
+        var divPaperWidth = '';
+        var textAlign = 'none';
+        var paddingTextR = '';
+        var paddingTextL = '';
         if (windowWidth > 450) {
+            divPaperWidth = '59%';
             widthPaper = '450px';
             floatPaper = 'right';
             displayPaper = 'inline-block';
             topPaddingcContent = '5%';
             displayContent = 'inline-block';
-            paddingLeftContent = 'none';
+            textAlign = 'left';
+            paddingTextR = '3%';
         }
         const styles = {
             paperStyle: {
@@ -76,11 +81,11 @@ export default class Settings extends React.Component {
             contentStyle: {
                 display: displayContent,
                 position: 'relative',
-                textAlign: 'left',
-                paddingRight: '3%',
+                textAlign: textAlign,
+                paddingRight: paddingTextR,
                 fontSize: '18px',
                 paddingTop: topPaddingcContent,
-                paddingLeft: paddingLeftContent
+               // paddingLeft: paddingLeftContent
             }
         };
         var shown;
@@ -109,7 +114,7 @@ export default class Settings extends React.Component {
                             <p style={{ fontWeight: 'normal' }} ref="password">Change Password</p>
                         </div>
                     </div>
-                    <div style={{ display: displayPaper, float: floatPaper, width: '59%' }}>
+                    <div style={{ display: displayPaper, float: floatPaper, width: divPaperWidth }}>
                         <Paper style={styles.paperStyle} zDepth={1}>
                             {shown}
                         </Paper>

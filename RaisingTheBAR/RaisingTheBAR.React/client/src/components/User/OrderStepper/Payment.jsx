@@ -85,12 +85,14 @@ export default class Payment extends React.Component {
     render() {
         const styles = {
             textStyle: {
-                textAlign: 'center'
+                textAlign: 'center',
+                margin: 'auto'
             },
             displayStyles: {
                 display: 'block',
                 margin: 'auto',
-                padding: '3%'
+                padding: '3%',
+                paddingTop: '1%'
             },
             labelStyle: {
                 fontWeight: 'normal',
