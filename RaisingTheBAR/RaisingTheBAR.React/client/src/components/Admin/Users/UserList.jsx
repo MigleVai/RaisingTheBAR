@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import matchSorter from 'match-sorter';
 import axios from 'axios';
 import FlatButton from 'material-ui/FlatButton';
 import UserOrders from './UserOrders'
@@ -110,9 +109,6 @@ export default class UserList extends React.Component {
           defaultPageSize={10}
           className="-striped -highlight"
           style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
           SubComponent={row => {
             return (
               <div>

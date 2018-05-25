@@ -53,13 +53,17 @@ export default class EditCategories extends React.Component {
           <TabList >
             <Tab >Category list</Tab>
             <Tab >Create category</Tab>
+            {/* <Tab >Category products</Tab> */}
           </TabList>
           <TabPanel>
-            <CategoryTable onAddEvent={this.handleAddEvent.bind(this)} categories={this.state.categories} />
+            <CategoryTable categories={this.state.categories} />
           </TabPanel>
           <TabPanel>
-            <CreatingCategoryForm />
+            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)}/>
           </TabPanel>
+          {/* <TabPanel>
+            <CategoryProducts categories={this.state.categories} />
+          </TabPanel> */}
         </Tabs>
 
 

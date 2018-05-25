@@ -33,25 +33,9 @@ export default class CategoryTable extends React.Component {
   handleAddFormDialogClose = () => {
     this.setState({ openAddFormDialog: false });
   };
-  handleCategoryNameChange = event => {
-    // // this.setState({
-    // //   [name]: event.target.value,
-    // // });
-    // var newCategory = event.target.value
-    // var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
-
-    // var newCategory = {
-    //   id: id,
-    //   name: event.target.value,
-    //   children: [],
-    //   productAmount: 0,
-    //   isAdded : true
-    // }
-    // console.log(this.state.categories)
-    // this.state.categories.push(category);
-    // this.setState({categories: this.state.categories});
-
-  };
+  onDeleteCategory = (category) => {
+    console.log(category)
+  }
   render() {
     const styles = {
       tdStyles: {
@@ -66,40 +50,35 @@ export default class CategoryTable extends React.Component {
         resizable: false,
         filterable: false,
       }, {
-        Header: 'Containing subcategories',
+        Header: 'Subcategory amount',
         accessor: 'children.length',
         style: styles.tdStyles,
         resizable: false,
         filterable: false
       }, {
-        Header: 'Amount of products',
+        Header: 'Product amount',
         accessor: 'productAmount',
         style: styles.tdStyles,
         resizable: false,
         filterable: false
-      }
+      }, {
+        Header: 'Delete category',
+        Cell: row =>
+          <div>
+            {
+              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.onDeleteCategory(row.original)}>
+                Delete
+              </Button>
+            }
+          </div>,
+        style: styles.tdStyles,
+        resizable: false,
+        filterable: false
+      },
+
     ];
     return (
       <div>
-        {/* <Dialog
-          open={this.state.openAddFormDialog}
-          onClose={this.handleAddFormDialogClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Adding category</DialogTitle>
-          <DialogContent>
-            <CreatingCategoryForm/>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleAddFormDialogClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleAddFormDialogClose} color="primary">
-              Add
-            </Button>
-          </DialogActions>
-        </Dialog> */}
-        {/* <button style={{ width: 100 + 'px', }} type="button" onClick={this.handleAddFormDialogOpen} className="btn btn-success pull-right">Add category</button> */}
         < ReactTable
           data={this.state.categories}
           columns={columns}

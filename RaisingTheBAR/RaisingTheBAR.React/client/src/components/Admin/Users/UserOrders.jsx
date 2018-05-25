@@ -86,9 +86,6 @@ export default class UserOrders extends React.Component {
           defaultPageSize={5}
           className="-striped -highlight"
           style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
         />
       </div>
     )
