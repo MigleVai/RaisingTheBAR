@@ -4,7 +4,7 @@
 ## TAUTRI FIXE THE BUGE
 Product add, new product with picture and thumbnail - error handling (Unhandled Rejection (TypeError): Cannot read property 'data' of undefined)
 
-
+Nelogink execleo ant importo
 
 
 ## Spotting bugs with Vytautas
