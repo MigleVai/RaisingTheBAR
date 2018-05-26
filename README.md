@@ -1,6 +1,29 @@
 # RaisingTheBAR
 
-#### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
+#### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md)
+
+## ALSO BUG SPOTTIN
+
+Order info mozziloj
+
+Cvv su minusu paeina
+
+Kai atidarai orders pakeist pagal ka rusiuoja
+
+Order liste kai ner produktu nerodyt. O kodel is vis yra tokiu(cj del testavimu)
+
+User liste naudot topricedispl
+
+Filtravimai react table idet ghost teksta pvz search
+
+Nuotrauku pridejimas overwrite state, maybe make po viena pridet pora
+
+Breadcrumba idet admine
+
+Kuriant kategorija name field atrd kaip search...
+
+Kai ne toki exceli siunti ir gauni error padet failiuka prie rejected
+
 ## TAUTRI FIXE THE BUGE
 Product add, new product with picture and thumbnail - error handling (Unhandled Rejection (TypeError): Cannot read property 'data' of undefined)
 
