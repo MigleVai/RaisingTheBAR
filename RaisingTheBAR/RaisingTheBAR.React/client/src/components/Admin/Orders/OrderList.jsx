@@ -130,9 +130,12 @@ export default class OrderList extends React.Component {
           defaultPageSize={5}
           className="-striped -highlight"
           style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
+          defaultSorted={[
+            {
+              id: "startedDate",
+              desc: true
+            }
+          ]}
           SubComponent={row => {
             return (
               <div>
