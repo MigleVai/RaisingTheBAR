@@ -31,6 +31,9 @@ export default class OrderList extends React.Component {
       this.setState({ responseError: error.response.data });
     });
   }
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
   handleOrderStateChange = (order, event, index, value) => {
     var indexOfOrder = this.state.orders.indexOf(order)
     this.setState({
@@ -41,6 +44,10 @@ export default class OrderList extends React.Component {
       })
     })
     this.postOrderStateChange(value, order.orderId)
+    this.sleep(500).then(() => {
+      this.getData()
+    })
+
   }
   postOrderStateChange = (orderState, id) => {
     var statusChangeUri = '/api/Order/EditOrder'
@@ -65,7 +72,7 @@ export default class OrderList extends React.Component {
         style: styles.tdStyles,
         resizable: false,
         filterable: false,
-      },{
+      }, {
         Header: 'Started',
         accessor: 'startedDate',
         Cell: row => {
