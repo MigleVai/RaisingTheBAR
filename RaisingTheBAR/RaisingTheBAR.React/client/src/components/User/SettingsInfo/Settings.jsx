@@ -61,7 +61,7 @@ export default class Settings extends React.Component {
         var divPaperWidth = '';
         var textAlign = 'none';
         var paddingTextR = '';
-        var paddingTextL = '';
+      //  var paddingTextL = '';
         if (windowWidth > 450) {
             divPaperWidth = '59%';
             widthPaper = '450px';

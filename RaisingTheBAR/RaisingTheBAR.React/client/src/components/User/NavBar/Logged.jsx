@@ -19,26 +19,29 @@ export default class Logged extends React.Component {
     localStorage.removeItem('amount');
     axios.defaults.headers.common['Authorization'] = '';
     this.props.handleLogging(false);
+    this.handleDrawerToggle();
   }
+  handleDrawerToggle = () => this.setState({ open: !this.state.open })
 
   render() {
     return (
-      <div onBlur={() => this.setState({open: false})}>
       <IconMenu
         open={this.state.open}
         iconButtonElement={<IconButton><Person /></IconButton>}
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        onClick={() => this.setState({open: true})}
+        onClick={() => this.handleDrawerToggle()}
+        onRequestChange={(open) => this.handleDrawerToggle()}
+
       >
         <Link to="/shop/orders">
-          <MenuItem primaryText="Orders" onClick={() => this.setState({open: false})}/>
+          <MenuItem primaryText="Orders" onClick={this.handleDrawerToggle}/>
         </Link>
         <Link to="/shop/settings">
-          <MenuItem primaryText="Settings" onClick={() => this.setState({open: false})} />
+          <MenuItem primaryText="Settings" onClick={this.handleDrawerToggle} />
         </Link>
         <Link to="/shop">
-          <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} />
+          <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} /> 
         </Link>
       </IconMenu>
       </div>
