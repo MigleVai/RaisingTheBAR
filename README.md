@@ -1,6 +1,11 @@
 # RaisingTheBAR
 
 #### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
+## TAUTRI FIXE THE BUGE
+Product add, new product with picture and thumbnail - error handling (Unhandled Rejection (TypeError): Cannot read property 'data' of undefined)
+
+
+
 
 ## Spotting bugs with Vytautas
 
