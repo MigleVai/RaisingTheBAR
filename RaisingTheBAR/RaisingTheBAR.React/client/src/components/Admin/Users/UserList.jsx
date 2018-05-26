@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import UserOrders from './UserOrders'
 import update from 'immutability-helper';
 import ErrorMessage from '../../User/ErrorMessage';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 
 export default class UserList extends React.Component {
   constructor(props) {
@@ -74,12 +75,18 @@ export default class UserList extends React.Component {
         Header: 'Total cost of orders',
         accessor: 'totalCostOfOrders',
         style: styles.tdStyles,
+        Cell: row => {
+          return ToPriceDisplay(row.original.totalCostOfOrders);
+        },
         maxWidth: 200,
         resizable: false,
         filterable: false
       }, {
         Header: 'Average cost of orders',
         accessor: 'averageCostOfOrders',
+        Cell: row => {
+          return ToPriceDisplay(row.original.averageCostOfOrders);
+        },
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
