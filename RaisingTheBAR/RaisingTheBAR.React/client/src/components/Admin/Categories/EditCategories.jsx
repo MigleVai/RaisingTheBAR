@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CategoryTable from './CategoryTable';
 import CreatingCategoryForm from './CreatingCategoryForm';
+import EditCategoryProducts from './EditCategoryProducts'
 
 export default class EditCategories extends React.Component {
   constructor(props) {
@@ -14,9 +15,9 @@ export default class EditCategories extends React.Component {
     }
   }
   componentDidMount() {
-    this.getData()
+    this.getCategories()
   }
-  getData() {
+  getCategories() {
     var uri = '/api/Category/GetAllCategories';
     axios.get(uri
     ).then(res => {
@@ -53,7 +54,7 @@ export default class EditCategories extends React.Component {
           <TabList >
             <Tab >Category list</Tab>
             <Tab >Create category</Tab>
-            {/* <Tab >Category products</Tab> */}
+            <Tab >Edit category products</Tab>
           </TabList>
           <TabPanel>
             <CategoryTable categories={this.state.categories} />
@@ -61,9 +62,9 @@ export default class EditCategories extends React.Component {
           <TabPanel>
             <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)}/>
           </TabPanel>
-          {/* <TabPanel>
-            <CategoryProducts categories={this.state.categories} />
-          </TabPanel> */}
+          <TabPanel>
+            <EditCategoryProducts categories={this.state.categories} />
+          </TabPanel>
         </Tabs>
 
 

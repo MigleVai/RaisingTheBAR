@@ -2,6 +2,7 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import ToPriceDisplay from '../../../functions/ToPriceDisplay';
+import Button from '@material-ui/core/Button';
 
 export default class SubCategories extends React.Component {
   constructor() {
@@ -23,13 +24,27 @@ export default class SubCategories extends React.Component {
       {
         Header: "Name",
         accessor: "name",
+        Cell: row => {return row.original.name ? row.original.name : "Undefined"},
         style: styles.tdStyles,
       },
       {
         Header: "Product amount",
         accessor: "productAmount",
         style: styles.tdStyles,
-      }
+      }, {
+        Header: 'Delete subcategory',
+        Cell: row =>
+          <div>
+            {
+              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.props.onDeleteCategory(row.original)}>
+                Delete
+              </Button>
+            }
+          </div>,
+        style: styles.tdStyles,
+        resizable: false,
+        filterable: false
+      },
     ];
     return (
       <div>
