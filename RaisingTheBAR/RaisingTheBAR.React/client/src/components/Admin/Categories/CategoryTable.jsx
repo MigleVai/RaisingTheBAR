@@ -11,6 +11,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
+
 export default class CategoryTable extends React.Component {
   constructor(props) {
     super(props);
@@ -33,8 +34,19 @@ export default class CategoryTable extends React.Component {
   handleAddFormDialogClose = () => {
     this.setState({ openAddFormDialog: false });
   };
-  onDeleteCategory = (category) => {
+  handleDeleteCategory = (category) => {
     console.log(category)
+    // this.postCategoryRemove(category.id)
+  }
+  postCategoryRemove = (categoryId) => {
+    var removeUri = '/api/Category/RemoveCategory';
+    axios.post(removeUri, {
+      categoryId: categoryId,
+    }).catch(error => {
+      console.log("error with removing a category!")
+      console.log(error)
+    });
+    this.forceUpdate()
   }
   render() {
     const styles = {
@@ -46,6 +58,7 @@ export default class CategoryTable extends React.Component {
       {
         Header: 'Name',
         accessor: 'name',
+        Cell: row => { return row.original.name ? row.original.name : "Undefined" },
         style: styles.tdStyles,
         resizable: false,
         filterable: false,
@@ -66,7 +79,7 @@ export default class CategoryTable extends React.Component {
         Cell: row =>
           <div>
             {
-              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.onDeleteCategory(row.original)}>
+              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.handleDeleteCategory(row.original)}>
                 Delete
               </Button>
             }
@@ -91,7 +104,9 @@ export default class CategoryTable extends React.Component {
           SubComponent={
             row => {
               if (row.original.children.length) {
-                return <SubCategories subCategories={row.original.children} />
+                return <SubCategories
+                  onDeleteCategory={this.handleDeleteCategory.bind(this)}
+                  subCategories={row.original.children} />
               }
               else {
                 return null
