@@ -44,7 +44,6 @@ export default class Logged extends React.Component {
           <MenuItem primaryText="Sign out" onClick={this.handleLoggingChange.bind(this)} /> 
         </Link>
       </IconMenu>
-      </div>
     );
   }
 }
