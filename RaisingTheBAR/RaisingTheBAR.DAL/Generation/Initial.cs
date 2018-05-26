@@ -23,9 +23,9 @@ namespace RaisingTheBAR.DAL.Generation
                 }
                 SeedRoles(context);
                 //SeedUsers(context);
-                SeedCategories(context);
-                SeedProducts(context);
-                SeedProductsToCategories(context);
+                //SeedCategories(context);
+                //SeedProducts(context);
+                //SeedProductsToCategories(context);
             }
             return host;
         }
