@@ -270,11 +270,15 @@ class HorizontalLinearStepper extends React.Component {
         axios.get(`/api/User/GetUserData`)
             .then(res => {
                 const user = res.data;
-                if (user.firstName !== null) {
+                if (user.firstname !== null) {
                     this.setState({firstName: user.firstname});
+                }else{
+                    this.setState({firstName: ''});
                 }
-                if (user.lastName !== null) {
+                if (user.lastname !== null) {
                     this.setState({lastName: user.lastname});
+                }else{
+                    this.setState({lastName: ''});
                 }
             });
     }
