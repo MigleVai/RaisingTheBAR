@@ -156,13 +156,16 @@ namespace RaisingTheBAR.BLL.Controllers
             var productContext = _dbContext.Set<Product>();
             var imageList = new List<Image>();
 
-            var thumbnail = new Image()
+            if (!string.IsNullOrEmpty(request.Thumbnail))
             {
-                Product = product,
-                ImageBase64 = request.Thumbnail,
-                Type = ImageTypeEnum.Thumbnail
-            };
-            imageList.Add(thumbnail);
+                var thumbnail = new Image()
+                {
+                    Product = product,
+                    ImageBase64 = request.Thumbnail,
+                    Type = ImageTypeEnum.Thumbnail
+                };
+                imageList.Add(thumbnail);
+            }
             if (request.Images.Count == 1)
             {
                 var image = new Image()
@@ -203,6 +206,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
             if (result > 0)
             {
+                product.Images = null;
                 return Ok(product);
             }
 
@@ -319,6 +323,7 @@ namespace RaisingTheBAR.BLL.Controllers
 
                 if (result > 0)
                 {
+                    product.Images = null;
                     return Ok(product);
                 }
 
