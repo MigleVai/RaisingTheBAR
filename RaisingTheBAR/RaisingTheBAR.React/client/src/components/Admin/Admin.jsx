@@ -9,7 +9,7 @@ import AppBar from 'material-ui/AppBar';
 import AdminAuthentication from './AdminAuthentication';
 import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 
 export default class Admin extends React.Component {
@@ -98,7 +98,9 @@ export default class Admin extends React.Component {
               iconElementLeft={(<div />)}
             >
             </AppBar>
-            <Route exact path="/admin" render={(props) => <OrderList {...props} />} />
+            <Route exact path="/admin/" render={() => (
+              <Redirect to="/admin/orders" />)} />
+            <Route path="/admin/orders" render={(props) => <OrderList {...props} />} />
             <Route path="/admin/userlist" render={(props) => <UserList  {...props} />} />
             <Route path="/admin/editproducts" render={(props) => <EditProducts  {...props} />} />
             <Route path="/admin/excel" render={(props) => <Excel {...props} />} />
