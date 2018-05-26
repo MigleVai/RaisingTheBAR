@@ -157,7 +157,19 @@ namespace RaisingTheBAR.BLL.Controllers
             }
             return BadRequest("Something went wrong with database");
         }
+        //[Authorize(Roles = "administrator")]
+        [HttpGet("[Action]")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public IActionResult GetPossibleChildCategories()
+        {
+            var categoryContext = _dbContext.Set<Category>().Include(x=>x.ChildCategories);
+            var categories = categoryContext.Where(x => x.ParentCategoryId == null && !x.ChildCategories.Any());
 
+            return Ok(categories);
+        }
         [HttpGet("[Action]")]
         [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
         public IActionResult GetAllCategories()

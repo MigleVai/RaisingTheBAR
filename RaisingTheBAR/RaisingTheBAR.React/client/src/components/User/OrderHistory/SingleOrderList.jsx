@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 import ErrorMessage from '../ErrorMessage';
 
 export default class SingleOrderList extends React.Component {

@@ -2,6 +2,8 @@ import React from 'react';
 import ReactTable from 'react-table';
 import axios from 'axios';
 import ErrorMessage from '../../User/ErrorMessage';
+import ToDateDisplay from '../../../functions/ToDateDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 
 export default class UserOrders extends React.Component {
   constructor(props) {
@@ -41,6 +43,9 @@ export default class UserOrders extends React.Component {
         Header: 'Started',
         accessor: 'startedDate',
         style: styles.tdStyles,
+        Cell: row => {
+          return ToDateDisplay(row.original.startedDate)
+        },
         resizable: false,
         filterable: false,
       },
@@ -48,11 +53,17 @@ export default class UserOrders extends React.Component {
         Header: 'Last updated',
         accessor: 'lastUpdateDate',
         style: styles.tdStyles,
+        Cell: row => {
+          return row.original.lastUpdateDate ? ToDateDisplay(row.original.lastUpdateDate) : ""
+        },
         resizable: false,
         filterable: false
       }, {
         Header: 'Total price',
         accessor: 'totalPrice',
+        Cell: row => {
+          return ToPriceDisplay(row.original.totalPrice);
+        },
         style: styles.tdStyles,
         filterable: false,
         maxWidth: 200,
@@ -75,9 +86,6 @@ export default class UserOrders extends React.Component {
           defaultPageSize={5}
           className="-striped -highlight"
           style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
         />
       </div>
     )

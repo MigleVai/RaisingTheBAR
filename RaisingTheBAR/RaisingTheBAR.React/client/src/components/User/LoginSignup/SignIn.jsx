@@ -5,7 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ErrorMessage from '../ErrorMessage';
-import addTempCartCheck from '../../../functions/addTempCartCheck.js';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -38,18 +37,25 @@ export default class SignIn extends React.Component {
                     localStorage.setItem('role', 'user');
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
                     this.props.handleLogging(true);
-                    var tempCart = addTempCartCheck(true);
-                    if(Number(tempCart)){
-                        this.props.handleAmount(Number(tempCart));
-                    }else{
-                        this.setState({ responseError: tempCart});
+                    var array = localStorage.getItem('cartNotLogged');
+                    if (array !== null) {
+                        axios.post(`/api/Cart/AddTemporaryCartToDatabase`, JSON.parse(array))
+                            .then(res => {
+                                this.props.handleAmount(res.data);
+                            })
+                            .catch(error => {
+                                return error.response.data;
+                            });
                     }
-                    this.props.history.push('/');
+                    else{
+                        this.props.getDataAmount();
+                    }
+                    this.props.history.push('/shop');
                     localStorage.removeItem('productAmount');
                     localStorage.removeItem('cartNotLogged');
                 })
                 .catch(error => {
-                    this.setState({responseError: error.response.data});
+                    this.setState({ responseError: error.response.data });
                 });
         } else {
             var error = 'This field is required!';
@@ -98,7 +104,7 @@ export default class SignIn extends React.Component {
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
                     <h3 style={styles.textStyle}>Sign In</h3>
-                    <h6 style={styles.textStyle}>to Raise the BAR</h6>
+                    <h6 style={styles.textStyle}>to Raising the BAR</h6>
                 </div>
                 <form>
                     <TextField

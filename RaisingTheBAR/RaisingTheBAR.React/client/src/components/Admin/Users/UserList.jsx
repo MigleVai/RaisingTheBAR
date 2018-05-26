@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import matchSorter from 'match-sorter';
 import axios from 'axios';
 import FlatButton from 'material-ui/FlatButton';
 import UserOrders from './UserOrders'
@@ -62,9 +61,7 @@ export default class UserList extends React.Component {
         accessor: 'email',
         style: styles.tdStyles,
         resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['email'] }),
-        filterAll: true
+        filterable: false
       },
       {
         Header: 'Order count',
@@ -72,27 +69,21 @@ export default class UserList extends React.Component {
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['orderCount'] }),
-        filterAll: true,
+        filterable: false
       }, {
         Header: 'Total cost of orders',
         accessor: 'totalCostOfOrders',
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['totalCostOfOrders'] }),
-        filterAll: true
+        filterable: false
       }, {
         Header: 'Average cost of orders',
         accessor: 'averageCostOfOrders',
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['averageCostOfOrders'] }),
-        filterAll: true
+        filterable: false
       }, {
         Header: 'Block',
         accessor: 'blocked',
@@ -105,9 +96,7 @@ export default class UserList extends React.Component {
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
-        filterMethod: (filter, rows) =>
-          matchSorter(rows, filter.value, { keys: ['blocked'] }),
-        filterAll: true
+        filterable: false
       }
     ];
 
@@ -120,9 +109,6 @@ export default class UserList extends React.Component {
           defaultPageSize={10}
           className="-striped -highlight"
           style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
           SubComponent={row => {
             return (
               <div>

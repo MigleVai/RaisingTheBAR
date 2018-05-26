@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar';
 import Logged from './Logged';
 import FlatButton from 'material-ui/FlatButton';
 import BadgeIcon from './BadgeIcon';

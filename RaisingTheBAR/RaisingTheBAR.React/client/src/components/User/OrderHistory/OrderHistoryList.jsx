@@ -3,7 +3,7 @@ import axios from 'axios';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import SingleOrderList from './SingleOrderList';
-import ToPriceDisplay from '../functions/ToPriceDisplay';
+import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 import ErrorMessage from '../ErrorMessage';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
@@ -17,7 +17,7 @@ export default class OrderHistoryList extends React.Component {
             responseError: '',
             orders: [],
             open: false,
-            rating: 0,
+            rating: 1,
             comment: '',
             orderId: '',
             button: false

@@ -14,6 +14,7 @@ import OrderHistory from './OrderHistory/OrderHistory';
 import Settings from './SettingsInfo/Settings';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class User extends Component {
   constructor(props) {
@@ -22,36 +23,60 @@ export default class User extends Component {
       {
         logged: false,
         productAmount: 0,
-        open: false
+        open: false,
+        unrated: 0,
+        snackOpen: false,
       };
 
     this.handleLogging = this.handleLogging.bind(this);
-    this.handleAmount = this.handleAmount.bind(this);
     this.checkError = this.checkError.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.checkErrorOnTheGo = this.checkErrorOnTheGo.bind(this);
+    this.getUnrated = this.getUnrated.bind(this);
+    this.checkUnrated = this.checkUnrated.bind(this);
   }
+
+  getUnrated() {
+    axios.get(`/api/Order/GetUnratedOrder`)
+      .then(res => {
+        const gotOrders = res.data;
+        console.log(gotOrders);
+        if (gotOrders > 0) {
+          this.setState({ unrated: gotOrders, snackOpen: true });
+        }
+      });
+  }
+
   componentDidMount() {
     if (localStorage.getItem('jwtToken') && (localStorage.getItem('role') === 'user')) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwtToken');
       this.setState({ logged: true });
-      axios.get(`/api/Cart/GetProductAmountInCart`)
-        .then(res => {
-          this.setState({ productAmount: res.data });
-        })
-        .catch(error => {
-          if (error.response !== undefined && error.response.status === 401) {
-            this.setState({ open: true });
-          }
-        });
+      this.getDataAmount();
+      this.getUnrated();
     }
-
     if (localStorage.getItem('productAmount')) {
-      this.setState({ productAmount: localStorage.getItem('productAmount') });
+      this.handleAmount(localStorage.getItem('productAmount'));
     }
   }
 
-  handleAmount(settableAmount) {
+  checkUnrated() {
+    if (this.state.unrated > 0) {
+      var orderWord = "orders";
+      if(this.state.unrated === 1){
+        orderWord = "order";
+      }
+      return (
+        <Snackbar
+          open={this.state.snackOpen}
+          message={"You have " + this.state.unrated + " unrated "+ orderWord +"!"}
+          autoHideDuration={3000}
+          onRequestClose={() => this.setState({snackOpen: false})}
+        />
+      );
+    }
+  }
+
+  handleAmount = (settableAmount) => {
     this.setState({ productAmount: settableAmount });
   }
 
@@ -69,6 +94,17 @@ export default class User extends Component {
     localStorage.removeItem('amount');
   };
 
+  getDataAmount = () => {
+    axios.get(`/api/Cart/GetProductAmountInCart`)
+      .then(res => {
+        const result = res.data;
+        this.handleAmount(result);
+      })
+      .catch(error => {
+        this.setState({ responseError: error.response.data });
+      });
+      this.getUnrated();
+  }
   checkErrorOnTheGo() {
     axios.interceptors.response.use(undefined, function (error) {
       if (error.response.status === 401) {
@@ -95,8 +131,8 @@ export default class User extends Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
           >
-            Your session has ended! 
-            <br/>
+            Your session has ended!
+            <br />
             Please re-login.
         </Dialog>
         </div>
@@ -109,11 +145,11 @@ export default class User extends Component {
     return (
       <div className="App">
         <header>
-          <Route path="/shop" render={(props) => <Header productAmount={this.state.productAmount} {...props} handleLogging={this.handleLogging} islogged={this.state.logged} />} />
+          <Route path="/shop" render={(props) => <Header handleAmount={this.handleAmount} productAmount={this.state.productAmount} {...props} handleLogging={this.handleLogging} islogged={this.state.logged} />} />
         </header>
         <Route exact path="/shop" component={ImgCarousel} />
-        <Route path="/shop/signin" render={(props) => <SignIn handleAmount={this.handleAmount} {...props} handleLogging={this.handleLogging} />} />
-        <Route path="/shop/register" render={(props) => <Register handleAmount={this.handleAmount} {...props} handleLogging={this.handleLogging} />} />
+        <Route path="/shop/signin" render={(props) => <SignIn handleAmount={this.handleAmount} getDataAmount={this.getDataAmount} {...props} handleLogging={this.handleLogging} />} />
+        <Route path="/shop/register" render={(props) => <Register handleAmount={this.handleAmount} getDataAmount={this.getDataAmount} {...props} handleLogging={this.handleLogging} />} />
         <Route exact path="/shop/products" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/products/:category/:productId" render={(props) => <Item handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route exact path="/shop/products/:category" render={(props) => <ItemPage handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
@@ -121,10 +157,10 @@ export default class User extends Component {
         <Route path="/shop/stepper" render={(props) => <OrderStepper productAmount={this.state.productAmount} handleAmount={this.handleAmount} islogged={this.state.logged} {...props} />} />
         <Route path="/shop/orders" render={(props) => <OrderHistory logged={this.state.logged} {...props} />} />
         <Route path="/shop/settings" render={(props) => <Settings islogged={this.state.logged} {...props} />} />
-        {/* <Route path="/shop/stepper" component={} /> */}
         <Route path="/shop/payment" render={(props) => (
           !this.state.logged ? <Redirect to="/shop/signin" /> : <Payment />)} />
         {this.checkError()}
+        {this.checkUnrated()}
       </div>
     );
   }

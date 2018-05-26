@@ -1,14 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import ReactTable from 'react-table';
-import ErrorMessage from '../../User/ErrorMessage';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import CategoryTable from './CategoryTable';
+import CreatingCategoryForm from './CreatingCategoryForm';
 
-export default class AdminPanel extends React.Component {
+export default class EditCategories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responseError: '',
-      categories: []
+      tabIndex: 0,
+      categories: [],
     }
   }
   componentDidMount() {
@@ -26,48 +28,46 @@ export default class AdminPanel extends React.Component {
       this.setState({ responseError: error.response.request.statusText });
     });
   }
-  render() {
-    const styles = {
-      tdStyles: {
-        margin: 'auto',
-      }
-    };
-    const columns = [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        style: styles.tdStyles,
-        resizable: false,
-        filterable: false,
-      }, {
-        Header: 'Product amount',
-        accessor: 'productAmount',
-        style: styles.tdStyles,
-        resizable: false,
-        filterable: false
-      }
-    ];
+  handleTabChange = (event, value) => {
+    this.setState({ tabValue: value });
+  };
+  handleAddEvent() {
 
+    // var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
+
+    // var newCategory = {
+    //   id: id,
+    //   name: event.target.value,
+    //   children: [],
+    //   productAmount: 0,
+    //   isAdded : true
+    // }
+    // console.log(this.state.categories)
+    // this.state.categories.push(category);
+    // this.setState({categories: this.state.categories});
+  }
+  render() {
     return (
       <div>
-        <ErrorMessage responseError={this.state.responseError} />
-        < ReactTable
-          data={this.state.categories}
-          columns={columns}
-          defaultPageSize={5}
-          className="-striped -highlight"
-          style={{ display: 'contents' }}
-          filterable
-          defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]) === filter.value}
-          SubComponent={row => {
-            return (
-              <div>
-                <h1> Future implementation of categories functionality</h1>
-              </div>
-            )
-          }}
-        />
+        <Tabs selectedIndex={this.state.tabIndex} onSelect={current => this.setState({ tabIndex: current })}>
+          <TabList >
+            <Tab >Category list</Tab>
+            <Tab >Create category</Tab>
+            {/* <Tab >Category products</Tab> */}
+          </TabList>
+          <TabPanel>
+            <CategoryTable categories={this.state.categories} />
+          </TabPanel>
+          <TabPanel>
+            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)}/>
+          </TabPanel>
+          {/* <TabPanel>
+            <CategoryProducts categories={this.state.categories} />
+          </TabPanel> */}
+        </Tabs>
+
+
+
       </div>
     )
   }

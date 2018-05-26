@@ -35,8 +35,11 @@ export default class PersonalInfo extends React.Component {
         axios.get(`/api/User/GetUserData`)
             .then(res => {
                 const result = res.data;
-                if(result.firstname !== null){
-                    this.setState({ firstname: result.firstname, lastname: result.lastname });
+                if (result.firstname !== null) {
+                    this.setState({ firstname: result.firstname });
+                }
+                if (result.firstname !== null) {
+                    this.setState({ lastname: result.lastname });
                 }
             })
             .catch(error => {
@@ -81,7 +84,7 @@ export default class PersonalInfo extends React.Component {
                         floatingLabelFixed={true}
                         style={styles.textStyle}
                     />
-                    <br/>
+                    <br />
                     <TextField
                         value={this.state.lastname}
                         onChange={this.handleLastNameChange}
@@ -89,14 +92,14 @@ export default class PersonalInfo extends React.Component {
                         floatingLabelFixed={true}
                         style={styles.textStyle}
                     />
-                    <br/>
+                    <br />
                     <RaisedButton label="Submit" onClick={this.handleLoggingChange} />
                     <Snackbar
-                            open={this.state.open}
-                            message="Personal Information changed!"
-                            autoHideDuration={1000}
-                            onRequestClose={this.handleRequestClose}
-                        />
+                        open={this.state.open}
+                        message="Personal Information changed!"
+                        autoHideDuration={1000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </form>
             </div>
         );
