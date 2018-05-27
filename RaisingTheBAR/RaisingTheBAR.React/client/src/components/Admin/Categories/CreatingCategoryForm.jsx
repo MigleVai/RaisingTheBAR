@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class CreatingCategoryForm extends React.Component {
   constructor(props) {
@@ -14,27 +15,25 @@ export default class CreatingCategoryForm extends React.Component {
     this.state = {
       newCategoryName: '',
       newCategoryParentId: '',
-      newCategoryChildId: '',
       anchorElCategoryParent: null,
-      anchorElCategoryChild: null,
-      possibleSubCategories: [],
+      responseError: '',
     };
   }
-  componentDidMount() {
-    this.getSubCategories()
-  }
-  getSubCategories() {
-    var uri = '/api/Category/GetPossibleChildCategories';
-    axios.get(uri
-    ).then(res => {
-      const possibleSubCategories = res.data;
-      this.setState({ possibleSubCategories: possibleSubCategories });
-    }
-    ).catch(error => {
-      console.log("error with getting possible subcategories!")
-      this.setState({ responseError: error.response.request.statusText });
-    });
-  }
+  // componentDidMount() {
+  //   this.getSubCategories()
+  // }
+  // getSubCategories() {
+  //   var uri = '/api/Category/GetPossibleChildCategories';
+  //   axios.get(uri
+  //   ).then(res => {
+  //     const possibleSubCategories = res.data;
+  //     this.setState({ possibleSubCategories: possibleSubCategories });
+  //   }
+  //   ).catch(error => {
+  //     console.log("error with getting possible subcategories!")
+  //     this.setState({ responseError: error.response.request.statusText });
+  //   });
+  // }
   postNewCategory = () => {
     var createUri = '/api/Category/CreateCategory';
     axios.post(createUri, {
@@ -42,7 +41,7 @@ export default class CreatingCategoryForm extends React.Component {
       parentCategoryId: this.state.newCategoryParentId,
     }).catch(error => {
       console.log("error with creating new category!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     });
     this.forceUpdate()
   }
@@ -71,7 +70,7 @@ export default class CreatingCategoryForm extends React.Component {
     this.setState({ anchorElCategoryChild: null });
   };
   render() {
-    console.log(this.state.possibleSubCategories)
+    // console.log(this.state.possibleSubCategories)
     // const { anchorElCategoryParent } = this.state;
     // const { anchorElCategoryChild } = this.state;
 
@@ -87,6 +86,7 @@ export default class CreatingCategoryForm extends React.Component {
 
     return (
       <Paper style={{ width: 400, margin: "auto" }}>
+        <ErrorMessage responseError={this.state.responseError} />
         <form >
           <label htmlFor="name">Please enter new category name</label>
           <input
@@ -103,8 +103,6 @@ export default class CreatingCategoryForm extends React.Component {
               aria-haspopup="true"
               aria-controls="lock-menu"
               onClick={this.handleParentCategoryMenuOpen}
-              style={{ fontSize: 200 }}
-
             >
               <ListItemText
                 primary="Choose a parent"

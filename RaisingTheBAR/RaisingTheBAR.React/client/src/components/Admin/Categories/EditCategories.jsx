@@ -5,6 +5,7 @@ import 'react-tabs/style/react-tabs.css';
 import CategoryTable from './CategoryTable';
 import CreatingCategoryForm from './CreatingCategoryForm';
 import EditCategoryProducts from './EditCategoryProducts'
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class EditCategories extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export default class EditCategories extends React.Component {
     this.state = {
       tabIndex: 0,
       categories: [],
+      responseError: ''
     }
   }
   componentDidMount() {
@@ -50,6 +52,7 @@ export default class EditCategories extends React.Component {
   render() {
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         <Tabs selectedIndex={this.state.tabIndex} onSelect={current => this.setState({ tabIndex: current })}>
           <TabList >
             <Tab >Category list</Tab>
@@ -60,7 +63,7 @@ export default class EditCategories extends React.Component {
             <CategoryTable categories={this.state.categories} />
           </TabPanel>
           <TabPanel>
-            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)}/>
+            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)} />
           </TabPanel>
           <TabPanel>
             <EditCategoryProducts categories={this.state.categories} />

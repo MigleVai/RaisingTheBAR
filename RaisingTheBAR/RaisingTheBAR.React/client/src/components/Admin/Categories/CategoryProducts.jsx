@@ -28,6 +28,7 @@ export default class CategoryProducts extends React.Component {
         this.setState({ products: products });
       })
       .catch(error => {
+        console.log("Error with getting products by category")
         this.setState({ responseError: error.response.data });
       });
   }
@@ -38,7 +39,7 @@ export default class CategoryProducts extends React.Component {
       categoryId: this.props.category.id,
     }).catch(error => {
       console.log("error with removing product from a category!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     });
     this.forceUpdate()
   }
@@ -54,11 +55,17 @@ export default class CategoryProducts extends React.Component {
     this.setState({ removeProductId: undefined });
   }
   render() {
+    const styles = {
+      tdStyles: {
+        margin: 'auto',
+      }
+    };
     const columns = [
       {
         Header: 'Name',
         accessor: 'name',
-        // style: styles.tdStyles,
+        style: styles.tdStyles,
+        maxWidth: 400,
         resizable: false,
         filterable: false,
       }, {
@@ -67,31 +74,34 @@ export default class CategoryProducts extends React.Component {
         Cell: row => {
           return ToPriceDisplay(row.original.price);
         },
-        // style: styles.tdStyles,
+        maxWidth: 200,
+        style: styles.tdStyles,
       }, {
         Header: "Discounted price",
         accessor: "discountedPrice",
         Cell: row => {
           return ToPriceDisplay(row.original.discountedPrice);
         },
-        // style: styles.tdStyles,
+        maxWidth: 200,
+        style: styles.tdStyles,
       }, {
         Header: "Remove",
         Cell: row =>
           <div>
             <Button label="Remove" backgroundColor="#FF0000" onClick={() => this.handleRemoveProduct(row.original)} />
           </div>,
-        // style: styles.tdStyles,
+        style: styles.tdStyles,
       }
     ];
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         < ReactTable
           data={this.state.products}
           columns={columns}
           defaultPageSize={5}
           className="-striped -highlight"
-          // style={{ display: 'contents' }}
+        style={{ display: 'contents' }}
         />
       </div>
     )

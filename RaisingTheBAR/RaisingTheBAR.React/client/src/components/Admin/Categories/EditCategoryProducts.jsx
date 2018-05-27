@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactTable from 'react-table';
-import ErrorMessage from '../../User/ErrorMessage';
 import CategoryProducts from './CategoryProducts'
 import AddProduct from './AddProduct'
 
@@ -8,7 +7,6 @@ export default class EditCategoryProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responseError: '',
       categories: this.props.categories,
       allCategories: [],
     }
@@ -47,14 +45,14 @@ export default class EditCategoryProducts extends React.Component {
         accessor: 'name',
         Cell: row => { return row.original.name ? row.original.name : "Undefined" },
         style: styles.tdStyles,
-        maxWidth: 400,
+        maxWidth: 200,
         resizable: false,
         filterable: false,
       }, {
         Header: 'Product amount',
         accessor: 'productAmount',
         style: styles.tdStyles,
-        maxWidth: 200,
+        maxWidth: 150,
         resizable: false,
         filterable: false
       }, {

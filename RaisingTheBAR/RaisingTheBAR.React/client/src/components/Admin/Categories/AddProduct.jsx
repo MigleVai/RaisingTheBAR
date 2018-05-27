@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 import ToPriceDisplay from '../../../functions/ToPriceDisplay';
 import AddIcon from 'material-ui/svg-icons/content/add'
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class AddProduct extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ export default class AddProduct extends React.Component {
     this.state = {
       anchorElProductAdd: null,
       allProducts: [],
-      categoryProducts: []
+      categoryProducts: [],
+      responseError: '',
     }
   }
   // componentDidMount() {
@@ -69,7 +71,7 @@ export default class AddProduct extends React.Component {
     console.log("Gonna add dis")
     console.log(this.state.addProductId)
     this.postProductAdd()
-    this.setState({ addProductId: undefined})
+    this.setState({ addProductId: undefined })
   }
   handleAddProductMenuChoose = (event, index, id) => {
     this.setState({ selectedAddProductIndex: index, anchorElProductAdd: null, addProductId: id });
@@ -83,53 +85,56 @@ export default class AddProduct extends React.Component {
     this.setState({ anchorElProductAdd: null });
   };
   render() {
-    var availableForAddProducts = this.state.allProducts.filter((product) => {
-      return this.state.categoryProducts.indexOf(product) === -1;
-    });
-    console.log(availableForAddProducts)
+    // var availableForAddProducts = this.state.allProducts.filter((product) => {
+    //   return this.state.categoryProducts.indexOf(product) === -1;
+    // });
+    // console.log(availableForAddProducts)
     return (
-      <Toolbar style={{ display: "inline", padding: 0, backgroundColor: "#fffff", height: 3, boxSizing: "content-box" }}>
-        <ToolbarGroup>
-          <List style={{ width: 200, margin: "auto" }}>
-            <ListItem
-              button
-              aria-haspopup="true"
-              aria-controls="lock-menu"
-              onClick={this.handleAddProductMenuOpen}
-              style={{ fontSize: 200 }}
+      <div>
+        <ErrorMessage responseError={this.state.responseError} />
+        <Toolbar style={{ display: "inline", padding: 0, backgroundColor: "#fffff", height: 3, boxSizing: "content-box" }}>
+          <ToolbarGroup>
+            <List style={{ width: 200, margin: "auto" }}>
+              <ListItem
+                button
+                aria-haspopup="true"
+                aria-controls="lock-menu"
+                onClick={this.handleAddProductMenuOpen}
+                style={{ fontSize: 200 }}
+              >
+                <ListItemText
+                  primary="Choose a product to add"
+                  secondary={
+                    this.state.selectedAddProductIndex === undefined ?
+                      "None" :
+                      (this.state.allProducts[this.state.selectedAddProductIndex]).displayName + ToPriceDisplay((this.state.allProducts[this.state.selectedAddProductIndex]).price)}
+                />
+              </ListItem>
+            </List>
+            <Menu
+              id="add-product"
+              anchorEl={this.state.anchorElProductAdd}
+              open={Boolean(this.state.anchorElProductAdd)}
+              onClose={this.handleAddProductMenuClose}
             >
-              <ListItemText
-                primary="Choose a product to add"
-                secondary={
-                  this.state.selectedAddProductIndex === undefined ?
-                    "None" :
-                    (this.state.allProducts[this.state.selectedAddProductIndex]).displayName + ToPriceDisplay((this.state.allProducts[this.state.selectedAddProductIndex]).price)}
-              />
-            </ListItem>
-          </List>
-          <Menu
-            id="add-product"
-            anchorEl={this.state.anchorElProductAdd}
-            open={Boolean(this.state.anchorElProductAdd)}
-            onClose={this.handleAddProductMenuClose}
-          >
-            {/* pakeist i availableForAdd */}
-            {this.state.allProducts.map((option, index) => (
-              <MenuItem
-                key={option.id}
-                selected={index === this.state.selectedAddProductIndex}
-                onClick={event => this.handleAddProductMenuChoose(event, index, option.id)}>
-                {option.displayName + " " + ToPriceDisplay(option.price)}
-              </MenuItem>
-            ))}
-          </Menu>
-          <ToolbarSeparator style={{ display: "inline", marginLeft: 25, marginRight: 25 }} />
-          <Button onClick={this.handleAddProduct} style={{ marginRight: 12, marginLeft: 15, width: 150, height: 25 }} aria-label="Add a product">
-            Add chosen
+              {/* pakeist i availableForAdd */}
+              {this.state.allProducts.map((option, index) => (
+                <MenuItem
+                  key={option.id}
+                  selected={index === this.state.selectedAddProductIndex}
+                  onClick={event => this.handleAddProductMenuChoose(event, index, option.id)}>
+                  {option.displayName + " " + ToPriceDisplay(option.price)}
+                </MenuItem>
+              ))}
+            </Menu>
+            <ToolbarSeparator style={{ display: "inline", marginLeft: 25, marginRight: 25 }} />
+            <Button onClick={this.handleAddProduct} style={{ marginRight: 12, marginLeft: 15, width: 150, height: 25 }} aria-label="Add a product">
+              Add chosen
             <AddIcon style={{ color: "green" }} />
-          </Button>
-        </ToolbarGroup>
-      </Toolbar>
+            </Button>
+          </ToolbarGroup>
+        </Toolbar>
+      </div>
     )
   }
 }

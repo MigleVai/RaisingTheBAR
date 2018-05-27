@@ -18,7 +18,6 @@ export default class CategoryTable extends React.Component {
     if (this.props !== nextProps) {
       this.setState({ categories: nextProps.categories })
     }
-
   }
   handleAddFormDialogOpen = () => {
     this.setState({ openAddFormDialog: true });
@@ -37,7 +36,7 @@ export default class CategoryTable extends React.Component {
       categoryId: categoryId,
     }).catch(error => {
       console.log("error with removing a category!")
-      console.log(error)
+      this.setState({ responseError: error.response.data });
     });
     this.forceUpdate()
   }
@@ -85,6 +84,7 @@ export default class CategoryTable extends React.Component {
     ];
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         < ReactTable
           data={this.state.categories}
           columns={columns}
