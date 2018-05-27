@@ -159,10 +159,8 @@ export default class EditProducts extends React.Component {
                 }
               })
             })
-            console.log(res)
           }).catch(error => {
             console.log("error with edditing product!")
-            console.log(error)
             if (error.message) {
               this.setState({ responseError: error.message })
             }

@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminProductRow from './AdminProductRow';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 
 export default class AdminProductTable extends React.Component {
@@ -52,8 +52,7 @@ export default class AdminProductTable extends React.Component {
 
     return (
       <div>
-        <RaisedButton style={{ margin: 8 }} label="Save changes" backgroundColor="#FF0000" onClick={this.onSaveEvent.bind(this)} />
-        <button style={{ width: 100 + 'px', }} type="button" onClick={this.props.onRowAdd} className="btn btn-success pull-right">Add</button>
+        <Button style={{ margin: 8, backgroundColor:"#FF0000" }}  onClick={this.onSaveEvent.bind(this)}> Save changes </Button>
         <table style={{ width: 100 + "%" }} className="table table-bordered">
           <thead >
             <tr style={{ verticalAlign: "middle", textAlign: "center" }}>
@@ -73,6 +72,8 @@ export default class AdminProductTable extends React.Component {
           </tbody>
 
         </table>
+        <Button style={{ width: 100 + 'px', backgroundColor: "green", float:"right", margin: 10}} onClick={this.props.onRowAdd}>Add</Button>
+
         <Snackbar
           open={this.state.openSnackbar}
           message="Some files were rejected, maybe they were not images, or over 1 MB size"
