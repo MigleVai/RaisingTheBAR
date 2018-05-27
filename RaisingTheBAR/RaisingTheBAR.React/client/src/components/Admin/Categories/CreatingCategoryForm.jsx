@@ -86,9 +86,11 @@ export default class CreatingCategoryForm extends React.Component {
     // console.log(availableChildren)
 
     return (
-      <Paper style={{width: 400, margin: "auto"}}>
+      <Paper style={{ width: 400, margin: "auto" }}>
         <form >
+          <label htmlFor="name">Please enter new category name</label>
           <input
+            id="name"
             type="text"
             placeholder="Category name"
             value={this.state.newCategoryName}
@@ -101,7 +103,7 @@ export default class CreatingCategoryForm extends React.Component {
               aria-haspopup="true"
               aria-controls="lock-menu"
               onClick={this.handleParentCategoryMenuOpen}
-              style={{fontSize: 200}}
+              style={{ fontSize: 200 }}
 
             >
               <ListItemText
@@ -125,35 +127,6 @@ export default class CreatingCategoryForm extends React.Component {
               </MenuItem>
             ))}
           </Menu>
-          <List style={{ width: 200, margin: "auto" }}>
-            <ListItem
-              button
-              aria-haspopup="true"
-              aria-controls="lock-menu"
-              onClick={this.handleChildCategoryMenuOpen}
-            >
-              <ListItemText
-                primary="Choose a child"
-                secondary={this.state.selectedChildIndex === undefined ? "None" : (this.props.categories[this.state.selectedChildIndex]).name}
-              />
-            </ListItem>
-          </List>
-          <Menu
-            id="choose-child"
-            anchorEl={this.state.anchorElCategoryChild}
-            open={Boolean(this.state.anchorElCategoryChild)}
-            onClose={this.handleChildCategoryMenuClose}
-          >
-            {this.state.possibleSubCategories.map((option, index) => (
-              <MenuItem
-                key={option.id}
-                selected={index === this.state.selectedChildIndex}
-                onClick={event => this.handleChildCategoryMenuChoose(event, index, option.id)}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </Menu>
-
           <Button onClick={this.postNewCategory} color="primary">
             Submit
         </Button>

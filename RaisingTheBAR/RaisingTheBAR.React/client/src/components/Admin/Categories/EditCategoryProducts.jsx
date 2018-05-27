@@ -1,11 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import ReactTable from 'react-table';
 import ErrorMessage from '../../User/ErrorMessage';
-import SubCategories from './SubCategories'
-import AddRemoveProduct from './AddRemoveProduct'
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import CategoryProducts from './CategoryProducts'
+import AddProduct from './AddProduct'
 
 export default class EditCategoryProducts extends React.Component {
   constructor(props) {
@@ -13,7 +10,6 @@ export default class EditCategoryProducts extends React.Component {
     this.state = {
       responseError: '',
       categories: this.props.categories,
-      openAddFormDialog: false,
       allCategories: [],
     }
   }
@@ -34,8 +30,6 @@ export default class EditCategoryProducts extends React.Component {
         margin: 'auto',
       }
     };
-    var subCategories = this.props.categories.filter
-
     var hasChildren = this.props.categories.filter((category) => {
       return category.children.length > 0;
     });
@@ -47,20 +41,29 @@ export default class EditCategoryProducts extends React.Component {
     }
     var allCategories = this.props.categories.concat(children)
 
-    // var unique = children.filter((v, i, a) => a.indexOf(v) === i)
-    // console.log(unique)
-
     const columns = [
       {
         Header: 'Name',
         accessor: 'name',
         Cell: row => { return row.original.name ? row.original.name : "Undefined" },
         style: styles.tdStyles,
+        maxWidth: 400,
         resizable: false,
         filterable: false,
       }, {
         Header: 'Product amount',
         accessor: 'productAmount',
+        style: styles.tdStyles,
+        maxWidth: 200,
+        resizable: false,
+        filterable: false
+      }, {
+        Header: 'Add a product',
+        Cell: row => {
+          return <div>
+            <AddProduct category={row.original} />
+          </div>
+        },
         style: styles.tdStyles,
         resizable: false,
         filterable: false
@@ -79,7 +82,7 @@ export default class EditCategoryProducts extends React.Component {
             row => {
               return (
                 <div>
-                  <AddRemoveProduct category={row.original} />
+                  <CategoryProducts category={row.original} />
                 </div>
               )
             }
