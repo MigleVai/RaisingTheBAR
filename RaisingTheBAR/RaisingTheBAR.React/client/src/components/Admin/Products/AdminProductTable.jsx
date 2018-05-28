@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminProductRow from './AdminProductRow';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Snackbar from 'material-ui/Snackbar';
 
 export default class AdminProductTable extends React.Component {
