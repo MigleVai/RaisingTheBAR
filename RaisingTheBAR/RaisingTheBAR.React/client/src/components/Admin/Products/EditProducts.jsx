@@ -132,7 +132,6 @@ export default class EditProducts extends React.Component {
                 }
               })
             })
-            console.log(res)
           }).catch(error => {
             console.log("error with adding product!")
             product.isAdded = true

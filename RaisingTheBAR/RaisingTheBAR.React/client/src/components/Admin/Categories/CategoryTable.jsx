@@ -28,7 +28,7 @@ export default class CategoryTable extends React.Component {
   };
   handleDeleteCategory = (category) => {
     console.log(category)
-    // this.postCategoryRemove(category.id)
+    this.postCategoryRemove(category.id)
   }
   postCategoryRemove = (categoryId) => {
     var removeUri = '/api/Category/RemoveCategory';
@@ -38,7 +38,12 @@ export default class CategoryTable extends React.Component {
       console.log("error with removing a category!")
       this.setState({ responseError: error.response.data });
     });
-    this.forceUpdate()
+    this.sleep(500).then(() => {
+      this.props.refresh()
+    })
+  }
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
   render() {
     const styles = {

@@ -20,7 +20,7 @@ export default class CategoryProducts extends React.Component {
     var productsByCategoryUri = '/api/Product/GetProductsByCategories';
     axios.get(productsByCategoryUri, {
       params: {
-        categoryName: this.props.category
+        categoryName: this.props.category.name
       }
     })
       .then(res => {
@@ -41,18 +41,22 @@ export default class CategoryProducts extends React.Component {
       console.log("error with removing product from a category!")
       this.setState({ responseError: error.response.data });
     });
-    this.forceUpdate()
+    this.sleep(500).then(() => {
+      this.getData()
+    })
+  }
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
   handleRemoveProduct = (product) => {
     this.handleSubmit(product)
   }
-  handleSubmit = () => {
+  handleSubmit = (product) => {
     console.log("Gonna edit dis category")
     console.log(this.props.category.id)
     console.log("Gonna remove dis")
-    console.log(this.state.removeProductId)
-    // this.postProductRemove(product)
-    this.setState({ removeProductId: undefined });
+    console.log(product.id)
+    this.postProductRemove(product)
   }
   render() {
     const styles = {
@@ -88,7 +92,7 @@ export default class CategoryProducts extends React.Component {
         Header: "Remove",
         Cell: row =>
           <div>
-            <Button label="Remove" backgroundColor="#FF0000" onClick={() => this.handleRemoveProduct(row.original)} />
+            <Button onClick={() => this.handleRemoveProduct(row.original)}> Remove </Button>
           </div>,
         style: styles.tdStyles,
       }

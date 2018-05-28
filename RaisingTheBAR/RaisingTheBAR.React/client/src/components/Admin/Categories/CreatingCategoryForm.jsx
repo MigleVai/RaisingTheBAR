@@ -19,38 +19,14 @@ export default class CreatingCategoryForm extends React.Component {
       responseError: '',
     };
   }
-  // componentDidMount() {
-  //   this.getSubCategories()
-  // }
-  // getSubCategories() {
-  //   var uri = '/api/Category/GetPossibleChildCategories';
-  //   axios.get(uri
-  //   ).then(res => {
-  //     const possibleSubCategories = res.data;
-  //     this.setState({ possibleSubCategories: possibleSubCategories });
-  //   }
-  //   ).catch(error => {
-  //     console.log("error with getting possible subcategories!")
-  //     this.setState({ responseError: error.response.request.statusText });
-  //   });
-  // }
-  postNewCategory = () => {
-    var createUri = '/api/Category/CreateCategory';
-    axios.post(createUri, {
-      name: this.state.newCategoryName,
-      parentCategoryId: this.state.newCategoryParentId,
-    }).catch(error => {
-      console.log("error with creating new category!")
-      this.setState({ responseError: error.response.data });
-    });
-    this.forceUpdate()
+  onSubmit = () => {
+    // this.props.onAddEvent(this.state.newCategoryName, this.state.newCategoryParentId)
+    console.log(this.state.newCategoryName, this.state.newCategoryParentId)
+    this.setState({newCategoryName: '', newCategoryParentId: '', selectedParentIndex: undefined})
   }
   handleNameChange = event => {
     this.setState({ newCategoryName: event.target.value });
   };
-  handleSubmit = () => {
-    console.log(this.state.newCategoryName)
-  }
   handleParentCategoryMenuChoose = (event, index, id) => {
     this.setState({ selectedParentIndex: index, anchorElCategoryParent: null, newCategoryParentId: id });
   }
@@ -125,7 +101,7 @@ export default class CreatingCategoryForm extends React.Component {
               </MenuItem>
             ))}
           </Menu>
-          <Button onClick={this.postNewCategory} color="primary">
+          <Button onClick={this.onSubmit} color="primary">
             Submit
         </Button>
         </form>
