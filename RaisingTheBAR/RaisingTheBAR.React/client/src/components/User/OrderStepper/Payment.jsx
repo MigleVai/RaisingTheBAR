@@ -21,7 +21,7 @@ export default class Payment extends React.Component {
     handleCvvChange(event) {
         this.props.handleCvv(event.target.value);
         var re = RegExp('\\b[0-9]{3}\\b');
-        if (!re.test(event.target.value)) {
+        if (!re.test(event.target.value) || event.target.value < 100) {
             this.props.handleCvvError('Not a valid cvv!');
         } else {
             this.props.handleCvvError('');
@@ -104,7 +104,7 @@ export default class Payment extends React.Component {
             imgStyle: {
                 margin: 'auto',
                 paddingTop: '6%',
-                width: '40%'
+                width: '200px'
 
             },
             buttonStyle: {
