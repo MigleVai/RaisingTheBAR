@@ -109,7 +109,7 @@ export default class AdminProductRow extends React.Component {
                   this.onDropImageEvent(accepted, rejected)
                 }}
                 accept="image/*">
-                <IconButton style={{ padding: 0, width: 25, height: 25 }} tooltip="Any image up to 1MB">
+                <IconButton style={{ padding: 0, width: 25, height: 25 }} tooltip="Drop or select multiple at once if needed. Any images up to 1MB">
                   <AddAPhoto />
                 </IconButton>
               </Dropzone>

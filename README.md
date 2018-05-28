@@ -8,13 +8,7 @@ Order info mozziloj
 
 Cvv su minusu paeina
 
-Kai atidarai orders pakeist pagal ka rusiuoja
-
 Filtravimai react table idet ghost teksta pvz search
-
-Nuotrauku pridejimas overwrite state, maybe make po viena pridet pora
-
-Kuriant kategorija name field atrd kaip search...
 
 In react components IDK if this will be used still
 
@@ -35,6 +29,12 @@ Error parsing nicer
 Greitaveika product edite
 
 ## Marked as resolved
+
+~~Nuotrauku pridejimas overwrite state, maybe make po viena pridet pora~~ tooltip padariau...
+
+~~Kuriant kategorija name field atrd kaip search...~~
+
+~~Kai atidarai orders pakeist pagal ka rusiuoja~~
 
 ~~ne per daug post'u getAllCategories, getProductAmountInCart, getCart?~~ maybe someday we will fix this
 
