@@ -69,7 +69,9 @@ namespace RaisingTheBAR.BLL.Controllers
         public IActionResult AddProductToCategory([FromBody]ProductCategoryRequest request)
         {
             var productContext = _dbContext.Set<Product>().Include(x => x.ProductCategories);
-            var categoryContext = _dbContext.Set<Category>();
+            var categoryContext = _dbContext.Set<Category>()
+                .Include(x => x.ParentCategory).ThenInclude(x => x.ProductCategories)
+                .Include(x => x.ChildCategories).ThenInclude(x => x.ProductCategories);
 
             var product = productContext.FirstOrDefault(x => x.Id == Guid.Parse(request.ProductId));
             var category = categoryContext.FirstOrDefault(x => x.Id == Guid.Parse(request.CategoryId));
@@ -83,13 +85,31 @@ namespace RaisingTheBAR.BLL.Controllers
             {
                 product.ProductCategories = new List<ProductCategory>();
             }
-            product.ProductCategories.Add(new ProductCategory
+
+            if (product.ProductCategories.FirstOrDefault(x =>
+                    x.CategoryId == category.Id && x.ProductId == category.Id) != null)
             {
-                Category = category,
-                CategoryId = category.Id,
-                Product = product,
-                ProductId = product.Id
+                return BadRequest("This product is already in this category");
+            }
+
+            if (category.ParentCategory.ProductCategories.FirstOrDefault(x =>
+                    x.CategoryId == category.Id && x.ProductId == category.Id) != null)
+            {
+                return BadRequest("This product is already in parent category");
+            }
+            if (category.ChildCategories.Any(y => y.ProductCategories.FirstOrDefault(x =>
+                    x.CategoryId == category.Id && x.ProductId == category.Id) != null))
+            {
+                return BadRequest("This product is already in child category");
+            }
+            var pcContext = _dbContext.Set<ProductCategory>();
+
+            pcContext.Add(new ProductCategory()
+            {
+                CategoryId = Guid.Parse(request.CategoryId),
+                ProductId = Guid.Parse(request.ProductId)
             });
+
             var result = _dbContext.SaveChanges();
             if (result > 0)
             {
