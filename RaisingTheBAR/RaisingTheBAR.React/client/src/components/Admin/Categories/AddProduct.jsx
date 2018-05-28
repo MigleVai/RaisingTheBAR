@@ -48,7 +48,9 @@ export default class AddProduct extends React.Component {
         this.setState({ categoryProducts: products });
       })
       .catch(error => {
-        this.setState({ responseError: error.response.data });
+        if (error.response.data) {
+          this.setState({ responseError: error.response.data });
+        }
       });
   }
   postProductAdd = () => {
