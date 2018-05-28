@@ -87,18 +87,18 @@ namespace RaisingTheBAR.BLL.Controllers
             }
 
             if (product.ProductCategories.FirstOrDefault(x =>
-                    x.CategoryId == category.Id && x.ProductId == category.Id) != null)
+                    x.CategoryId == category.Id && x.ProductId == product.Id) != null)
             {
                 return BadRequest("This product is already in this category");
             }
 
             if (category.ParentCategory?.ProductCategories?.FirstOrDefault(x =>
-                    x.CategoryId == category.Id && x.ProductId == category.Id) != null)
+                    x.CategoryId == category.Id && x.ProductId == product.Id) != null)
             {
                 return BadRequest("This product is already in parent category");
             }
             if (category.ChildCategories?.Any(y => y.ProductCategories?.FirstOrDefault(x =>
-                    x.CategoryId == category.Id && x.ProductId == category.Id) != null) == true)
+                    x.CategoryId == category.Id && x.ProductId == product.Id) != null) == true)
             {
                 return BadRequest("This product is already in child category");
             }
