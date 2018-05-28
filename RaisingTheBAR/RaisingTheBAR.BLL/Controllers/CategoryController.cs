@@ -92,13 +92,13 @@ namespace RaisingTheBAR.BLL.Controllers
                 return BadRequest("This product is already in this category");
             }
 
-            if (category.ParentCategory.ProductCategories.FirstOrDefault(x =>
+            if (category.ParentCategory?.ProductCategories?.FirstOrDefault(x =>
                     x.CategoryId == category.Id && x.ProductId == category.Id) != null)
             {
                 return BadRequest("This product is already in parent category");
             }
-            if (category.ChildCategories.Any(y => y.ProductCategories.FirstOrDefault(x =>
-                    x.CategoryId == category.Id && x.ProductId == category.Id) != null))
+            if (category.ChildCategories?.Any(y => y.ProductCategories?.FirstOrDefault(x =>
+                    x.CategoryId == category.Id && x.ProductId == category.Id) != null) == true)
             {
                 return BadRequest("This product is already in child category");
             }
