@@ -59,7 +59,6 @@ class HorizontalLinearStepper extends React.Component {
         this.handleExpYearError = this.handleExpYearError.bind(this);
         this.handleExpMonthError = this.handleExpMonthError.bind(this);
         this.handleResponse = this.handleResponse.bind(this);
-        //this.mobileOrderSum = this.mobileOrderSum.bind(this);
     }
     updateChild() {
         this.setState(state => ({
@@ -304,11 +303,8 @@ class HorizontalLinearStepper extends React.Component {
         }
         const { finished, stepIndex } = this.state;
         const contentStyle = { margin: '0 16px' };
-        //197 eilute -> , maxWidth: 70%
         return (
             <div style={{ width: '100%', margin: 'auto' }}>
-                {/* <Breadcrumb pathname={this.props.location.pathname} /> */}
-
                 <div>
                     <Stepper activeStep={stepIndex} style={{ float: floatStepper, width: widthStepper, paddingLeft: paddingLeft }}>
                         <Step>
@@ -327,7 +323,6 @@ class HorizontalLinearStepper extends React.Component {
                             <div>
                                 <FlatButton
                                     label={this.getLabel()}
-                                    //label='Back'
                                     disabled={stepIndex === 0}
                                     onClick={this.handlePrev}
 

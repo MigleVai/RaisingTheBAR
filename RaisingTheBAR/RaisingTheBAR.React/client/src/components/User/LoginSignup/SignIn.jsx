@@ -21,7 +21,7 @@ export default class SignIn extends React.Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleLoggingChange = this.handleLoggingChange.bind(this);
     }
-    // reikes cia patikrint ar geri prisijungimo duomenys
+
     handleLoggingChange(props) {
         if (this.state.emailError === '' && this.state.passwordError === ''
             && this.state.email !== '' && this.state.password !== '') {
@@ -99,7 +99,6 @@ export default class SignIn extends React.Component {
             }
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
@@ -132,7 +131,6 @@ export default class SignIn extends React.Component {
                     </div>
                 </form>
             </div>
-            //  </Jumbotron>
         );
     }
 }

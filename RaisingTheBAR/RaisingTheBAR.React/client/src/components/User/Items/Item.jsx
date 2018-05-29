@@ -52,7 +52,6 @@ export default class Item extends React.Component {
                     .then(res => {
                         const result = res.data;
                         this.props.handleAmount(result);
-                        // localStorage.setItem('amount', result);
                         this.handleClick();
                     })
                     .catch(error => {

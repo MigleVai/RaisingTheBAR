@@ -74,7 +74,7 @@ export default class CartTable extends React.Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.cart.length !== this.props.cart.length) { //Number(amount) !== this.state.products.length && 
+        if (nextProps.cart.length !== this.props.cart.length) {
             this.setState({ products: nextProps.cart });
             this.props.update();
             return true;
@@ -134,7 +134,7 @@ export default class CartTable extends React.Component {
                 margin: 'auto',
             },
         };
-        // var data = this.props.cart;
+        
         const columns = [
             {
                 Header: 'Name',

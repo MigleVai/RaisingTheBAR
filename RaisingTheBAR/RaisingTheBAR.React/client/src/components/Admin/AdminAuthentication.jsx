@@ -83,7 +83,6 @@ export default class AdminAuthentication extends React.Component {
             }
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
@@ -111,7 +110,6 @@ export default class AdminAuthentication extends React.Component {
                     <RaisedButton buttonStyle={styles.buttonStyle} onClick={this.handleLoggingChange.bind(this)} label="Submit" primary={true} />
                 </form>
             </div>
-            //  </Jumbotron>
         );
     }
 }

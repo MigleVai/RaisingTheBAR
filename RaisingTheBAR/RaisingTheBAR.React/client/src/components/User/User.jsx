@@ -40,7 +40,6 @@ export default class User extends Component {
     axios.get(`/api/Order/GetUnratedOrder`)
       .then(res => {
         const gotOrders = res.data;
-        console.log(gotOrders);
         if (gotOrders > 0) {
           this.setState({ unrated: gotOrders, snackOpen: true });
         }
@@ -140,8 +139,6 @@ export default class User extends Component {
     }
   }
   render() {
-   // this.checkErrorOnTheGo();
-    //cart 62 eilute
     return (
       <div className="App">
         <header>

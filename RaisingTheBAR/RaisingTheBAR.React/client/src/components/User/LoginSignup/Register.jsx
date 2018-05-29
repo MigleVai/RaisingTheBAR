@@ -92,7 +92,7 @@ export default class Register extends React.Component {
                     localStorage.removeItem('productAmount');
                     localStorage.removeItem('cartNotLogged');
                 })
-                .catch(error => {//(function (error) {
+                .catch(error => {
                     this.setState({ responseError: error.response.data });
                 });
         } else {
@@ -122,7 +122,6 @@ export default class Register extends React.Component {
             }
         };
         return (
-            //  <Jumbotron>
             <div style={styles.displayStyles}>
                 <ErrorMessage responseError={this.state.responseError} />
                 <div>
@@ -161,7 +160,6 @@ export default class Register extends React.Component {
                     <br />
                     <RaisedButton onClick={this.handleLoggingChange.bind(this)} buttonStyle={styles.buttonStyle} label="Submit" primary={true} />
                 </form>
-                {/* </Jumbotron> */}
             </div>
         );
     }
