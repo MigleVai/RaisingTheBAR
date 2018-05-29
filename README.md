@@ -6,11 +6,7 @@
 
 Order info mozziloj
 
-Cvv su minusu paeina
-
 Filtravimai react table idet ghost teksta pvz search
-
-In react components IDK if this will be used still
 
 Pašalinti errora iš carto -- ???
 
@@ -29,6 +25,12 @@ Error parsing nicer
 Greitaveika product edite
 
 ## Marked as resolved
+
+~~Cvv su minusu paeina~~
+
+~~In react components IDK if this will be used still~~
+
+~~edit products snackbar po skemingo saugojimo/add~~
 
 ~~Nuotrauku pridejimas overwrite state, maybe make po viena pridet pora~~ tooltip padariau...
 
