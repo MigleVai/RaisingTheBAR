@@ -111,7 +111,7 @@ namespace RaisingTheBAR.BLL.Controllers
             });
 
             var result = _dbContext.SaveChanges();
-            if (result > 0)
+            if (result == 0)
             {
                 return BadRequest("Something went wrong with database");
             }
@@ -160,15 +160,22 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(403)]
         public IActionResult RemoveCategory([FromBody]RemoveCategoryRequest request)
         {
-            var categoryContext = _dbContext.Set<Category>();
+            var categoryContext = _dbContext.Set<Category>().Include(x=>x.ProductCategories).Include(x=>x.ChildCategories);
             var category = categoryContext.FirstOrDefault(x => x.Id == Guid.Parse(request.Id));
 
             if (category == null)
             {
                 return BadRequest("Category doesnt exist");
             }
-
+            if (category.ChildCategories.Any())
+            {
+                foreach (var child in category.ChildCategories)
+                {
+                    child.ParentCategoryId = null;
+                }
+            }
             _dbContext.Remove(category);
+
             var result = _dbContext.SaveChanges();
 
             if (result > 0)
@@ -183,12 +190,16 @@ namespace RaisingTheBAR.BLL.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
-        public IActionResult GetPossibleChildCategories()
+        public IActionResult GetPossibleProductsForCategory(string categoryId)
         {
-            var categoryContext = _dbContext.Set<Category>().Include(x=>x.ChildCategories);
-            var categories = categoryContext.Where(x => x.ParentCategoryId == null && !x.ChildCategories.Any());
+            var productContext = _dbContext.Set<Product>().Include(x => x.ProductCategories).ThenInclude(x => x.Category).ThenInclude(x=>x.ChildCategories);
+            var id = Guid.Parse(categoryId);
+            var products = productContext.Where(x => x.ProductCategories.Any(y => y.CategoryId == id 
+                                                    || y.Category.ParentCategoryId == id 
+                                                    || y.Category.ChildCategories.Any(z=>z.Id == id)) == false);
 
-            return Ok(categories);
+           
+            return Ok(products.Select(x=> new { Name = x.DisplayName, Price = x.Price }));
         }
         [HttpGet("[Action]")]
         [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
