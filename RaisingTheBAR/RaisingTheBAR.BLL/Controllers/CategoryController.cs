@@ -199,7 +199,7 @@ namespace RaisingTheBAR.BLL.Controllers
                                                     || y.Category.ChildCategories.Any(z=>z.Id == id)) == false);
 
            
-            return Ok(products.Select(x=> new { Name = x.DisplayName, Price = x.Price }));
+            return Ok(products.Select(x=> new { Name = x.DisplayName, Price = x.Price, Id = x.Id }));
         }
         [HttpGet("[Action]")]
         [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), 200)]
