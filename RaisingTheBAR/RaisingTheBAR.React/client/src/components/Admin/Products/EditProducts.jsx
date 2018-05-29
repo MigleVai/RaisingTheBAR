@@ -6,6 +6,7 @@ import update from 'immutability-helper';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ErrorMessage from '../../User/ErrorMessage';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class EditProducts extends React.Component {
 
@@ -17,8 +18,10 @@ export default class EditProducts extends React.Component {
       filterText: "",
       products: [],
       inTransaction: false,
-      responseError: ''
-    };
+      responseError: '',
+      openSnackbar: false
+    }
+    this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this)
     this.handlePosts = this.handlePosts.bind(this);
     this.handleEditConflict = this.handleEditConflict.bind(this);
     this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
@@ -39,6 +42,16 @@ export default class EditProducts extends React.Component {
         this.setState({ responseError: error.response.data });
       });
   }
+  handleSnackbarClose = () => {
+    this.setState({
+      openSnackbar: false
+    });
+  }
+  handleSnackbarOpen = () => {
+    this.setState({
+      openSnackbar: true
+    });
+  };
   handleSaveButtonClick = () => {
     this.handleTransactionState(true);
     this.handleSaveDialogClose();
@@ -128,10 +141,11 @@ export default class EditProducts extends React.Component {
                 [index]: {
                   timestamp: { $set: res.data.timestamp },
                   id: { $set: res.data.id },
-                  isAdded: {$set: undefined}
+                  isAdded: { $set: undefined }
                 }
               })
             })
+            this.handleSnackbarOpen()
           }).catch(error => {
             console.log("error with adding product!")
             product.isAdded = true
@@ -158,6 +172,7 @@ export default class EditProducts extends React.Component {
                 }
               })
             })
+            this.handleSnackbarOpen()
           }).catch(error => {
             console.log("error with edditing product!")
             if (error.message) {
@@ -281,6 +296,12 @@ export default class EditProducts extends React.Component {
         >
           One or more product edits failed, because they had already been changed by somebody else. <b>We will refresh the page for you.</b>
         </Dialog>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message="Products were succesfully saved"
+          autoHideDuration={4000}
+          onRequestClose={this.handleSnackbarClose}
+        />
       </div>
     );
 
