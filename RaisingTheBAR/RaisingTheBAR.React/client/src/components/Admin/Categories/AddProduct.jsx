@@ -43,9 +43,8 @@ export default class AddProduct extends React.Component {
       productId: this.state.addProductId,
       categoryId: this.props.category.id,
     }).catch(error => {
-      if (error.response.data) {
-        this.setState({ responseError: error.response.data });
-      }
+      const response = error.response
+      this.setState({ responseError: response.data, possibleProducts: [] });
     });
   }
   handleAddProduct = () => {

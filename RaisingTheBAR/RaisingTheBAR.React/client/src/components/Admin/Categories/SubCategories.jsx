@@ -35,7 +35,7 @@ export default class SubCategories extends React.Component {
         Cell: row =>
           <div>
             {
-              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.props.onDeleteCategory(row.original)}>
+              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.props.onDeleteCategory(row.original.id)}>
                 Delete
               </Button>
             }
