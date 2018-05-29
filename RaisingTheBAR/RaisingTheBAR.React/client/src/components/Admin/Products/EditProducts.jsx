@@ -111,6 +111,7 @@ export default class EditProducts extends React.Component {
     var editUri = '/api/Product/EditProduct';
     var products = this.state.products.slice();
     products.forEach((product) => {
+      var index = this.state.products.indexOf(product);
       if (product.isSaved !== undefined && product.isSaved === false) {
         if (product.isAdded === true && product.isAdded !== undefined) {
           axios.post(addUri, {
@@ -121,6 +122,16 @@ export default class EditProducts extends React.Component {
             thumbnail: product.thumbnail,
             discountedPrice: product.discountedPrice,
             isFeatured: product.isFeatured
+          }).then((res) => {
+            this.setState({
+              products: update(this.state.products, {
+                [index]: {
+                  timestamp: { $set: res.data.timestamp },
+                  id: { $set: res.data.id },
+                  isAdded: {$set: undefined}
+                }
+              })
+            })
           }).catch(error => {
             console.log("error with adding product!")
             product.isAdded = true
@@ -139,9 +150,16 @@ export default class EditProducts extends React.Component {
             timestamp: product.timestamp,
             isFeatured: product.isFeatured,
             isEnabled: product.isEnabled
+          }).then((res) => {
+            this.setState({
+              products: update(this.state.products, {
+                [index]: {
+                  timestamp: { $set: res.data.timestamp },
+                }
+              })
+            })
           }).catch(error => {
             console.log("error with edditing product!")
-            console.log(error)
             if (error.message) {
               this.setState({ responseError: error.message })
             }

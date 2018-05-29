@@ -1,29 +1,64 @@
 # RaisingTheBAR
 
-#### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md) 
-## TAUTRI FIXE THE BUGE
-Product add, new product with picture and thumbnail - error handling (Unhandled Rejection (TypeError): Cannot read property 'data' of undefined)
+#### [Bendravimas su užsakovu](/INFO/BendravimasSuUzsakovu.md)
 
-Nelogink execleo ant importo
+## UNRESOLVED
 
+Order info mozziloj
 
-## Spotting bugs with Vytautas
+Cvv su minusu paeina
+
+Filtravimai react table idet ghost teksta pvz search
+
+In react components IDK if this will be used still
+
+Pašalinti errora iš carto -- ???
+
+Credit card number nice format -- idk
+
+Su cartu prisijungus errorai -- ???
+
+Order Stepper kartais forceUpdate ar kazka padaro ne vietoj, kai eini is order details i payment details
+
+CVV image too small on mobile
+
+Nice loading image on mobile, Make it on desktop
+
+Error parsing nicer
+
+Greitaveika product edite
+
+## Marked as resolved
+
+~~Nuotrauku pridejimas overwrite state, maybe make po viena pridet pora~~ tooltip padariau...
+
+~~Kuriant kategorija name field atrd kaip search...~~
+
+~~Kai atidarai orders pakeist pagal ka rusiuoja~~
+
+~~ne per daug post'u getAllCategories, getProductAmountInCart, getCart?~~ maybe someday we will fix this
+
+~~Rodyt kur esi admine~~
+
+~~Siunciant exceli isvalyt state~~
+
+~~Product add, new product with picture and thumbnail - error handling (Unhandled Rejection (TypeError): Cannot read property 'data' of undefined)~~
+
+~~Nelogink execleo ant importo~~
+
+~~Order liste kai ner produktu nerodyt. O kodel is vis yra tokiu(cj del testavimu)~~
+
+~~User liste naudot topricedispl~~
 
 ~~Raise the bar to raising the bar in sign in~~
 
 ~~Remove errrors after success~~
 
-Pašalinti errora iš carto -- ???
-
 ~~Maybe add first name and last name to order info~~
-
-Credit card number nice format -- idk
 
 ~~Carto skaičius po prisijungimo nusinulina~~
 
 ~~Next not active po prisijungimo carte~~
-
-Su cartu prisijungus errorai -- ???
 
 ~~User options must close after click~~
 
@@ -31,19 +66,13 @@ Su cartu prisijungus errorai -- ???
 
 ~~Order info center on mobile~~
 
-CVV image too small on mobile
-
-Nice loading image on mobile, Make it on desktop
-
 ~~Change information on the left on mobile~~ kind of
 
 ~~Repeating password incorrect~~ < - i think its done
 
-Error parsing nicer
+~~Set timestamp after product edit and timestamp and id after add~~
 
-Set timestamp after product edit and timestamp and id after add
-
-Duplication on add and edit
+~~Duplication on add and edit~~
 
 ~~Date display pirkeju sarase~~
 
@@ -52,11 +81,6 @@ Duplication on add and edit
 ~~Filtrus ir sortus isimti is pirkeju saraso~~
 
 ~~Add email to order list~~
-
-Greitaveika product edite
-
-## Spotting bugs
-~~ne per daug post'u getAllCategories, getProductAmountInCart, getCart?~~ maybe someday we will fix this
 
 ~~itemPage kai paspaudi ant tuscios eilutes meta error~~
 
@@ -72,7 +96,6 @@ settings info nera kai pirma kart prisijungi~~
 paymente leidzia susimoket neprisijungus?
 paymentas kai submittini ner dialog kazkokio
 paymentas nedingsta krepselyje prekes kai submittini~~
-
 
 ~~carte filtravimas ir searchas ar reikalingas?
 carte jei ner nieko ar reikia stepperio ir next?~~

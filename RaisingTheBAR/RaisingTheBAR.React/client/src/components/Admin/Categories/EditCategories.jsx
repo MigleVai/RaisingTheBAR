@@ -4,6 +4,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CategoryTable from './CategoryTable';
 import CreatingCategoryForm from './CreatingCategoryForm';
+import EditCategoryProducts from './EditCategoryProducts'
+import ErrorMessage from '../../User/ErrorMessage';
 
 export default class EditCategories extends React.Component {
   constructor(props) {
@@ -11,12 +13,13 @@ export default class EditCategories extends React.Component {
     this.state = {
       tabIndex: 0,
       categories: [],
+      responseError: ''
     }
   }
   componentDidMount() {
-    this.getData()
+    this.getCategories()
   }
-  getData() {
+  getCategories() {
     var uri = '/api/Category/GetAllCategories';
     axios.get(uri
     ).then(res => {
@@ -28,42 +31,47 @@ export default class EditCategories extends React.Component {
       this.setState({ responseError: error.response.request.statusText });
     });
   }
+  postNewCategory = (name, parentId) => {
+    var createUri = '/api/Category/CreateCategory';
+    axios.post(createUri, {
+      name: this.state.newCategoryName,
+      parentCategoryId: this.state.newCategoryParentId,
+    }).catch(error => {
+      console.log("error with creating new category!")
+      this.setState({ responseError: error.response.data });
+    });
+  }
   handleTabChange = (event, value) => {
     this.setState({ tabValue: value });
   };
-  handleAddEvent() {
-
-    // var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
-
-    // var newCategory = {
-    //   id: id,
-    //   name: event.target.value,
-    //   children: [],
-    //   productAmount: 0,
-    //   isAdded : true
-    // }
-    // console.log(this.state.categories)
-    // this.state.categories.push(category);
-    // this.setState({categories: this.state.categories});
+  handleAddEvent =(name, parentId) => {
+    this.postNewCategory(name, parentId);
+    this.sleep(500).then(() => {
+      this.getCategories()
+    })
+  }
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
   render() {
     return (
       <div>
+        <ErrorMessage responseError={this.state.responseError} />
         <Tabs selectedIndex={this.state.tabIndex} onSelect={current => this.setState({ tabIndex: current })}>
           <TabList >
             <Tab >Category list</Tab>
             <Tab >Create category</Tab>
-            {/* <Tab >Category products</Tab> */}
+            <Tab >Edit category products</Tab>
           </TabList>
           <TabPanel>
-            <CategoryTable categories={this.state.categories} />
+            <CategoryTable refresh={this.getCategories.bind(this)} categories={this.state.categories} />
           </TabPanel>
           <TabPanel>
-            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)}/>
+            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)} />
           </TabPanel>
-          {/* <TabPanel>
-            <CategoryProducts categories={this.state.categories} />
-          </TabPanel> */}
+          <TabPanel>
+            <EditCategoryProducts categories={this.state.categories} />
+          </TabPanel>
         </Tabs>
 
 

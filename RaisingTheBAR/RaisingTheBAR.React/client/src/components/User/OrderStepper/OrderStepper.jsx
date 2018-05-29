@@ -358,7 +358,7 @@ class HorizontalLinearStepper extends React.Component {
 
                             <p> {this.state.response}</p>
                             <p> You will be redirected shortly.</p>
-                            <img style={{ width: '100%' }} alt="Loading..." src="https://camo.githubusercontent.com/95a5827b9ac945165d531184c9288bae16f03f11/68747470733a2f2f692e726564642e69742f6f756e71316d77356b6478792e676966" />
+                            <img style={{ width: '200px' }} alt="Loading..." src="https://camo.githubusercontent.com/95a5827b9ac945165d531184c9288bae16f03f11/68747470733a2f2f692e726564642e69742f6f756e71316d77356b6478792e676966" />
                             <span hidden>{this.state.redirect ? (<Redirect to="/shop" />) : (setTimeout(function () {
                                 this.setState({ redirect: true }); //After 5 seconds, set redirect to true
                             }.bind(this), 5000))}</span>
