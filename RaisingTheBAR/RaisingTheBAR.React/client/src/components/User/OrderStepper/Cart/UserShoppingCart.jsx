@@ -80,12 +80,10 @@ export default class UserShoppingCart extends React.Component {
 
     getInformationAndUpdate() {
         if (this.props.islogged === true) {
-            // logged in/registered - amount is saved in 'amount'
             this.getData();
             this.getDataAmount();
             localStorage.setItem('amount', this.state.totalAmountProducts);
         } else {
-            // NOT logged in/registered - amount is saved in 'productAmount'
             var am = localStorage.getItem('productAmount');
             if (am == null) {
                 this.setState({ totalAmountProducts: 0 });

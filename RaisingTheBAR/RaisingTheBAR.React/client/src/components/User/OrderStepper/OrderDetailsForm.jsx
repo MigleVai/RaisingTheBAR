@@ -28,7 +28,6 @@ export default class OrderDetailsForm extends React.Component {
 
     handleFirstNameChange(event) {
         this.props.handleFirstName(event.target.value);
-        //this.setState({ firstName: event.target.value });
         var re = RegExp('[A-Za-z]');
         if (!re.test(this.props.firstName)) {
             this.props.handleFirstNameError('Not a valid name!');

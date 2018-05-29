@@ -32,7 +32,6 @@ export default class ItemPage extends React.Component {
                 .then(res => {
                     const result = res.data;
                     this.props.handleAmount(result);
-                    // localStorage.setItem('amount', result);
                 })
                 .catch(error => {
                     this.setState({ responseError: error.response.data });

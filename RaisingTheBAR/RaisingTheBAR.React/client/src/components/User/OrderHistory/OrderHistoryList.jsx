@@ -109,7 +109,7 @@ export default class OrderHistoryList extends React.Component {
             },
             tdStyles: {
                 margin: 'auto',
-            }
+            },
         };
         const columnsOrders = [
             {
@@ -205,10 +205,13 @@ export default class OrderHistoryList extends React.Component {
                         />
                         <br />
                         <TextField
-                            floatingLabelText="Comment"
-                            hintText="Optional..."
                             value={this.state.comment}
                             onChange={(event) => this.setState({ comment: event.target.value })}
+                            floatingLabelText="Comment"
+                            floatingLabelFixed={true}
+                            style={styles.textFieldSytle}
+                            hintText="Optional..."
+                            fullWidth
                         />
                     </Dialog>
                 </div>
