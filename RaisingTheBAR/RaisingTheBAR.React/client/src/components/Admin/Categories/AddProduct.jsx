@@ -43,8 +43,9 @@ export default class AddProduct extends React.Component {
       productId: this.state.addProductId,
       categoryId: this.props.category.id,
     }).catch(error => {
-      console.log("error with adding product to a category!")
-      console.log(error)
+      if (error.response.data) {
+        this.setState({ responseError: error.response.data });
+      }
     });
   }
   handleAddProduct = () => {
@@ -91,7 +92,6 @@ export default class AddProduct extends React.Component {
               open={Boolean(this.state.anchorElProductAdd)}
               onClose={this.handleAddProductMenuClose}
             >
-              {/* pakeist i availableForAdd */}
               {this.state.possibleProducts.map((option, index) => (
                 <MenuItem
                   key={option.id}

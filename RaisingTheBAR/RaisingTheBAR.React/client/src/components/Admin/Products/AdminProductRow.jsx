@@ -65,7 +65,6 @@ export default class AdminProductRow extends React.Component {
       }
     })
   }
-
   render() {
     let trStyle = {
       backgroundColor: '#FFFFFF'

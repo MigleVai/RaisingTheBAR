@@ -18,7 +18,7 @@ export default class CreatingCategoryForm extends React.Component {
   }
   onSubmit = () => {
     this.props.onAddCategoryEvent(this.state.newCategoryName, this.state.newCategoryParentId)
-    this.setState({newCategoryName: '', newCategoryParentId: '', selectedParentIndex: undefined})
+    this.setState({ newCategoryName: '', newCategoryParentId: '', selectedParentIndex: undefined })
   }
   handleNameChange = event => {
     this.setState({ newCategoryName: event.target.value });
@@ -54,7 +54,7 @@ export default class CreatingCategoryForm extends React.Component {
             onChange={this.handleNameChange}
             style={{ width: 200, margin: "auto" }}
           />
-          <hr/>
+          <hr />
           <label htmlFor="parent">Don't select if you want it to be a parent category</label>
           <List style={{ width: 200, margin: "auto" }} id="parent">
             <ListItem
@@ -89,7 +89,6 @@ export default class CreatingCategoryForm extends React.Component {
         </Button>
         </form>
       </Paper>
-
     );
   }
 }

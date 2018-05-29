@@ -23,7 +23,7 @@ export default class SubCategories extends React.Component {
       {
         Header: "Name",
         accessor: "name",
-        Cell: row => {return row.original.name ? row.original.name : "Undefined"},
+        Cell: row => { return row.original.name ? row.original.name : "Undefined" },
         style: styles.tdStyles,
       },
       {

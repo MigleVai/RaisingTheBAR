@@ -27,7 +27,6 @@ export default class EditCategories extends React.Component {
       this.setState({ categories: categories });
     }
     ).catch(error => {
-      console.log("error with getting all categories!")
       this.setState({ responseError: error.response.request.statusText });
     });
   }
@@ -37,7 +36,6 @@ export default class EditCategories extends React.Component {
       name: name,
       parentCategoryId: parentId,
     }).catch(error => {
-      console.log("error with creating new category!")
       this.setState({ responseError: error.response.data });
     });
     this.refresh();
@@ -73,9 +71,6 @@ export default class EditCategories extends React.Component {
             <EditCategoryProducts refresh={this.refresh.bind(this)} categories={this.state.categories} />
           </TabPanel>
         </Tabs>
-
-
-
       </div>
     )
   }

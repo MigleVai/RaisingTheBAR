@@ -9,7 +9,6 @@ import ErrorMessage from '../../User/ErrorMessage';
 import Snackbar from 'material-ui/Snackbar';
 
 export default class EditProducts extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +37,6 @@ export default class EditProducts extends React.Component {
         this.setState({ products: products });
       })
       .catch(error => {
-        console.log("Error with getting products")
         this.setState({ responseError: error.response.data });
       });
   }
@@ -147,7 +145,6 @@ export default class EditProducts extends React.Component {
             })
             this.handleSnackbarOpen()
           }).catch(error => {
-            console.log("error with adding product!")
             product.isAdded = true
             this.setState({ responseError: error.response.data });
           });
@@ -174,7 +171,6 @@ export default class EditProducts extends React.Component {
             })
             this.handleSnackbarOpen()
           }).catch(error => {
-            console.log("error with edditing product!")
             if (error.message) {
               this.setState({ responseError: error.message })
             }
@@ -192,7 +188,6 @@ export default class EditProducts extends React.Component {
     })
     this.setState({ products: products })
   };
-
   handleAddEvent() {
     var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
     var product = {
@@ -210,7 +205,6 @@ export default class EditProducts extends React.Component {
     this.state.products.push(product);
     this.setState({ products: this.state.products });
   }
-
   handleProductTable(evt) {
     var item = {
       id: evt.target.id,
@@ -304,9 +298,7 @@ export default class EditProducts extends React.Component {
         />
       </div>
     );
-
   }
-
 }
 
 

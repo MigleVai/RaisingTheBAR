@@ -32,7 +32,6 @@ export default class EditCategoryProducts extends React.Component {
       }
     }
     var allCategories = this.props.categories.concat(children)
-
     const columns = [
       {
         Header: 'Name',
@@ -60,7 +59,6 @@ export default class EditCategoryProducts extends React.Component {
         resizable: false,
         filterable: false
       }
-
     ];
     return (
       <div>

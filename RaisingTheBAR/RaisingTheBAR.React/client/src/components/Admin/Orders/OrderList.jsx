@@ -27,7 +27,6 @@ export default class OrderList extends React.Component {
       const orders = res.data;
       this.setState({ orders: orders });
     }).catch(error => {
-      console.log("error with getting all orders!")
       this.setState({ responseError: error.response.data });
     });
   }
@@ -47,7 +46,6 @@ export default class OrderList extends React.Component {
     this.sleep(500).then(() => {
       this.getData()
     })
-
   }
   postOrderStateChange = (orderState, id) => {
     var statusChangeUri = '/api/Order/EditOrder'
@@ -55,7 +53,6 @@ export default class OrderList extends React.Component {
       orderId: id,
       orderState: orderState
     }).catch(error => {
-      console.log("error with changing order state!")
       this.setState({ responseError: error.response.data });
     })
   }
@@ -120,7 +117,6 @@ export default class OrderList extends React.Component {
         resizable: false
       }
     ];
-
     return (
       <div>
         <ErrorMessage responseError={this.state.responseError} />

@@ -12,8 +12,8 @@ export default class EditableNumberCell extends React.Component {
       WebkitAppearance: "none",
       margin: 0,
       MozAppearance: "textfield",
-      display: "table-cell", 
-      width: 100 + "%" 
+      display: "table-cell",
+      width: 100 + "%"
     }
     return (
       <td style={{ verticalAlign: "middle", textAlign: "center" }}>

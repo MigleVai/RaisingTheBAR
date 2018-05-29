@@ -27,7 +27,6 @@ export default class UserOrders extends React.Component {
       this.setState({ orders: orders });
     }
     ).catch(error => {
-      console.log("error with getting user orders!")
       this.setState({ responseError: error.response.data });
 
     });
@@ -76,7 +75,6 @@ export default class UserOrders extends React.Component {
         resizable: false
       }
     ];
-
     return (
       <div>
         <ErrorMessage responseError={this.state.responseError} />

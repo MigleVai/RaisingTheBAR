@@ -28,7 +28,6 @@ export default class Excel extends React.Component {
       document.body.appendChild(link);
       link.click();
     }).catch(error => {
-      console.log("error with exporting excel!")
       this.setState({ responseError: error.response.data });
     })
   }
@@ -45,7 +44,6 @@ export default class Excel extends React.Component {
       document.body.appendChild(link);
       link.click();
     }).catch(error => {
-      console.log("error with downloading excel template!")
       this.setState({ responseError: error.response.data });
     })
   }
@@ -55,12 +53,10 @@ export default class Excel extends React.Component {
       this.state.base64Files.forEach(base64 => {
         axios.post(importUri, { excelBase64: base64 }
         ).catch(error => {
-          console.log("error with importing excel!")
-          console.log(this.state.rejected)
-          this.setState({ responseError: error.response.data, accepted: [], base64Files: [], rejected: []});
+          this.setState({ responseError: error.response.data, accepted: [], base64Files: [], rejected: [] });
         })
       })
-      this.setState({ base64Files: [], accepted: [], rejected: []});
+      this.setState({ base64Files: [], accepted: [], rejected: [] });
     }
   }
   renderAccepted() {
@@ -89,7 +85,6 @@ export default class Excel extends React.Component {
         })
       }
     })
-
     if (rejected.length !== 0) {
       this.setState(prevState => ({
         rejected: [...prevState.rejected, rejected]
@@ -144,7 +139,6 @@ export default class Excel extends React.Component {
           </section>
         </Card>
       </div >
-
     )
   }
 }

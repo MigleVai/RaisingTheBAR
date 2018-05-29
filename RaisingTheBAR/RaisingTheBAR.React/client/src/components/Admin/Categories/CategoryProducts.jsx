@@ -28,7 +28,6 @@ export default class CategoryProducts extends React.Component {
         this.setState({ products: products });
       })
       .catch(error => {
-        console.log("Error with getting products by category")
         this.setState({ responseError: error.response.data });
       });
   }
@@ -38,7 +37,6 @@ export default class CategoryProducts extends React.Component {
       productId: id,
       categoryId: this.props.category.id,
     }).catch(error => {
-      console.log("error with removing product from a category!")
       this.setState({ responseError: error.response.data });
     });
     this.props.refresh()
@@ -90,7 +88,7 @@ export default class CategoryProducts extends React.Component {
           columns={columns}
           defaultPageSize={5}
           className="-striped -highlight"
-        style={{ display: 'contents' }}
+          style={{ display: 'contents' }}
         />
       </div>
     )

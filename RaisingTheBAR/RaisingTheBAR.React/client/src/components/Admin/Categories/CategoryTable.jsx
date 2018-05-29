@@ -31,7 +31,6 @@ export default class CategoryTable extends React.Component {
     axios.post(removeUri, {
       id: id,
     }).catch(error => {
-      console.log("error with removing a category!")
       this.setState({ responseError: error.response.data });
     });
     this.props.refresh()
@@ -76,7 +75,6 @@ export default class CategoryTable extends React.Component {
         resizable: false,
         filterable: false
       },
-
     ];
     return (
       <div>
@@ -102,7 +100,6 @@ export default class CategoryTable extends React.Component {
               }
             }
           }
-
         />
       </div>
     )

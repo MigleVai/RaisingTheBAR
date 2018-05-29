@@ -31,7 +31,6 @@ export default class AdminProductTable extends React.Component {
     var thumbnailChange = this.props.onThumbnailChange;
     var imageChange = this.props.onImageChange;
     var handleSnackbarOpen = this.handleSnackbarOpen;
-
     var filterText = this.props.filterText;
     var product = this.props.products.map(function (product) {
       if (product.displayName.indexOf(filterText) === -1) {
@@ -49,10 +48,9 @@ export default class AdminProductTable extends React.Component {
           openSnackbar={handleSnackbarOpen.bind(this)}
         />)
     });
-
     return (
       <div>
-        <Button style={{ margin: 8, backgroundColor:"#FF0000" }}  onClick={this.onSaveEvent.bind(this)}> Save changes </Button>
+        <Button style={{ margin: 8, backgroundColor: "#FF0000" }} onClick={this.onSaveEvent.bind(this)}> Save changes </Button>
         <table style={{ width: 100 + "%" }} className="table table-bordered">
           <thead >
             <tr style={{ verticalAlign: "middle", textAlign: "center" }}>
@@ -66,14 +64,11 @@ export default class AdminProductTable extends React.Component {
               <th style={{ width: 2 + "%", verticalAlign: "middle", textAlign: "center" }} >Is disabled</th>
             </tr>
           </thead>
-
           <tbody>
             {product}
           </tbody>
-
         </table>
-        <Button style={{ width: 100 + 'px', backgroundColor: "green", float:"right", margin: 10}} onClick={this.props.onRowAdd}>Add</Button>
-
+        <Button style={{ width: 100 + 'px', backgroundColor: "green", float: "right", margin: 10 }} onClick={this.props.onRowAdd}>Add</Button>
         <Snackbar
           open={this.state.openSnackbar}
           message="Some files were rejected, maybe they were not images, or over 1 MB size"

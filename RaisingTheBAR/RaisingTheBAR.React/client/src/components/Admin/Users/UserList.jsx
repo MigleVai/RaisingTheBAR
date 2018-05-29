@@ -27,7 +27,6 @@ export default class UserList extends React.Component {
         this.setState({ users: users });
       })
       .catch(error => {
-        console.log("error with getting user data!")
         this.setState({ responseError: error.response.data });
       });
   }
@@ -37,7 +36,6 @@ export default class UserList extends React.Component {
       email: user.email,
       blocked: !user.blocked
     }).catch(error => {
-      console.log("error with blocking/unblocking user!")
       this.setState({ responseError: error.response.data });
     });
     var index = this.state.users.indexOf(user);
@@ -94,19 +92,27 @@ export default class UserList extends React.Component {
       }, {
         Header: 'Block',
         accessor: 'blocked',
-        Cell: user => <div>{
-          user.original.blocked === false ?
-            <FlatButton label="Block user" backgroundColor="#FF0000" onClick={() => this.handleBlockEvent(user.original)} />
-            :
-            <FlatButton label="Unblock user" backgroundColor="#00FF00" onClick={() => this.handleBlockEvent(user.original)} />
-        }</div>,
+        Cell: user =>
+          <div>
+            {
+              user.original.blocked === false ?
+                <FlatButton
+                  label="Block user"
+                  backgroundColor="#FF0000"
+                  onClick={() => this.handleBlockEvent(user.original)} />
+                :
+                <FlatButton
+                  label="Unblock user"
+                  backgroundColor="#00FF00"
+                  onClick={() => this.handleBlockEvent(user.original)} />
+            }
+          </div>,
         style: styles.tdStyles,
         maxWidth: 200,
         resizable: false,
         filterable: false
       }
     ];
-
     return (
       <div>
         <ErrorMessage responseError={this.state.responseError} />
