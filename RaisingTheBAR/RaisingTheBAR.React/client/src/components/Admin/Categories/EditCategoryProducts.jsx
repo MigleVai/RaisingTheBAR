@@ -16,12 +16,6 @@ export default class EditCategoryProducts extends React.Component {
       this.setState({ categories: nextProps.categories })
     }
   }
-  handleRemoveProduct = (category) => {
-    console.log(category)
-  }
-  handleAddProduct = (category) => {
-    console.log(category)
-  }
   render() {
     const styles = {
       tdStyles: {
@@ -59,7 +53,7 @@ export default class EditCategoryProducts extends React.Component {
         Header: 'Add a product',
         Cell: row => {
           return <div>
-            <AddProduct category={row.original} />
+            <AddProduct refresh={this.props.refresh.bind(this)} category={row.original} />
           </div>
         },
         style: styles.tdStyles,
@@ -80,7 +74,7 @@ export default class EditCategoryProducts extends React.Component {
             row => {
               return (
                 <div>
-                  <CategoryProducts category={row.original} />
+                  <CategoryProducts refresh={this.props.refresh.bind(this)} category={row.original} />
                 </div>
               )
             }

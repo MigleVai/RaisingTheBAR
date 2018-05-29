@@ -5,9 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
-import ErrorMessage from '../../User/ErrorMessage';
 
 export default class CreatingCategoryForm extends React.Component {
   constructor(props) {
@@ -16,12 +14,10 @@ export default class CreatingCategoryForm extends React.Component {
       newCategoryName: '',
       newCategoryParentId: '',
       anchorElCategoryParent: null,
-      responseError: '',
     };
   }
   onSubmit = () => {
-    // this.props.onAddEvent(this.state.newCategoryName, this.state.newCategoryParentId)
-    console.log(this.state.newCategoryName, this.state.newCategoryParentId)
+    this.props.onAddCategoryEvent(this.state.newCategoryName, this.state.newCategoryParentId)
     this.setState({newCategoryName: '', newCategoryParentId: '', selectedParentIndex: undefined})
   }
   handleNameChange = event => {
@@ -46,23 +42,8 @@ export default class CreatingCategoryForm extends React.Component {
     this.setState({ anchorElCategoryChild: null });
   };
   render() {
-    // console.log(this.state.possibleSubCategories)
-    // const { anchorElCategoryParent } = this.state;
-    // const { anchorElCategoryChild } = this.state;
-
-    // var availableChildren = this.props.categories.map(function (category) {
-    //   if (category.children.length) {
-    //     return category.children.map(function (child) {
-    //       return child
-    //     })
-    //   }
-    // })
-    // const availableChildren = (this.props.categories.filter(children => children.length > 0)).filter();
-    // console.log(availableChildren)
-
     return (
       <Paper style={{ width: 400, margin: "auto" }}>
-        <ErrorMessage responseError={this.state.responseError} />
         <form >
           <label htmlFor="name">Please enter new category name</label>
           <input
@@ -73,7 +54,9 @@ export default class CreatingCategoryForm extends React.Component {
             onChange={this.handleNameChange}
             style={{ width: 200, margin: "auto" }}
           />
-          <List style={{ width: 200, margin: "auto" }}>
+          <hr/>
+          <label htmlFor="parent">Don't select if you want it to be a parent category</label>
+          <List style={{ width: 200, margin: "auto" }} id="parent">
             <ListItem
               button
               aria-haspopup="true"

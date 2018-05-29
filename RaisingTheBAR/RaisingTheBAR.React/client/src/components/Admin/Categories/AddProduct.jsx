@@ -16,36 +16,20 @@ export default class AddProduct extends React.Component {
     super(props);
     this.state = {
       anchorElProductAdd: null,
-      allProducts: [],
-      categoryProducts: [],
+      possibleProducts: [],
       responseError: '',
     }
   }
-  // componentDidMount() {
-  //   this.getAllProducts()
-  // }
-  getAllProducts = () => {
-    var uri = '/api/Administrator/GetProducts';
-    axios.get(uri)
-      .then(res => {
-        const products = res.data;
-        this.setState({ allProducts: products });
-      })
-      .catch(error => {
-        console.log("Error with getting products")
-        this.setState({ responseError: error.response.data });
-      });
-  }
-  getCategoryProducts = () => {
-    var productsByCategoryUri = '/api/Product/GetProductsByCategories';
-    axios.get(productsByCategoryUri, {
+  getPossibleProductsForCategory = () => {
+    var possibleProductsForCategoryUri = '/api/Category/GetPossibleProductsForCategory';
+    axios.get(possibleProductsForCategoryUri, {
       params: {
-        categoryName: this.props.category
+        categoryId: this.props.category.id
       }
     })
       .then(res => {
         const products = res.data;
-        this.setState({ categoryProducts: products });
+        this.setState({ possibleProducts: products });
       })
       .catch(error => {
         if (error.response.data) {
@@ -62,35 +46,23 @@ export default class AddProduct extends React.Component {
       console.log("error with adding product to a category!")
       console.log(error)
     });
-    // this.forceUpdate()
   }
   handleAddProduct = () => {
-    this.handleSubmit()
-  }
-  handleSubmit = () => {
-    console.log("Gonna edit dis category")
-    console.log(this.props.category.id)
-    console.log("Gonna add dis")
-    console.log(this.state.addProductId)
     this.postProductAdd()
     this.setState({ addProductId: undefined })
+    this.props.refresh()
   }
   handleAddProductMenuChoose = (event, index, id) => {
     this.setState({ selectedAddProductIndex: index, anchorElProductAdd: null, addProductId: id });
   }
   handleAddProductMenuOpen = event => {
+    this.getPossibleProductsForCategory();
     this.setState({ anchorElProductAdd: event.currentTarget });
-    this.getCategoryProducts();
-    this.getAllProducts();
   };
   handleAddProductMenuClose = () => {
     this.setState({ anchorElProductAdd: null });
   };
   render() {
-    // var availableForAddProducts = this.state.allProducts.filter((product) => {
-    //   return this.state.categoryProducts.indexOf(product) === -1;
-    // });
-    // console.log(availableForAddProducts)
     return (
       <div>
         <ErrorMessage responseError={this.state.responseError} />
@@ -109,7 +81,7 @@ export default class AddProduct extends React.Component {
                   secondary={
                     this.state.selectedAddProductIndex === undefined ?
                       "None" :
-                      (this.state.allProducts[this.state.selectedAddProductIndex]).displayName + ToPriceDisplay((this.state.allProducts[this.state.selectedAddProductIndex]).price)}
+                      (this.state.possibleProducts[this.state.selectedAddProductIndex]).name + " " + ToPriceDisplay((this.state.possibleProducts[this.state.selectedAddProductIndex]).price)}
                 />
               </ListItem>
             </List>
@@ -120,12 +92,12 @@ export default class AddProduct extends React.Component {
               onClose={this.handleAddProductMenuClose}
             >
               {/* pakeist i availableForAdd */}
-              {this.state.allProducts.map((option, index) => (
+              {this.state.possibleProducts.map((option, index) => (
                 <MenuItem
                   key={option.id}
                   selected={index === this.state.selectedAddProductIndex}
                   onClick={event => this.handleAddProductMenuChoose(event, index, option.id)}>
-                  {option.displayName + " " + ToPriceDisplay(option.price)}
+                  {option.name + " " + ToPriceDisplay(option.price)}
                 </MenuItem>
               ))}
             </Menu>

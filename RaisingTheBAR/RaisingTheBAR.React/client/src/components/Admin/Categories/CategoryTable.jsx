@@ -26,24 +26,15 @@ export default class CategoryTable extends React.Component {
   handleAddFormDialogClose = () => {
     this.setState({ openAddFormDialog: false });
   };
-  handleDeleteCategory = (category) => {
-    console.log(category)
-    this.postCategoryRemove(category.id)
-  }
-  postCategoryRemove = (categoryId) => {
+  postCategoryRemove = (id) => {
     var removeUri = '/api/Category/RemoveCategory';
     axios.post(removeUri, {
-      categoryId: categoryId,
+      id: id,
     }).catch(error => {
       console.log("error with removing a category!")
       this.setState({ responseError: error.response.data });
     });
-    this.sleep(500).then(() => {
-      this.props.refresh()
-    })
-  }
-  sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
+    this.props.refresh()
   }
   render() {
     const styles = {
@@ -76,7 +67,7 @@ export default class CategoryTable extends React.Component {
         Cell: row =>
           <div>
             {
-              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.handleDeleteCategory(row.original)}>
+              <Button style={{ backgroundColor: "#FF0000" }} onClick={() => this.postCategoryRemove(row.original.id)}>
                 Delete
               </Button>
             }
@@ -103,7 +94,7 @@ export default class CategoryTable extends React.Component {
             row => {
               if (row.original.children.length) {
                 return <SubCategories
-                  onDeleteCategory={this.handleDeleteCategory.bind(this)}
+                  onDeleteCategory={this.postCategoryRemove.bind(this)}
                   subCategories={row.original.children} />
               }
               else {

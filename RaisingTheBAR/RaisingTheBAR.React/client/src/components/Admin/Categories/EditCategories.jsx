@@ -34,18 +34,18 @@ export default class EditCategories extends React.Component {
   postNewCategory = (name, parentId) => {
     var createUri = '/api/Category/CreateCategory';
     axios.post(createUri, {
-      name: this.state.newCategoryName,
-      parentCategoryId: this.state.newCategoryParentId,
+      name: name,
+      parentCategoryId: parentId,
     }).catch(error => {
       console.log("error with creating new category!")
       this.setState({ responseError: error.response.data });
     });
+    this.refresh();
   }
   handleTabChange = (event, value) => {
     this.setState({ tabValue: value });
   };
-  handleAddEvent =(name, parentId) => {
-    this.postNewCategory(name, parentId);
+  refresh = () => {
     this.sleep(500).then(() => {
       this.getCategories()
     })
@@ -64,13 +64,13 @@ export default class EditCategories extends React.Component {
             <Tab >Edit category products</Tab>
           </TabList>
           <TabPanel>
-            <CategoryTable refresh={this.getCategories.bind(this)} categories={this.state.categories} />
+            <CategoryTable refresh={this.refresh.bind(this)} categories={this.state.categories} />
           </TabPanel>
           <TabPanel>
-            <CreatingCategoryForm categories={this.state.categories} onAddEvent={this.handleAddEvent.bind(this)} />
+            <CreatingCategoryForm categories={this.state.categories} onAddCategoryEvent={this.postNewCategory.bind(this)} />
           </TabPanel>
           <TabPanel>
-            <EditCategoryProducts categories={this.state.categories} />
+            <EditCategoryProducts refresh={this.refresh.bind(this)} categories={this.state.categories} />
           </TabPanel>
         </Tabs>
 
