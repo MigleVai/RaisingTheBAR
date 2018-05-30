@@ -105,7 +105,6 @@
     <Folder Include="client\src\components\" />
     <Folder Include="client\src\components\Admin\" />
     <Folder Include="client\src\components\Admin\ProductTable\" />
-    <Folder Include="client\src\components\IDK if this will be used still\" />
     <Folder Include="client\public\resources\" />
     <Folder Include="client\src\components\User\" />
     <Folder Include="client\src\components\User\Cart\" />
