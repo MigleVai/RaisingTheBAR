@@ -216,6 +216,9 @@ export default class EditProducts extends React.Component {
       for (var key in product) {
         if (key === item.name && product.id === item.id) {
           product[key] = item.value;
+          if(key === "discountedPrice" && item.value==="") {
+            product[key] = 0
+          }
           product.isSaved = false
         }
       }
