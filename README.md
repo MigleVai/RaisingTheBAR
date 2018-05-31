@@ -2,7 +2,7 @@
 
 
 ## A friendly guide on how to run the project:
- * Set RaisingTheBAR.BLL and RaisingTheBAR.React as startup projects. Make sure that axios baseUrl is the same as your backend.
+ * Set RaisingTheBAR.BLL and RaisingTheBAR.React as startup projects. Make sure that axios baseUrl in RaisingTheBAR.React\client\index.js is the same as your backend.
  * Install:
 	* Node.js
 	* Visual Studio 2017
@@ -12,6 +12,6 @@
 	* Go to: RaisingTheBAR.React\client and run 'npm install' in Command line
 	* Go to: RaisingTheBAR.React and run 'npm install' in Command line
  * Run Visual studio 2017
- * Start RaisingTheBAR.React
+ * Start RaisingTheBAR solution
  * The browser will start in a few seconds. First time it might take some time to start
 
