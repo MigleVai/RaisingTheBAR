@@ -2,7 +2,7 @@
 
 
 ## A friendly guide on how to run the project:
- * Set RaisingTheBAR.BLL and RaisingTheBAR.React as startup projects. Make sure that axios baseUrl in RaisingTheBAR.React\client\index.js is the same as your backend.
+ * Set RaisingTheBAR.BLL and RaisingTheBAR.React as startup projects. Make sure that axios baseUrl in RaisingTheBAR.React\client\src\index.js is the same as your backend.
  * Install:
 	* Node.js
 	* Visual Studio 2017
