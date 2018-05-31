@@ -15,3 +15,5 @@
  * Start RaisingTheBAR solution
  * The browser will start in a few seconds. First time it might take some time to start
 
+
+## [Savaitinės ataskaitos](https://docs.google.com/document/d/12LpsnhNwRQDuoyFOg-Vdpbmngx9d1kDVNMfzU4WhBkI/edit?usp=sharing)
